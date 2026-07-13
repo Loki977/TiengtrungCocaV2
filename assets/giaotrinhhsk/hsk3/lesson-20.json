@@ -1,0 +1,435 @@
+{
+  "lessonId": 20,
+  "level": 4,
+  "title": "Những con số may mắn",
+  "meta": {
+    "estimatedMinutes": 40,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 20 + mở rộng ngữ pháp nhấn mạnh",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson20/"
+  },
+  "vocabulary": [
+    {
+      "id": "jili",
+      "hanzi": "吉利",
+      "pinyin": "jílì",
+      "meaning": "may mắn, tốt lành",
+      "example": "很多人觉得八是吉利的数字。",
+      "audio": "vocab/jili.mp3"
+    },
+    {
+      "id": "shuzi",
+      "hanzi": "数字",
+      "pinyin": "shùzì",
+      "meaning": "con số",
+      "example": "你喜欢哪个数字？",
+      "audio": "vocab/shuzi.mp3"
+    },
+    {
+      "id": "yanhui",
+      "hanzi": "宴会",
+      "pinyin": "yànhuì",
+      "meaning": "tiệc, yến tiệc",
+      "example": "宴会上的规定很多。",
+      "audio": "vocab/yanhui.mp3"
+    },
+    {
+      "id": "guiding",
+      "hanzi": "规定",
+      "pinyin": "guīdìng",
+      "meaning": "quy định",
+      "example": "公司有自己的规定。",
+      "audio": "vocab/guiding.mp3"
+    },
+    {
+      "id": "xiangs声",
+      "hanzi": "相声",
+      "pinyin": "xiàngsheng",
+      "meaning": "tấu nói, xiangsheng",
+      "example": "相声常常让人笑。",
+      "audio": "vocab/xiangs声.mp3"
+    },
+    {
+      "id": "haoma",
+      "hanzi": "号码",
+      "pinyin": "hàomǎ",
+      "meaning": "số hiệu, số điện thoại",
+      "example": "这个电话号码很好记。",
+      "audio": "vocab/haoma.mp3"
+    },
+    {
+      "id": "li",
+      "hanzi": "六",
+      "pinyin": "liù",
+      "meaning": "số sáu",
+      "example": "六和顺利有关。",
+      "audio": "vocab/li.mp3"
+    },
+    {
+      "id": "jiu",
+      "hanzi": "九",
+      "pinyin": "jiǔ",
+      "meaning": "số chín",
+      "example": "九常常表示长久。",
+      "audio": "vocab/jiu.mp3"
+    },
+    {
+      "id": "ba_num",
+      "hanzi": "八",
+      "pinyin": "bā",
+      "meaning": "số tám",
+      "example": "八的声音像发财的发。",
+      "audio": "vocab/ba_num.mp3"
+    },
+    {
+      "id": "si",
+      "hanzi": "四",
+      "pinyin": "sì",
+      "meaning": "số bốn",
+      "example": "有些人不太喜欢四。",
+      "audio": "vocab/si.mp3"
+    },
+    {
+      "id": "fayin",
+      "hanzi": "发音",
+      "pinyin": "fāyīn",
+      "meaning": "phát âm",
+      "example": "这个字的发音很特别。",
+      "audio": "vocab/fayin.mp3"
+    },
+    {
+      "id": "yisi",
+      "hanzi": "意思",
+      "pinyin": "yìsi",
+      "meaning": "ý nghĩa",
+      "example": "这个数字有什么意思？",
+      "audio": "vocab/yisi.mp3"
+    },
+    {
+      "id": "fancai",
+      "hanzi": "发财",
+      "pinyin": "fācái",
+      "meaning": "phát tài",
+      "example": "大家都希望新年发财。",
+      "audio": "vocab/fancai.mp3"
+    },
+    {
+      "id": "shunli",
+      "hanzi": "顺利",
+      "pinyin": "shùnlì",
+      "meaning": "thuận lợi",
+      "example": "祝你工作顺利。",
+      "audio": "vocab/shunli.mp3"
+    },
+    {
+      "id": "changjiu",
+      "hanzi": "长久",
+      "pinyin": "chángjiǔ",
+      "meaning": "lâu dài, bền lâu",
+      "example": "九有长久的意思。",
+      "audio": "vocab/changjiu.mp3"
+    },
+    {
+      "id": "xiguan",
+      "hanzi": "习惯",
+      "pinyin": "xíguàn",
+      "meaning": "thói quen",
+      "example": "不同地方有不同的习惯。",
+      "audio": "vocab/xiguan.mp3"
+    },
+    {
+      "id": "keqi",
+      "hanzi": "客气",
+      "pinyin": "kèqi",
+      "meaning": "khách sáo, lịch sự",
+      "example": "请别客气，多吃一点儿。",
+      "audio": "vocab/keqi.mp3"
+    },
+    {
+      "id": "juzi",
+      "hanzi": "句子",
+      "pinyin": "jùzi",
+      "meaning": "câu",
+      "example": "这个句子是反问句。",
+      "audio": "vocab/juzi.mp3"
+    },
+    {
+      "id": "fouwen",
+      "hanzi": "否定",
+      "pinyin": "fǒudìng",
+      "meaning": "phủ định",
+      "example": "这个句子用了两次否定。",
+      "audio": "vocab/fouwen.mp3"
+    },
+    {
+      "id": "fanwen",
+      "hanzi": "反问",
+      "pinyin": "fǎnwèn",
+      "meaning": "phản vấn, hỏi tu từ",
+      "example": "反问句不是真的提问。",
+      "audio": "vocab/fanwen.mp3"
+    },
+    {
+      "id": "liandou",
+      "hanzi": "连……都",
+      "pinyin": "lián…dōu",
+      "meaning": "ngay cả... cũng",
+      "example": "他连这个数字都不知道。",
+      "audio": "vocab/liandou.mp3"
+    },
+    {
+      "id": "wenti",
+      "hanzi": "问题",
+      "pinyin": "wèntí",
+      "meaning": "vấn đề, câu hỏi",
+      "example": "以后有什么问题就来问我。",
+      "audio": "vocab/wenti.mp3"
+    },
+    {
+      "id": "xiaohua",
+      "hanzi": "笑话",
+      "pinyin": "xiàohua",
+      "meaning": "truyện cười, chuyện đùa",
+      "example": "他讲了一个笑话。",
+      "audio": "vocab/xiaohua.mp3"
+    },
+    {
+      "id": "shaonian",
+      "hanzi": "少年",
+      "pinyin": "shàonián",
+      "meaning": "tuổi trẻ, thiếu niên",
+      "example": "笑一笑，十年少。",
+      "audio": "vocab/shaonian.mp3"
+    },
+    {
+      "id": "wenhua",
+      "hanzi": "文化",
+      "pinyin": "wénhuà",
+      "meaning": "văn hóa",
+      "example": "数字文化很有意思。",
+      "audio": "vocab/wenhua.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "谐音",
+      "pinyin": "xiéyīn",
+      "meaning": "đồng âm/gần âm",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "忌讳",
+      "pinyin": "jìhuì",
+      "meaning": "điều kiêng kỵ",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "幸运号",
+      "pinyin": "xìngyùnhào",
+      "meaning": "số may mắn",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "尾号",
+      "pinyin": "wěihào",
+      "meaning": "số cuối của dãy số",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "吉利的数字",
+      "chinese": "《吉利的数字》\n今天上文化课，老师问大家喜欢哪个数字。小林马上说：“我喜欢八，因为八的发音和‘发’有点儿像，听起来很吉利。”小雨说她喜欢六，因为中国人常说“六六大顺”，表示事情顺利。老师又问：“那九呢？”同学们回答：“九有长久的意思。”这时，马克小声问：“那四是不是不太受欢迎？”老师笑了笑说：“有些人不喜欢四，是因为它的发音让人想到不好的意思。不过，不同地方、不同人有不同的习惯，不能一听到四就害怕。”老师还告诉大家，数字本身没有好坏，重要的是人们给它们加上了文化意义。下课后，大家连自己的电话号码都拿出来研究，看看里面有没有吉利的数字。小林说：“这不是很有意思吗？”大家都笑了。"
+    }
+  ],
+  "story": [
+    {
+      "title": "一个电话号码",
+      "chinese": "小赵刚买了一个新电话号码，号码里有很多八。他高兴得不得了，觉得自己一定会发财。朋友老王看了以后说：“号码吉利当然不错，可是你不能光靠数字生活吧？”小赵不服气地说：“难道你不喜欢好数字吗？”老王笑着回答：“喜欢是喜欢，可是努力更重要。”后来，小赵开了一家小店。开始的时候，生意并不太好，他连房租都快付不起了。可是他没有放弃，每天认真服务客人，还把店里打扫得干干净净。几个月以后，客人越来越多。小赵这才明白，吉利的数字能给人好心情，但真正带来好运的，还是自己的努力和热心。"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: Con số và hài âm trong tiếng Trung",
+      "content": "Trong tiếng Trung, nhiều con số được yêu thích hoặc kiêng kỵ vì phát âm gần giống từ khác. Ví dụ 8 gần âm với 发, 6 gợi ý thuận lợi, 9 gợi ý lâu dài. Đây là một phần thú vị của văn hóa giao tiếp."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "反问句 - Câu hỏi tu từ / phản vấn",
+      "source": "Giáo trình Hán ngữ 4 - Bài 20",
+      "pattern": "难道……吗？/ 不是……吗？",
+      "structure": "Hình thức câu hỏi nhưng thực chất nhấn mạnh ý khẳng định hoặc phủ định",
+      "explanation": "反问句 không nhất thiết cần câu trả lời. Người nói dùng hình thức hỏi để biểu thị thái độ chắc chắn, nhấn mạnh hoặc phản bác.",
+      "examples": [
+        "这不是很有意思吗？"
+      ],
+      "usage": "Dùng nhiều trong hội thoại, tranh luận nhẹ hoặc văn kể chuyện."
+    },
+    {
+      "title": "连……也/都…… - Ngay cả... cũng...",
+      "source": "Giáo trình Hán ngữ 4 - Bài 20",
+      "pattern": "连 + đối tượng được nhấn mạnh + 也/都 + VP",
+      "structure": "Nhấn mạnh mức độ vượt dự đoán",
+      "explanation": "Dùng 连 để đưa ra một trường hợp đặc biệt, thường là điều người nghe không ngờ tới. 也/都 đứng trước vị ngữ để nhấn mạnh.",
+      "examples": [
+        "他连这个数字都不知道。"
+      ],
+      "usage": "Dùng để nhấn mạnh mức độ, thường mang sắc thái ngạc nhiên, không hài lòng hoặc nhấn mạnh khách quan."
+    },
+    {
+      "title": "二次否定 - Hai lần phủ định biểu thị khẳng định",
+      "source": "Giáo trình Hán ngữ 4 - Bài 20",
+      "pattern": "不能不 / 不得不 / 不是不",
+      "structure": "Phủ định + phủ định = ý khẳng định mạnh hoặc khách quan",
+      "explanation": "Trong tiếng Trung, hai yếu tố phủ định có thể tạo thành nghĩa khẳng định, nhưng sắc thái thường mạnh hơn hoặc có ý bắt buộc/không còn lựa chọn.",
+      "examples": [
+        "这个问题我不能不考虑。"
+      ],
+      "usage": "Dùng trong văn nói và văn viết khi muốn nhấn mạnh sự cần thiết hoặc thái độ chắc chắn."
+    },
+    {
+      "title": "什么话 - Cách phản ứng trong hội thoại",
+      "source": "Mở rộng theo chú thích bài 20",
+      "pattern": "什么话！",
+      "structure": "Cụm cố định dùng để phản ứng",
+      "explanation": "Dùng khi người nói không đồng ý hoặc cho rằng lời vừa nghe không hợp lý, gần nghĩa: Nói gì vậy! / Sao lại nói thế!",
+      "examples": [
+        "什么话！朋友之间还客气什么？"
+      ],
+      "usage": "Mang sắc thái khẩu ngữ, nên dùng đúng ngữ cảnh thân mật."
+    },
+    {
+      "title": "以后有什么问题就来问我好了 - 就……好了",
+      "source": "Mở rộng theo chú thích bài 20",
+      "pattern": "有问题就……好了",
+      "structure": "Nếu có vấn đề thì cứ... là được",
+      "explanation": "就……好了 dùng để đưa ra cách giải quyết đơn giản, tự nhiên, thường mang sắc thái nhẹ nhàng, trấn an.",
+      "examples": [
+        "以后有什么问题就来问我好了。"
+      ],
+      "usage": "Dùng khi đưa lời khuyên hoặc đề nghị giúp đỡ."
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "吉利 nghĩa là gì?",
+      "answer": "may mắn, tốt lành",
+      "options": [
+        "may mắn, tốt lành",
+        "quy định",
+        "địa chỉ",
+        "điện thoại"
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng 连……都 đúng?",
+      "answer": "他连这个问题都不知道。",
+      "options": [
+        "他连这个问题都不知道。",
+        "他都连这个问题不知道。",
+        "连他这个问题不知道都。",
+        "他这个问题连都不知道。"
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "反问句 thường dùng để làm gì?",
+      "answer": "nhấn mạnh ý kiến hoặc thái độ",
+      "options": [
+        "nhấn mạnh ý kiến hoặc thái độ",
+        "chỉ thời gian",
+        "đếm số lượng",
+        "hỏi tên người"
+      ]
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 他___这个数字___不知道。",
+      "answer": "连 / 都"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 这___很有意思吗？",
+      "answer": "不是"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 这个问题我不能___考虑。",
+      "answer": "不"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 连 / 他 / 都 / 四 / 不喜欢",
+      "answer": "他连四都不喜欢"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 不是 / 很 / 这 / 有意思 / 吗",
+      "answer": "这不是很有意思吗"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 他连都这个数字不知道。",
+      "answer": "他连这个数字都不知道"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 这个问题我能不考虑。",
+      "answer": "这个问题我不能不考虑"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Ngay cả số này anh ấy cũng không biết.",
+      "answer": "他连这个数字都不知道"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Điều này chẳng phải rất thú vị sao?",
+      "answer": "这不是很有意思吗"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 以后有什么问题就来问我好了。",
+      "answer": "Sau này có vấn đề gì thì cứ đến hỏi tôi là được"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: Trong bài đọc, 小林为什么喜欢八？",
+      "answer": "因为八的发音和发有点儿像，听起来很吉利"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 老师认为数字本身怎么样？",
+      "answer": "数字本身没有好坏，重要的是人们给它们加上了文化意义"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 连……都/也…….",
+      "answer": "他连饭都没吃"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu phản vấn dùng 不是……吗？",
+      "answer": "这不是很好吗"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng hai lần phủ định.",
+      "answer": "这个机会我不能不珍惜"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

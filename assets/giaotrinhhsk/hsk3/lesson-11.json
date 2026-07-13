@@ -1,0 +1,495 @@
+{
+  "lessonId": 11,
+  "level": 4,
+  "title": "Mùa thu cuối cùng của khu tứ hợp viện",
+  "meta": {
+    "estimatedMinutes": 35,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 11: 前边开过来一辆空车",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson11/"
+  },
+  "vocabulary": [
+    {
+      "id": "zuoke",
+      "hanzi": "做客",
+      "pinyin": "zuò kè",
+      "meaning": "làm khách",
+      "example": "周末我去朋友家做客。",
+      "audio": "vocab/zuoke.mp3"
+    },
+    {
+      "id": "yuelaiyue",
+      "hanzi": "越来越",
+      "pinyin": "yuè lái yuè",
+      "meaning": "càng ngày càng",
+      "example": "等车的人越来越多。",
+      "audio": "vocab/yuelaiyue.mp3",
+      "note": "Dùng trước tính từ hoặc một số động từ tâm lý."
+    },
+    {
+      "id": "dadi",
+      "hanzi": "打的",
+      "pinyin": "dǎ dī",
+      "meaning": "đi taxi",
+      "example": "太晚了，我们打的回家吧。",
+      "audio": "vocab/dadi.mp3"
+    },
+    {
+      "id": "kong",
+      "hanzi": "空",
+      "pinyin": "kōng",
+      "meaning": "trống, không có người",
+      "example": "前边开过来一辆空车。",
+      "audio": "vocab/kong.mp3"
+    },
+    {
+      "id": "siheyuan",
+      "hanzi": "四合院",
+      "pinyin": "sìhéyuàn",
+      "meaning": "nhà tứ hợp viện",
+      "example": "北京以前有很多四合院。",
+      "audio": "vocab/siheyuan.mp3"
+    },
+    {
+      "id": "yuanzi",
+      "hanzi": "院子",
+      "pinyin": "yuànzi",
+      "meaning": "sân",
+      "example": "院子里种着一棵树。",
+      "audio": "vocab/yuanzi.mp3"
+    },
+    {
+      "id": "zhong",
+      "hanzi": "种",
+      "pinyin": "zhòng",
+      "meaning": "trồng",
+      "example": "爷爷在院子里种花。",
+      "audio": "vocab/zhong.mp3"
+    },
+    {
+      "id": "ke",
+      "hanzi": "棵",
+      "pinyin": "kē",
+      "meaning": "lượng từ cho cây",
+      "example": "门前有一棵老树。",
+      "audio": "vocab/ke.mp3"
+    },
+    {
+      "id": "zao",
+      "hanzi": "枣",
+      "pinyin": "zǎo",
+      "meaning": "quả táo tàu",
+      "example": "秋天枣树上结了很多枣。",
+      "audio": "vocab/zao.mp3"
+    },
+    {
+      "id": "jie",
+      "hanzi": "结",
+      "pinyin": "jiē",
+      "meaning": "kết, ra quả",
+      "example": "这棵树每年都结果。",
+      "audio": "vocab/jie.mp3"
+    },
+    {
+      "id": "chang",
+      "hanzi": "尝",
+      "pinyin": "cháng",
+      "meaning": "nếm, thử ăn",
+      "example": "请你尝尝我做的菜。",
+      "audio": "vocab/chang.mp3"
+    },
+    {
+      "id": "tian",
+      "hanzi": "甜",
+      "pinyin": "tián",
+      "meaning": "ngọt",
+      "example": "这些枣很甜。",
+      "audio": "vocab/tian.mp3"
+    },
+    {
+      "id": "gai",
+      "hanzi": "盖",
+      "pinyin": "gài",
+      "meaning": "xây, dựng",
+      "example": "城市里盖了很多高楼。",
+      "audio": "vocab/gai.mp3"
+    },
+    {
+      "id": "zhuzhai",
+      "hanzi": "住宅",
+      "pinyin": "zhùzhái",
+      "meaning": "nhà ở",
+      "example": "这里是新的住宅小区。",
+      "audio": "vocab/zhuzhai.mp3"
+    },
+    {
+      "id": "xiaoqu",
+      "hanzi": "小区",
+      "pinyin": "xiǎoqū",
+      "meaning": "khu dân cư",
+      "example": "我们小区越来越漂亮了。",
+      "audio": "vocab/xiaoqu.mp3"
+    },
+    {
+      "id": "jian",
+      "hanzi": "建",
+      "pinyin": "jiàn",
+      "meaning": "xây dựng",
+      "example": "明年这里要建一所学校。",
+      "audio": "vocab/jian.mp3"
+    },
+    {
+      "id": "ban",
+      "hanzi": "搬",
+      "pinyin": "bān",
+      "meaning": "chuyển, dọn đi",
+      "example": "他们搬进新房子了。",
+      "audio": "vocab/ban.mp3"
+    },
+    {
+      "id": "yihan",
+      "hanzi": "遗憾",
+      "pinyin": "yíhàn",
+      "meaning": "tiếc, đáng tiếc",
+      "example": "不能再住在这里，我觉得很遗憾。",
+      "audio": "vocab/yihan.mp3"
+    },
+    {
+      "id": "shebude",
+      "hanzi": "舍不得",
+      "pinyin": "shěbudé",
+      "meaning": "không nỡ rời, tiếc không nỡ",
+      "example": "我舍不得离开这个院子。",
+      "audio": "vocab/shebude.mp3"
+    },
+    {
+      "id": "likai",
+      "hanzi": "离开",
+      "pinyin": "líkāi",
+      "meaning": "rời khỏi",
+      "example": "明天我们就要离开北京了。",
+      "audio": "vocab/likai.mp3"
+    },
+    {
+      "id": "xiandaihua",
+      "hanzi": "现代化",
+      "pinyin": "xiàndàihuà",
+      "meaning": "hiện đại hóa",
+      "example": "城市正在现代化。",
+      "audio": "vocab/xiandaihua.mp3"
+    },
+    {
+      "id": "ganxiang",
+      "hanzi": "感想",
+      "pinyin": "gǎnxiǎng",
+      "meaning": "cảm tưởng",
+      "example": "请大家谈谈自己的感想。",
+      "audio": "vocab/ganxiang.mp3"
+    },
+    {
+      "id": "tihui",
+      "hanzi": "体会",
+      "pinyin": "tǐhuì",
+      "meaning": "hiểu biết, cảm nhận qua trải nghiệm",
+      "example": "我慢慢体会到了家的重要。",
+      "audio": "vocab/tihui.mp3"
+    },
+    {
+      "id": "yijian",
+      "hanzi": "意见",
+      "pinyin": "yìjiàn",
+      "meaning": "ý kiến",
+      "example": "你有什么意见可以提。",
+      "audio": "vocab/yijian.mp3"
+    },
+    {
+      "id": "jianyi",
+      "hanzi": "建议",
+      "pinyin": "jiànyì",
+      "meaning": "đề nghị, kiến nghị",
+      "example": "我建议我们坐出租车去。",
+      "audio": "vocab/jianyi.mp3"
+    },
+    {
+      "id": "ti",
+      "hanzi": "提",
+      "pinyin": "tí",
+      "meaning": "nêu lên, nhắc đến",
+      "example": "他提了一个好建议。",
+      "audio": "vocab/ti.mp3"
+    },
+    {
+      "id": "chumen",
+      "hanzi": "出门",
+      "pinyin": "chū mén",
+      "meaning": "ra ngoài, ra cửa",
+      "example": "出门前别忘了带钥匙。",
+      "audio": "vocab/chumen.mp3"
+    },
+    {
+      "id": "renmen",
+      "hanzi": "人们",
+      "pinyin": "rénmen",
+      "meaning": "mọi người, người ta",
+      "example": "人们的生活一天比一天方便。",
+      "audio": "vocab/renmen.mp3"
+    },
+    {
+      "id": "fengfu",
+      "hanzi": "丰富",
+      "pinyin": "fēngfù",
+      "meaning": "phong phú, dồi dào",
+      "example": "城市生活越来越丰富。",
+      "audio": "vocab/fengfu.mp3"
+    },
+    {
+      "id": "daban",
+      "hanzi": "打扮",
+      "pinyin": "dǎban",
+      "meaning": "trang điểm, ăn mặc",
+      "example": "年轻人越来越会打扮。",
+      "audio": "vocab/daban.mp3"
+    },
+    {
+      "id": "zhuangshi",
+      "hanzi": "装饰",
+      "pinyin": "zhuāngshì",
+      "meaning": "trang trí",
+      "example": "商店被装饰得很漂亮。",
+      "audio": "vocab/zhuangshi.mp3"
+    },
+    {
+      "id": "liwu",
+      "hanzi": "礼物",
+      "pinyin": "lǐwù",
+      "meaning": "quà tặng",
+      "example": "我给老师准备了一件礼物。",
+      "audio": "vocab/liwu.mp3"
+    },
+    {
+      "id": "huanle",
+      "hanzi": "欢乐",
+      "pinyin": "huānlè",
+      "meaning": "vui mừng, hoan hỉ",
+      "example": "节日的气氛很欢乐。",
+      "audio": "vocab/huanle.mp3"
+    },
+    {
+      "id": "jieri",
+      "hanzi": "节日",
+      "pinyin": "jiérì",
+      "meaning": "ngày lễ",
+      "example": "春节是中国最重要的节日。",
+      "audio": "vocab/jieri.mp3"
+    },
+    {
+      "id": "chunjie",
+      "hanzi": "春节",
+      "pinyin": "Chūn Jié",
+      "meaning": "Tết Nguyên đán",
+      "example": "春节快到了。",
+      "audio": "vocab/chunjie.mp3"
+    },
+    {
+      "id": "kai",
+      "hanzi": "开",
+      "pinyin": "kāi",
+      "meaning": "mở, tổ chức",
+      "example": "我们班要开一个联欢会。",
+      "audio": "vocab/kai.mp3"
+    },
+    {
+      "id": "lianhuanhui",
+      "hanzi": "联欢会",
+      "pinyin": "liánhuānhuì",
+      "meaning": "buổi liên hoan",
+      "example": "同学们准备开新年联欢会。",
+      "audio": "vocab/lianhuanhui.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "出租车",
+      "pinyin": "chūzūchē",
+      "meaning": "taxi",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "老街",
+      "pinyin": "lǎojiē",
+      "meaning": "phố cũ",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "高楼",
+      "pinyin": "gāolóu",
+      "meaning": "nhà cao tầng",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "最后一个秋天",
+      "chinese": "《最后一个秋天》\n秋天的一个下午，林老师请我们去她家的四合院做客。我们刚走到胡同口，就看见前边开过来一辆空出租车，可是林老师说：“不远了，我们走过去吧。”胡同里很安静，门前种着几棵老树，树下坐着几位老人。走进院子，院子中间种着一棵枣树，树上结着很多红枣。林老师摘了一些让我们尝，大家都说很甜。她告诉我们，这个院子明年可能要拆，附近会盖新的住宅小区。听到这个消息，我心里有点儿遗憾。现在城市里的高楼越来越多，生活也越来越方便，可是这样的老院子越来越少了。离开的时候，我回头看了看那棵枣树，忽然明白了：城市越现代化，人们越应该记住过去的生活。"
+    }
+  ],
+  "story": [
+    {
+      "title": "Bài đọc: 最后一个秋天",
+      "chinese": "秋天的一个下午，林老师请我们去她家的四合院做客。我们刚走到胡同口，就看见前边开过来一辆空出租车，可是林老师说：“不远了，我们走过去吧。”胡同里很安静，门前种着几棵老树，树下坐着几位老人。走进院子，院子中间种着一棵枣树，树上结着很多红枣。林老师摘了一些让我们尝，大家都说很甜。她告诉我们，这个院子明年可能要拆，附近会盖新的住宅小区。听到这个消息，我心里有点儿遗憾。现在城市里的高楼越来越多，生活也越来越方便，可是这样的老院子越来越少了。离开的时候，我回头看了看那棵枣树，忽然明白了：城市越现代化，人们越应该记住过去的生活。"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: 四合院",
+      "content": "四合院 là kiểu nhà truyền thống Bắc Kinh, các gian nhà bao quanh một sân ở giữa. Trong bài này, 四合院 được dùng để gợi ký ức về đời sống cũ và sự thay đổi của thành phố."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "存现句 - Câu tồn hiện / xuất hiện",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 11",
+      "pattern": "处所词 + 动词 + 助词/补语 + 名词",
+      "structure": "Từ chỉ nơi chốn + động từ + trợ từ/bổ ngữ + danh từ",
+      "explanation": "存现句 dùng để biểu thị sự tồn tại hoặc xuất hiện của người/sự vật tại một địa điểm. Tân ngữ thường là thông tin mới, chưa xác định, nên thường không dùng để nói một người/sự vật đã xác định rõ.",
+      "examples": [
+        "院子中间种着一棵枣树。"
+      ]
+    },
+    {
+      "title": "越来越…… - Càng ngày càng……",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 11",
+      "pattern": "越来越 + 形容词 / 动词",
+      "structure": "越来越 + tính từ / động từ",
+      "explanation": "越来越…… biểu thị mức độ của sự việc thay đổi dần theo thời gian, thường dịch là “càng ngày càng”.",
+      "examples": [
+        "城市里的高楼越来越多。"
+      ]
+    },
+    {
+      "title": "越……越…… - Càng…… càng……",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 11",
+      "pattern": "越 + A + 越 + B",
+      "structure": "越 + điều kiện/thay đổi 1 + 越 + kết quả/thay đổi 2",
+      "explanation": "越……越…… biểu thị mức độ thay đổi của vế sau tăng hoặc giảm theo sự thay đổi của vế trước.",
+      "examples": [
+        "城市越现代化，人们越应该记住过去的生活。"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "“越来越” nghĩa là gì?",
+      "options": [
+        "càng ngày càng",
+        "ngay lập tức",
+        "vừa mới",
+        "đã từng"
+      ],
+      "answer": "càng ngày càng"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào là 存现句 đúng?",
+      "options": [
+        "院子中间种着一棵枣树。",
+        "我种着一棵枣树院子中间。",
+        "一棵枣树院子中间种着。",
+        "院子中间很一棵枣树。"
+      ],
+      "answer": "院子中间种着一棵枣树。"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 城市里的高楼___多。",
+      "answer": "越来越"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 城市___现代化，人们___应该记住过去的生活。",
+      "answer": "越，越"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 门前___几棵老树。",
+      "answer": "种着"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 开过来 / 前边 / 一辆 / 空出租车",
+      "answer": "前边开过来一辆空出租车"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 越来越 / 老院子 / 少 / 这样的 / 了",
+      "answer": "这样的老院子越来越少了"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 越 / 生活 / 方便 / 越 / 城市 / 现代化",
+      "answer": "城市越现代化，生活越方便"
+    },
+    {
+      "type": "error-correction",
+      "question": "Tìm lỗi sai và viết lại: 院子中间一棵枣树种着。",
+      "answer": "院子中间种着一棵枣树"
+    },
+    {
+      "type": "error-correction",
+      "question": "Tìm lỗi sai và viết lại: 高楼很越来越多。",
+      "answer": "高楼越来越多"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 前边开过来一辆空出租车。",
+      "answer": "Phía trước có một chiếc taxi trống đang chạy tới"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Trong sân có trồng một cây táo tàu.",
+      "answer": "院子里种着一棵枣树"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Thành phố càng ngày càng hiện đại.",
+      "answer": "城市越来越现代化"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Càng học tiếng Trung, tôi càng thấy thú vị.",
+      "answer": "汉语越学越有意思"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 林老师家的院子中间种着什么？",
+      "answer": "一棵枣树"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 为什么“我”觉得有点儿遗憾？",
+      "answer": "因为这个院子明年可能要拆"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 越来越……",
+      "answer": "我的汉语越来越好了"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 越……越……",
+      "answer": "朋友越多越好"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

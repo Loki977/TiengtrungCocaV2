@@ -1,0 +1,535 @@
+{
+  "lessonId": 14,
+  "level": 4,
+  "title": "Chân của tôi bị thương do xe đạp va vào",
+  "meta": {
+    "estimatedMinutes": 35,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 14",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson14/"
+  },
+  "vocabulary": [
+    {
+      "id": "tui",
+      "hanzi": "腿",
+      "pinyin": "tuǐ",
+      "meaning": "đùi, chân",
+      "example": "她的腿被自行车撞伤了。",
+      "audio": "vocab/tui.mp3"
+    },
+    {
+      "id": "shangjie",
+      "hanzi": "上街",
+      "pinyin": "shàng jiē",
+      "meaning": "ra phố, lên phố",
+      "example": "星期天我骑车上街买书。",
+      "audio": "vocab/shangjie.mp3"
+    },
+    {
+      "id": "bei",
+      "hanzi": "被",
+      "pinyin": "bèi",
+      "meaning": "bị, được",
+      "example": "我的钱包被小偷偷走了。",
+      "audio": "vocab/bei.mp3"
+    },
+    {
+      "id": "zhuang",
+      "hanzi": "撞",
+      "pinyin": "zhuàng",
+      "meaning": "va, chạm, đụng",
+      "example": "一辆自行车撞到了树上。",
+      "audio": "vocab/zhuang.mp3"
+    },
+    {
+      "id": "dao",
+      "hanzi": "倒",
+      "pinyin": "dǎo",
+      "meaning": "ngã, đổ",
+      "example": "他不小心摔倒了。",
+      "audio": "vocab/dao.mp3"
+    },
+    {
+      "id": "shang",
+      "hanzi": "伤",
+      "pinyin": "shāng",
+      "meaning": "tổn thương, bị thương",
+      "example": "医生说他的腿没有伤着骨头。",
+      "audio": "vocab/shang.mp3"
+    },
+    {
+      "id": "liu",
+      "hanzi": "流",
+      "pinyin": "liú",
+      "meaning": "chảy, di động",
+      "example": "他的手流了一点儿血。",
+      "audio": "vocab/liu.mp3"
+    },
+    {
+      "id": "xue",
+      "hanzi": "血",
+      "pinyin": "xiě",
+      "meaning": "máu",
+      "example": "伤口流血了。",
+      "audio": "vocab/xue.mp3"
+    },
+    {
+      "id": "yaojin",
+      "hanzi": "要紧",
+      "pinyin": "yàojǐn",
+      "meaning": "quan trọng, nghiêm trọng",
+      "example": "这点儿小伤不要紧。",
+      "audio": "vocab/yaojin.mp3"
+    },
+    {
+      "id": "buyaojin",
+      "hanzi": "不要紧",
+      "pinyin": "bú yàojǐn",
+      "meaning": "không nghiêm trọng, không sao",
+      "example": "没关系，不要紧。",
+      "audio": "vocab/buyaojin.mp3"
+    },
+    {
+      "id": "gutou",
+      "hanzi": "骨头",
+      "pinyin": "gǔtou",
+      "meaning": "xương",
+      "example": "还好，骨头没有被撞伤。",
+      "audio": "vocab/gutou.mp3"
+    },
+    {
+      "id": "buhaoyisi",
+      "hanzi": "不好意思",
+      "pinyin": "bù hǎo yìsi",
+      "meaning": "xấu hổ, ngại",
+      "example": "不好意思，我来晚了。",
+      "audio": "vocab/buhaoyisi.mp3"
+    },
+    {
+      "id": "guyi",
+      "hanzi": "故意",
+      "pinyin": "gùyì",
+      "meaning": "cố tình",
+      "example": "他不是故意撞你的。",
+      "audio": "vocab/guyi.mp3"
+    },
+    {
+      "id": "ai",
+      "hanzi": "唉",
+      "pinyin": "āi",
+      "meaning": "thán từ: ôi, haiz",
+      "example": "唉，今天真倒霉。",
+      "audio": "vocab/ai.mp3"
+    },
+    {
+      "id": "qianbao",
+      "hanzi": "钱包",
+      "pinyin": "qiánbāo",
+      "meaning": "ví tiền",
+      "example": "我的钱包被人偷走了。",
+      "audio": "vocab/qianbao.mp3"
+    },
+    {
+      "id": "rang",
+      "hanzi": "让",
+      "pinyin": "ràng",
+      "meaning": "bị, để cho",
+      "example": "他的车让朋友骑走了。",
+      "audio": "vocab/rang.mp3"
+    },
+    {
+      "id": "xiaotou",
+      "hanzi": "小偷",
+      "pinyin": "xiǎotōu",
+      "meaning": "kẻ trộm",
+      "example": "小偷被警察抓住了。",
+      "audio": "vocab/xiaotou.mp3"
+    },
+    {
+      "id": "tou",
+      "hanzi": "偷",
+      "pinyin": "tōu",
+      "meaning": "trộm, cắp",
+      "example": "有人偷了他的自行车。",
+      "audio": "vocab/tou.mp3"
+    },
+    {
+      "id": "yudao",
+      "hanzi": "遇到",
+      "pinyin": "yùdào",
+      "meaning": "gặp phải",
+      "example": "我今天遇到了一件倒霉事。",
+      "audio": "vocab/yudao.mp3"
+    },
+    {
+      "id": "jiao",
+      "hanzi": "叫",
+      "pinyin": "jiào",
+      "meaning": "bị; kêu, gọi, bảo",
+      "example": "我的照相机叫弟弟摔坏了。",
+      "audio": "vocab/jiao.mp3"
+    },
+    {
+      "id": "lin",
+      "hanzi": "淋",
+      "pinyin": "lín",
+      "meaning": "thấm ướt, dầm mưa",
+      "example": "他被大雨淋湿了。",
+      "audio": "vocab/lin.mp3"
+    },
+    {
+      "id": "luotangji",
+      "hanzi": "落汤鸡",
+      "pinyin": "luòtāngjī",
+      "meaning": "ướt như chuột lột",
+      "example": "大家都被雨淋得像落汤鸡似的。",
+      "audio": "vocab/luotangji.mp3"
+    },
+    {
+      "id": "shide",
+      "hanzi": "似的",
+      "pinyin": "shìde",
+      "meaning": "như, tựa như",
+      "example": "他高兴得像孩子似的。",
+      "audio": "vocab/shide.mp3"
+    },
+    {
+      "id": "shi",
+      "hanzi": "湿",
+      "pinyin": "shī",
+      "meaning": "ẩm, ướt",
+      "example": "衣服全湿了。",
+      "audio": "vocab/shi.mp3"
+    },
+    {
+      "id": "tou2",
+      "hanzi": "透",
+      "pinyin": "tòu",
+      "meaning": "thấm, xuyên qua; cực kỳ",
+      "example": "我的衣服湿透了。",
+      "audio": "vocab/tou2.mp3"
+    },
+    {
+      "id": "shoudu",
+      "hanzi": "首都",
+      "pinyin": "shǒudū",
+      "meaning": "thủ đô",
+      "example": "北京是中国的首都。",
+      "audio": "vocab/shoudu.mp3"
+    },
+    {
+      "id": "juchang",
+      "hanzi": "剧场",
+      "pinyin": "jùchǎng",
+      "meaning": "kịch trường, nhà hát",
+      "example": "他们坐出租车去首都剧场。",
+      "audio": "vocab/juchang.mp3"
+    },
+    {
+      "id": "siji",
+      "hanzi": "司机",
+      "pinyin": "sījī",
+      "meaning": "tài xế",
+      "example": "司机把我们送到了医院。",
+      "audio": "vocab/siji.mp3"
+    },
+    {
+      "id": "la",
+      "hanzi": "拉",
+      "pinyin": "lā",
+      "meaning": "lôi, kéo, chở",
+      "example": "出租车司机把他们拉到了机场。",
+      "audio": "vocab/la.mp3"
+    },
+    {
+      "id": "jichang",
+      "hanzi": "机场",
+      "pinyin": "jīchǎng",
+      "meaning": "sân bay",
+      "example": "他差点儿被拉到机场去了。",
+      "audio": "vocab/jichang.mp3"
+    },
+    {
+      "id": "keqi",
+      "hanzi": "可气",
+      "pinyin": "kěqì",
+      "meaning": "đáng giận",
+      "example": "这件事真可气。",
+      "audio": "vocab/keqi.mp3"
+    },
+    {
+      "id": "suanming",
+      "hanzi": "算命",
+      "pinyin": "suàn mìng",
+      "meaning": "bói toán",
+      "example": "他找人算命。",
+      "audio": "vocab/suanming.mp3"
+    },
+    {
+      "id": "yunqi",
+      "hanzi": "运气",
+      "pinyin": "yùnqi",
+      "meaning": "vận may, số phận",
+      "example": "我最近运气不太好。",
+      "audio": "vocab/yunqi.mp3"
+    },
+    {
+      "id": "sha",
+      "hanzi": "傻",
+      "pinyin": "shǎ",
+      "meaning": "ngốc, khờ",
+      "example": "别做傻事。",
+      "audio": "vocab/sha.mp3"
+    },
+    {
+      "id": "hua",
+      "hanzi": "花",
+      "pinyin": "huā",
+      "meaning": "dùng thời gian, chi tiêu",
+      "example": "他花了一百块钱。",
+      "audio": "vocab/hua.mp3"
+    },
+    {
+      "id": "shoupian",
+      "hanzi": "受骗",
+      "pinyin": "shòu piàn",
+      "meaning": "bị lừa",
+      "example": "他花钱算命，结果受骗了。",
+      "audio": "vocab/shoupian.mp3"
+    },
+    {
+      "id": "pian",
+      "hanzi": "骗",
+      "pinyin": "piàn",
+      "meaning": "lừa gạt",
+      "example": "不要相信骗人的话。",
+      "audio": "vocab/pian.mp3"
+    },
+    {
+      "id": "chouyan",
+      "hanzi": "抽烟",
+      "pinyin": "chōu yān",
+      "meaning": "hút thuốc",
+      "example": "公共场所不能抽烟。",
+      "audio": "vocab/chouyan.mp3"
+    },
+    {
+      "id": "fa",
+      "hanzi": "罚",
+      "pinyin": "fá",
+      "meaning": "phạt, xử phạt",
+      "example": "他在公园抽烟，被罚了五十块钱。",
+      "audio": "vocab/fa.mp3"
+    },
+    {
+      "id": "shao",
+      "hanzi": "烧",
+      "pinyin": "shāo",
+      "meaning": "đốt, thiêu; nấu",
+      "example": "别在山上烧东西。",
+      "audio": "vocab/shao.mp3"
+    },
+    {
+      "id": "jieyan",
+      "hanzi": "戒烟",
+      "pinyin": "jiè yān",
+      "meaning": "cai thuốc lá",
+      "example": "爸爸决定从今天开始戒烟。",
+      "audio": "vocab/jieyan.mp3"
+    },
+    {
+      "id": "langfei",
+      "hanzi": "浪费",
+      "pinyin": "làngfèi",
+      "meaning": "lãng phí",
+      "example": "别浪费时间。",
+      "audio": "vocab/langfei.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "交通安全",
+      "pinyin": "jiāotōng ānquán",
+      "meaning": "an toàn giao thông",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "急诊室",
+      "pinyin": "jízhěnshì",
+      "meaning": "phòng cấp cứu",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "保险",
+      "pinyin": "bǎoxiǎn",
+      "meaning": "bảo hiểm",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "斑马线",
+      "pinyin": "bānmǎxiàn",
+      "meaning": "vạch sang đường",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "倒霉的一天",
+      "chinese": "《倒霉的一天》\n星期天上午，玛丽骑自行车上街买东西。路口的人和车都很多，她刚要转弯，一辆电动车突然从旁边冲过来，把她撞倒了。她的腿被撞伤了，还流了一点儿血。骑车的人马上停下来，叫了一辆出租车，把她送到了医院。医生检查以后说：“还好，骨头没有被撞伤，休息几天就好了。”下午，玛丽坐出租车回学校。没想到，她下车时才发现钱包被小偷偷走了，里面只有几十块钱和一张学生卡。更可气的是，她的自行车也让同学骑走了。晚上回到宿舍，朋友们都来看她。大家一边安慰她，一边提醒她以后上街一定要小心。玛丽笑着说：“今天虽然很倒霉，但是我也学到了不少东西。以后我不但要注意安全，还要把自己的东西看好。”"
+    }
+  ],
+  "story": [
+    {
+      "title": "钱包又丢了",
+      "chinese": "大山最近觉得自己很倒霉。先是自行车被人骑走了，后来钱包又被小偷偷走了。朋友劝他不要再花钱算命，他却说：“我只是想知道明天会不会好一点儿。”第二天，他出门时特别小心，钱包放在里面的口袋，自行车锁了两把锁。可是刚到教室，他发现自己忘了带课本。老师问他为什么没带书，他不好意思地说：“书没被人偷，是被我自己忘在宿舍了。”同学们听了都笑了。大山也笑了：“看来，最倒霉的不是运气不好，而是自己不小心。”"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: Đi xe đạp và xe điện ở Trung Quốc",
+      "content": "Ở nhiều thành phố Trung Quốc, xe đạp và xe điện rất phổ biến. Khi đi bộ hoặc qua đường cần chú ý xe từ hai bên, nhất là ở cổng trường, khu dân cư và các ngã tư đông người."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "被动意义的表达：“被”字句 - Câu chữ 被 biểu thị bị động",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 14",
+      "pattern": "主语 + 被（叫 / 让）+ 宾语 + 动词 + 其他成分",
+      "structure": "Chủ ngữ + 被/叫/让 + tác nhân + động từ + thành phần khác",
+      "explanation": "“被”字句用来表示被动意义。介词“被”及其宾语作状语，说明主语受到某个动作的影响。口语中常用“叫”“让”代替“被”；如果不强调施事者，“被”的宾语可以省略。",
+      "examples": [
+        "我的钱包被小偷偷走了。"
+      ],
+      "wrongExamples": [
+        "* 我的钱包被小偷偷。",
+        "* 还好，骨头被车没有撞伤了。"
+      ],
+      "usage": "Dùng khi muốn nói chủ ngữ chịu tác động của một hành động, thường là chuyện không mong muốn như 被撞伤、被偷走、被淋湿、被罚。"
+    },
+    {
+      "title": "副词“又” - Phó từ 又 nhấn mạnh ngữ khí phủ định",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 14",
+      "pattern": "又 + 不是 / 没 + ……",
+      "structure": "又 + phủ định / câu phủ định",
+      "explanation": "副词“又”可以加强否定语气，表示 người nói muốn nhấn mạnh rằng điều đó không phải như đối phương nghĩ hoặc không đáng để trách. Trong bài, 又 thường xuất hiện trong câu phủ định như “你又不是故意的”。",
+      "examples": [
+        "你又不是故意的。"
+      ],
+      "wrongExamples": [
+        "* 你不是又故意的。"
+      ],
+      "usage": "Dùng để làm câu phủ định tự nhiên hơn, thường mang sắc thái giải thích, an ủi hoặc phản bác nhẹ."
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "被字句 thường dùng để biểu thị điều gì?",
+      "options": [
+        "ý nghĩa bị động",
+        "so sánh hơn kém",
+        "mục đích của hành động",
+        "thời gian xảy ra"
+      ],
+      "answer": "ý nghĩa bị động"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng 被 đúng?",
+      "options": [
+        "我的钱包被小偷偷走了。",
+        "我的钱包被小偷偷。",
+        "我的钱包小偷被偷走了。",
+        "小偷被我的钱包偷走了。"
+      ],
+      "answer": "我的钱包被小偷偷走了。"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Trong bài đọc, 玛丽的腿怎么了？",
+      "options": [
+        "被车撞伤了",
+        "被雨淋湿了",
+        "被小偷偷走了",
+        "被老师批评了"
+      ],
+      "answer": "被车撞伤了"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 我的自行车___同学骑走了。",
+      "answer": "被"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 你___不是故意的，别太难过。",
+      "answer": "又"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 他被大雨淋得像___似的。",
+      "answer": "落汤鸡"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 钱包 / 被 / 我的 / 小偷 / 偷走了",
+      "answer": "我的钱包被小偷偷走了"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 被 / 她的 / 撞伤了 / 腿 / 自行车",
+      "answer": "她的腿被自行车撞伤了"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 我的钱包被小偷偷。",
+      "answer": "我的钱包被小偷偷走了"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 你不是又故意的。",
+      "answer": "你又不是故意的"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Ví tiền của tôi bị kẻ trộm lấy mất rồi.",
+      "answer": "我的钱包被小偷偷走了"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Chân của cô ấy bị xe đạp đụng bị thương rồi.",
+      "answer": "她的腿被自行车撞伤了"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 他被大雨淋湿了。",
+      "answer": "Anh ấy bị mưa lớn làm ướt rồi"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 医生说玛丽的骨头有没有被撞伤？",
+      "answer": "没有被撞伤"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 玛丽最后学到了什么？",
+      "answer": "以后要注意安全，还要把自己的东西看好"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 被 / 叫 / 让 để biểu thị bị động.",
+      "answer": "我的手机被弟弟摔坏了"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

@@ -1,0 +1,568 @@
+﻿<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiếng Trung Cam &amp; Coca – Học Tiếng Trung Hiệu Quả</title>
+    <meta property="og:title" content="Tiếng Trung Cam & Coca" />
+    <meta property="og:description" content="Học tiếng Trung hiệu quả với phương pháp gamified độc đáo." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/home.css" />
+    <link rel="stylesheet" href="assets/css/home-fabs.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+      <div class="container header__inner">
+        <a href="#" class="logo logo--reveal">
+          <span class="logo__icon">🍊</span>
+          <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+        </a>
+   <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav__link active">Trang chủ</a>
+    <a href="hsk.html" class="nav__link">Khóa học</a>
+    <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+    <a href="flashcard.html" class="nav__link"> Flashcard</a>
+    <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+    <a href="#challenge-section" class="nav__link">Thử thách</a>
+    <a href="profile.html" class="nav__link">Hồ sơ</a>
+</nav>
+        <div class="header__actions">
+          <div class="streak-badge" title="Streak 0 ngày">
+            <span class="streak-badge__icon">🔥</span>
+            <span class="streak-badge__count" data-progress="streak">0</span>
+          </div>
+          <div class="streak-badge" title="Xu hiện có">
+            <span class="streak-badge__icon">🪙</span>
+            <span class="streak-badge__count js-user-coins" data-progress="coins">0</span>
+          </div>
+          <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+        
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+      <div class="mobile-nav__inner">
+        <a href="index.html" class="nav__link">Trang chủ</a>
+        <a href="#path-section" class="nav__link">Lộ trình</a>
+        <a href="hsk.html" class="nav__link">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+        <a href="#challenge-section" class="nav__link">Thử thách</a>
+        <a href="profile.html" class="nav__link">Hồ sơ</a>
+        <div class="mobile-nav__divider"></div>
+        <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+       <a
+href="lesson.html?level=hsk1&lesson=1"
+class="btn btn--primary btn--lg ripple">
+Bắt đầu miễn phí
+</a>
+      </div>
+    </div>
+
+    <main>
+      <!-- ========== HERO ========== -->
+      <section class="hero" id="hero">
+        <!-- ========== QUICK MENU CARDS ========== -->
+<section class="quick-menu">
+  <div class="container quick-menu__inner">
+    <a href="hsk.html" class="quick-card quick-card--blue" data-bg="📚">
+      <span class="quick-card__icon">📚</span>
+      <span class="quick-card__text">Khóa học</span>
+    </a>
+
+    <a href="hsk-writing.html" class="quick-card quick-card--purple" data-bg="✍️">
+      <span class="quick-card__icon">✍️</span>
+      <span class="quick-card__text">HSK Luyện viết</span>
+    </a>
+
+    <a href="flashcard.html" class="quick-card quick-card--green" data-bg="🃏">
+      <span class="quick-card__icon">🃏</span>
+      <span class="quick-card__text">Flashcard</span>
+    </a>
+  </div>
+</section>
+        <div class="container hero__inner">
+          <div class="hero__content">
+            <span class="badge badge--orange badge--anim">🎉 Mới! HSK 3.0 đã cập nhật</span>
+            <h1 class="hero__title">
+              <span class="text-orange">Mỗi ngày một chữ – Mỗi bước một xa</span>
+            </h1>
+            <p class="hero__desc">
+              Phương pháp học gamified độc đáo giúp bạn nhớ lâu hơn, học nhanh hơn và không bao giờ chán!
+            </p>
+            <div class="hero__cta">
+    <a href="hsk.html" class="btn btn--primary btn--lg ripple">
+        Bắt đầu miễn phí
+    </a>
+
+    <button class="btn btn--ghost btn--lg">
+        <span class="play-icon">▶</span> Xem demo
+    </button>
+</div>
+            <div class="hero__stats">
+              <div class="stat">
+            
+              </div>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="hero__img-wrap">
+              <img
+                src="assets/images/hero.png"
+                alt="Learning Chinese"
+                class="hero__img"
+                loading="lazy"
+               />
+              />
+            </div>
+            <div class="hero__float hero__float--1"><span>🎯</span><p>Hoàn thành bài học!</p></div>
+            <div class="hero__float hero__float--2"><span>🔥</span><p>Streak <span data-progress="streak">0</span> ngày!</p></div>
+            <div class="hero__float hero__float--3"><span>⚡</span><p><span data-progress="lastXp">+0</span> XP</p></div>
+          </div>
+        </div>
+        <div class="hero__wave">
+          <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FFFDF9" />
+          </svg>
+        </div>
+      </section>
+
+      <!-- ========== DASHBOARD ========== -->
+      <section class="dashboard section" id="dashboard">
+        <div class="container">
+          <div class="section__header">
+            <h2 class="section__title">Hành trình của bạn</h2>
+            <a href="#" class="section__link">Xem chi tiết →</a>
+          </div>
+          <div class="dashboard__grid">
+            <div class="card card--streak">
+              <div class="card__icon-wrap card__icon-wrap--orange">🔥</div>
+              <div class="card__body">
+                <div class="card__value" data-progress="streak">0</div>
+                <div class="card__label">Ngày liên tiếp</div>
+              </div>
+              <div class="card__bar">
+                <div class="card__bar-day active">T2</div>
+                <div class="card__bar-day active">T3</div>
+                <div class="card__bar-day active">T4</div>
+                <div class="card__bar-day active">T5</div>
+                <div class="card__bar-day active">T6</div>
+                <div class="card__bar-day active">T7</div>
+                <div class="card__bar-day active">CN</div>
+              </div>
+            </div>
+            <div class="card card--xp">
+              <div class="card__icon-wrap card__icon-wrap--yellow">⚡</div>
+              <div class="card__body">
+                <div class="card__value" data-progress="xp">0</div>
+                <div class="card__label">Điểm XP tổng</div>
+              </div>
+              <div class="card__level-bar"><div class="card__level-fill" data-progress-style="levelPercent" style="width: 0%"></div></div>
+              <p class="card__hint" data-progress="xpToNext">Cần 1000 XP để lên cấp</p>
+            </div>
+            <div class="card card--level">
+              <div class="card__icon-wrap card__icon-wrap--teal">🏆</div>
+              <div class="card__body">
+                <div class="card__value" data-progress="level">HSK 1</div>
+                <div class="card__label">Cấp độ hiện tại</div>
+              </div>
+              <div class="card__stars">
+                <span class="star active">★</span><span class="star active">★</span>
+                <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+              </div>
+            </div>
+            <div class="card card--lessons">
+              <div class="card__icon-wrap card__icon-wrap--green">📚</div>
+              <div class="card__body">
+                <div class="card__value" data-progress="completedLessons">0</div>
+                <div class="card__label">Bài đã hoàn thành</div>
+              </div>
+              <p class="card__hint" data-progress="weeklyLessons">+0 bài tuần này</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CONTINUE LEARNING + DAILY GOAL ========== -->
+      <section class="progress-section section" id="progress-section">
+        <div class="container">
+          <div class="progress-section__grid">
+            <div class="continue-card">
+              <div class="continue-card__header">
+                <h3>Tiếp tục học</h3>
+                <span class="badge badge--orange" data-progress="currentLessonLevel">HSK 1</span>
+              </div>
+              <div class="continue-card__lesson">
+                <div class="lesson-icon">📖</div>
+                <div class="lesson-info">
+                  <h4 data-progress="currentLessonTitle">Bài 1: Bắt đầu học HSK 1</h4>
+                  <p class="lesson-meta" data-progress="currentLessonMeta">Từ vựng · bắt đầu học · ~10 phút</p>
+                </div>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar">
+                  <div class="progress-bar__fill" data-progress-style="currentLessonProgress" style="width: 0%"></div>
+                </div>
+                <span class="progress-bar__label" data-progress="currentLessonProgressLabel">0%</span>
+              </div>
+              <div class="continue-card__upcoming">
+                <p class="upcoming-label">Tiếp theo:</p>
+                <div class="upcoming-item" data-progress="nextLesson"><span>🎧</span> Bài 2: Tiếp tục học</div>
+              </div>
+              <button class="btn btn--primary btn--full ripple" id="continueLearningBtn">Tiếp tục học <span class="arrow">→</span></button>
+            </div>
+            <div class="daily-goal">
+              <h3>Mục tiêu hôm nay</h3>
+              <div class="daily-goal__ring-wrap">
+                <div class="daily-goal__ring">
+                  <svg viewBox="0 0 120 120" class="ring-svg" aria-hidden="true">
+                    <circle cx="60" cy="60" r="50" class="ring-track" />
+                    <circle cx="60" cy="60" r="50" class="ring-progress" data-progress-ring="dailyGoal" stroke-dasharray="0 314" stroke-dashoffset="0" />
+                  </svg>
+                  <div class="ring-center">
+                    <span class="ring-value" data-progress="todayXp">0</span>
+                    <span class="ring-unit" data-progress="dailyGoal">/ 250 XP</span>
+                  </div>
+                </div>
+              </div>
+              <div class="daily-goal__tasks">
+                <div class="goal-task completed">
+                  <span class="goal-task__check">✓</span>
+                  <span>Flashcard <span class="goal-task__count" data-progress="flashcardTask">0/10</span></span>
+                </div>
+                <div class="goal-task completed">
+                  <span class="goal-task__check">✓</span>
+                  <span>Bài nghe <span class="goal-task__count" data-progress="listeningTask">0/1</span></span>
+                </div>
+                <div class="goal-task">
+                  <span class="goal-task__circle">○</span>
+                  <span>Luyện viết <span class="goal-task__count" data-progress="writingTask">0/5</span></span>
+                </div>
+                <div class="goal-task">
+                  <span class="goal-task__circle">○</span>
+                  <span>Luyện nói <span class="goal-task__count" data-progress="speakingTask">0/3</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LEARNING PATH ========== -->
+      <section class="path-section section" id="path-section">
+        <div class="container">
+          <div class="section__header section__header--center">
+            <h2 class="section__title">Lộ trình học tập</h2>
+            <p class="section__subtitle">Chinh phục từng cấp độ để mở khóa nội dung mới</p>
+          </div>
+          <div class="path-container">
+            <div class="path-row path-row--left">
+              <div class="path-node completed" data-node="1">
+                <div class="path-node__circle"><span>✓</span></div>
+                <div class="path-node__content">
+                  <span class="path-node__tag">Hoàn thành</span>
+                  <h4 class="path-node__label">Sơ cấp 1</h4>
+                  <p class="path-node__desc">Chào hỏi &amp; Giới thiệu</p>
+                  <div class="path-node__stars">★★★</div>
+                </div>
+              </div>
+              <div class="path-connector completed"></div>
+            </div>
+            <div class="path-row path-row--right">
+              <div class="path-connector completed"></div>
+              <div class="path-node completed" data-node="2">
+                <div class="path-node__circle"><span>✓</span></div>
+                <div class="path-node__content">
+                  <span class="path-node__tag">Hoàn thành</span>
+                  <h4 class="path-node__label">Sơ cấp 2</h4>
+                  <p class="path-node__desc">Gia đình &amp; Màu sắc</p>
+                  <div class="path-node__stars">★★★</div>
+                </div>
+              </div>
+            </div>
+            <div class="path-row path-row--left">
+              <div class="path-node active" data-node="3">
+                <div class="path-node__circle"><span>★</span></div>
+                <div class="path-node__content">
+                  <span class="path-node__tag path-node__tag--active">Đang học</span>
+                  <h4 class="path-node__label">Sơ cấp 3</h4>
+                  <p class="path-node__desc">Mua sắm &amp; Thức ăn</p>
+                  <button class="btn btn--primary btn--sm ripple">Học ngay</button>
+                </div>
+              </div>
+              <div class="path-connector"></div>
+            </div>
+            <div class="path-row path-row--right">
+              <div class="path-connector"></div>
+              <div class="path-node locked" data-node="4">
+                <div class="path-node__circle"><span>🔒</span></div>
+                <div class="path-node__content">
+                  <h4 class="path-node__label">Trung cấp 1</h4>
+                  <p class="path-node__desc">Công việc &amp; Thời gian</p>
+                </div>
+              </div>
+            </div>
+            <div class="path-row path-row--left">
+              <div class="path-node locked" data-node="5">
+                <div class="path-node__circle"><span>🔒</span></div>
+                <div class="path-node__content">
+                  <h4 class="path-node__label">Trung cấp 2</h4>
+                  <p class="path-node__desc">Du lịch &amp; Văn hóa</p>
+                </div>
+              </div>
+              <div class="path-connector"></div>
+            </div>
+            <div class="path-row path-row--right">
+              <div class="path-connector"></div>
+              <div class="path-node locked" data-node="6">
+                <div class="path-node__circle"><span>🔒</span></div>
+                <div class="path-node__content">
+                  <h4 class="path-node__label">Nâng cao</h4>
+                  <p class="path-node__desc">Thành ngữ &amp; Chữ Hán</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== HSK COURSES ========== -->
+      <section class="courses-section section" id="courses-section">
+        <div class="container">
+          <div class="section__header section__header--center">
+            <h2 class="section__title">Khóa học HSK</h2>
+            <p class="section__subtitle">Lựa chọn cấp độ phù hợp với trình độ của bạn</p>
+          </div>
+          <div class="courses-grid">
+            <div class="course-card course-card--locked" data-course="hsk1">
+              <div class="course-card__ribbon" data-course-ribbon="hsk1">Chưa học</div>
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--1">HSK 1</span>
+                <span class="course-card__chinese">初级</span>
+              </div>
+              <h3 class="course-card__title">Sơ Cấp</h3>
+              <p class="course-card__desc">150 từ vựng cơ bản, giao tiếp đơn giản</p>
+              <div class="course-card__meta"><span>🎯 20 bài học</span><span>⏱ 15 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress" data-course-progress="hsk1" style="width: 0%"></div></div>
+                <span data-course-percent="hsk1">0%</span>
+              </div>
+              <button class="btn btn--sm btn--primary ripple" data-course-button="hsk1">Bắt đầu</button>
+            </div>
+            <div class="course-card course-card--locked" data-course="hsk2">
+              <div class="course-card__ribbon course-card__ribbon--active" data-course-ribbon="hsk2">Chưa học</div>
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--2">HSK 2</span>
+                <span class="course-card__chinese">初级+</span>
+              </div>
+              <h3 class="course-card__title">Sơ Cấp +</h3>
+              <p class="course-card__desc">300 từ vựng, hội thoại hàng ngày</p>
+              <div class="course-card__meta"><span>🎯 30 bài học</span><span>⏱ 25 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress mini-progress--active" data-course-progress="hsk2" style="width: 0%"></div></div>
+                <span data-course-percent="hsk2">0%</span>
+              </div>
+              <button class="btn btn--sm btn--primary ripple" data-course-button="hsk2">Bắt đầu</button>
+            </div>
+            <div class="course-card course-card--locked">
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--3">HSK 3</span>
+                <span class="course-card__chinese">中级</span>
+              </div>
+              <h3 class="course-card__title">Trung Cấp</h3>
+              <p class="course-card__desc">600 từ vựng, viết &amp; đọc cơ bản</p>
+              <div class="course-card__meta"><span>🎯 40 bài học</span><span>⏱ 40 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress" style="width: 0%"></div></div>
+                <span>0%</span>
+              </div>
+              <button class="btn btn--sm btn--locked" disabled>🔒 Chưa mở khóa</button>
+            </div>
+            <div class="course-card course-card--locked">
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--4">HSK 4</span>
+                <span class="course-card__chinese">中级+</span>
+              </div>
+              <h3 class="course-card__title">Trung Cấp +</h3>
+              <p class="course-card__desc">1,200 từ vựng, văn bản phức tạp</p>
+              <div class="course-card__meta"><span>🎯 50 bài học</span><span>⏱ 60 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress" style="width: 0%"></div></div>
+                <span>0%</span>
+              </div>
+              <button class="btn btn--sm btn--locked" disabled>🔒 Chưa mở khóa</button>
+            </div>
+            <div class="course-card course-card--locked">
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--5">HSK 5</span>
+                <span class="course-card__chinese">高级</span>
+              </div>
+              <h3 class="course-card__title">Nâng Cao</h3>
+              <p class="course-card__desc">2,500 từ vựng, đọc báo &amp; sách</p>
+              <div class="course-card__meta"><span>🎯 60 bài học</span><span>⏱ 80 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress" style="width: 0%"></div></div>
+                <span>0%</span>
+              </div>
+              <button class="btn btn--sm btn--locked" disabled>🔒 Chưa mở khóa</button>
+            </div>
+            <div class="course-card course-card--locked">
+              <div class="course-card__header">
+                <span class="hsk-badge hsk-badge--6">HSK 6</span>
+                <span class="course-card__chinese">精通</span>
+              </div>
+              <h3 class="course-card__title">Thành Thạo</h3>
+              <p class="course-card__desc">5,000+ từ vựng, thành thạo hoàn toàn</p>
+              <div class="course-card__meta"><span>🎯 80 bài học</span><span>⏱ 120 giờ</span></div>
+              <div class="course-card__progress-wrap">
+                <div class="mini-progress-track"><div class="mini-progress" style="width: 0%"></div></div>
+                <span>0%</span>
+              </div>
+              <button class="btn btn--sm btn--locked" disabled>🔒 Chưa mở khóa</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== DAILY CHALLENGE ========== -->
+      <section class="challenge-section section" id="challenge-section">
+        <div class="container">
+          <div class="challenge-card">
+            <div class="challenge-card__info">
+              <span class="badge badge--white">⚡ Thử thách hôm nay</span>
+              <h2 class="challenge-card__title">Dịch 10 câu trong 5 phút!</h2>
+              <p class="challenge-card__desc">Bạn có 3 mạng. Vượt qua đủ 10 câu để nhận <strong>30 XP</strong> và <strong>30 xu</strong>!</p>
+              <div class="challenge-card__timer">
+                <span class="timer-icon">⏰</span>
+                <span>Thời gian:</span>
+                <span class="timer-display">05:00</span>
+              </div>
+              <div class="challenge-card__cta">
+                <a class="btn btn--white btn--lg ripple" id="startChallengeBtn" href="challenge.html">Chấp nhận thử thách</a>
+                <span class="challenge-card__participants">❤️❤️❤️ · 10 câu · HSK 1–6</span>
+              </div>
+            </div>
+            <div class="challenge-card__visual">
+              <div class="challenge-badge-wrap">
+                <div class="challenge-badge">
+                  <span class="challenge-badge__icon">🏅</span>
+                  <p class="challenge-badge__xp">+30 XP · +30 xu</p>
+                </div>
+                <div class="challenge-orbits">
+                  <span class="orbit orbit--1">🔥</span>
+                  <span class="orbit orbit--2">⭐</span>
+                  <span class="orbit orbit--3">💎</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+     
+        </div>
+      </div>
+        </div>
+  </div>
+</section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <a href="#" class="logo logo--white">
+            <span class="logo__icon">🍊</span>
+            <span class="logo__text">Cam &amp; Coca</span>
+          </a>
+          <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo. Cùng nhau chinh phục ngôn ngữ!</p>
+          <div class="footer__social">
+            <a href="#" class="social-btn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+            <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <h4>Học tập</h4>
+          <a href="#">Lộ trình HSK</a>
+          <a href="#">Flashcard</a>
+          <a href="#">Luyện nghe</a>
+          <a href="#">Luyện viết</a>
+          <a href="#">Bảng chữ cái</a>
+        </div>
+        <div class="footer__links">
+          <h4>Cộng đồng</h4>
+          <a href="#">Diễn đàn</a>
+          <a href="#">Bảng xếp hạng</a>
+          <a href="#">Blog</a>
+          <a href="#">Sự kiện</a>
+        </div>
+        <div class="footer__links">
+          <h4>Hỗ trợ</h4>
+          <a href="#">FAQ</a>
+          <a href="#">Liên hệ</a>
+          <a href="#">Điều khoản</a>
+          <a href="#">Chính sách BM</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2024 Tiếng Trung Cam &amp; Coca. Made with ❤️ in Vietnam</p>
+        <p class="footer__tagline">学中文，乐无穷</p>
+      </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+      <div class="modal">
+        <button class="modal__close" id="modalClose">✕</button>
+        <div class="modal__logo">🍊</div>
+        <h2 class="modal__title">Chào mừng trở lại!</h2>
+        <p class="modal__subtitle">Đăng nhập để tiếp tục hành trình</p>
+        <form class="modal__form" id="loginForm">
+          <div class="form-group">
+            <label for="emailInput">Email</label>
+            <input type="email" id="emailInput" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="passwordInput">Mật khẩu</label>
+            <input type="password" id="passwordInput" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn btn--primary btn--full ripple">
+    Đăng nhập
+</button>
+
+<div style="margin:16px 0;text-align:center;color:#888;">hoặc</div>
+
+<button
+    type="button"
+    id="googleLogin"
+    class="btn btn--outline btn--full">
+    <img
+        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+        width="20"
+        style="vertical-align:middle;margin-right:8px;">
+    Đăng nhập bằng Google
+</button>
+        </form>
+        <p class="modal__footer-text">Chưa có tài khoản? <a href="#">Đăng ký ngay</a></p>
+      </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/speech-service.js"></script>
+    <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+    <script type="module" src="assets/js/home-progress.js"></script>
+    <script type="module" src="assets/js/home-fabs.js"></script>
+    
+  </body>
+</html>

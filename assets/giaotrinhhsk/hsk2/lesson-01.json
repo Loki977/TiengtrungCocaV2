@@ -1,0 +1,436 @@
+{
+  "lessonId": 1,
+  "level": 2,
+  "title": "Bạn có thường xuyên đến thư viện không",
+  "meta": {
+    "estimatedMinutes": 40,
+    "difficulty": "HSK2",
+    "version": 2
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk2/lesson01/"
+  },
+  "vocabulary": [
+    {
+      "id": "xianzai",
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
+      "meaning": "bây giờ, hiện tại",
+      "audio": "vocab/xianzai.mp3",
+      "example": "我现在去图书馆。"
+    },
+    {
+      "id": "gen",
+      "hanzi": "跟",
+      "pinyin": "gēn",
+      "meaning": "cùng, với",
+      "audio": "vocab/gen.mp3",
+      "example": "你跟我一起去，好吗？"
+    },
+    {
+      "id": "yiqi",
+      "hanzi": "一起",
+      "pinyin": "yìqǐ",
+      "meaning": "cùng nhau",
+      "audio": "vocab/yiqi.mp3",
+      "example": "我们一起去吧。"
+    },
+    {
+      "id": "zanmen",
+      "hanzi": "咱们",
+      "pinyin": "zánmen",
+      "meaning": "chúng ta",
+      "audio": "vocab/zanmen.mp3",
+      "note": "Bao gồm cả người nói và người nghe.",
+      "example": "咱们走吧。"
+    },
+    {
+      "id": "zou",
+      "hanzi": "走",
+      "pinyin": "zǒu",
+      "meaning": "đi, đi bộ",
+      "audio": "vocab/zou.mp3",
+      "example": "咱们走吧。"
+    },
+    {
+      "id": "chang",
+      "hanzi": "常",
+      "pinyin": "cháng",
+      "meaning": "thường, thường xuyên",
+      "audio": "vocab/chang.mp3",
+      "example": "我常去图书馆。"
+    },
+    {
+      "id": "youshihou",
+      "hanzi": "有时候",
+      "pinyin": "yǒu shíhou",
+      "meaning": "có lúc, thỉnh thoảng",
+      "audio": "vocab/youshihou.mp3",
+      "example": "有时候我上网查资料。"
+    },
+    {
+      "id": "shihou",
+      "hanzi": "时候",
+      "pinyin": "shíhou",
+      "meaning": "thời gian, lúc",
+      "audio": "vocab/shihou.mp3",
+      "example": "你什么时候去？"
+    },
+    {
+      "id": "jie",
+      "hanzi": "借",
+      "pinyin": "jiè",
+      "meaning": "mượn, cho mượn",
+      "audio": "vocab/jie.mp3",
+      "example": "我借书。"
+    },
+    {
+      "id": "shangwang",
+      "hanzi": "上网",
+      "pinyin": "shàng wǎng",
+      "meaning": "lên mạng",
+      "audio": "vocab/shangwang.mp3",
+      "example": "我上网查资料。"
+    },
+    {
+      "id": "wang",
+      "hanzi": "网",
+      "pinyin": "wǎng",
+      "meaning": "mạng, internet",
+      "audio": "vocab/wang.mp3"
+    },
+    {
+      "id": "cha",
+      "hanzi": "查",
+      "pinyin": "chá",
+      "meaning": "tra, kiểm tra, tìm kiếm",
+      "audio": "vocab/cha.mp3",
+      "example": "查词典。"
+    },
+    {
+      "id": "ziliao",
+      "hanzi": "资料",
+      "pinyin": "zīliào",
+      "meaning": "tài liệu",
+      "audio": "vocab/ziliao.mp3",
+      "example": "查资料。"
+    },
+    {
+      "id": "zongshi",
+      "hanzi": "总是",
+      "pinyin": "zǒng shì",
+      "meaning": "luôn luôn",
+      "audio": "vocab/zongshi.mp3",
+      "example": "他总是在宿舍看书。"
+    },
+    {
+      "id": "anjing",
+      "hanzi": "安静",
+      "pinyin": "ānjìng",
+      "meaning": "yên tĩnh",
+      "audio": "vocab/anjing.mp3",
+      "example": "图书馆很安静。"
+    },
+    {
+      "id": "wanshang",
+      "hanzi": "晚上",
+      "pinyin": "wǎnshang",
+      "meaning": "buổi tối",
+      "audio": "vocab/wanshang.mp3",
+      "example": "晚上你常做什么？"
+    },
+    {
+      "id": "fuxi",
+      "hanzi": "复习",
+      "pinyin": "fùxí",
+      "meaning": "ôn tập",
+      "audio": "vocab/fuxi.mp3",
+      "example": "复习课文。"
+    },
+    {
+      "id": "yuxi",
+      "hanzi": "预习",
+      "pinyin": "yùxí",
+      "meaning": "chuẩn bị bài",
+      "audio": "vocab/yuxi.mp3",
+      "example": "预习生词。"
+    },
+    {
+      "id": "huozhe",
+      "hanzi": "或者",
+      "pinyin": "huòzhě",
+      "meaning": "hoặc, hoặc là",
+      "audio": "vocab/huozhe.mp3",
+      "example": "看电影或者看电视剧。"
+    },
+    {
+      "id": "lianxi",
+      "hanzi": "练习",
+      "pinyin": "liànxí",
+      "meaning": "luyện tập",
+      "audio": "vocab/lianxi.mp3",
+      "example": "做练习。"
+    },
+    {
+      "id": "liaotianr",
+      "hanzi": "聊天儿",
+      "pinyin": "liáo tiānr",
+      "meaning": "nói chuyện, tán gẫu",
+      "audio": "vocab/liaotianr.mp3",
+      "example": "跟朋友聊天儿。"
+    },
+    {
+      "id": "shoufa",
+      "hanzi": "收发",
+      "pinyin": "shōufā",
+      "meaning": "nhận và gửi",
+      "audio": "vocab/shoufa.mp3",
+      "example": "收发伊妹儿。"
+    },
+    {
+      "id": "yimeir",
+      "hanzi": "伊妹儿",
+      "pinyin": "yīmèir",
+      "meaning": "email, thư điện tử",
+      "audio": "vocab/yimeir.mp3"
+    },
+    {
+      "id": "dianying",
+      "hanzi": "电影",
+      "pinyin": "diànyǐng",
+      "meaning": "phim điện ảnh",
+      "audio": "vocab/dianying.mp3",
+      "example": "看中文电影。"
+    },
+    {
+      "id": "dianshiju",
+      "hanzi": "电视剧",
+      "pinyin": "diànshìjù",
+      "meaning": "phim truyền hình",
+      "audio": "vocab/dianshiju.mp3",
+      "example": "看电视剧。"
+    },
+    {
+      "id": "dianshi",
+      "hanzi": "电视",
+      "pinyin": "diànshì",
+      "meaning": "tivi, truyền hình",
+      "audio": "vocab/dianshi.mp3"
+    },
+    {
+      "id": "xiuxi",
+      "hanzi": "休息",
+      "pinyin": "xiūxi",
+      "meaning": "nghỉ ngơi",
+      "audio": "vocab/xiuxi.mp3",
+      "example": "在宿舍休息。"
+    },
+    {
+      "id": "sushe",
+      "hanzi": "宿舍",
+      "pinyin": "sùshè",
+      "meaning": "ký túc xá",
+      "audio": "vocab/sushe.mp3",
+      "example": "我的宿舍很安静。"
+    },
+    {
+      "id": "gongyuan",
+      "hanzi": "公园",
+      "pinyin": "gōngyuán",
+      "meaning": "công viên",
+      "audio": "vocab/gongyuan.mp3",
+      "example": "去公园玩儿。"
+    },
+    {
+      "id": "chaoshi",
+      "hanzi": "超市",
+      "pinyin": "chāoshì",
+      "meaning": "siêu thị",
+      "audio": "vocab/chaoshi.mp3",
+      "example": "去超市买东西。"
+    },
+    {
+      "id": "dongxi",
+      "hanzi": "东西",
+      "pinyin": "dōngxi",
+      "meaning": "đồ vật, đồ đạc",
+      "audio": "vocab/dongxi.mp3",
+      "example": "买东西。"
+    }
+  ],
+  "lessonText": [
+    {
+      "speaker": "玛丽:",
+      "chinese": "我现在去图书馆，你跟我一起去，好吗？",
+      "pinyin": "Wǒ xiànzài qù túshūguǎn, nǐ gēn wǒ yìqǐ qù, hǎo ma?",
+      "vietnamese": "Bây giờ tôi đi thư viện, bạn đi cùng tôi được không?",
+      "audio": "dialogue/001.mp3"
+    },
+    {
+      "speaker": "麦克:",
+      "chinese": "好，咱们走吧。你常去图书馆吗？",
+      "pinyin": "Hǎo, zánmen zǒu ba. Nǐ cháng qù túshūguǎn ma?",
+      "vietnamese": "Được, chúng ta đi thôi. Bạn thường đến thư viện không?",
+      "audio": "dialogue/002.mp3"
+    },
+    {
+      "speaker": "玛丽:",
+      "chinese": "常去。我常借书，也常在那儿看书。你呢？",
+      "pinyin": "Cháng qù. Wǒ cháng jiè shū, yě cháng zài nàr kàn shū. Nǐ ne?",
+      "vietnamese": "Thường đi. Tôi thường mượn sách, cũng thường đọc sách ở đó. Còn bạn?",
+      "audio": "dialogue/003.mp3"
+    },
+    {
+      "speaker": "麦克:",
+      "chinese": "我也常去。有时候借书，有时候上网查资料，但不常在那儿看书。",
+      "pinyin": "Wǒ yě cháng qù. Yǒu shíhou jiè shū, yǒu shíhou shàng wǎng chá zīliào, dàn bù cháng zài nàr kàn shū.",
+      "vietnamese": "Tôi cũng thường đi. Có lúc mượn sách, có lúc lên mạng tra tài liệu, nhưng không thường đọc sách ở đó.",
+      "audio": "dialogue/004.mp3"
+    },
+    {
+      "speaker": "玛丽:",
+      "chinese": "你的宿舍安静吗？",
+      "pinyin": "Nǐ de sùshè ānjìng ma?",
+      "vietnamese": "Ký túc xá của bạn yên tĩnh không?",
+      "audio": "dialogue/005.mp3"
+    },
+    {
+      "speaker": "麦克:",
+      "chinese": "很安静。",
+      "pinyin": "Hěn ānjìng.",
+      "vietnamese": "Rất yên tĩnh.",
+      "audio": "dialogue/006.mp3"
+    },
+    {
+      "speaker": "A:",
+      "chinese": "晚上你常做什么？",
+      "pinyin": "Wǎnshang nǐ cháng zuò shénme?",
+      "vietnamese": "Buổi tối bạn thường làm gì?",
+      "audio": "dialogue/007.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "复习课文，预习生词，或者做练习。",
+      "pinyin": "Fùxí kèwén, yùxí shēngcí, huòzhě zuò liànxí.",
+      "vietnamese": "Ôn bài khóa, chuẩn bị từ mới hoặc làm bài tập.",
+      "audio": "dialogue/008.mp3"
+    }
+  ],
+  "grammar": [
+    {
+      "title": "Đề nghị với ……，好吗？",
+      "pattern": "Câu đề nghị + ，好吗？",
+      "structure": "S + V/O + ，好吗？",
+      "explanation": "Dùng <span class='hl'>好吗</span> ở cuối câu để hỏi ý kiến hoặc đề nghị một cách nhẹ nhàng.",
+      "examples": [
+        "你跟我一起去，<span class='hl'>好吗</span>？Bạn đi cùng tôi được không?",
+        "晚上咱们看电影，<span class='hl'>好吗</span>？Tối chúng ta xem phim được không?"
+      ]
+    },
+    {
+      "title": "咱们 và 我们",
+      "pattern": "咱们 = tôi + bạn/chúng ta cùng làm",
+      "structure": "咱们 + V + 吧",
+      "explanation": "<span class='hl'>咱们</span> thường bao gồm cả người nghe; <span class='hl'>我们</span> có thể bao gồm hoặc không bao gồm người nghe.",
+      "examples": [
+        "<span class='hl'>咱们</span>走吧。Chúng ta đi thôi.",
+        "我们是中国学生。Chúng tôi là học sinh Trung Quốc."
+      ]
+    },
+    {
+      "title": "Trợ từ 吧",
+      "pattern": "Câu đề nghị + 吧",
+      "structure": "S + V/O + 吧",
+      "explanation": "<span class='hl'>吧</span> đặt cuối câu để biểu thị đề nghị, thúc giục hoặc đồng ý.",
+      "examples": [
+        "咱们走<span class='hl'>吧</span>。Chúng ta đi thôi.",
+        "好<span class='hl'>吧</span>。Được thôi."
+      ]
+    },
+    {
+      "title": "Từ chỉ thời gian làm trạng ngữ",
+      "pattern": "Thời gian + S + V / S + thời gian + V",
+      "structure": "晚上我复习课文。/ 我晚上复习课文。",
+      "explanation": "Từ chỉ thời gian thường đứng trước động từ hoặc trước chủ ngữ để nói thời điểm hành động xảy ra.",
+      "examples": [
+        "<span class='hl'>晚上</span>你常做什么？Buổi tối bạn thường làm gì?",
+        "我<span class='hl'>有时候</span>上网查资料。Tôi thỉnh thoảng lên mạng tra tài liệu."
+      ]
+    },
+    {
+      "title": "还是 và 或者",
+      "pattern": "A 还是 B？ / A 或者 B",
+      "structure": "Câu hỏi dùng 还是; câu trần thuật dùng 或者",
+      "explanation": "<span class='hl'>还是</span> dùng trong câu hỏi lựa chọn, còn <span class='hl'>或者</span> dùng trong câu kể để nói 'hoặc'.",
+      "examples": [
+        "你喝茶<span class='hl'>还是</span>喝咖啡？Bạn uống trà hay cà phê?",
+        "我晚上复习课文<span class='hl'>或者</span>做练习。Tối tôi ôn bài hoặc làm bài tập."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "现在 nghĩa là gì?",
+      "options": [
+        "hôm qua",
+        "bây giờ",
+        "ngày mai",
+        "thỉnh thoảng"
+      ],
+      "answer": "bây giờ"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng để đề nghị?",
+      "options": [
+        "你跟我一起去，好吗？",
+        "我现在去图书馆。",
+        "他在宿舍。",
+        "这是书。"
+      ],
+      "answer": "你跟我一起去，好吗？"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 咱们走___。",
+      "answer": "吧"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 我晚上复习课文，___做练习。",
+      "answer": "或者"
+    },
+    {
+      "type": "arrange-sentence",
+      "question": "Xếp câu: 去 / 图书馆 / 我 / 现在",
+      "answer": "我现在去图书馆"
+    },
+    {
+      "type": "arrange-sentence",
+      "question": "Xếp câu: 常 / 你 / 图书馆 / 去 / 吗",
+      "answer": "你常去图书馆吗"
+    },
+    {
+      "type": "find-error",
+      "question": "Tìm lỗi sai và viết câu đúng: 我跟你一起去，好吧吗？",
+      "answer": "我跟你一起去，好吗"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang Việt: 我常上网查资料。",
+      "answer": "Tôi thường lên mạng tra tài liệu"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang Trung: Chúng ta đi thôi.",
+      "answer": "咱们走吧"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang Trung: Buổi tối bạn thường làm gì?",
+      "answer": "晚上你常做什么"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK Grammar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/css/grammar.css">
+
+</head>
+
+<body>
+
+<header id="header"></header>
+
+<section class="grammar-hero">
+
+<div class="container">
+
+<h1>📚 HSK Grammar</h1>
+
+<p>
+
+Tra cứu toàn bộ ngữ pháp HSK 1 → HSK 6
+
+</p>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Tìm ngữ pháp, pinyin, nghĩa..."
+autocomplete="off">
+
+</div>
+
+<div class="level-filter">
+
+<button class="level-btn active" data-level="all">Tất cả</button>
+
+<button class="level-btn" data-level="HSK1">HSK1</button>
+
+<button class="level-btn" data-level="HSK2">HSK2</button>
+
+<button class="level-btn" data-level="HSK3">HSK3</button>
+
+<button class="level-btn" data-level="HSK4">HSK4</button>
+
+<button class="level-btn" data-level="HSK5">HSK5</button>
+
+<button class="level-btn" data-level="HSK6">HSK6</button>
+
+</div>
+
+</div>
+
+</section>
+
+<main class="grammar-page">
+
+<div class="container">
+
+<div class="grammar-layout">
+
+<!---------------- SIDEBAR ---------------->
+
+<aside class="grammar-sidebar">
+
+<div class="sidebar-header">
+
+<h3>Danh sách ngữ pháp</h3>
+
+<span id="grammarCount">0</span>
+
+</div>
+
+<div id="grammarList" class="grammar-list">
+
+</div>
+
+</aside>
+
+<!--------------- DETAIL ----------------->
+
+<section class="grammar-content">
+
+<div id="grammarDetail" class="grammar-detail">
+
+<div class="empty-state">
+
+<div class="empty-icon">
+
+📖
+
+</div>
+
+<h2>
+
+Chọn một ngữ pháp
+
+</h2>
+
+<p>
+
+Danh sách nằm bên trái
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</div>
+
+</main>
+
+<footer class="grammar-footer">
+
+<div class="container">
+
+HSK Grammar Dictionary
+
+</div>
+
+</footer>
+
+<script src="assets/js/grammar.js"></script>
+<script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+
+</body>
+</html>

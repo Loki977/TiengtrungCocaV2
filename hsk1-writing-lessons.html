@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSK1 - Sơ cấp</title>
+  <style>
+    :root {
+      --page-bg: #edf5f7;
+      --navy: #10234a;
+      --muted: #858aa3;
+      --cream: #fffdf5;
+      --line: rgba(247, 180, 0, 0.28);
+      --yellow: #f7b400;
+      --yellow-2: #ffc21a;
+      --orange: #ff8a2a;
+      --shadow: 0 16px 34px rgba(39, 62, 92, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 16% 10%, rgba(255, 255, 255, 0.92), transparent 27%),
+        linear-gradient(135deg, #eaf4f6 0%, #f4f8f4 50%, #e8f1f5 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 64px;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .back-btn {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      border: 1px solid rgba(247, 180, 0, 0.26);
+      border-radius: 20px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      box-shadow: 0 12px 24px rgba(255, 138, 42, 0.22);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(255, 138, 42, 0.28);
+    }
+
+    .back-btn svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      font-weight: 950;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.5;
+      font-weight: 750;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .lesson-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) 34px;
+      gap: 18px;
+      align-items: center;
+      min-height: 154px;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        linear-gradient(138deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 253, 245, 0.97) 52%, rgba(255, 244, 202, 0.58) 100%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
+    }
+
+    .lesson-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -22px -52px -22px;
+      height: 96px;
+      background:
+        radial-gradient(ellipse at 18% 90%, rgba(255, 255, 255, 0.88) 0 20%, transparent 21%),
+        radial-gradient(ellipse at 52% 92%, rgba(255, 255, 255, 0.72) 0 18%, transparent 19%),
+        radial-gradient(ellipse at 82% 90%, rgba(255, 255, 255, 0.82) 0 22%, transparent 23%),
+        linear-gradient(135deg, transparent 0 28%, rgba(247, 180, 0, 0.08) 29% 42%, transparent 43%);
+      opacity: 0.76;
+      pointer-events: none;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(247, 180, 0, 0.68);
+      box-shadow: 0 21px 42px rgba(39, 62, 92, 0.15);
+    }
+
+    .lesson-number {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-2));
+      box-shadow: inset 0 0 0 7px rgba(255, 249, 229, 0.48), 0 10px 20px rgba(247, 180, 0, 0.22);
+      font-size: 23px;
+      font-weight: 950;
+    }
+
+    .lesson-content {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 9px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: #bf6a00;
+      background: rgba(255, 194, 26, 0.14);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .status.locked {
+      color: #d86a12;
+      background: rgba(255, 138, 42, 0.12);
+    }
+
+    .lesson-label {
+      margin: 0 0 4px;
+      color: #d58700;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .lesson-title {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(20px, 2.2vw, 25px);
+      line-height: 1.22;
+      letter-spacing: 0;
+      font-weight: 950;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--yellow);
+    }
+
+    .chevron {
+      position: relative;
+      z-index: 1;
+      justify-self: end;
+      color: var(--orange);
+      font-size: 56px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    @media (max-width: 840px) {
+      .page {
+        width: min(100% - 30px, 620px);
+        padding-top: 24px;
+      }
+
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .header {
+        grid-template-columns: 50px minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .back-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 17px;
+      }
+
+      .lesson-card {
+        grid-template-columns: 52px minmax(0, 1fr) 24px;
+        gap: 12px;
+        min-height: 150px;
+        padding: 19px 18px;
+      }
+
+      .lesson-number {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+
+      .chevron {
+        font-size: 42px;
+      }
+
+      .stat {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="back-btn" href="hsk-writing.html" aria-label="Quay lại chọn cấp độ">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5"></path>
+          <path d="m11 6-6 6 6 6"></path>
+        </svg>
+      </a>
+      <div>
+        <h1 id="pageTitle">HSK1 - Sơ cấp</h1>
+        <p class="subtitle" id="pageSubtitle">Giao tiếp sinh hoạt hằng ngày</p>
+      </div>
+    </header>
+
+    <section class="lesson-grid" id="lessonGrid" aria-label="Danh sách bài học HSK"></section>
+  </main>
+
+  <script type="module">
+    import { getLessonConfig } from "./lesson-config.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const level = (params.get("level") || "hsk1").toLowerCase();
+    const config = getLessonConfig(level) || getLessonConfig("hsk1");
+    const lessons = config.lessons.map((item, index) => ({
+      status: index < 3 ? "Miễn phí" : "Học thử 5 câu",
+      lesson: `Bài ${item.lessonId}`,
+      title: item.title,
+      words: item.vocabularyCount || 0,
+      sentences: item.sentenceCount || 0
+    }));
+
+    document.title = config.label;
+    document.getElementById("pageTitle").textContent = config.label;
+    document.getElementById("pageSubtitle").textContent = config.description;
+    document.getElementById("lessonGrid").setAttribute("aria-label", `Danh sách bài học ${config.level.toUpperCase()}`);
+    const lessonGrid = document.getElementById("lessonGrid");
+
+    function renderLessons() {
+      lessonGrid.innerHTML = lessons.map((item, index) => {
+        const isFree = item.status === "Miễn phí";
+
+        return `
+          <a class="lesson-card" href="lesson.html?level=${config.level}&lesson=${index + 1}">
+            <div class="lesson-number">${index + 1}</div>
+            <div class="lesson-content">
+              <span class="status${isFree ? "" : " locked"}">${item.status}</span>
+              <p class="lesson-label">${item.lesson}</p>
+              <h2 class="lesson-title">${item.title}</h2>
+              <div class="stats" aria-label="Thống kê bài học">
+                <span class="stat"><span class="dot"></span>${item.words} từ vựng</span>
+                <span class="stat"><span class="dot"></span>${item.sentences} câu</span>
+              </div>
+            </div>
+            <div class="chevron" aria-hidden="true">›</div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    renderLessons();
+  </script>
+<script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

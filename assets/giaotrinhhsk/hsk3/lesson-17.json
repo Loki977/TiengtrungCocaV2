@@ -1,0 +1,470 @@
+{
+  "lessonId": 17,
+  "level": 4,
+  "title": "Tôi nhớ ra rồi",
+  "meta": {
+    "estimatedMinutes": 40,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 17 + mở rộng ngữ pháp 趋向补语",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson17/"
+  },
+  "vocabulary": [
+    {
+      "id": "turan",
+      "hanzi": "突然",
+      "pinyin": "tūrán",
+      "meaning": "đột nhiên, bất ngờ",
+      "example": "老师突然给我打了一个电话。",
+      "audio": "vocab/turan.mp3"
+    },
+    {
+      "id": "shu",
+      "hanzi": "熟",
+      "pinyin": "shú",
+      "meaning": "quen thuộc, thành thạo",
+      "example": "这个声音听起来很熟。",
+      "audio": "vocab/shu.mp3"
+    },
+    {
+      "id": "yixiazi",
+      "hanzi": "一下子",
+      "pinyin": "yíxiàzi",
+      "meaning": "trong chốc lát, đột nhiên",
+      "example": "我一下子想不起来他的名字了。",
+      "audio": "vocab/yixiazi.mp3"
+    },
+    {
+      "id": "ying",
+      "hanzi": "应",
+      "pinyin": "yìng",
+      "meaning": "nhận lời mời, được mời",
+      "example": "他应电视台的邀请来北京工作。",
+      "audio": "vocab/ying.mp3"
+    },
+    {
+      "id": "guoji",
+      "hanzi": "国际",
+      "pinyin": "guójì",
+      "meaning": "quốc tế",
+      "example": "她在一家国际公司工作。",
+      "audio": "vocab/guoji.mp3"
+    },
+    {
+      "id": "guangbo",
+      "hanzi": "广播",
+      "pinyin": "guǎngbō",
+      "meaning": "phát thanh, radio",
+      "example": "他喜欢听汉语广播。",
+      "audio": "vocab/guangbo.mp3"
+    },
+    {
+      "id": "diantai",
+      "hanzi": "电台",
+      "pinyin": "diàntái",
+      "meaning": "đài phát thanh",
+      "example": "这个电台每天都有中文节目。",
+      "audio": "vocab/diantai.mp3"
+    },
+    {
+      "id": "yaoqing",
+      "hanzi": "邀请",
+      "pinyin": "yāoqǐng",
+      "meaning": "mời, lời mời",
+      "example": "我们邀请老师来家里做客。",
+      "audio": "vocab/yaoqing.mp3"
+    },
+    {
+      "id": "dai",
+      "hanzi": "呆",
+      "pinyin": "dāi",
+      "meaning": "ở lại, lưu lại",
+      "example": "他打算在北京呆两年。",
+      "audio": "vocab/dai.mp3"
+    },
+    {
+      "id": "qian",
+      "hanzi": "签",
+      "pinyin": "qiān",
+      "meaning": "ký",
+      "example": "我跟公司签了两年的合同。",
+      "audio": "vocab/qian.mp3"
+    },
+    {
+      "id": "hetong",
+      "hanzi": "合同",
+      "pinyin": "hétong",
+      "meaning": "hợp đồng",
+      "example": "这份合同明天就要签。",
+      "audio": "vocab/hetong.mp3"
+    },
+    {
+      "id": "zhongwai",
+      "hanzi": "中外",
+      "pinyin": "zhōng-wài",
+      "meaning": "Trung Quốc và nước ngoài",
+      "example": "公司主要搞中外文化交流。",
+      "audio": "vocab/zhongwai.mp3"
+    },
+    {
+      "id": "hezi",
+      "hanzi": "合资",
+      "pinyin": "hézī",
+      "meaning": "hợp tác đầu tư, liên doanh",
+      "example": "他在一家中外合资公司上班。",
+      "audio": "vocab/hezi.mp3"
+    },
+    {
+      "id": "kongr",
+      "hanzi": "空儿",
+      "pinyin": "kòngr",
+      "meaning": "thời gian rảnh, chỗ trống",
+      "example": "你星期六下午有没有空儿？",
+      "audio": "vocab/kongr.mp3"
+    },
+    {
+      "id": "dizhi",
+      "hanzi": "地址",
+      "pinyin": "dìzhǐ",
+      "meaning": "địa chỉ",
+      "example": "请把你的地址写下来。",
+      "audio": "vocab/dizhi.mp3"
+    },
+    {
+      "id": "yewu",
+      "hanzi": "业务",
+      "pinyin": "yèwù",
+      "meaning": "nghiệp vụ, công việc kinh doanh",
+      "example": "公司的业务刚开展起来。",
+      "audio": "vocab/yewu.mp3"
+    },
+    {
+      "id": "gao",
+      "hanzi": "搞",
+      "pinyin": "gǎo",
+      "meaning": "làm, tiến hành, xử lý",
+      "example": "我们公司是搞文化交流的。",
+      "audio": "vocab/gao.mp3"
+    },
+    {
+      "id": "jiaoliu",
+      "hanzi": "交流",
+      "pinyin": "jiāoliú",
+      "meaning": "giao lưu, trao đổi",
+      "example": "学习语言需要多交流。",
+      "audio": "vocab/jiaoliu.mp3"
+    },
+    {
+      "id": "chengli",
+      "hanzi": "成立",
+      "pinyin": "chénglì",
+      "meaning": "thành lập",
+      "example": "这家公司成立不久。",
+      "audio": "vocab/chengli.mp3"
+    },
+    {
+      "id": "bujiu",
+      "hanzi": "不久",
+      "pinyin": "bùjiǔ",
+      "meaning": "không lâu, chẳng bao lâu",
+      "example": "他来北京不久，就找到了工作。",
+      "audio": "vocab/bujiu.mp3"
+    },
+    {
+      "id": "kaizhan",
+      "hanzi": "开展",
+      "pinyin": "kāizhǎn",
+      "meaning": "mở ra, triển khai",
+      "example": "新的业务已经开展起来了。",
+      "audio": "vocab/kaizhan.mp3"
+    },
+    {
+      "id": "jixu",
+      "hanzi": "继续",
+      "pinyin": "jìxù",
+      "meaning": "tiếp tục",
+      "example": "我们还想继续学下去。",
+      "audio": "vocab/jixu.mp3"
+    },
+    {
+      "id": "yiding",
+      "hanzi": "一定",
+      "pinyin": "yídìng",
+      "meaning": "nhất định; chắc chắn",
+      "example": "只要坚持下去，一定能学好。",
+      "audio": "vocab/yiding.mp3"
+    },
+    {
+      "id": "jichu",
+      "hanzi": "基础",
+      "pinyin": "jīchǔ",
+      "meaning": "cơ sở, nền tảng",
+      "example": "你们有一定的汉语基础。",
+      "audio": "vocab/jichu.mp3"
+    },
+    {
+      "id": "zhiyou_cai",
+      "hanzi": "只有……才……",
+      "pinyin": "zhǐyǒu...cái...",
+      "meaning": "chỉ có... mới...",
+      "example": "只有多练，才会说得更流利。",
+      "audio": "vocab/zhiyou_cai.mp3"
+    },
+    {
+      "id": "guang",
+      "hanzi": "光",
+      "pinyin": "guāng",
+      "meaning": "dùng hết, sạch; chỉ, mỗi",
+      "example": "钱都花光了。",
+      "audio": "vocab/guang.mp3"
+    },
+    {
+      "id": "chou",
+      "hanzi": "抽",
+      "pinyin": "chōu",
+      "meaning": "rút, trích ra (thời gian)",
+      "example": "老师今天抽不出时间来。",
+      "audio": "vocab/chou.mp3"
+    },
+    {
+      "id": "tongyi",
+      "hanzi": "同意",
+      "pinyin": "tóngyì",
+      "meaning": "đồng ý",
+      "example": "老师同意我们晚上去上课。",
+      "audio": "vocab/tongyi.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "想起来",
+      "pinyin": "xiǎng qǐlái",
+      "meaning": "nhớ ra",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "想出来",
+      "pinyin": "xiǎng chūlái",
+      "meaning": "nghĩ ra",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "记下来",
+      "pinyin": "jì xiàlái",
+      "meaning": "ghi lại",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "坚持下去",
+      "pinyin": "jiānchí xiàqù",
+      "meaning": "kiên trì tiếp tục",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "我想起来了",
+      "chinese": "《我想起来了》\n一天晚上，林老师突然接到一个电话。电话里的声音听起来很熟，可是他一下子想不起来是谁。对方笑着说：“老师，我是三年前的学生海伦，您还参加过我的毕业晚会呢。”林老师这才想起来了。海伦告诉老师，她应一家国际广播电台的邀请来到北京工作，已经跟电台签了两年的合同。她的朋友保罗也在北京的一家中外合资公司工作，公司主要搞文化交流，业务刚开展起来。海伦想邀请林老师星期六来家里做客，还请老师把新的地址记下来。林老师说自己已经搬家了，住在学校附近的新小区。海伦马上把地址写下来，并说一定让保罗开车去接老师。后来，海伦又谈到汉语学习。她说离开中国以后，因为工作忙，很多词都想不起来了。林老师告诉她，学外语只有坚持下去，多听、多说、多练，才会越学越好。海伦听了很高兴，决定每周抽出时间继续学下去。"
+    }
+  ],
+  "story": [
+    {
+      "title": "那个声音",
+      "chinese": "《那个声音》\n周六下午，李老师正在整理旧照片，突然接到一个陌生电话。电话里的声音很熟，可是他想了半天也想不起来是谁。对方说：“老师，您还记得十年前那个总坐在最后一排的学生吗？”李老师一下子笑了：“我想起来了，你是小周！”小周现在在一家国际公司工作，负责中外文化交流。这次他回北京，是想邀请老师参加公司的一个活动。李老师把时间和地址记下来，又把旧照片找出来。照片上，小周正站在黑板前说汉语，脸红得不敢抬头。晚上见面时，小周说：“老师，要不是您当年鼓励我，我可能早就不学汉语了。”李老师说：“学语言没有特别快的办法，只有坚持下去，才会看到进步。”听了这句话，小周又想起了很多在学校里的日子。"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: Liên lạc lại với thầy cô cũ",
+      "content": "Trong văn hóa Á Đông, quan hệ thầy trò thường được coi trọng. Việc học sinh cũ gọi điện, đến thăm hoặc mời thầy cô ăn cơm là cách bày tỏ sự biết ơn và giữ liên hệ lâu dài."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "动作结果的表达：动词 + 起来",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "动词 + 起来",
+      "structure": "Động từ + 起来",
+      "explanation": "Bổ ngữ xu hướng 起来 có nghĩa mở rộng, biểu thị hành động bắt đầu và tiếp tục. Với 想起来, nó biểu thị việc khôi phục trí nhớ: trước đó quên, sau đó nhớ ra.",
+      "examples": [
+        "我想起来了，这个地方我们来过。"
+      ],
+      "usage": "Dùng với 笑、下、打、跑、开展、想... để chỉ hành động bắt đầu/tiếp diễn hoặc nhớ ra điều đã quên."
+    },
+    {
+      "title": "动作结果的表达：动词 + 出来",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "动词 + 出来",
+      "structure": "Động từ + 出来",
+      "explanation": "出来 biểu thị nhận ra, phân biệt ra, hoặc làm cho sự vật từ chưa rõ thành rõ. 想出来 nghĩa là nghĩ ra một ý kiến/cách làm mới, khác với 想起来 là nhớ lại điều đã biết.",
+      "examples": [
+        "这个办法是你想出来的吗？"
+      ],
+      "usage": "Thường dùng với 听、看、喝、洗、画、写、做、想... để nói nhận ra, làm ra, nghĩ ra."
+    },
+    {
+      "title": "动作结果的表达：动词 + 下去",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "动词 + 下去",
+      "structure": "Động từ + 下去",
+      "explanation": "下去 biểu thị một hành động đang diễn ra sẽ tiếp tục tiến hành trong tương lai.",
+      "examples": [
+        "我们还想继续在这里学下去。"
+      ],
+      "usage": "Dùng với 学、说、读、做、干、坚持... để nhấn mạnh tiếp tục làm một việc."
+    },
+    {
+      "title": "动作结果的表达：动词 + 下来",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "动词 + 下来",
+      "structure": "Động từ + 下来",
+      "explanation": "下来 biểu thị ghi lại/lưu giữ lại, hoặc trạng thái/hành động từ trước kéo dài đến hiện tại. Trong bài thường dùng 记下来, 写下来, 照下来.",
+      "examples": [
+        "请把地址和电话号码记下来。"
+      ],
+      "usage": "Dùng khi muốn nói ghi, chụp, vẽ, viết... để lưu lại thông tin hoặc hình ảnh."
+    },
+    {
+      "title": "比较：想起来 和 想出来",
+      "source": "Mở rộng theo Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "想起来 = nhớ ra / 想出来 = nghĩ ra",
+      "structure": "想 + 起来 / 出来",
+      "explanation": "想起来 là khôi phục ký ức đã có nhưng từng quên. 想出来 là qua suy nghĩ mà tạo ra ý kiến, cách giải quyết hoặc đáp án mới.",
+      "examples": [
+        "我想不起来他的名字，但我想出了一个找他的办法。"
+      ],
+      "usage": "想起来 thường đi với 名字、地址、事情; 想出来 thường đi với 办法、主意、答案、意见."
+    },
+    {
+      "title": "只有……才…… - Chỉ có... mới...",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 17",
+      "pattern": "只有 + 条件，才 + 结果",
+      "structure": "只有 + điều kiện, 才 + kết quả",
+      "explanation": "只有……才…… dùng để nối câu điều kiện. 只有 nêu điều kiện cần thiết, 才 nêu kết quả chỉ có thể xuất hiện khi điều kiện đó được thỏa mãn.",
+      "examples": [
+        "只有多听、多说、多练，才能学好外语。"
+      ],
+      "usage": "Dùng để nhấn mạnh điều kiện bắt buộc: chỉ khi có điều kiện A thì mới có kết quả B."
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "突然 nghĩa là gì?",
+      "options": [
+        "đột nhiên",
+        "hợp đồng",
+        "địa chỉ",
+        "cơ sở"
+      ],
+      "answer": "đột nhiên"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng 想起来 đúng?",
+      "options": [
+        "我想起来他的名字了。",
+        "我想出来他的名字了。",
+        "我把名字想下去。",
+        "我想下来一个名字。"
+      ],
+      "answer": "我想起来他的名字了。"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "想出来 thường dùng để nói gì?",
+      "options": [
+        "nghĩ ra cách/ý mới",
+        "nhớ lại người đã quên",
+        "ghi địa chỉ xuống",
+        "tiếp tục học"
+      ],
+      "answer": "nghĩ ra cách/ý mới"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 我一下子想不___他的名字了。",
+      "answer": "起来"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 请把地址记___。",
+      "answer": "下来"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: ___坚持下去，才会有进步。",
+      "answer": "只有"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 只有多听、多说、多练，___能学好外语。",
+      "answer": "才"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 想起来 / 我 / 了 / 他的名字",
+      "answer": "我想起来他的名字了"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 地址 / 请 / 记下来 / 把 / 这个",
+      "answer": "请把这个地址记下来"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 才 / 学好 / 只有 / 外语 / 坚持下去 / 能",
+      "answer": "只有坚持下去，才能学好外语"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 我想出来了他的名字。",
+      "answer": "我想起来了他的名字"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 只有努力学习，就能取得好成绩。",
+      "answer": "只有努力学习，才能取得好成绩"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Tôi nhớ ra rồi, chúng ta đã từng đến nơi này.",
+      "answer": "我想起来了，这个地方我们来过"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Hãy ghi địa chỉ và số điện thoại xuống.",
+      "answer": "请把地址和电话号码记下来"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 我们还想继续学下去。",
+      "answer": "Chúng tôi vẫn muốn tiếp tục học tiếp"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: Trong bài khóa, 海伦为什么来到北京工作？",
+      "answer": "因为她应一家国际广播电台的邀请来到北京工作"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 林老师说学外语怎样才能学好？",
+      "answer": "只有坚持下去，多听、多说、多练，才会学好"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 只有……才……",
+      "answer": "只有认真复习，才能考好"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

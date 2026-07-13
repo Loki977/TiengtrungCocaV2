@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Super · Tiếng Trung Coca</title>
+  <link rel="stylesheet" href="assets/css/admin-super.css" />
+</head>
+<body>
+  <a href="profile.html" class="admin-back-btn">← Quay về Profile</a>
+
+  <section id="loginScreen" class="admin-login">
+    <div class="login-card">
+      <div class="login-logo">🛡️</div>
+      <h1>Admin Super</h1>
+      <p>Chỉ tài khoản Google <b>nqthanhforwork@gmail.com</b> được truy cập.</p>
+      <button id="loginBtn" class="btn primary">Đăng nhập Google</button>
+      <a class="home-link" href="index.html">← Về trang chủ</a>
+      <p id="loginMsg" class="muted"></p>
+    </div>
+  </section>
+
+  <main id="app" class="hidden">
+    <aside class="sidebar">
+      <div class="brand"><span>中</span><div><b>Admin Super</b><small>Tiếng Trung Coca</small></div></div>
+      <nav>
+        <button class="nav-item active" data-tab="dashboard" title="Tổng quan">📊 Tổng quan</button>
+        <button class="nav-item" data-tab="feedback" title="Góp ý người dùng">💬 Góp ý người dùng</button>
+        <button class="nav-item" data-tab="users" title="Quản lý người dùng">👥 Người dùng</button>
+        <button class="nav-item" data-tab="auth" title="Phân quyền và tài khoản Auth">🔐 Phân quyền</button>
+        <button class="nav-item" data-tab="learning" title="Quản lý khóa học">🎓 Khóa học</button>
+        <button class="nav-item" data-tab="content" title="Quản lý nội dung">📝 Nội dung</button>
+        <button class="nav-item" data-tab="logs" title="Thống kê truy cập">📈 Thống kê</button>
+        <button class="nav-item" data-tab="database" title="Cài đặt dữ liệu">🧩 Cài đặt</button>
+      </nav>
+      <div class="admin-user"><img id="adminAvatar" alt=""><div><b id="adminEmail">Admin</b><button id="logoutBtn">Đăng xuất</button></div></div>
+    </aside>
+
+    <section class="content">
+      <header class="topbar"><div><h1 id="pageTitle">Tổng quan</h1><p>Quản trị dữ liệu Firestore, góp ý, tiến độ và truy cập.</p></div><div class="topbar-actions"><a href="index.html" class="btn">↗ Xem website</a><button id="refreshAll" class="btn" title="Làm mới dữ liệu">↻ Làm mới</button></div></header>
+
+      <section id="tab-dashboard" class="tab-panel">
+          <div class="stats-grid">
+          <div class="stat"><span>👥</span><b id="statUsers">0</b><p>Người dùng</p></div>
+          <div class="stat"><span>💬</span><b id="statFeedback">0</b><p>Góp ý</p></div>
+          <div class="stat"><span>🆕</span><b id="statNew">0</b><p>Góp ý mới</p></div>
+          <div class="stat"><span>📈</span><b id="statVisits">0</b><p>Lượt truy cập</p></div>
+          <div class="stat"><span>🔥</span><b id="statXp">0</b><p>Tổng XP</p></div>
+          <div class="stat"><span>📚</span><b id="statLessons">0</b><p>Bài hoàn thành</p></div>
+        </div>
+        <div class="panel"><h2>Trạng thái Backend Admin</h2><div id="backendNotice" class="notice ok">Đang kiểm tra Cloud Functions Admin SDK...</div></div>
+      </section>
+
+      <section id="tab-feedback" class="tab-panel hidden">
+        <div class="panel"><h2>💬 Góp ý realtime</h2><div class="toolbar"><input id="feedbackSearch" class="input" placeholder="Tìm tên/email/nội dung"><select id="feedbackStatus" class="input"><option value="">Tất cả trạng thái</option><option value="new">Mới</option><option value="read">Đã đọc</option><option value="done">Đã xử lý</option></select></div><div id="feedbackList" class="list"></div></div>
+      </section>
+
+      <section id="tab-users" class="tab-panel hidden">
+        <div class="panel"><h2>👥 Quản lý người dùng</h2><div class="toolbar"><input id="userSearch" class="input" placeholder="Tìm email/tên/UID"><select id="userSort" class="input"><option value="xp">XP cao nhất</option><option value="newest">Mới cập nhật</option><option value="email">Email A-Z</option></select><button id="exportUsers" class="btn">Tải JSON</button></div><div id="usersTable"></div></div>
+      </section>
+
+
+      <section id="tab-auth" class="tab-panel hidden">
+        <div class="panel">
+          <h2>🔐 Phân quyền Firebase Authentication</h2>
+          <div class="notice">Phần này cần deploy Cloud Functions trong thư mục <b>functions</b>. Sau khi deploy, admin có thể xem, khóa/mở khóa và xóa tài khoản Auth thật.</div>
+          <div class="toolbar"><input id="authSearch" class="input" placeholder="Tìm email/UID/tên"><button id="loadAuthUsers" class="btn primary">Tải tài khoản Auth</button></div>
+          <div id="authUsersTable"><div class="muted">Bấm Tải tài khoản Auth sau khi deploy Functions.</div></div>
+        </div>
+      </section>
+
+      <section id="tab-learning" class="tab-panel hidden">
+        <div class="panel">
+          <h2>🎓 Khóa / mở khóa học tập</h2>
+          <p class="muted">Cấu hình này lưu ở Firestore <b>adminSettings/learning</b>. Website sẽ đọc để khóa/mở khóa khóa học và từng lesson.</p>
+          <div class="notice">Gợi ý: bật HSK1, chỉ mở Lesson 1 nếu muốn người học đi tuần tự. Admin có thể mở toàn bộ bất cứ lúc nào.</div>
+          <div class="admin-grid two" style="margin-top:14px">
+            <div class="admin-box"><h3>📚 Khóa học</h3><div id="courseToggles" class="toggle-list"></div></div>
+            <div class="admin-box"><h3>⚙️ Tính năng</h3><div id="featureToggles" class="toggle-list"></div></div>
+          </div>
+          <div class="admin-box" style="margin-top:14px">
+            <div class="toolbar"><select id="lessonLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><button id="openAllLessons" class="btn ok">Mở tất cả bài cấp này</button><button id="lockAllLessons" class="btn warn">Khóa tất cả bài cấp này</button><button id="freeAllLessons" class="btn ok">Đặt free</button><button id="vipAllLessons" class="btn warn">Đặt VIP</button><button id="coinsAllLessons" class="btn">Đặt dùng xu</button><input id="bulkCoinCost" class="input" type="number" min="0" value="50" style="max-width:120px" placeholder="Xu"><button id="saveLearningSettings" class="btn primary">Lưu cấu hình</button></div>
+            <div id="lessonLockGrid" class="lesson-lock-grid"></div>
+          </div>
+          <div class="lesson-total" id="lessonTotals" style="margin-top:14px"></div>
+        </div>
+      </section>
+
+      <section id="tab-content" class="tab-panel hidden">
+        <div class="panel">
+          <h2>📝 CMS nội dung bài học</h2>
+          <p class="muted">Sửa bài học trực tiếp bằng form hoặc JSON. Dữ liệu được lưu vào Firestore <b>lessonOverrides</b>; nếu chưa có override thì web dùng file JSON cũ.</p>
+            <div class="toolbar sticky-actions"><select id="cmsLevel" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><select id="cmsLesson" class="input"></select><button id="cmsLoad" class="btn primary" title="Tải bài học">Tải bài</button><button id="cmsSave" class="btn ok btn-save" title="Lưu thay đổi lên Firestore">💾 Lưu thay đổi</button><button id="cmsDeleteOverride" class="btn danger" title="Xóa bản sửa trên Firestore">🗑 Xóa bản sửa</button><button id="cmsDownload" class="btn" title="Tải nội dung JSON">⬇ Tải JSON</button><span id="cmsStatus" class="save-status">Sẵn sàng</span></div>
+          <div class="admin-grid two">
+            <div class="admin-box">
+              <h3>Thông tin nhanh</h3>
+              <label>Tiêu đề<input id="cmsTitle" class="input full" placeholder="Tiêu đề bài học"></label>
+              <label>Mô tả<textarea id="cmsDesc" class="input full smallarea" placeholder="Mô tả ngắn"></textarea></label>
+              <label>XP<input id="cmsXp" class="input full" type="number" min="0" step="1"></label>
+              <label><input id="cmsLocked" type="checkbox"> Khóa riêng bài này</label>
+              <label><input id="cmsVisible" type="checkbox" checked> Hiển thị bài này</label>
+              <p class="muted">Những trường nhanh sẽ đồng bộ vào JSON khi bấm lưu.</p>
+            </div>
+            <div class="admin-box">
+              <h3>Nhập nhanh từ vựng</h3>
+              <p class="muted">Mỗi dòng: 汉字 | pinyin | nghĩa | ví dụ</p>
+              <textarea id="cmsVocabText" class="input full textarea" placeholder="你好 | nǐ hǎo | xin chào | 你好，我是学生。"></textarea>
+              <button id="cmsApplyVocab" class="btn">Áp dụng vào JSON</button>
+            </div>
+          </div>
+          <div class="admin-box" style="margin-top:14px">
+            <div class="cms-tabs">
+              <button class="cms-tab active" data-cms-tab="vocab">Từ vựng</button>
+              <button class="cms-tab" data-cms-tab="extended">Từ vựng mở rộng</button>
+              <button class="cms-tab" data-cms-tab="reading">Bài khóa</button>
+              <button class="cms-tab" data-cms-tab="story">Câu chuyện</button>
+              <button class="cms-tab" data-cms-tab="culture">Văn hóa</button>
+              <button class="cms-tab" data-cms-tab="grammar">Ngữ pháp</button>
+              <button class="cms-tab" data-cms-tab="exercises">Bài tập</button>
+              <button class="cms-tab" data-cms-tab="json">JSON nâng cao</button>
+            </div>
+            <div class="cms-pane" data-cms-pane="vocab"><h3>Từ vựng</h3><p class="muted">Mỗi dòng: hanzi | pinyin | nghĩa | ví dụ | audio</p><textarea id="cmsVocabEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="extended"><h3>Từ vựng mở rộng</h3><p class="muted">Mỗi dòng: hanzi | pinyin | nghĩa | ví dụ | audio</p><textarea id="cmsExtendedEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="reading"><h3>Bài khóa / Reading</h3><p class="muted">Mỗi dòng: speaker/title | chữ Hán | dịch nghĩa | audio</p><textarea id="cmsReadingEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="story"><h3>Câu chuyện</h3><p class="muted">Mỗi dòng: title | chữ Hán/nội dung | dịch nghĩa</p><textarea id="cmsStoryEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="culture"><h3>Văn hóa</h3><p class="muted">Mỗi dòng: title | nội dung</p><textarea id="cmsCultureEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="grammar"><h3>Ngữ pháp</h3><p class="muted">Mỗi dòng: title | pattern | explanation | example1 ; example2 ; example3</p><textarea id="cmsGrammarEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="exercises"><h3>Bài tập</h3><p class="muted">Mỗi dòng: type | question | options cách nhau bằng ; | answer | explanation | hint | xp</p><textarea id="cmsExercisesEditor" class="input full textarea"></textarea></div>
+            <div class="cms-pane hidden" data-cms-pane="json"><h3>JSON bài học đầy đủ</h3><textarea id="cmsJson" class="json-editor" spellcheck="false"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-logs" class="tab-panel hidden">
+        <div class="panel"><h2>📈 Dữ liệu truy cập</h2><div class="toolbar"><input id="logSearch" class="input" placeholder="Tìm page/email/browser"><button id="exportLogs" class="btn">Export JSON</button></div><div id="logsTable"></div></div>
+      </section>
+
+      <section id="tab-database" class="tab-panel hidden">
+        <div class="panel"><h2>🧩 Database Explorer</h2><div class="toolbar"><select id="collectionSelect" class="input"><option value="users">users</option><option value="feedbacks">feedbacks</option><option value="accessLogs">accessLogs</option><option value="visits">visits</option></select><button id="loadCollection" class="btn">Load</button><button id="exportCollection" class="btn">Export JSON</button></div><pre id="dbOutput" class="json-box">Chọn collection rồi bấm Load.</pre></div>
+      </section>
+    </section>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/admin-super.js"></script>
+</body>
+</html>

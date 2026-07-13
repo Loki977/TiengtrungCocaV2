@@ -1,0 +1,225 @@
+/* ================================================
+   TIENG TRUNG CAM & COCA — responsive.css
+   Media queries: Tablet (≤1024px), Mobile (≤768px), Small (≤480px)
+   ================================================ */
+
+/* ── TABLET (≤ 1024px) ── */
+@media (max-width: 1024px) {
+  .container { padding-inline: 20px; }
+
+  /* Header */
+  .header__inner { gap: 18px; }
+  .header .logo--reveal { --logo-roll-distance: 190px; }
+  .nav { gap: 0; }
+  .nav__link { padding: 5px 8px; font-size: .78rem; }
+
+  /* Hero */
+  .hero__inner { gap: 32px; }
+  .hero__img-wrap { width: 336.6px; }
+  .hero__float--3 { display: none; }
+
+  /* Dashboard */
+  .dashboard__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Progress */
+  .progress-section__grid {
+    grid-template-columns: 1fr;
+  }
+  .daily-goal { flex-direction: row; text-align: left; flex-wrap: wrap; }
+  .daily-goal h3 { width: 100%; }
+  .daily-goal__ring-wrap { flex-shrink: 0; }
+  .daily-goal__tasks { flex: 1; min-width: 200px; }
+
+  /* Path */
+  .path-row--left  { padding-left: 20px; }
+  .path-row--right { padding-right: 20px; }
+
+  /* Courses */
+  .courses-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Challenge */
+  .challenge-card { padding: 40px; gap: 32px; }
+}
+
+/* ── MOBILE (≤ 768px) ── */
+@media (max-width: 768px) {
+  :root { --header-h: 64px; }
+  .section { padding-block: 56px; }
+
+  /* Header */
+  .nav { display: none; }
+  .header__inner { gap: 8px; min-width: 0; }
+  .header .logo { min-width: 0; flex: 1 1 auto; }
+  .header .logo__text {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .header .logo--reveal { --logo-roll-distance: 184px; }
+  .header__actions { gap: 6px; min-width: 0; flex: 0 1 auto; }
+  .header__actions .btn { display: none; }
+  .header__actions .streak-badge {
+    display: flex;
+    padding: 4px 8px;
+    font-size: .82rem;
+  }
+  .streak-badge__icon { font-size: .9rem; }
+  .streak-badge__count { font-size: .9rem; }
+  #firebaseUserBox {
+    max-width: 86px;
+    font-size: 12px !important;
+  }
+  #firebaseUserBox img,
+  #firebaseUserBox span[style*="width:32px"] {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .hamburger {
+    display: flex;
+    margin-left: 0;
+    padding: 5px;
+    flex: 0 0 auto;
+  }
+  .hamburger span { width: 21px; }
+
+  /* Hero */
+  .hero { padding-top: 24px; }
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero__content { order: 1; }
+  .hero__visual  { order: 0; }
+
+  .hero__title { font-size: 2rem; }
+  .hero__desc  { margin-inline: auto; font-size: .95rem; }
+  .hero__cta   { justify-content: center; }
+  .hero__stats { justify-content: center; gap: 16px; }
+
+  .hero__img-wrap { width: 277.2px; margin-inline: auto; }
+  .hero__float--1 { top: auto; bottom: 10%; left: -4%; font-size: .75rem; padding: 8px 12px; }
+  .hero__float--2 { top: 10%; right: -4%; left: auto; font-size: .75rem; padding: 8px 12px; }
+  .hero__float--3 { display: none; }
+
+  /* Dashboard */
+  .dashboard__grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .card { padding: 18px; }
+  .card__value { font-size: 1.6rem; }
+
+  /* Progress */
+  .progress-section__grid { grid-template-columns: 1fr; }
+  .daily-goal { flex-direction: column; text-align: center; align-items: center; }
+  .daily-goal__tasks { width: 100%; }
+
+  /* Path */
+  .path-container {
+    max-width: 100%;
+  }
+  .path-row { padding-left: 0 !important; padding-right: 0 !important; }
+  .path-row--left, .path-row--right {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .path-connector {
+    width: 4px;
+    height: 32px;
+    flex: none;
+    margin: -2px 0;
+  }
+  .path-node {
+    max-width: 90%;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Courses */
+  .courses-grid { grid-template-columns: 1fr; }
+
+  /* Challenge */
+  .challenge-card {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    text-align: center;
+    gap: 32px;
+  }
+  .challenge-card__title { font-size: 1.5rem; }
+  .challenge-card__cta { justify-content: center; flex-direction: column; }
+  .challenge-card__visual { order: -1; }
+  .challenge-badge-wrap { width: 140px; height: 140px; margin-inline: auto; }
+
+  /* Footer */
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer__brand { grid-column: 1 / -1; }
+
+  /* Section header */
+  .section__header { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+/* ── SMALL MOBILE (≤ 480px) ── */
+@media (max-width: 480px) {
+  .container { padding-inline: 16px; }
+  .section { padding-block: 40px; }
+
+  .header .logo__text { max-width: 118px; }
+  .header__actions { gap: 4px; }
+  .header__actions .streak-badge { padding: 3px 7px; }
+  #firebaseUserBox { max-width: 32px; }
+  #firebaseUserBox span:last-child { display: none; }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; }
+
+  /* Hero */
+  .hero { padding-top: 18px; }
+  .header .logo--reveal { --logo-roll-distance: 178px; }
+  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero__img-wrap { width: 237.6px; }
+  .hero__float { display: none; }
+
+  /* Dashboard */
+  .dashboard__grid { grid-template-columns: 1fr; }
+  .card__bar { display: none; }
+
+  /* Buttons */
+  .btn--lg { font-size: 1rem; padding: 12px 24px; }
+
+  /* Course cards */
+  .course-card__meta { flex-direction: column; gap: 4px; }
+
+  /* Challenge */
+  .challenge-card { padding: 24px 16px; }
+  .challenge-card__title { font-size: 1.3rem; }
+  .challenge-card__timer { flex-wrap: wrap; justify-content: center; }
+
+  /* Footer */
+  .footer__inner { grid-template-columns: 1fr; gap: 28px; }
+  .footer__bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* Modal */
+  .modal { padding: 28px 20px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── LARGE SCREENS (≥ 1400px) ── */
+@media (min-width: 1400px) {
+  :root { --container: 1360px; }
+  .hero__img-wrap { width: 495px; }
+  .courses-grid { grid-template-columns: repeat(3, 1fr); }
+}

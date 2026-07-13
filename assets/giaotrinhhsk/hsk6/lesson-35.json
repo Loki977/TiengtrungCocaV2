@@ -1,0 +1,959 @@
+{
+  "lessonId": 35,
+  "level": 6,
+  "title": "Một thành phố đáng sống",
+  "icon": "🌉",
+  "xp": 40,
+  "desc": "Không gian công cộng, môi trường, văn minh đô thị và cộng đồng.",
+  "meta": {
+    "estimatedMinutes": 55,
+    "difficulty": "HSK6",
+    "version": 3,
+    "sourceLesson": "Giáo trình chuẩn HSK6 quyển hạ - Bài 35: 宜居城市",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": true,
+    "basePath": "assets/audio/hsk6/lesson35/",
+    "files": [
+      "35-1.mp3",
+      "35-2.mp3"
+    ]
+  },
+  "vocabulary": [
+    {
+      "id": "gaishan",
+      "hanzi": "改善",
+      "pinyin": "gǎishàn",
+      "meaning": "cải thiện",
+      "example": "我们要改善学习方法。",
+      "audio": "vocab/gaishan.mp3"
+    },
+    {
+      "id": "weichi",
+      "hanzi": "维持",
+      "pinyin": "wéichí",
+      "meaning": "duy trì",
+      "example": "维持关系需要耐心。",
+      "audio": "vocab/weichi.mp3"
+    },
+    {
+      "id": "cjin",
+      "hanzi": "促进",
+      "pinyin": "cùjìn",
+      "meaning": "thúc đẩy",
+      "example": "阅读能促进思考。",
+      "audio": "vocab/cjin.mp3"
+    },
+    {
+      "id": "xingcheng",
+      "hanzi": "形成",
+      "pinyin": "xíngchéng",
+      "meaning": "hình thành",
+      "example": "习惯不是一天形成的。",
+      "audio": "vocab/xingcheng.mp3"
+    },
+    {
+      "id": "bimian",
+      "hanzi": "避免",
+      "pinyin": "bìmiǎn",
+      "meaning": "tránh",
+      "example": "提前准备可以避免错误。",
+      "audio": "vocab/bimian.mp3"
+    },
+    {
+      "id": "daozhi",
+      "hanzi": "导致",
+      "pinyin": "dǎozhì",
+      "meaning": "dẫn đến",
+      "example": "粗心会导致失败。",
+      "audio": "vocab/daozhi.mp3"
+    },
+    {
+      "id": "tixian",
+      "hanzi": "体现",
+      "pinyin": "tǐxiàn",
+      "meaning": "thể hiện",
+      "example": "细节体现态度。",
+      "audio": "vocab/tixian.mp3"
+    },
+    {
+      "id": "shiying",
+      "hanzi": "适应",
+      "pinyin": "shìyìng",
+      "meaning": "thích ứng",
+      "example": "人要适应变化。",
+      "audio": "vocab/shiying.mp3"
+    },
+    {
+      "id": "toul",
+      "hanzi": "透露",
+      "pinyin": "tòulù",
+      "meaning": "tiết lộ",
+      "example": "表情透露了他的想法。",
+      "audio": "vocab/toul.mp3"
+    },
+    {
+      "id": "qiangdiao",
+      "hanzi": "强调",
+      "pinyin": "qiángdiào",
+      "meaning": "nhấn mạnh",
+      "example": "老师强调复习的重要性。",
+      "audio": "vocab/qiangdiao.mp3"
+    },
+    {
+      "id": "xiyin",
+      "hanzi": "吸引",
+      "pinyin": "xīyǐn",
+      "meaning": "thu hút",
+      "example": "好故事能吸引读者。",
+      "audio": "vocab/xiyin.mp3"
+    },
+    {
+      "id": "jifa",
+      "hanzi": "激发",
+      "pinyin": "jīfā",
+      "meaning": "khơi dậy",
+      "example": "问题能激发好奇心。",
+      "audio": "vocab/jifa.mp3"
+    },
+    {
+      "id": "yilai",
+      "hanzi": "依赖",
+      "pinyin": "yīlài",
+      "meaning": "dựa dẫm",
+      "example": "不要过分依赖手机。",
+      "audio": "vocab/yilai.mp3"
+    },
+    {
+      "id": "nanmian",
+      "hanzi": "难免",
+      "pinyin": "nánmiǎn",
+      "meaning": "khó tránh",
+      "example": "学习中难免会犯错。",
+      "audio": "vocab/nanmian.mp3"
+    },
+    {
+      "id": "bijing",
+      "hanzi": "毕竟",
+      "pinyin": "bìjìng",
+      "meaning": "dù sao",
+      "example": "毕竟经验需要时间积累。",
+      "audio": "vocab/bijing.mp3"
+    },
+    {
+      "id": "xianran",
+      "hanzi": "显然",
+      "pinyin": "xiǎnrán",
+      "meaning": "rõ ràng",
+      "example": "显然这个办法更合适。",
+      "audio": "vocab/xianran.mp3"
+    },
+    {
+      "id": "youqi",
+      "hanzi": "尤其",
+      "pinyin": "yóuqí",
+      "meaning": "đặc biệt là",
+      "example": "他尤其喜欢历史。",
+      "audio": "vocab/youqi.mp3"
+    },
+    {
+      "id": "faner",
+      "hanzi": "反而",
+      "pinyin": "fǎn’ér",
+      "meaning": "ngược lại",
+      "example": "批评太多反而没效果。",
+      "audio": "vocab/faner.mp3"
+    },
+    {
+      "id": "zongzhi",
+      "hanzi": "总之",
+      "pinyin": "zǒngzhī",
+      "meaning": "tóm lại",
+      "example": "总之，态度决定结果。",
+      "audio": "vocab/zongzhi.mp3"
+    },
+    {
+      "id": "zhiy",
+      "hanzi": "至于",
+      "pinyin": "zhìyú",
+      "meaning": "còn về",
+      "example": "至于细节，明天再讨论。",
+      "audio": "vocab/zhiy.mp3"
+    },
+    {
+      "id": "weibi",
+      "hanzi": "未必",
+      "pinyin": "wèibì",
+      "meaning": "chưa chắc",
+      "example": "快未必就是好。",
+      "audio": "vocab/weibi.mp3"
+    },
+    {
+      "id": "bfang",
+      "hanzi": "不妨",
+      "pinyin": "bùfáng",
+      "meaning": "cứ thử",
+      "example": "你不妨换一种方法。",
+      "audio": "vocab/bfang.mp3"
+    },
+    {
+      "id": "yqi",
+      "hanzi": "与其",
+      "pinyin": "yǔqí",
+      "meaning": "thay vì",
+      "example": "与其抱怨，不如行动。",
+      "audio": "vocab/yqi.mp3"
+    },
+    {
+      "id": "ningke",
+      "hanzi": "宁可",
+      "pinyin": "nìngkě",
+      "meaning": "thà",
+      "example": "我宁可慢一点，也要做准确。",
+      "audio": "vocab/ningke.mp3"
+    },
+    {
+      "id": "yidan",
+      "hanzi": "一旦",
+      "pinyin": "yídàn",
+      "meaning": "một khi",
+      "example": "一旦决定就坚持下去。",
+      "audio": "vocab/yidan.mp3"
+    },
+    {
+      "id": "jishi",
+      "hanzi": "即使",
+      "pinyin": "jíshǐ",
+      "meaning": "cho dù",
+      "example": "即使失败，也要总结经验。",
+      "audio": "vocab/jishi.mp3"
+    },
+    {
+      "id": "jiran",
+      "hanzi": "既然",
+      "pinyin": "jìrán",
+      "meaning": "đã vậy",
+      "example": "既然选择了，就别后悔。",
+      "audio": "vocab/jiran.mp3"
+    },
+    {
+      "id": "jinguan",
+      "hanzi": "尽管",
+      "pinyin": "jǐnguǎn",
+      "meaning": "mặc dù",
+      "example": "尽管很累，他仍然坚持。",
+      "audio": "vocab/jinguan.mp3"
+    },
+    {
+      "id": "youcikejian",
+      "hanzi": "由此可见",
+      "pinyin": "yóucǐ kějiàn",
+      "meaning": "từ đó có thể thấy",
+      "example": "由此可见，沟通很重要。",
+      "audio": "vocab/youcikejian.mp3"
+    },
+    {
+      "id": "bkebimian",
+      "hanzi": "不可避免",
+      "pinyin": "bùkě bìmiǎn",
+      "meaning": "không thể tránh",
+      "example": "竞争是不可避免的。",
+      "audio": "vocab/bkebimian.mp3"
+    },
+    {
+      "id": "wlnrhe",
+      "hanzi": "无论如何",
+      "pinyin": "wúlùn rúhé",
+      "meaning": "dù thế nào",
+      "example": "无论如何，诚信不能丢。",
+      "audio": "vocab/wlnrhe.mp3"
+    },
+    {
+      "id": "huanjhuashuo",
+      "hanzi": "换句话说",
+      "pinyin": "huàn jù huà shuō",
+      "meaning": "nói cách khác",
+      "example": "换句话说，方法比速度重要。",
+      "audio": "vocab/huanjhuashuo.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "逻辑",
+      "pinyin": "luóji",
+      "meaning": "logic",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "证据",
+      "pinyin": "zhèngjù",
+      "meaning": "bằng chứng",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "立刻",
+      "pinyin": "lìkè",
+      "meaning": "ngay lập tức",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "启示",
+      "pinyin": "qǐshì",
+      "meaning": "gợi mở, bài học",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "爽快",
+      "pinyin": "shuǎngkuài",
+      "meaning": "thẳng thắn, sảng khoái",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "巴不得",
+      "pinyin": "bābude",
+      "meaning": "chỉ mong sao",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "speaker": "旁白:",
+      "chinese": "在这一课里，我们通过“宜居城市”这个主题，讨论现代生活中常见却容易被忽略的问题。",
+      "pinyin": "",
+      "vietnamese": "Trong bài này, chúng ta thông qua chủ đề “宜居城市” để bàn về một vấn đề thường gặp nhưng dễ bị bỏ qua trong đời sống hiện đại.",
+      "audio": "dialogue/001.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "我以前总觉得改善只是一个简单的词，可是经历多了以后，才发现它和维持、促进都有关系。",
+      "pinyin": "",
+      "vietnamese": "Trước đây tôi luôn nghĩ “改善” chỉ là một từ đơn giản, nhưng trải nghiệm nhiều rồi mới thấy nó liên quan đến 维持 và 促进.",
+      "audio": "dialogue/002.mp3"
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "没错。尤其在面对形成的时候，一个人的避免往往会影响最后的结果。",
+      "pinyin": "",
+      "vietnamese": "Đúng vậy. Đặc biệt khi đối mặt với 形成, 避免 của một người thường ảnh hưởng đến kết quả cuối cùng.",
+      "audio": "dialogue/003.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "与其急着下结论，不如先观察事实，听听不同的声音，再形成自己的导致。",
+      "pinyin": "",
+      "vietnamese": "Thay vì vội kết luận, tốt hơn nên quan sát sự thật, lắng nghe nhiều tiếng nói khác nhau rồi hình thành 导致 của mình.",
+      "audio": "dialogue/004.mp3"
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "即使过程不轻松，也能让我们学会体现，并且逐渐提高适应。",
+      "pinyin": "",
+      "vietnamese": "Cho dù quá trình không dễ dàng, nó vẫn giúp chúng ta học cách 体现 và dần nâng cao 适应.",
+      "audio": "dialogue/005.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "由此可见，真正重要的并非表面的成功，而是人在过程中积累的透露和强调。",
+      "pinyin": "",
+      "vietnamese": "Từ đó có thể thấy, điều thật sự quan trọng không phải thành công bề mặt, mà là 透露 và 强调 tích lũy trong quá trình.",
+      "audio": "dialogue/006.mp3"
+    },
+    {
+      "speaker": "旁白:",
+      "chinese": "这也是学习高级汉语的意义：用更准确的语言，表达更复杂的想法。",
+      "pinyin": "",
+      "vietnamese": "Đây cũng là ý nghĩa của việc học tiếng Trung nâng cao: dùng ngôn ngữ chính xác hơn để diễn đạt suy nghĩ phức tạp hơn.",
+      "audio": "dialogue/007.mp3"
+    }
+  ],
+  "story": [
+    {
+      "title": "Đọc mở rộng: Một thành phố đáng sống",
+      "chinese": "有一次，Cam 在准备一个关于“宜居城市”的分享。刚开始，他只想把资料堆在一起，后来发现，真正打动人的不是信息数量，而是清楚的逻辑和真实的体验。于是他重新整理例子，删掉空话，加入自己的观察。分享结束后，有同学说：“你讲的不是大道理，而是我们每天都会遇到的选择。”这句话让他意识到，高级表达并不是把句子说得复杂，而是把复杂的问题说清楚。",
+      "pinyin": "",
+      "vietnamese": "Một đoạn đọc mở rộng tự viết theo cùng chủ đề, dùng để luyện đọc hiểu và tóm tắt ở trình độ HSK6."
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: 宜居城市",
+      "content": "Ở trình độ HSK6, người học không chỉ ghi nhớ từ vựng mà còn cần hiểu cách người Trung Quốc trình bày quan điểm: thường đi từ hiện tượng, phân tích nguyên nhân, đưa ví dụ rồi rút ra kết luận. Khi học bài này, hãy chú ý các cụm nối ý như “由此可见”, “换句话说”, “从某种意义上说”."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "不仅……还……",
+      "pattern": "不仅……还……",
+      "structure": "不仅 + A，还 + B",
+      "explanation": "Liên kết hai ý, ý sau thường bổ sung hoặc nâng cấp ý trước.",
+      "examples": [
+        "阅读不仅能积累知识，还能训练判断力。",
+        "旅行不仅是放松，还是一种学习。"
+      ]
+    },
+    {
+      "title": "之所以……是因为……",
+      "pattern": "之所以……是因为……",
+      "structure": "之所以 + kết quả，是因为 + nguyên nhân",
+      "explanation": "Dùng để giải thích nguyên nhân cốt lõi của một hiện tượng.",
+      "examples": [
+        "他之所以进步快，是因为方法正确。",
+        "沟通之所以重要，是因为它能减少误会。"
+      ]
+    },
+    {
+      "title": "并非……而是……",
+      "pattern": "并非……而是……",
+      "structure": "并非 + phủ định hiểu lầm，而是 + bản chất",
+      "explanation": "Dùng để sửa lại cách hiểu chưa chính xác.",
+      "examples": [
+        "自律并非限制自由，而是保护自由。",
+        "失败并非终点，而是新的开始。"
+      ]
+    },
+    {
+      "title": "由此可见",
+      "pattern": "由此可见",
+      "structure": "由此可见 + kết luận",
+      "explanation": "Dùng để rút ra kết luận từ ví dụ hoặc phân tích trước đó.",
+      "examples": [
+        "由此可见，细节体现态度。",
+        "由此可见，信任需要长期积累。"
+      ]
+    },
+    {
+      "title": "不妨",
+      "pattern": "不妨",
+      "structure": "主语 + 不妨 + thử làm gì",
+      "explanation": "Đưa ra lời khuyên mềm, nghĩa là “cứ thử”.",
+      "examples": [
+        "遇到困难时，你不妨换个角度。",
+        "如果效率不高，不妨先整理计划。"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "改善 nghĩa là gì?",
+      "options": [
+        "cải thiện",
+        "duy trì",
+        "thúc đẩy",
+        "hình thành"
+      ],
+      "answer": "cải thiện"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Cấu trúc nào diễn đạt “thay vì A, chi bằng B”?",
+      "options": [
+        "与其A，不如B",
+        "虽然A，但是B",
+        "因为A，所以B",
+        "一边A，一边B"
+      ],
+      "answer": "与其A，不如B"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: ___一直抱怨，不如立刻行动。",
+      "answer": "与其"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: ___遇到挫折，也不要轻易放弃。",
+      "answer": "即使"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 不如 / 与其 / 行动 / 抱怨",
+      "answer": "与其抱怨，不如行动"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 也 / 即使 / 坚持 / 失败",
+      "answer": "即使失败，也坚持"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 与其一直抱怨，所以不如立刻行动。",
+      "answer": "与其一直抱怨，不如立刻行动"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 即使很困难，但是也要坚持。",
+      "answer": "即使很困难，也要坚持"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 这个主题让我们重新理解改善。",
+      "answer": "Chủ đề này khiến chúng ta hiểu lại về cải thiện"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Thay vì phàn nàn, chi bằng thay đổi phương pháp.",
+      "answer": "与其抱怨，不如改变方法"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Cho dù áp lực lớn, chúng ta cũng không nên bỏ cuộc.",
+      "answer": "即使压力很大，我们也不应该放弃"
+    },
+    {
+      "type": "reading",
+      "question": "Theo bài khóa, điều quan trọng khi học tiếng Trung nâng cao là gì?",
+      "answer": "用更准确的语言，表达更复杂的想法"
+    },
+    {
+      "type": "reading",
+      "question": "Trong câu chuyện mở rộng, điều gì làm bài chia sẻ cảm động hơn?",
+      "answer": "清楚的逻辑和真实的体验"
+    },
+    {
+      "type": "writing",
+      "question": "Viết một đoạn 80–120 chữ tiếng Trung về chủ đề “宜居城市”, dùng ít nhất 3 từ mới trong bài.",
+      "answer": "开放题。参考：我认为这个主题和我们的生活关系密切。与其只看表面，不如认真观察原因。即使过程不容易，也能帮助我们形成更成熟的判断。"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  },
+  "learningPath": {
+    "mode": "sequential",
+    "sections": [
+      "vocabulary",
+      "extendedVocabulary",
+      "lessonText",
+      "story",
+      "culture",
+      "grammar",
+      "exercises"
+    ],
+    "allowSkip": false,
+    "reviewAfterComplete": true
+  },
+  "vocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "gaishan",
+          "hanzi": "改善",
+          "pinyin": "gǎishàn",
+          "meaning": "cải thiện",
+          "example": "我们要改善学习方法。",
+          "audio": "vocab/gaishan.mp3"
+        },
+        {
+          "id": "weichi",
+          "hanzi": "维持",
+          "pinyin": "wéichí",
+          "meaning": "duy trì",
+          "example": "维持关系需要耐心。",
+          "audio": "vocab/weichi.mp3"
+        },
+        {
+          "id": "cjin",
+          "hanzi": "促进",
+          "pinyin": "cùjìn",
+          "meaning": "thúc đẩy",
+          "example": "阅读能促进思考。",
+          "audio": "vocab/cjin.mp3"
+        },
+        {
+          "id": "xingcheng",
+          "hanzi": "形成",
+          "pinyin": "xíngchéng",
+          "meaning": "hình thành",
+          "example": "习惯不是一天形成的。",
+          "audio": "vocab/xingcheng.mp3"
+        },
+        {
+          "id": "bimian",
+          "hanzi": "避免",
+          "pinyin": "bìmiǎn",
+          "meaning": "tránh",
+          "example": "提前准备可以避免错误。",
+          "audio": "vocab/bimian.mp3"
+        },
+        {
+          "id": "daozhi",
+          "hanzi": "导致",
+          "pinyin": "dǎozhì",
+          "meaning": "dẫn đến",
+          "example": "粗心会导致失败。",
+          "audio": "vocab/daozhi.mp3"
+        },
+        {
+          "id": "tixian",
+          "hanzi": "体现",
+          "pinyin": "tǐxiàn",
+          "meaning": "thể hiện",
+          "example": "细节体现态度。",
+          "audio": "vocab/tixian.mp3"
+        },
+        {
+          "id": "shiying",
+          "hanzi": "适应",
+          "pinyin": "shìyìng",
+          "meaning": "thích ứng",
+          "example": "人要适应变化。",
+          "audio": "vocab/shiying.mp3"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "items": [
+        {
+          "id": "toul",
+          "hanzi": "透露",
+          "pinyin": "tòulù",
+          "meaning": "tiết lộ",
+          "example": "表情透露了他的想法。",
+          "audio": "vocab/toul.mp3"
+        },
+        {
+          "id": "qiangdiao",
+          "hanzi": "强调",
+          "pinyin": "qiángdiào",
+          "meaning": "nhấn mạnh",
+          "example": "老师强调复习的重要性。",
+          "audio": "vocab/qiangdiao.mp3"
+        },
+        {
+          "id": "xiyin",
+          "hanzi": "吸引",
+          "pinyin": "xīyǐn",
+          "meaning": "thu hút",
+          "example": "好故事能吸引读者。",
+          "audio": "vocab/xiyin.mp3"
+        },
+        {
+          "id": "jifa",
+          "hanzi": "激发",
+          "pinyin": "jīfā",
+          "meaning": "khơi dậy",
+          "example": "问题能激发好奇心。",
+          "audio": "vocab/jifa.mp3"
+        },
+        {
+          "id": "yilai",
+          "hanzi": "依赖",
+          "pinyin": "yīlài",
+          "meaning": "dựa dẫm",
+          "example": "不要过分依赖手机。",
+          "audio": "vocab/yilai.mp3"
+        },
+        {
+          "id": "nanmian",
+          "hanzi": "难免",
+          "pinyin": "nánmiǎn",
+          "meaning": "khó tránh",
+          "example": "学习中难免会犯错。",
+          "audio": "vocab/nanmian.mp3"
+        },
+        {
+          "id": "bijing",
+          "hanzi": "毕竟",
+          "pinyin": "bìjìng",
+          "meaning": "dù sao",
+          "example": "毕竟经验需要时间积累。",
+          "audio": "vocab/bijing.mp3"
+        },
+        {
+          "id": "xianran",
+          "hanzi": "显然",
+          "pinyin": "xiǎnrán",
+          "meaning": "rõ ràng",
+          "example": "显然这个办法更合适。",
+          "audio": "vocab/xianran.mp3"
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "items": [
+        {
+          "id": "youqi",
+          "hanzi": "尤其",
+          "pinyin": "yóuqí",
+          "meaning": "đặc biệt là",
+          "example": "他尤其喜欢历史。",
+          "audio": "vocab/youqi.mp3"
+        },
+        {
+          "id": "faner",
+          "hanzi": "反而",
+          "pinyin": "fǎn’ér",
+          "meaning": "ngược lại",
+          "example": "批评太多反而没效果。",
+          "audio": "vocab/faner.mp3"
+        },
+        {
+          "id": "zongzhi",
+          "hanzi": "总之",
+          "pinyin": "zǒngzhī",
+          "meaning": "tóm lại",
+          "example": "总之，态度决定结果。",
+          "audio": "vocab/zongzhi.mp3"
+        },
+        {
+          "id": "zhiy",
+          "hanzi": "至于",
+          "pinyin": "zhìyú",
+          "meaning": "còn về",
+          "example": "至于细节，明天再讨论。",
+          "audio": "vocab/zhiy.mp3"
+        },
+        {
+          "id": "weibi",
+          "hanzi": "未必",
+          "pinyin": "wèibì",
+          "meaning": "chưa chắc",
+          "example": "快未必就是好。",
+          "audio": "vocab/weibi.mp3"
+        },
+        {
+          "id": "bfang",
+          "hanzi": "不妨",
+          "pinyin": "bùfáng",
+          "meaning": "cứ thử",
+          "example": "你不妨换一种方法。",
+          "audio": "vocab/bfang.mp3"
+        },
+        {
+          "id": "yqi",
+          "hanzi": "与其",
+          "pinyin": "yǔqí",
+          "meaning": "thay vì",
+          "example": "与其抱怨，不如行动。",
+          "audio": "vocab/yqi.mp3"
+        },
+        {
+          "id": "ningke",
+          "hanzi": "宁可",
+          "pinyin": "nìngkě",
+          "meaning": "thà",
+          "example": "我宁可慢一点，也要做准确。",
+          "audio": "vocab/ningke.mp3"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "items": [
+        {
+          "id": "yidan",
+          "hanzi": "一旦",
+          "pinyin": "yídàn",
+          "meaning": "một khi",
+          "example": "一旦决定就坚持下去。",
+          "audio": "vocab/yidan.mp3"
+        },
+        {
+          "id": "jishi",
+          "hanzi": "即使",
+          "pinyin": "jíshǐ",
+          "meaning": "cho dù",
+          "example": "即使失败，也要总结经验。",
+          "audio": "vocab/jishi.mp3"
+        },
+        {
+          "id": "jiran",
+          "hanzi": "既然",
+          "pinyin": "jìrán",
+          "meaning": "đã vậy",
+          "example": "既然选择了，就别后悔。",
+          "audio": "vocab/jiran.mp3"
+        },
+        {
+          "id": "jinguan",
+          "hanzi": "尽管",
+          "pinyin": "jǐnguǎn",
+          "meaning": "mặc dù",
+          "example": "尽管很累，他仍然坚持。",
+          "audio": "vocab/jinguan.mp3"
+        },
+        {
+          "id": "youcikejian",
+          "hanzi": "由此可见",
+          "pinyin": "yóucǐ kějiàn",
+          "meaning": "từ đó có thể thấy",
+          "example": "由此可见，沟通很重要。",
+          "audio": "vocab/youcikejian.mp3"
+        },
+        {
+          "id": "bkebimian",
+          "hanzi": "不可避免",
+          "pinyin": "bùkě bìmiǎn",
+          "meaning": "không thể tránh",
+          "example": "竞争是不可避免的。",
+          "audio": "vocab/bkebimian.mp3"
+        },
+        {
+          "id": "wlnrhe",
+          "hanzi": "无论如何",
+          "pinyin": "wúlùn rúhé",
+          "meaning": "dù thế nào",
+          "example": "无论如何，诚信不能丢。",
+          "audio": "vocab/wlnrhe.mp3"
+        },
+        {
+          "id": "huanjhuashuo",
+          "hanzi": "换句话说",
+          "pinyin": "huàn jù huà shuō",
+          "meaning": "nói cách khác",
+          "example": "换句话说，方法比速度重要。",
+          "audio": "vocab/huanjhuashuo.mp3"
+        }
+      ]
+    }
+  ],
+  "extendedVocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "hanzi": "逻辑",
+          "pinyin": "luóji",
+          "meaning": "logic",
+          "tag": "mở rộng"
+        },
+        {
+          "hanzi": "证据",
+          "pinyin": "zhèngjù",
+          "meaning": "bằng chứng",
+          "tag": "mở rộng"
+        },
+        {
+          "hanzi": "立刻",
+          "pinyin": "lìkè",
+          "meaning": "ngay lập tức",
+          "tag": "mở rộng"
+        },
+        {
+          "hanzi": "启示",
+          "pinyin": "qǐshì",
+          "meaning": "gợi mở, bài học",
+          "tag": "mở rộng"
+        },
+        {
+          "hanzi": "爽快",
+          "pinyin": "shuǎngkuài",
+          "meaning": "thẳng thắn, sảng khoái",
+          "tag": "mở rộng"
+        },
+        {
+          "hanzi": "巴不得",
+          "pinyin": "bābude",
+          "meaning": "chỉ mong sao",
+          "tag": "mở rộng"
+        }
+      ]
+    }
+  ],
+  "exerciseGroups": {
+    "multiple-choice": [
+      {
+        "type": "multiple-choice",
+        "question": "改善 nghĩa là gì?",
+        "options": [
+          "cải thiện",
+          "duy trì",
+          "thúc đẩy",
+          "hình thành"
+        ],
+        "answer": "cải thiện"
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Cấu trúc nào diễn đạt “thay vì A, chi bằng B”?",
+        "options": [
+          "与其A，不如B",
+          "虽然A，但是B",
+          "因为A，所以B",
+          "一边A，一边B"
+        ],
+        "answer": "与其A，不如B"
+      }
+    ],
+    "fill-blank": [
+      {
+        "type": "fill-blank",
+        "question": "Điền từ: ___一直抱怨，不如立刻行动。",
+        "answer": "与其"
+      },
+      {
+        "type": "fill-blank",
+        "question": "Điền từ: ___遇到挫折，也不要轻易放弃。",
+        "answer": "即使"
+      }
+    ],
+    "sentence-order": [
+      {
+        "type": "sentence-order",
+        "question": "Xếp câu: 不如 / 与其 / 行动 / 抱怨",
+        "answer": "与其抱怨，不如行动"
+      },
+      {
+        "type": "sentence-order",
+        "question": "Xếp câu: 也 / 即使 / 坚持 / 失败",
+        "answer": "即使失败，也坚持"
+      }
+    ],
+    "error-correction": [
+      {
+        "type": "error-correction",
+        "question": "Sửa câu sai: 与其一直抱怨，所以不如立刻行动。",
+        "answer": "与其一直抱怨，不如立刻行动"
+      },
+      {
+        "type": "error-correction",
+        "question": "Sửa câu sai: 即使很困难，但是也要坚持。",
+        "answer": "即使很困难，也要坚持"
+      }
+    ],
+    "translation": [
+      {
+        "type": "translation",
+        "question": "Dịch sang tiếng Việt: 这个主题让我们重新理解改善。",
+        "answer": "Chủ đề này khiến chúng ta hiểu lại về cải thiện"
+      },
+      {
+        "type": "translation",
+        "question": "Dịch sang tiếng Trung: Thay vì phàn nàn, chi bằng thay đổi phương pháp.",
+        "answer": "与其抱怨，不如改变方法"
+      },
+      {
+        "type": "translation",
+        "question": "Dịch sang tiếng Trung: Cho dù áp lực lớn, chúng ta cũng không nên bỏ cuộc.",
+        "answer": "即使压力很大，我们也不应该放弃"
+      }
+    ],
+    "reading": [
+      {
+        "type": "reading",
+        "question": "Theo bài khóa, điều quan trọng khi học tiếng Trung nâng cao là gì?",
+        "answer": "用更准确的语言，表达更复杂的想法"
+      },
+      {
+        "type": "reading",
+        "question": "Trong câu chuyện mở rộng, điều gì làm bài chia sẻ cảm động hơn?",
+        "answer": "清楚的逻辑和真实的体验"
+      }
+    ],
+    "writing": [
+      {
+        "type": "writing",
+        "question": "Viết một đoạn 80–120 chữ tiếng Trung về chủ đề “宜居城市”, dùng ít nhất 3 từ mới trong bài.",
+        "answer": "开放题。参考：我认为这个主题和我们的生活关系密切。与其只看表面，不如认真观察原因。即使过程不容易，也能帮助我们形成更成熟的判断。"
+      }
+    ]
+  }
+}

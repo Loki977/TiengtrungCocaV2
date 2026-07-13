@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khóa học HSK – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/giaotrinhhsk.css" />
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 60%, #FFB366 100%);
+      padding: calc(var(--header-h) + 56px) 0 56px;
+      position: relative; overflow: hidden;
+      text-align: center; color: #fff;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 30% 50%, rgba(255,255,255,.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-hero h1 { color: #fff; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 12px; }
+    .page-hero p  { color: rgba(255,255,255,.88); font-size: 1rem; max-width: 560px; margin-inline: auto; }
+    .page-hero__wave { line-height: 0; margin-bottom: -2px; }
+    .page-hero__wave svg { width: 100%; height: 60px; display: block; }
+
+    /* ── HSK Tabs ── */
+    .hsk-section { background: var(--bg); padding-block: 56px; }
+    .hsk-tabs-wrap {
+      display: flex; gap: 8px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .hsk-tab {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 12px 20px; border-radius: var(--r-lg);
+      border: 2px solid var(--border); background: var(--bg-card);
+      cursor: pointer; font-family: 'Baloo 2', cursive; font-weight: 700;
+      transition: all var(--t-base); min-width: 96px; position: relative;
+    }
+    .hsk-tab:hover { border-color: var(--orange); transform: translateY(-2px); }
+    .hsk-tab.active { background: var(--orange); border-color: var(--orange); color: #fff; box-shadow: var(--shadow-orange); }
+    .hsk-tab__level { font-size: 1.05rem; }
+    .hsk-tab__name  { font-size: .7rem; opacity: .85; font-family: 'Poppins', sans-serif; font-weight: 500; }
+    .hsk-tab__dot   { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; }
+    .hsk-tab__dot--done   { background: var(--green); }
+    .hsk-tab__dot--active { background: var(--orange); }
+    .hsk-tab.active .hsk-tab__dot--active { background: #fff; }
+
+    /* ── Tab Panel ── */
+    .tab-panel { display: none; animation: fadeUp .3s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── Panel Header ── */
+    .panel-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; margin-bottom: 32px; padding: 28px 32px;
+      background: var(--bg-card); border-radius: var(--r-lg); border: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .panel-header__info h2 { font-size: 1.4rem; margin-bottom: 6px; }
+    .panel-header__meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+    .ph-stat { display: flex; align-items: center; gap: 6px; font-size: .85rem; color: var(--text-muted); }
+    .ph-stat strong { color: var(--charcoal); font-weight: 700; }
+    .panel-header__progress-wrap { min-width: 200px; }
+    .panel-header__progress-wrap p { font-size: .8rem; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .ph-bar { height: 10px; background: var(--border); border-radius: var(--r-full); overflow: hidden; }
+    .ph-bar__fill { height: 100%; border-radius: var(--r-full); background: linear-gradient(90deg, var(--orange), var(--orange-light)); transition: width .8s; }
+
+    /* ── Lesson List: đồng bộ style với HSK Luyện viết ── */
+    .lesson-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .lesson-chapter { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; color: var(--text-muted); margin: 4px 0 2px; }
+    .lesson-chapter::before, .lesson-chapter::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .lesson-item {
+      position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) 34px;
+      gap: 18px; align-items: center; min-height: 154px; padding: 22px 24px;
+      border: 1px solid rgba(255, 194, 26, .38); border-radius: 20px;
+      background: linear-gradient(138deg, rgba(255,255,255,.98) 0%, rgba(255,253,245,.97) 52%, rgba(255,244,202,.58) 100%);
+      box-shadow: 0 14px 34px rgba(39,62,92,.10); overflow: hidden;
+      transition: transform 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
+      text-decoration: none; color: inherit;
+    }
+    .lesson-item::before {
+      content: ''; position: absolute; inset: auto -22px -52px -22px; height: 96px;
+      background: radial-gradient(ellipse at 18% 90%, rgba(255,255,255,.88) 0 20%, transparent 21%), radial-gradient(ellipse at 52% 92%, rgba(255,255,255,.72) 0 18%, transparent 19%), radial-gradient(ellipse at 82% 90%, rgba(255,255,255,.82) 0 22%, transparent 23%), linear-gradient(135deg, transparent 0 28%, rgba(247,180,0,.08) 29% 42%, transparent 43%);
+      opacity: .76; pointer-events: none;
+    }
+    .lesson-item.clickable-lesson { cursor: pointer; }
+    .lesson-item:hover { transform: translateY(-3px); border-color: rgba(247,180,0,.68); box-shadow: 0 21px 42px rgba(39,62,92,.15); }
+    .lesson-item.locked { opacity: .58; cursor: not-allowed; }
+    .lesson-item.locked:hover { transform: none; border-color: rgba(255,194,26,.28); box-shadow: 0 14px 34px rgba(39,62,92,.08); }
+    .lesson-item.completed { border-color: rgba(56,176,0,.45); background: linear-gradient(138deg, #fff 0%, #f7fff1 55%, rgba(218,255,199,.65) 100%); }
+    .lesson-item.active-lesson { border-color: rgba(255,122,0,.58); }
+    .lesson-item__icon { position: relative; z-index: 1; display: grid; width: 58px; height: 58px; place-items: center; border-radius: 999px; color: #fff; background: linear-gradient(135deg, var(--yellow), #ff9f1a); box-shadow: inset 0 0 0 7px rgba(255,249,229,.48), 0 10px 20px rgba(247,180,0,.22); font-size: 1.35rem; font-weight: 900; }
+    .lesson-item.completed .lesson-item__icon { background: linear-gradient(135deg, var(--green), #6bd85c); }
+    .lesson-item__info { position: relative; z-index: 1; min-width: 0; }
+    .lesson-item__num { display: inline-flex; align-items: center; justify-content: center; margin-bottom: 9px; padding: 7px 11px; border-radius: 999px; color: #bf6a00; background: rgba(255,194,26,.14); font-size: 13px; font-weight: 950; letter-spacing: 0; text-transform: none; }
+    .lesson-item.completed .lesson-item__num { color: var(--green-dark); background: var(--green-light); }
+    .lesson-item__title { margin: 0; color: var(--charcoal); font-family: 'Baloo 2', cursive; font-size: clamp(20px, 2.2vw, 25px); line-height: 1.22; font-weight: 950; }
+    .lesson-item__desc { margin: 5px 0 0; color: var(--text-muted); font-size: 14px; line-height: 1.45; font-weight: 650; }
+    .lesson-item__bar-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+    .lesson-item__bar { flex: 1 1 120px; height: 7px; background: rgba(255,255,255,.82); border-radius: var(--r-full); overflow: hidden; }
+    .lesson-item__bar-fill { height: 100%; border-radius: var(--r-full); background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+    .lesson-item.completed .lesson-item__bar-fill { background: linear-gradient(90deg, var(--green), #82e06f); }
+    .lesson-item__bar-pct { font-size: 12px; font-weight: 900; color: var(--text-muted); }
+    .lesson-item__action { position: relative; z-index: 1; justify-self: end; display: flex; align-items: center; gap: 10px; }
+    .lesson-item__xp { display: inline-flex; align-items: center; padding: 7px 10px; border-radius: 999px; color: var(--text-muted); background: rgba(255,255,255,.72); font-size: 13px; font-weight: 850; white-space: nowrap; }
+    .lesson-item__chevron { color: var(--orange); font-size: 56px; line-height: 1; font-weight: 700; }
+    .lesson-status { position: absolute; top: 14px; right: 16px; z-index: 2; font-size: 12px; font-weight: 900; padding: 6px 10px; border-radius: var(--r-full); }
+    .lesson-status--done { background: var(--green-light); color: var(--green-dark); }
+    .lesson-status--active { background: var(--orange-xlight); color: var(--orange-dark); }
+    .lesson-status--locked { background: var(--border); color: var(--text-light); }
+    /* ── Lesson Detail Panel ── */
+    #lessonDetail { animation: fadeUp .35s ease; }
+
+    .lesson-detail-wrap { max-width: 860px; margin-inline: auto; }
+
+    .detail-back-row {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .detail-breadcrumb {
+      font-size: .85rem; color: var(--text-muted); font-weight: 500;
+    }
+
+    .detail-hero {
+      display: flex; align-items: flex-start; gap: 24px;
+      background: linear-gradient(135deg, var(--orange-xlight), #fff);
+      border: 2px solid rgba(255,122,0,.2);
+      border-radius: var(--r-xl); padding: 32px;
+      margin-bottom: 28px; flex-wrap: wrap;
+    }
+    .detail-hero__icon {
+      font-size: 3.5rem; line-height: 1;
+      width: 80px; height: 80px;
+      background: #fff; border-radius: var(--r-lg);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .detail-hero__body { flex: 1; min-width: 200px; }
+    .detail-hero__level { font-size: .75rem; font-weight: 700; color: var(--text-muted); background: var(--border); padding: 2px 10px; border-radius: var(--r-full); }
+    .detail-hero__title { font-size: 1.6rem; font-family: 'Baloo 2', cursive; color: var(--charcoal); margin: 6px 0 4px; }
+    .detail-hero__desc  { font-size: .9rem; color: var(--text-muted); }
+    .detail-hero__meta  { display: flex; gap: 16px; margin-left: auto; flex-shrink: 0; }
+    .detail-meta-stat   { text-align: center; background: #fff; border-radius: var(--r-md); padding: 12px 20px; box-shadow: var(--shadow-sm); }
+    .detail-meta-val    { display: block; font-family: 'Baloo 2', cursive; font-size: 1.6rem; font-weight: 800; color: var(--orange); line-height: 1; }
+    .detail-meta-lbl    { display: block; font-size: .72rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Detail tabs */
+    .detail-tabs-row {
+      display: flex; gap: 8px; margin-bottom: 24px;
+    }
+    .detail-tab-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: var(--r-full);
+      border: 2px solid var(--border); background: var(--bg-card);
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .95rem;
+      color: var(--text-muted); cursor: pointer;
+      transition: all var(--t-base);
+    }
+    .detail-tab-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .detail-tab-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; box-shadow: var(--shadow-orange); }
+    .detail-tab-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,255,255,.3); font-size: .72rem; font-weight: 800;
+    }
+    .detail-tab-btn:not(.active) .detail-tab-count { background: var(--border); color: var(--text-muted); }
+
+    /* ── Vocabulary Grid ── */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .vocab-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 8px;
+      transition: all var(--t-base);
+      position: relative; overflow: hidden;
+    }
+    .vocab-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), var(--orange-light));
+      opacity: 0; transition: opacity var(--t-fast);
+    }
+    .vocab-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .vocab-card:hover::before { opacity: 1; }
+
+    .vocab-card__top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+    }
+    .vocab-card__hanzi {
+      font-family: 'Baloo 2', cursive; font-size: 2.8rem; font-weight: 800;
+      color: var(--charcoal); line-height: 1;
+    }
+    .vocab-card__speak {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--orange); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer; border: none; flex-shrink: 0;
+      transition: transform var(--t-fast), box-shadow var(--t-fast);
+      box-shadow: 0 3px 10px rgba(255,122,0,.3);
+    }
+    .vocab-card__speak:hover { transform: scale(1.12); box-shadow: 0 5px 16px rgba(255,122,0,.45); }
+    .vocab-card__speak.speaking { animation: speakPulse .7s ease; }
+    @keyframes speakPulse { 0%,100%{transform:scale(1)} 40%{transform:scale(1.25)} 70%{transform:scale(.95)} }
+
+    .vocab-card__pinyin {
+      font-size: 1.05rem; font-weight: 600; color: var(--orange); letter-spacing: .03em;
+    }
+    .vocab-card__type {
+      display: inline-block; padding: 2px 10px;
+      border-radius: var(--r-full); font-size: .7rem; font-weight: 700;
+      background: var(--orange-xlight); color: var(--orange-dark);
+    }
+    .vocab-card__meaning {
+      font-size: 1.05rem; font-weight: 700; color: var(--charcoal);
+      border-top: 1px solid var(--border); padding-top: 8px; margin-top: 2px;
+    }
+    .vocab-card__example {
+      background: var(--bg-section); border-radius: var(--r-sm);
+      padding: 10px 12px; margin-top: 4px;
+    }
+    .vocab-ex-zh { font-size: .88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 3px; }
+    .vocab-ex-vi { font-size: .8rem; color: var(--text-muted); font-style: italic; }
+
+    /* ── Grammar List ── */
+    .grammar-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 32px; }
+    .grammar-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px 28px;
+      transition: all var(--t-base);
+    }
+    .grammar-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); }
+    .grammar-card__header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .grammar-card__num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--teal); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .grammar-card__title { font-family: 'Baloo 2', cursive; font-size: 1.1rem; color: var(--charcoal); margin: 0; }
+
+    .grammar-card__structure {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: var(--bg-section); border-radius: var(--r-md);
+      padding: 12px 16px; margin-bottom: 14px;
+    }
+    .grammar-struct-label { font-size: .75rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+    .grammar-struct-code {
+      font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 700;
+      color: var(--teal); background: var(--teal-light);
+      padding: 4px 14px; border-radius: var(--r-full);
+      border: 1.5px solid rgba(0,188,212,.2);
+    }
+
+    .grammar-card__explanation {
+      font-size: .9rem; color: var(--text); line-height: 1.75; margin-bottom: 14px;
+    }
+    .grammar-card__example { }
+    .grammar-ex-block {
+      background: linear-gradient(135deg, var(--orange-xlight), #fff);
+      border-left: 4px solid var(--orange);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 12px 16px;
+    }
+    .grammar-ex-zh { font-size: .95rem; font-weight: 600; color: var(--charcoal); margin-bottom: 5px; }
+    .grammar-ex-vi { font-size: .85rem; color: var(--text-muted); font-style: italic; }
+
+    /* Detail footer nav */
+    .detail-footer-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; border-top: 1px solid var(--border); margin-top: 8px; gap: 12px; flex-wrap: wrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .lesson-list { grid-template-columns: 1fr; }
+      .lesson-item { grid-template-columns: 52px minmax(0, 1fr) 24px; gap: 12px; min-height: 150px; padding: 19px 18px; }
+      .lesson-item__action { justify-self: end; }
+      .lesson-item__xp { display: none; }
+      .lesson-item__chevron { font-size: 42px; }
+      .panel-header { flex-direction: column; }
+      .detail-hero { flex-direction: column; }
+      .detail-hero__meta { margin-left: 0; }
+      .vocab-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 400px) {
+      .vocab-grid { grid-template-columns: 1fr; }
+      .detail-tabs-row { flex-wrap: wrap; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">HSK</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__link">Trang chủ</a>
+        <a href="hsk.html" class="nav__link active">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge" title="Streak 7 ngày">
+          <span class="streak-badge__icon">🔥</span>
+          <span class="streak-badge__count" data-progress="streak">0</span>
+        </div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+        <a href="profile.html" class="btn btn--primary">Hồ sơ</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="index.html" class="nav__link">Trang chủ</a>
+      <a href="hsk.html" class="nav__link active">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+      <a href="flashcard.html" class="nav__link">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+      <a href="profile.html" class="btn btn--primary btn--full" style="text-align:center">Hồ sơ</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="badge badge--white" style="margin-bottom:16px">📚 Chương trình học</span>
+        <h1>Khóa học HSK</h1>
+        <p>Hệ thống bài học có cấu trúc rõ ràng theo tiêu chuẩn quốc tế HSK mới nhất</p>
+      </div>
+      <div class="page-hero__wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#FFFDF9" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- HSK Tabs & Lessons -->
+    <section class="hsk-section">
+      <div class="container">
+        <!-- Tab Buttons -->
+        <div class="hsk-tabs-wrap" role="tablist">
+          <button class="hsk-tab active" role="tab" data-tab="1" aria-selected="true">
+            <span class="hsk-tab__dot hsk-tab__dot--done"></span>
+            <span class="hsk-tab__level">HSK 1</span>
+            <span class="hsk-tab__name">Sơ Cấp</span>
+          </button>
+          <button class="hsk-tab" role="tab" data-tab="2">
+            <span class="hsk-tab__dot hsk-tab__dot--active"></span>
+            <span class="hsk-tab__level">HSK 2</span>
+            <span class="hsk-tab__name">Sơ Cấp +</span>
+          </button>
+          <button class="hsk-tab" role="tab" data-tab="3">
+            <span class="hsk-tab__level">HSK 3</span>
+            <span class="hsk-tab__name">Trung Cấp</span>
+          </button>
+          <button class="hsk-tab" role="tab" data-tab="4">
+            <span class="hsk-tab__level">HSK 4</span>
+            <span class="hsk-tab__name">Trung Cấp +</span>
+          </button>
+          <button class="hsk-tab" role="tab" data-tab="5">
+            <span class="hsk-tab__level">HSK 5</span>
+            <span class="hsk-tab__name">Nâng Cao</span>
+          </button>
+          <button class="hsk-tab" role="tab" data-tab="6">
+            <span class="hsk-tab__level">HSK 6</span>
+            <span class="hsk-tab__name">Thành Thạo</span>
+          </button>
+        </div>
+
+        <!-- Course panel (lesson list) — rendered by hsk.js -->
+        <div id="tabPanels"></div>
+
+        <!-- Lesson detail panel — populated by hsk.js when a lesson is clicked -->
+        <div id="lessonDetail" style="display:none"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo logo--white">
+          <span class="logo__icon">🍊</span>
+          <span class="logo__text">Cam &amp; Coca</span>
+        </a>
+        <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo.</p>
+        <div class="footer__social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <h4>Học tập</h4>
+        <a href="hsk.html">Lộ trình HSK</a>
+        <a href="flashcard.html">Flashcard</a>
+        <a href="vocabulary.html">Từ vựng</a>
+      </div>
+      <div class="footer__links">
+        <h4>Cộng đồng</h4>
+        <a href="#">Diễn đàn</a>
+        <a href="#">Bảng xếp hạng</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer__links">
+        <h4>Hỗ trợ</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Liên hệ</a>
+        <a href="#">Điều khoản</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2024 Tiếng Trung Cam &amp; Coca. Made with ❤️ in Vietnam</p>
+      <p class="footer__tagline">学中文，乐无穷</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="modal__close" id="modalClose">✕</button>
+      <div class="modal__logo">🍊</div>
+      <h2 class="modal__title">Chào mừng trở lại!</h2>
+      <p class="modal__subtitle">Đăng nhập để tiếp tục hành trình</p>
+      <form class="modal__form" id="loginForm">
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Mật khẩu</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn--primary btn--full ripple">Đăng nhập</button>
+      </form>
+      <p class="modal__footer-text">Chưa có tài khoản? <a href="profile.html">Đăng ký ngay</a></p>
+    </div>
+  </div>
+
+  <!-- Scripts: data first, then page logic, then shared app -->
+  <script src="assets/js/data.js"></script>
+<script src="assets/js/speech-service.js"></script>
+<script src="assets/js/lesson-render.js"></script>
+<script src="assets/js/hsk.js"></script>
+<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

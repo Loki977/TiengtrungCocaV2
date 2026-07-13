@@ -1,0 +1,1519 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hồ sơ – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <style>
+    /* ── Dark mode ── */
+    body.dark-mode {
+      --bg: #1A1A2E; --bg-card: #16213E; --bg-section: #0F3460;
+      --border: #2A2A4A; --text: #E0E0F0; --charcoal: #F0F0FF;
+      --text-muted: #9090B0; --text-light: #6060A0;
+    }
+    body.dark-mode .header { background: rgba(22,33,62,.92); border-color: #2A2A4A; }
+    body.dark-mode .footer { background: #0D0D1A; }
+    body.dark-mode .form-group input { background: var(--bg); border-color: var(--border); color: var(--text); }
+
+    /* ── Auth Page ── */
+    .auth-page {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--header-h) + 32px) 16px 48px;
+    }
+    .auth-container {
+      width: 100%; max-width: 460px;
+    }
+    .auth-logo { text-align: center; margin-bottom: 32px; }
+    .auth-logo .logo__icon { font-size: 3rem; }
+    .auth-logo h2 { color: #fff; margin-top: 8px; }
+    .auth-logo p  { color: rgba(255,255,255,.55); font-size: .9rem; }
+
+    /* Auth card */
+    .auth-card {
+      background: var(--bg-card);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    /* Tabs */
+    .auth-tabs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .auth-tab {
+      padding: 16px; text-align: center;
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1rem;
+      cursor: pointer; border: none; background: transparent;
+      color: var(--text-muted); transition: all var(--t-fast);
+      border-bottom: 3px solid transparent;
+    }
+    .auth-tab.active { color: var(--orange); border-bottom-color: var(--orange); background: var(--orange-xlight); }
+
+    /* Auth form panel */
+    .auth-panel { display: none; padding: 32px; }
+    .auth-panel.active { display: block; animation: fadeUp .3s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* OAuth divider */
+    .oauth-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin-block: 20px; color: var(--text-muted); font-size: .8rem;
+    }
+    .oauth-divider::before, .oauth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* OAuth Buttons */
+    .oauth-btns { display: flex; flex-direction: column; gap: 10px; }
+    .oauth-btn {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; padding: 12px 16px;
+      border-radius: var(--r-md); border: 2px solid var(--border);
+      background: var(--bg-card); cursor: pointer; font-family: 'Poppins', sans-serif;
+      font-weight: 600; font-size: .9rem; color: var(--text);
+      transition: all var(--t-fast);
+    }
+    .oauth-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .oauth-btn--google { border-color: #DADCE0; }
+    .oauth-btn--google:hover { border-color: #4285F4; background: #F8FBFF; color: #3C4043; }
+    .oauth-btn--facebook { border-color: #1877F2; color: #1877F2; }
+    .oauth-btn--facebook:hover { background: #1877F2; color: #fff; }
+    .oauth-icon { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+    .oauth-icon--google { background: #fff; border: 1px solid #DADCE0; font-size: .75rem; font-weight: 900; }
+    .oauth-icon--fb { background: #1877F2; color: #fff; font-weight: 900; border-radius: 6px; }
+
+    /* Form submission */
+    .auth-submit-wrap { margin-top: 20px; }
+    .auth-footer-text { text-align: center; font-size: .82rem; color: var(--text-muted); margin-top: 16px; }
+    .auth-footer-text a { color: var(--orange); font-weight: 600; }
+
+    /* ── Profile Page ── */
+    .profile-page { display: none; }
+    .profile-page.show { display: block; }
+
+    /* Profile Hero */
+    .profile-hero {
+      background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 60%, #FFB366 100%);
+      padding: calc(var(--header-h) + 48px) 0 80px;
+      position: relative; overflow: hidden;
+    }
+    .profile-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255,255,255,.1) 0%, transparent 60%);
+    }
+    .profile-hero__inner {
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap; position: relative;
+    }
+
+    /* Avatar */
+    .profile-avatar {
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 4px solid rgba(255,255,255,.5);
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem; cursor: pointer; flex-shrink: 0;
+      position: relative; overflow: hidden;
+      transition: border-color var(--t-fast);
+    }
+    .profile-avatar:hover { border-color: #fff; }
+    .profile-avatar__edit {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.4);
+      color: #fff; font-size: .75rem; font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity var(--t-fast);
+    }
+    .profile-avatar:hover .profile-avatar__edit { opacity: 1; }
+
+    .profile-hero__info { flex: 1; color: #fff; }
+    .profile-hero__name { font-size: clamp(1.5rem, 4vw, 2.2rem); color: #fff; margin-bottom: 4px; }
+    .profile-hero__meta { color: rgba(255,255,255,.8); font-size: .9rem; margin-bottom: 16px; }
+    .profile-hero__badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .profile-badge {
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: var(--r-full);
+      background: rgba(255,255,255,.15); color: #fff;
+      font-size: .8rem; font-weight: 600; border: 1px solid rgba(255,255,255,.25);
+    }
+
+    /* XP Bar in hero */
+    .profile-xp-wrap { margin-top: 16px; max-width: 360px; }
+    .profile-xp-label { display: flex; justify-content: space-between; color: rgba(255,255,255,.8); font-size: .78rem; margin-bottom: 6px; }
+    .profile-xp-bar { height: 8px; background: rgba(255,255,255,.25); border-radius: var(--r-full); overflow: hidden; }
+    .profile-xp-fill { height: 100%; background: #fff; border-radius: var(--r-full); transition: width .8s ease; }
+
+    .profile-hero__wave { line-height: 0; }
+    .profile-hero__wave svg { width: 100%; height: 60px; display: block; }
+
+
+
+    /* ── Plush Chibi Flame Spirit Pet: pure CSS/SVG-like DOM, no image asset ── */
+    .spirit-pet-card {
+      --flame-main: #ff9a1f;
+      --flame-mid: #ffe27a;
+      --flame-core: #fffaf0;
+      --flame-magic: #ffd6ef;
+      --flame-pink: #ff9fba;
+      --body-main: #3f424c;
+      --body-hi: #6d707d;
+      --flame-size: 118px;
+      --pet-breathe: 1;
+      --pet-squash: 1;
+      --pet-float: 0px;
+      --pet-wave: 0deg;
+      --pet-wobble: 0deg;
+      --pet-blink: 1;
+      --pet-cheek: 1;
+      --pet-glow: 1;
+      --pet-intensity: 1;
+      width: min(310px, 100%);
+      min-height: 360px;
+      flex-shrink: 0;
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(255,255,255,.34);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,.13));
+      box-shadow: 0 18px 50px rgba(80, 32, 0, .22);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .spirit-pet-card::before {
+      content: ''; position: absolute; inset: -40%; z-index: -1;
+      background:
+        radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--flame-core), transparent 28%), transparent 29%),
+        radial-gradient(circle at 30% 68%, color-mix(in srgb, var(--flame-magic), transparent 55%), transparent 28%),
+        radial-gradient(circle at 76% 70%, color-mix(in srgb, var(--flame-main), transparent 60%), transparent 31%);
+      animation: flamePetBgPulse 4.2s ease-in-out infinite;
+    }
+    @keyframes flamePetBgPulse { 50% { transform: scale(1.08) rotate(5deg); opacity: .88; } }
+    .spirit-pet-title { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom: 8px; }
+    .spirit-pet-title h3 { margin:0; color:#fff; font-size:1.05rem; }
+    .spirit-pet-chip { padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.28); font-weight:800; font-size:.78rem; }
+    .spirit-pet-stage { position:relative; height: 220px; display:grid; place-items:center; cursor:pointer; perspective: 600px; touch-action: manipulation; }
+    .flame-pet {
+      position: relative;
+      width: var(--flame-size);
+      height: calc(var(--flame-size) * 1.22);
+      display: grid;
+      place-items: center;
+      transform-origin: 50% 90%;
+      transform: translate3d(0, var(--pet-float), 0) rotate(var(--pet-wobble)) scaleX(calc(var(--pet-breathe) * var(--pet-squash))) scaleY(calc(var(--pet-breathe) / var(--pet-squash)));
+      will-change: transform, filter;
+      filter:
+        drop-shadow(0 0 calc(12px * var(--pet-glow)) var(--flame-mid))
+        drop-shadow(0 0 calc(26px * var(--pet-glow)) color-mix(in srgb, var(--flame-main), transparent 28%))
+        drop-shadow(0 17px 20px rgba(20, 15, 25, .18));
+    }
+    .flame-pet__aura,
+    .flame-pet__halo,
+    .flame-pet__ring,
+    .flame-pet__spark,
+    .flame-pet__glitter,
+    .flame-pet__shadow { pointer-events:none; }
+    .flame-pet__aura {
+      position:absolute; inset: -6% -18% -2%; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--flame-mid), transparent 57%), transparent 68%);
+      transform: scale(calc(1 + (var(--pet-breathe) - 1) * 4));
+      opacity: calc(.62 + var(--pet-intensity) * .035);
+      filter: blur(calc(7px + var(--pet-intensity) * .5px));
+    }
+    .flame-pet__halo {
+      position:absolute; z-index:1; left:1%; top:-7%; width:98%; height:83%;
+      border-radius: 50% 50% 43% 43% / 62% 58% 42% 38%;
+      background:
+        radial-gradient(circle at 68% 9%, rgba(255,255,255,.95) 0 3%, transparent 4%),
+        radial-gradient(circle at 81% 22%, rgba(255,210,245,.95) 0 3.2%, transparent 4.2%),
+        radial-gradient(circle at 31% 26%, rgba(255,255,255,.85) 0 2.4%, transparent 3.4%),
+        radial-gradient(circle at 53% 21%, color-mix(in srgb, var(--flame-core), transparent 5%) 0 18%, transparent 28%),
+        linear-gradient(153deg, #fff3a6 0%, var(--flame-mid) 36%, var(--flame-main) 70%, #ff6d9c 100%);
+      clip-path: polygon(8% 74%, 15% 54%, 9% 45%, 24% 43%, 22% 20%, 39% 40%, 54% 0%, 65% 38%, 80% 17%, 78% 46%, 93% 45%, 84% 61%, 97% 75%, 75% 69%, 67% 84%, 50% 75%, 31% 85%, 25% 69%);
+      box-shadow: 0 0 calc(24px * var(--pet-glow)) var(--flame-mid), inset 7px 7px 20px rgba(255,255,255,.55), inset -8px -12px 18px rgba(255,97,50,.18);
+      transform-origin: 50% 83%;
+      transform: rotate(calc(var(--pet-wave) * .6)) scaleY(calc(1 + (var(--pet-breathe) - 1) * 1.2));
+      will-change: transform;
+    }
+    .flame-pet__halo::before,
+    .flame-pet__halo::after {
+      content:''; position:absolute; border-radius: 70% 30% 55% 45%; opacity:.9;
+      background: linear-gradient(155deg, rgba(255,255,255,.85), var(--flame-mid) 42%, var(--flame-main));
+      filter: blur(.1px);
+    }
+    .flame-pet__halo::before { left:26%; top:12%; width:32%; height:50%; transform:rotate(calc(-18deg + var(--pet-wave) * .55)); }
+    .flame-pet__halo::after { right:17%; top:26%; width:22%; height:35%; transform:rotate(calc(28deg + var(--pet-wave) * -.45)); opacity:.65; }
+    .flame-pet__body {
+      position: absolute; z-index: 3; left:14%; bottom:11%; width:72%; height:57%;
+      border-radius: 48% 52% 46% 46% / 47% 48% 50% 50%;
+      background:
+        radial-gradient(circle at 32% 24%, rgba(255,255,255,.22), transparent 18%),
+        radial-gradient(circle at 50% 84%, rgba(0,0,0,.13), transparent 42%),
+        linear-gradient(150deg, var(--body-hi) 0%, var(--body-main) 48%, #2c2e37 100%);
+      box-shadow:
+        inset 9px 9px 20px rgba(255,255,255,.16),
+        inset -10px -16px 20px rgba(0,0,0,.18),
+        0 0 calc(18px * var(--pet-glow)) color-mix(in srgb, var(--flame-mid), transparent 34%);
+      transform-origin: 50% 86%;
+      transform: scaleX(calc(1.03 - (var(--pet-breathe) - 1) * .85)) scaleY(calc(.98 + (var(--pet-breathe) - 1) * 1.25));
+      will-change: transform;
+    }
+    .flame-pet__body::after {
+      content:''; position:absolute; inset:0; border-radius:inherit; opacity:.7;
+      background-image: radial-gradient(circle, rgba(255,255,255,.8) 0 1.1px, transparent 1.7px), radial-gradient(circle, color-mix(in srgb, var(--flame-magic), white 30%) 0 1px, transparent 1.8px);
+      background-size: 21px 21px, 28px 28px; background-position: 4px 7px, 12px 1px;
+      mix-blend-mode: screen;
+    }
+    .flame-pet__arm { position:absolute; z-index:4; top:64%; width:16%; height:12%; border-radius:999px; background:linear-gradient(160deg,var(--body-hi),var(--body-main)); box-shadow:inset 2px 2px 5px rgba(255,255,255,.15); }
+    .flame-pet__arm--left { left:8%; transform:rotate(28deg); }
+    .flame-pet__arm--right { right:8%; transform:rotate(-28deg); }
+    .flame-pet__foot { position:absolute; z-index:5; bottom:5%; width:22%; height:14%; border-radius:999px; background:linear-gradient(160deg,var(--body-hi),var(--body-main)); box-shadow:inset 4px 3px 8px rgba(255,255,255,.22), 0 0 12px color-mix(in srgb, var(--flame-magic), transparent 58%); overflow:hidden; }
+    .flame-pet__foot::after { content:''; position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 1.7px), radial-gradient(circle, var(--flame-magic) 0 1.1px, transparent 1.9px); background-size:10px 10px; opacity:.8; }
+    .flame-pet__foot--left { left:27%; transform:rotate(-4deg); }
+    .flame-pet__foot--right { right:27%; transform:rotate(4deg); }
+    .flame-pet__face { position:absolute; z-index:6; width:66%; height:34%; top:44%; left:17%; }
+    .flame-pet__eye { position:absolute; top:0; width:23px; height:28px; border-radius:50%; background:radial-gradient(circle at 35% 21%, white 0 12%, transparent 13%), radial-gradient(circle at 55% 67%, #ffd15d 0 7%, transparent 8%), radial-gradient(circle at 31% 61%, #fff2ab 0 5%, transparent 6%), linear-gradient(180deg,#3b2634,#130b12); transform:scaleY(var(--pet-blink)); transform-origin:center; box-shadow: inset 3px -4px 0 rgba(255,179,92,.15); will-change:transform; }
+    .flame-pet__eye--left { left:0; }
+    .flame-pet__eye--right { right:0; }
+    .flame-pet__blush { position:absolute; top:31px; width:22px; height:16px; border-radius:50%; background:radial-gradient(circle, #ff9db7, rgba(255,157,183,.45) 68%, transparent 72%); opacity:.88; filter:blur(.2px); transform:scale(var(--pet-cheek)); will-change:transform; }
+    .flame-pet__blush--left { left:-4px; }
+    .flame-pet__blush--right { right:-4px; }
+    .flame-pet__mouth { position:absolute; left:50%; top:31px; width:18px; height:10px; transform:translateX(-50%); border-bottom:3px solid #2a1e24; border-radius:0 0 18px 18px; }
+    .flame-pet__ring { position:absolute; z-index:0; width:126%; height:30%; bottom:0; border-radius:50%; border:2px solid color-mix(in srgb, var(--flame-magic), transparent 26%); box-shadow:0 0 calc(18px * var(--pet-glow)) var(--flame-magic), inset 0 0 12px rgba(255,255,255,.22); transform:rotateX(66deg); animation: flamePetRing calc(3.2s - var(--pet-intensity) * .16s) linear infinite; opacity:.74; }
+    .flame-pet__spark,.flame-pet__glitter { position:absolute; z-index:7; width:7px; height:7px; border-radius:50%; background:var(--flame-core); box-shadow:0 0 10px var(--flame-core),0 0 18px var(--flame-main); animation: flamePetSpark calc(1.95s - var(--pet-intensity) * .06s) ease-in-out infinite; }
+    .flame-pet__glitter { border-radius:2px; transform:rotate(45deg); background:color-mix(in srgb, var(--flame-magic), white 30%); }
+    .flame-pet__spark:nth-of-type(1){ top:9%; left:10%; animation-delay:0s; }
+    .flame-pet__spark:nth-of-type(2){ top:11%; right:7%; animation-delay:.28s; }
+    .flame-pet__spark:nth-of-type(3){ bottom:32%; left:-5%; animation-delay:.62s; }
+    .flame-pet__spark:nth-of-type(4){ bottom:27%; right:-5%; animation-delay:.96s; }
+    .flame-pet__spark:nth-of-type(5){ top:2%; left:62%; animation-delay:1.22s; }
+    .flame-pet__glitter:nth-of-type(6){ top:23%; left:4%; animation-delay:.12s; }
+    .flame-pet__glitter:nth-of-type(7){ top:25%; right:14%; animation-delay:.75s; }
+    .flame-pet__glitter:nth-of-type(8){ bottom:16%; left:34%; animation-delay:1.05s; }
+    .flame-pet__shadow { position:absolute; z-index:-1; width:84%; height:17%; bottom:3%; border-radius:50%; background:radial-gradient(circle, color-mix(in srgb, var(--flame-main), transparent 46%), transparent 70%); filter:blur(8px); transform:scaleX(calc(1.04 - (var(--pet-float) / -80))); opacity:.52; }
+    .spirit-pet-stage:hover .flame-pet { filter: drop-shadow(0 0 28px var(--flame-mid)) drop-shadow(0 0 24px var(--flame-main)); }
+    .spirit-pet-progress { margin-top: 10px; }
+    .spirit-pet-progress__label { display:flex; justify-content:space-between; gap:10px; font-size:.76rem; font-weight:700; color:rgba(255,255,255,.88); margin-bottom:6px; }
+    .spirit-pet-bar { height:9px; border-radius:999px; background:rgba(255,255,255,.25); overflow:hidden; }
+    .spirit-pet-fill { height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,#fff,var(--flame-core),var(--flame-magic)); transition:width .8s ease; }
+    .spirit-pet-desc { margin:10px 0 0; font-size:.78rem; color:rgba(255,255,255,.86); line-height:1.45; }
+    .spirit-pet-toast { position:absolute; right:18px; top:54px; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.94); color:#ff5f00; font-weight:900; font-size:.78rem; opacity:0; transform:translateY(8px); pointer-events:none; }
+
+    /* Video Pet + Canvas magic effects. Only affects Pet card. */
+    .spirit-pet-stage {
+      isolation: isolate;
+      overflow: visible;
+      height: 260px;
+    }
+    .spirit-pet-canvas {
+      position:absolute;
+      inset:50% auto auto 50%;
+      width: 300px;
+      height: 300px;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+    .spirit-pet-video {
+      position:relative;
+      z-index:2;
+      width: var(--video-pet-size, 340px);
+      height: var(--video-pet-size, 340px);
+      object-fit: contain;
+      background: transparent;
+      transform: translate3d(0, var(--pet-float), 0) scale(var(--pet-breathe));
+      filter:
+        drop-shadow(0 0 calc(12px * var(--pet-glow)) var(--flame-mid))
+        drop-shadow(0 0 calc(24px * var(--pet-glow)) color-mix(in srgb, var(--flame-main), transparent 22%));
+      will-change: transform, filter;
+    }
+    .spirit-pet-card.pet-pop .spirit-pet-video {
+      animation: videoPetBurst .86s ease-out;
+    }
+    .spirit-pet--lv1 { --video-pet-size:200px; }
+    .spirit-pet--lv2 { --video-pet-size:210px; }
+    .spirit-pet--lv3 { --video-pet-size:220px; }
+    .spirit-pet--lv4 { --video-pet-size:230px; }
+    .spirit-pet--lv5 { --video-pet-size:240px; }
+    .spirit-pet--lv6 { --video-pet-size:250px; }
+    .spirit-pet--lv7 { --video-pet-size:260px; }
+    .spirit-pet--lv8 { --video-pet-size:270px; }
+    .spirit-pet--lv9 { --video-pet-size:280px; }
+    .spirit-pet--lv10 { --video-pet-size:320px; }
+    @keyframes videoPetBurst {
+      0% { transform: translate3d(0, var(--pet-float), 0) scale(var(--pet-breathe)); filter: brightness(1); }
+      32% { transform: translate3d(0, calc(var(--pet-float) - 12px), 0) scale(calc(var(--pet-breathe) * 1.28)); filter: brightness(1.8) saturate(1.55); }
+      100% { transform: translate3d(0, var(--pet-float), 0) scale(var(--pet-breathe)); filter: brightness(1); }
+    }
+    .spirit-pet-card.pet-pop .spirit-pet-toast { animation: flamePetToast 1.2s ease; }
+    .spirit-pet-card.pet-pop .flame-pet { animation: flamePetBurst calc(.78s + var(--pet-intensity) * .025s) ease-out; }
+    .spirit-pet-card.pet-pop .flame-pet__halo { animation: flamePetHaloBurst calc(.78s + var(--pet-intensity) * .025s) ease-out; }
+    .spirit-pet-card.pet-pop .flame-pet__ring { animation: flamePetBurstRing .82s ease-out, flamePetRing 2.3s linear .82s infinite; }
+    .spirit-pet-card.pet-pop .flame-pet__spark,.spirit-pet-card.pet-pop .flame-pet__glitter { animation: flamePetBurstSpark .82s ease-out; }
+    .spirit-pet-card.pet-pop .flame-pet__mouth { width:21px; height:14px; border:0; border-radius:0 0 18px 18px; background:#2b1700; }
+    .spirit-pet--lv1 { --flame-size:104px; --flame-main:#ff9a1f; --flame-mid:#ffe27a; --flame-core:#fffdf4; --flame-magic:#ffd6ef; --body-main:#444751; --body-hi:#737682; --pet-intensity:1; }
+    .spirit-pet--lv2 { --flame-size:112px; --flame-main:#ff8517; --flame-mid:#ffdf62; --flame-core:#fff8d6; --flame-magic:#ffd166; --body-main:#44414d; --body-hi:#74717f; --pet-intensity:2; }
+    .spirit-pet--lv3 { --flame-size:120px; --flame-main:#ff6b00; --flame-mid:#ffcd38; --flame-core:#fff4c4; --flame-magic:#ffc8e8; --body-main:#41434f; --body-hi:#777986; --pet-intensity:3; }
+    .spirit-pet--lv4 { --flame-size:128px; --flame-main:#ff4d00; --flame-mid:#ffb703; --flame-core:#fff6b0; --flame-magic:#ffb1df; --body-main:#3f3f4d; --body-hi:#7a7587; --pet-intensity:4; }
+    .spirit-pet--lv5 { --flame-size:136px; --flame-main:#ff477e; --flame-mid:#ffd166; --flame-core:#ffffff; --flame-magic:#ff7adf; --body-main:#3d3b49; --body-hi:#777187; --pet-intensity:5; }
+    .spirit-pet--lv6 { --flame-size:144px; --flame-main:#b35cff; --flame-mid:#ff9f1c; --flame-core:#ffffff; --flame-magic:#c77dff; --body-main:#3a3948; --body-hi:#746f8b; --pet-intensity:6; }
+    .spirit-pet--lv7 { --flame-size:152px; --flame-main:#6f8cff; --flame-mid:#b35cff; --flame-core:#ffffff; --flame-magic:#72ddf7; --body-main:#363847; --body-hi:#6d758f; --pet-intensity:7; }
+    .spirit-pet--lv8 { --flame-size:160px; --flame-main:#00d8ff; --flame-mid:#7b61ff; --flame-core:#ffffff; --flame-magic:#8cfbff; --body-main:#333947; --body-hi:#697d91; --pet-intensity:8; }
+    .spirit-pet--lv9 { --flame-size:168px; --flame-main:#80ffdb; --flame-mid:#00bbf9; --flame-core:#ffffff; --flame-magic:#ff8cff; --body-main:#313744; --body-hi:#6f8192; --pet-intensity:9; }
+    .spirit-pet--lv10 { --flame-size:184px; --flame-main:#ff3df5; --flame-mid:#ffe66d; --flame-core:#ffffff; --flame-magic:#ffffff; --body-main:#292d38; --body-hi:#7c8299; --pet-intensity:10; }
+    .spirit-pet--lv10 .flame-pet__halo { box-shadow:0 0 42px #fff, 0 0 70px var(--flame-main), inset 9px 9px 24px rgba(255,255,255,.6); }
+    .spirit-pet--lv10.pet-pop .flame-pet { animation-name: flamePetGodBurst; }
+    @keyframes flamePetRing { to{ rotate:360deg; } }
+    @keyframes flamePetSpark { 0%,100%{ transform:translate3d(0,0,0) rotate(45deg) scale(.72); opacity:.25; } 50%{ transform:translate3d(0,calc(-15px - var(--pet-intensity) * 1.6px),0) rotate(80deg) scale(calc(1.05 + var(--pet-intensity) * .04)); opacity:1; } }
+    @keyframes flamePetToast { 35%{opacity:1; transform:translateY(-8px);} 100%{opacity:0; transform:translateY(-22px);} }
+    @keyframes flamePetBurst { 0%{ transform:translate3d(0,var(--pet-float),0) rotate(var(--pet-wobble)) scale(1); filter:brightness(1); } 32%{ transform:translate3d(0,calc(var(--pet-float) - 6px),0) rotate(-7deg) scale(calc(1.28 + var(--pet-intensity) * .035)); filter:brightness(calc(1.65 + var(--pet-intensity) * .08)) saturate(calc(1.35 + var(--pet-intensity) * .06)); } 58%{ transform:translate3d(0,var(--pet-float),0) rotate(7deg) scale(calc(1.12 + var(--pet-intensity) * .012)); } 100%{ transform:translate3d(0,var(--pet-float),0) rotate(var(--pet-wobble)) scale(1); filter:brightness(1); } }
+    @keyframes flamePetGodBurst { 0%{ transform:translate3d(0,var(--pet-float),0) scale(1); filter:brightness(1); } 24%{ transform:translate3d(0,-18px,0) rotate(-10deg) scale(1.95); filter:brightness(3) saturate(2.4); } 46%{ transform:translate3d(0,-6px,0) rotate(10deg) scale(1.42); } 70%{ transform:translate3d(0,var(--pet-float),0) rotate(-5deg) scale(1.22); } 100%{ transform:translate3d(0,var(--pet-float),0) scale(1); filter:brightness(1); } }
+    @keyframes flamePetHaloBurst { 0%{ transform:rotate(calc(var(--pet-wave) * .6)) scale(1); } 45%{ transform:rotate(-14deg) scale(calc(1.18 + var(--pet-intensity) * .025)) translateY(-5px); } 100%{ transform:rotate(calc(var(--pet-wave) * .6)) scale(1); } }
+    @keyframes flamePetBurstRing { 0%{ transform:rotateX(66deg) scale(1); opacity:.8; } 60%{ transform:rotateX(66deg) scale(calc(1.8 + var(--pet-intensity) * .12)); opacity:1; } 100%{ transform:rotateX(66deg) scale(1); opacity:.74; } }
+    @keyframes flamePetBurstSpark { 0%{ transform:translateY(0) rotate(45deg) scale(1); opacity:1; } 100%{ transform:translateY(calc(-76px - var(--pet-intensity) * 7px)) rotate(160deg) scale(calc(2.3 + var(--pet-intensity) * .16)); opacity:0; } }
+    @media (max-width: 900px) { .profile-hero__inner { justify-content:center; text-align:center; } .profile-hero__badges, .profile-xp-label { justify-content:center; } .profile-xp-wrap { margin-inline:auto; } .spirit-pet-card { order: 3; width: min(360px, 100%); } }
+    @media (prefers-reduced-motion: reduce) { .spirit-pet-card *, .spirit-pet-card::before { animation: none !important; transition:none !important; } }
+
+    /* ── Profile Tabs ── */
+    .profile-tabs-section { background: var(--bg); padding-block: 48px; }
+    .profile-tabs {
+      display: flex; gap: 4px; border-bottom: 2px solid var(--border);
+      margin-bottom: 40px; overflow-x: auto;
+    }
+    .profile-tab {
+      padding: 12px 20px; font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .95rem;
+      color: var(--text-muted); cursor: pointer; border: none; background: transparent;
+      border-bottom: 3px solid transparent; white-space: nowrap;
+      transition: all var(--t-fast); margin-bottom: -2px;
+    }
+    .profile-tab:hover { color: var(--orange); }
+    .profile-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+    .profile-panel { display: none; animation: fadeUp .3s ease; }
+    .profile-panel.active { display: block; }
+
+    /* ── Overview Tab ── */
+    .overview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .ov-stat {
+      background: var(--bg-card); border-radius: var(--r-lg); padding: 20px;
+      border: 1px solid var(--border); text-align: center;
+      transition: transform var(--t-fast), box-shadow var(--t-fast);
+    }
+    .ov-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .ov-stat__icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .ov-stat__val { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.8rem; color: var(--charcoal); }
+    .ov-stat__lbl { font-size: .75rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Activity heatmap */
+    .activity-section {
+      background: var(--bg-card); border-radius: var(--r-lg); padding: 24px;
+      border: 1px solid var(--border); margin-bottom: 24px;
+    }
+    .activity-section h3 { margin-bottom: 16px; font-size: 1rem; }
+    .heatmap { display: grid; grid-template-columns: repeat(26, 1fr); gap: 3px; }
+    .hm-cell {
+      aspect-ratio: 1; border-radius: 3px;
+      background: var(--border); transition: background var(--t-fast); cursor: default;
+    }
+    .hm-cell--1 { background: #C8F0CC; }
+    .hm-cell--2 { background: #7DD984; }
+    .hm-cell--3 { background: var(--green); }
+    .hm-cell--4 { background: var(--green-dark); }
+
+    /* Achievement badges */
+    .achievements { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .achievement {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 14px; text-align: center;
+      transition: transform var(--t-fast);
+    }
+    .achievement:hover { transform: translateY(-2px); }
+    .achievement.locked { opacity: .45; filter: grayscale(.7); }
+    .achievement__icon { font-size: 2rem; margin-bottom: 6px; }
+    .achievement__name { font-size: .72rem; font-weight: 700; color: var(--charcoal); }
+    .achievement__desc { font-size: .65rem; color: var(--text-muted); }
+    .achievement__count { font-family: 'Baloo 2', cursive; font-size: 1.35rem; font-weight: 800; color: var(--orange-dark); line-height: 1.1; }
+
+    /* ── Settings Tab ── */
+    .settings-layout { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start; }
+    .settings-nav { background: var(--bg-card); border-radius: var(--r-lg); border: 1px solid var(--border); overflow: hidden; }
+    .settings-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px; cursor: pointer;
+      font-size: .9rem; font-weight: 500; color: var(--text-muted);
+      border-bottom: 1px solid var(--border); transition: all var(--t-fast);
+    }
+    .settings-nav-item:last-child { border-bottom: none; }
+    .settings-nav-item:hover { background: var(--bg-section); color: var(--charcoal); }
+    .settings-nav-item.active { background: var(--orange-xlight); color: var(--orange); font-weight: 700; }
+    .settings-panel { display: none; }
+    .settings-panel.active { display: block; animation: fadeUp .25s ease; }
+
+    .settings-card {
+      background: var(--bg-card); border-radius: var(--r-lg); border: 1px solid var(--border);
+      overflow: hidden; margin-bottom: 16px;
+    }
+    .settings-card__head {
+      padding: 16px 24px; background: var(--bg-section); border-bottom: 1px solid var(--border);
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1rem;
+      color: var(--charcoal); display: flex; align-items: center; gap: 8px;
+    }
+    .settings-card__body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Setting row */
+    .setting-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .setting-row__info { flex: 1; min-width: 160px; }
+    .setting-row__label { font-weight: 600; font-size: .9rem; color: var(--charcoal); margin-bottom: 2px; }
+    .setting-row__desc { font-size: .78rem; color: var(--text-muted); }
+
+    /* Toggle Switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+    .toggle { position: relative; width: 52px; height: 28px; }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute; inset: 0; border-radius: 14px;
+      background: var(--border); cursor: pointer;
+      transition: background var(--t-base);
+    }
+    .toggle-track::after {
+      content: ''; position: absolute;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff; top: 3px; left: 3px;
+      transition: transform var(--t-base);
+      box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    }
+    .toggle input:checked + .toggle-track { background: var(--orange); }
+    .toggle input:checked + .toggle-track::after { transform: translateX(24px); }
+
+    /* Slider */
+    .goal-slider-wrap { display: flex; align-items: center; gap: 12px; }
+    .goal-slider {
+      -webkit-appearance: none; width: 160px; height: 6px;
+      border-radius: 3px; background: var(--border); outline: none; cursor: pointer;
+    }
+    .goal-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--orange); cursor: pointer; box-shadow: 0 2px 8px rgba(255,122,0,.4);
+    }
+    .goal-value {
+      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+      color: var(--orange); min-width: 60px;
+    }
+
+    /* Notification toggles grid */
+    .notif-grid { display: flex; flex-direction: column; gap: 12px; }
+
+    /* Danger zone */
+    .danger-zone .settings-card__head { background: #FFF5F5; color: #D32F2F; border-color: #FFCDD2; }
+    .danger-zone .settings-card__body { gap: 12px; }
+    .danger-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+    .danger-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .danger-row__info h4 { font-size: .9rem; color: var(--charcoal); }
+    .danger-row__info p  { font-size: .78rem; color: var(--text-muted); }
+
+    /* ── History Tab ── */
+    .history-list { display: flex; flex-direction: column; gap: 12px; }
+    .history-item {
+      display: grid; grid-template-columns: 48px 1fr auto;
+      align-items: center; gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-card); border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      transition: border-color var(--t-fast);
+    }
+    .history-item:hover { border-color: var(--orange); }
+    .history-item__icon { font-size: 1.6rem; text-align: center; }
+    .history-item__title { font-weight: 700; font-size: .95rem; color: var(--charcoal); margin-bottom: 2px; }
+    .history-item__meta  { font-size: .78rem; color: var(--text-muted); }
+    .history-item__xp { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; color: var(--orange); text-align: right; }
+    .history-item__date { font-size: .72rem; color: var(--text-light); }
+
+    /* ── Logout button ── */
+    .logout-section { text-align: center; padding-top: 24px; }
+
+    @media (max-width: 900px) {
+      .settings-layout { grid-template-columns: 1fr; }
+      .settings-nav { display: flex; overflow-x: auto; }
+      .settings-nav-item { flex-direction: column; gap: 4px; font-size: .75rem; text-align: center; flex: 1; min-width: 80px; border-bottom: none; border-right: 1px solid var(--border); }
+      .settings-nav-item:last-child { border-right: none; }
+    }
+    @media (max-width: 640px) {
+      .overview-grid { grid-template-columns: repeat(2, 1fr); }
+      .achievements  { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+</head>
+<body>
+  <!-- Dark mode apply before paint -->
+  <script>
+    if (localStorage.getItem('cc_darkMode') === 'true') document.body.classList.add('dark-mode');
+  </script>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">HSK</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__link">Trang chủ</a>
+        <a href="hsk.html" class="nav__link">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge" title="Streak 7 ngày">
+          <span class="streak-badge__icon">🔥</span>
+          <span class="streak-badge__count" data-progress="streak">0</span>
+        </div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+        <a href="profile.html" class="btn btn--primary active">Hồ sơ</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="index.html" class="nav__link">Trang chủ</a>
+      <a href="hsk.html" class="nav__link">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+      <a href="flashcard.html" class="nav__link">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+    </div>
+  </div>
+
+  <!-- ========== AUTH PAGE (logged-out) ========== -->
+  <div class="auth-page" id="authPage">
+    <div class="auth-container">
+      <div class="auth-logo">
+        <div style="font-size:3rem">🍊</div>
+        <h2>Tiếng Trung Cam &amp; Coca</h2>
+        <p>Đăng nhập để tiếp tục hành trình chinh phục tiếng Trung</p>
+      </div>
+
+      <div class="auth-card">
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-auth="login">Đăng nhập</button>
+          <button class="auth-tab" data-auth="register">Đăng ký</button>
+        </div>
+
+        <!-- Login Panel -->
+        <div class="auth-panel active" id="loginPanel">
+          <form id="loginFormPage" novalidate>
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="loginPwd">Mật khẩu</label>
+              <input type="password" id="loginPwd" placeholder="••••••••" required />
+            </div>
+            <div style="text-align:right;margin-top:-8px;margin-bottom:16px">
+              <a href="#" onclick="resetPassword();return false" style="font-size:.8rem;color:var(--orange)">Quên mật khẩu?</a>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full ripple">Đăng nhập</button>
+          </form>
+
+          <div class="oauth-divider">hoặc tiếp tục với</div>
+
+          <div class="oauth-btns">
+            <button class="oauth-btn oauth-btn--google" onclick="oauthLogin('google')">
+              <div class="oauth-icon oauth-icon--google">G</div>
+              Tiếp tục với Google
+            </button>
+            <button class="oauth-btn oauth-btn--facebook" onclick="oauthLogin('facebook')">
+              <div class="oauth-icon oauth-icon--fb">f</div>
+              Tiếp tục với Facebook
+            </button>
+          </div>
+
+          <p class="auth-footer-text">Chưa có tài khoản? <a href="#" onclick="switchAuthTab('register')">Đăng ký ngay</a></p>
+        </div>
+
+        <!-- Register Panel -->
+        <div class="auth-panel" id="registerPanel">
+          <form id="registerFormPage" novalidate>
+            <div class="form-group">
+              <label for="regName">Tên hiển thị</label>
+              <input type="text" id="regName" placeholder="Nguyễn Văn A" required />
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input type="email" id="regEmail" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="regPwd">Mật khẩu</label>
+              <input type="password" id="regPwd" placeholder="Tối thiểu 8 ký tự" required />
+            </div>
+            <div class="form-group">
+              <label>Mục tiêu học mỗi ngày</label>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+                <label class="goal-opt"><input type="radio" name="regGoal" value="50" /> <span class="goal-opt__chip">🌱 50 XP</span></label>
+                <label class="goal-opt"><input type="radio" name="regGoal" value="100" checked /> <span class="goal-opt__chip">⚡ 100 XP</span></label>
+                <label class="goal-opt"><input type="radio" name="regGoal" value="200" /> <span class="goal-opt__chip">🚀 200 XP</span></label>
+                <label class="goal-opt"><input type="radio" name="regGoal" value="300" /> <span class="goal-opt__chip">🔥 300 XP</span></label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full ripple" style="margin-top:8px">Tạo tài khoản miễn phí</button>
+          </form>
+
+          <div class="oauth-divider">hoặc đăng ký với</div>
+          <div class="oauth-btns">
+            <button class="oauth-btn oauth-btn--google" onclick="oauthLogin('google')">
+              <div class="oauth-icon oauth-icon--google">G</div>
+              Đăng ký với Google
+            </button>
+            <button class="oauth-btn oauth-btn--facebook" onclick="oauthLogin('facebook')">
+              <div class="oauth-icon oauth-icon--fb">f</div>
+              Đăng ký với Facebook
+            </button>
+          </div>
+
+          <p class="auth-footer-text">Đã có tài khoản? <a href="#" onclick="switchAuthTab('login')">Đăng nhập ngay</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PROFILE PAGE (logged-in) ========== -->
+  <div class="profile-page" id="profilePage">
+    <!-- Profile Hero -->
+    <div class="profile-hero">
+      <div class="container profile-hero__inner">
+        <div class="profile-avatar" title="Đổi ảnh đại diện">
+          <span id="heroAvatar">🧑</span>
+          <div class="profile-avatar__edit">📷 Đổi</div>
+        </div>
+        <div class="profile-hero__info">
+          <h1 class="profile-hero__name" id="heroName">Học viên</h1>
+          <p class="profile-hero__meta" id="heroMeta">Thành viên từ tháng 1, 2024 · Ho Chi Minh City</p>
+          <div class="profile-hero__badges">
+            <span class="profile-badge" id="profileLevelBadge">🏆 HSK 1</span>
+            <span class="profile-badge" id="profileStreakBadge">🔥 Streak 0</span>
+            <span class="profile-badge" id="profileRankBadge">⭐ Cấp Newbie</span>
+            <span class="profile-badge" id="profileLessonsBadge">📚 0 bài học</span>
+            <span class="profile-badge">🪙 <span class="js-user-coins" data-progress="coins">0</span> xu</span>
+          </div>
+          <div class="profile-xp-wrap">
+            <div class="profile-xp-label">
+              <span>0 XP</span>
+              <span>Còn 760 XP để lên HSK 3</span>
+            </div>
+            <div class="profile-xp-bar">
+              <div class="profile-xp-fill" style="width: 62%"></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="spirit-pet-card spirit-pet--lv1" id="spiritPetCard" aria-label="Linh thú đồng hành Hỏa linh">
+          <div class="spirit-pet-title">
+            <h3><span id="spiritPetIcon" aria-hidden="true">🔥</span> <span id="spiritPetName">Mầm hỏa linh</span></h3>
+            <button class="spirit-pet-switch" id="spiritPetSwitch" type="button" title="Đổi linh thú" aria-label="Đổi linh thú">↻</button>
+            <span class="spirit-pet-chip" id="spiritPetLevel">Lv.1</span>
+          </div>
+          <div class="spirit-pet-stage" id="spiritPetStage" title="Bấm để hỏa linh cháy bùng">
+            <canvas class="spirit-pet-canvas" id="spiritPetCanvas" aria-hidden="true"></canvas>
+            <img class="spirit-pet-video" id="spiritPetVideo" src="assets/images/Pet/lv1.webp" alt="Hỏa linh đồng hành đang chuyển động" decoding="async">
+          </div>
+          <div class="spirit-pet-progress">
+            <div class="spirit-pet-progress__label">
+              <span id="spiritPetXpText">0 / 100 EXP</span>
+              <span id="spiritPetNextText">Còn 100 EXP</span>
+            </div>
+            <div class="spirit-pet-bar"><div class="spirit-pet-fill" id="spiritPetFill"></div></div>
+          </div>
+          <p class="spirit-pet-desc" id="spiritPetDesc">Hoàn thành bài học để Hỏa linh ăn EXP và tiến hóa.</p>
+          <div class="spirit-pet-toast">+EXP ✨</div>
+        </section>
+
+        <button class="btn btn--white" onclick="doLogout()" style="flex-shrink:0;align-self:flex-start">Đăng xuất</button>
+      </div>
+      <div class="profile-hero__wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="var(--bg)" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Profile Tabs -->
+    <section class="profile-tabs-section">
+      <div class="container">
+        <div class="profile-tabs">
+          <button class="profile-tab active" data-ptab="overview">📊 Tổng quan</button>
+          <button class="profile-tab" data-ptab="settings">⚙️ Cài đặt tài khoản</button>
+          <button class="profile-tab" data-ptab="history">📖 Lịch sử học</button>
+        </div>
+
+        <!-- ── Overview ── -->
+        <div class="profile-panel active" id="panel-overview">
+          <div class="overview-grid">
+            <div class="ov-stat">
+              <div class="ov-stat__icon">🔥</div>
+              <div class="ov-stat__val" id="profileStatStreak">0</div>
+              <div class="ov-stat__lbl">Streak hiện tại</div>
+            </div>
+            <div class="ov-stat">
+              <div class="ov-stat__icon">⚡</div>
+              <div class="ov-stat__val" id="profileStatXp">0</div>
+              <div class="ov-stat__lbl">Tổng XP</div>
+            </div>
+            <div class="ov-stat">
+              <div class="ov-stat__icon">📚</div>
+              <div class="ov-stat__val" id="profileStatLessons">0</div>
+              <div class="ov-stat__lbl">Bài đã học</div>
+            </div>
+            <div class="ov-stat">
+              <div class="ov-stat__icon">🪙</div>
+              <div class="ov-stat__val js-user-coins" id="profileStatCoins" data-progress="coins">0</div>
+              <div class="ov-stat__lbl">Xu hiện có</div>
+            </div>
+            <div class="ov-stat">
+              <div class="ov-stat__icon">🎁</div>
+              <div class="ov-stat__val" id="profileStatTotalCoins">0</div>
+              <div class="ov-stat__lbl">Tổng xu đã nhận</div>
+            </div>
+          </div>
+
+          <!-- Activity heatmap -->
+          <div class="activity-section">
+            <h3>Hoạt động học tập (6 tháng gần nhất)</h3>
+            <div class="heatmap" id="heatmap"></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.75rem;color:var(--text-muted)">
+              <span>Ít</span>
+              <div style="width:14px;height:14px;border-radius:3px;background:var(--border)"></div>
+              <div style="width:14px;height:14px;border-radius:3px;background:#C8F0CC"></div>
+              <div style="width:14px;height:14px;border-radius:3px;background:#7DD984"></div>
+              <div style="width:14px;height:14px;border-radius:3px;background:var(--green)"></div>
+              <div style="width:14px;height:14px;border-radius:3px;background:var(--green-dark)"></div>
+              <span>Nhiều</span>
+            </div>
+          </div>
+
+          <!-- Live achievements -->
+          <div class="activity-section">
+            <h3 style="margin-bottom:16px">Thành tích học tập</h3>
+            <div class="achievements">
+              <div class="achievement"><div class="achievement__icon">📚</div><div class="achievement__count" id="achievementLessons">0</div><div class="achievement__desc">Bài đã hoàn thành</div></div>
+              <div class="achievement"><div class="achievement__icon">⚡</div><div class="achievement__count" id="achievementXp">0</div><div class="achievement__desc">Tổng XP tích lũy</div></div>
+              <div class="achievement"><div class="achievement__icon">🔥</div><div class="achievement__count" id="achievementStreak">0</div><div class="achievement__desc">Ngày streak hiện tại</div></div>
+              <div class="achievement"><div class="achievement__icon">🎁</div><div class="achievement__count" id="achievementTotalCoins">0</div><div class="achievement__desc">Tổng xu đã nhận</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Settings ── -->
+        <div class="profile-panel" id="panel-settings">
+          <div class="settings-layout">
+            <!-- Settings Nav -->
+            <div class="settings-nav">
+              <div class="settings-nav-item active" data-spanel="account">👤 Tài khoản</div>
+              <div class="settings-nav-item" data-spanel="goals">🎯 Mục tiêu</div>
+              <div class="settings-nav-item" data-spanel="notifications">🔔 Thông báo</div>
+              <div class="settings-nav-item" data-spanel="appearance">🎨 Giao diện</div>
+              <div class="settings-nav-item" data-spanel="danger">⚠️ Nguy hiểm</div>
+            </div>
+
+            <!-- Settings Panels -->
+            <div>
+              <!-- Account Panel -->
+              <div class="settings-panel active" id="spanel-account">
+                <div class="settings-card">
+                  <div class="settings-card__head">👤 Thông tin tài khoản</div>
+                  <div class="settings-card__body">
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Tên hiển thị</div>
+                        <div class="setting-row__desc">Tên hiển thị trên bảng xếp hạng</div>
+                      </div>
+                      <div style="display:flex;gap:8px;align-items:center">
+                        <input type="text" id="settingName" value="" style="padding:8px 12px;border:2px solid var(--border);border-radius:var(--r-md);font-family:Poppins,sans-serif;font-size:.9rem;color:var(--charcoal);background:var(--bg);outline:none;width:200px" />
+                        <button class="btn btn--sm btn--primary ripple" onclick="saveName()">Lưu</button>
+                      </div>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Email</div>
+                        <div class="setting-row__desc" id="settingEmailDisplay">hoc@example.com</div>
+                      </div>
+                      <button class="btn btn--sm btn--outline">Đổi email</button>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Mật khẩu</div>
+                        <div class="setting-row__desc">••••••••••••</div>
+                      </div>
+                      <button class="btn btn--sm btn--outline">Đổi mật khẩu</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Goals Panel -->
+              <div class="settings-panel" id="spanel-goals">
+                <div class="settings-card">
+                  <div class="settings-card__head">🎯 Mục tiêu học tập hàng ngày</div>
+                  <div class="settings-card__body">
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Mục tiêu XP mỗi ngày</div>
+                        <div class="setting-row__desc">Phấn đấu đạt mục tiêu này để duy trì streak</div>
+                      </div>
+                      <div class="goal-slider-wrap">
+                        <input type="range" class="goal-slider" id="goalSlider" min="50" max="500" step="50" value="200" oninput="updateGoalDisplay(this.value)" />
+                        <span class="goal-value" id="goalDisplay">200 XP</span>
+                      </div>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Thời gian nhắc nhở</div>
+                        <div class="setting-row__desc">Nhận thông báo vào thời điểm này hàng ngày</div>
+                      </div>
+                      <input type="time" value="20:00" style="padding:8px 12px;border:2px solid var(--border);border-radius:var(--r-md);font-family:Poppins,sans-serif;font-size:.9rem;background:var(--bg);color:var(--charcoal);outline:none" />
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Cấp độ mục tiêu</div>
+                        <div class="setting-row__desc">Mục tiêu HSK muốn đạt được</div>
+                      </div>
+                      <select style="padding:8px 12px;border:2px solid var(--border);border-radius:var(--r-md);font-family:Poppins,sans-serif;font-size:.9rem;background:var(--bg);color:var(--charcoal);outline:none;cursor:pointer">
+                        <option selected>HSK 1</option><option>HSK 2</option><option>HSK 3</option>
+                        <option>HSK 4</option><option>HSK 5</option><option>HSK 6</option>
+                      </select>
+                    </div>
+                    <button class="btn btn--primary ripple" onclick="showToast('Đã lưu mục tiêu! 🎯')">Lưu cài đặt</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notifications Panel -->
+              <div class="settings-panel" id="spanel-notifications">
+                <div class="settings-card">
+                  <div class="settings-card__head">🔔 Cài đặt thông báo</div>
+                  <div class="settings-card__body">
+                    <div class="notif-grid">
+                      <div class="setting-row">
+                        <div class="setting-row__info">
+                          <div class="setting-row__label">Nhắc nhở học hàng ngày</div>
+                          <div class="setting-row__desc">Thông báo khi chưa đạt mục tiêu ngày</div>
+                        </div>
+                        <label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label>
+                      </div>
+                      <div class="setting-row">
+                        <div class="setting-row__info">
+                          <div class="setting-row__label">Thông báo streak</div>
+                          <div class="setting-row__desc">Cảnh báo khi sắp mất streak</div>
+                        </div>
+                        <label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label>
+                      </div>
+                      <div class="setting-row">
+                        <div class="setting-row__info">
+                          <div class="setting-row__label">Cập nhật nội dung mới</div>
+                          <div class="setting-row__desc">Khi có bài học hoặc thử thách mới</div>
+                        </div>
+                        <label class="toggle"><input type="checkbox" /><div class="toggle-track"></div></label>
+                      </div>
+                      <div class="setting-row">
+                        <div class="setting-row__info">
+                          <div class="setting-row__label">Email tuần</div>
+                          <div class="setting-row__desc">Tóm tắt tiến độ học mỗi tuần</div>
+                        </div>
+                        <label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Appearance Panel -->
+              <div class="settings-panel" id="spanel-appearance">
+                <div class="settings-card">
+                  <div class="settings-card__head">🎨 Giao diện</div>
+                  <div class="settings-card__body">
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Chế độ tối (Dark Mode)</div>
+                        <div class="setting-row__desc">Giảm mỏi mắt khi học ban đêm</div>
+                      </div>
+                      <div class="toggle-wrap">
+                        <span id="darkModeLabel" style="font-size:.8rem;color:var(--text-muted)">Tắt</span>
+                        <label class="toggle">
+                          <input type="checkbox" id="darkModeToggle" />
+                          <div class="toggle-track"></div>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Cỡ chữ</div>
+                        <div class="setting-row__desc">Điều chỉnh kích thước văn bản</div>
+                      </div>
+                      <div style="display:flex;gap:8px">
+                        <button class="btn btn--sm btn--outline" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Nhỏ</button>
+                        <button class="btn btn--sm btn--primary" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Vừa</button>
+                        <button class="btn btn--sm btn--outline" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Lớn</button>
+                      </div>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Hiệu ứng hoạt hình</div>
+                        <div class="setting-row__desc">Tắt để tiết kiệm pin trên thiết bị di động</div>
+                      </div>
+                      <label class="toggle"><input type="checkbox" checked /><div class="toggle-track"></div></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Danger Panel -->
+              <div class="settings-panel danger-zone" id="spanel-danger">
+                <div class="settings-card">
+                  <div class="settings-card__head">⚠️ Vùng nguy hiểm</div>
+                  <div class="settings-card__body">
+                    <div class="danger-row">
+                      <div class="danger-row__info">
+                        <h4>Xóa lịch sử học tập</h4>
+                        <p>Không thể hoàn tác. XP và streak sẽ bị mất.</p>
+                      </div>
+                      <button class="btn btn--sm" style="background:#FFF5F5;color:#D32F2F;border:1.5px solid #FFCDD2" onclick="showToast('⚠️ Tính năng bị vô hiệu hóa trong bản demo')">Xóa</button>
+                    </div>
+                    <div class="danger-row">
+                      <div class="danger-row__info">
+                        <h4>Xóa tài khoản</h4>
+                        <p>Xóa vĩnh viễn tài khoản và tất cả dữ liệu.</p>
+                      </div>
+                      <button class="btn btn--sm" style="background:#D32F2F;color:#fff" onclick="showToast('⚠️ Tính năng bị vô hiệu hóa trong bản demo')">Xóa tài khoản</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── History ── -->
+        <div class="profile-panel" id="panel-history">
+          <div class="history-list" id="historyList"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo logo--white">
+          <span class="logo__icon">🍊</span>
+          <span class="logo__text">Cam &amp; Coca</span>
+        </a>
+        <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo.</p>
+        <div class="footer__social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <h4>Học tập</h4>
+        <a href="hsk.html">Lộ trình HSK</a>
+        <a href="flashcard.html">Flashcard</a>
+        <a href="vocabulary.html">Từ vựng</a>
+      </div>
+      <div class="footer__links">
+        <h4>Cộng đồng</h4>
+        <a href="#">Diễn đàn</a>
+        <a href="#">Bảng xếp hạng</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer__links">
+        <h4>Hỗ trợ</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Liên hệ</a>
+        <a href="#">Điều khoản</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2024 Tiếng Trung Cam &amp; Coca. Made with ❤️ in Vietnam</p>
+      <p class="footer__tagline">学中文，乐无穷</p>
+    </div>
+  </footer>
+
+  <style>
+    .goal-opt { cursor: pointer; }
+    .goal-opt input { display: none; }
+    .goal-opt__chip {
+      display: inline-flex; align-items: center; padding: 6px 14px;
+      border-radius: var(--r-full); border: 2px solid var(--border);
+      font-size: .82rem; font-weight: 600; color: var(--text-muted);
+      transition: all var(--t-fast); background: var(--bg-card); cursor: pointer;
+    }
+    .goal-opt input:checked + .goal-opt__chip { border-color: var(--orange); background: var(--orange-xlight); color: var(--orange-dark); }
+  </style>
+
+
+
+  <style>
+    /* Profile refresh + centered 3-video spirit pet override */
+    .profile-hero {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,.38), transparent 26%),
+        radial-gradient(circle at 82% 22%, rgba(255,222,138,.35), transparent 24%),
+        linear-gradient(135deg, #ff7a18 0%, #ff9e43 42%, #ffd08a 100%);
+      padding: calc(var(--header-h) + 44px) 0 78px;
+    }
+    .profile-hero::before {
+      background:
+        linear-gradient(115deg, rgba(255,255,255,.18), transparent 38%),
+        radial-gradient(circle at 60% 70%, rgba(255,255,255,.16), transparent 32%);
+      animation: profileHeroGlow 8s ease-in-out infinite alternate;
+    }
+    @keyframes profileHeroGlow { from { transform: translate3d(-1%, -1%, 0) scale(1); } to { transform: translate3d(1%, 1%, 0) scale(1.05); } }
+    .profile-hero__inner {
+      display: grid;
+      grid-template-columns: 112px minmax(260px, 1fr) minmax(300px, 360px);
+      align-items: center;
+      gap: 28px;
+    }
+    .profile-avatar {
+      width: 108px; height: 108px;
+      box-shadow: 0 18px 45px rgba(126, 48, 0, .22), inset 0 0 0 1px rgba(255,255,255,.4);
+      backdrop-filter: blur(10px);
+    }
+    .profile-hero__info {
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 18px 48px rgba(126,48,0,.12);
+      backdrop-filter: blur(10px);
+    }
+    .profile-badge { background: rgba(255,255,255,.20); box-shadow: inset 0 1px 0 rgba(255,255,255,.24); }
+    .profile-xp-bar { height: 11px; background: rgba(255,255,255,.28); box-shadow: inset 0 1px 3px rgba(0,0,0,.08); }
+    .profile-xp-fill { background: linear-gradient(90deg, #fff, #fff7cf); box-shadow: 0 0 18px rgba(255,255,255,.7); }
+
+    .spirit-pet-card {
+      --video-pet-size: 220px;
+      min-height: 408px;
+      width: min(360px, 100%);
+      padding: 18px 18px 16px;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--flame-core), transparent 20%), transparent 35%),
+        linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.12));
+      box-shadow: 0 24px 70px rgba(80, 32, 0, .26), inset 0 1px 0 rgba(255,255,255,.34);
+      transform: translateZ(0);
+    }
+    .spirit-pet-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 32px 126px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(80,24,0,.24), transparent 68%);
+      filter: blur(8px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .spirit-pet-title { position: relative; z-index: 4; margin-bottom: 4px; }
+    .spirit-pet-switch {
+      width: 34px; height: 34px; flex: 0 0 34px; border: 1px solid rgba(255,255,255,.52);
+      border-radius: 50%; background: rgba(255,255,255,.22); color: #fff; font: 800 1.25rem/1 Poppins,sans-serif;
+      cursor: pointer; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(0,0,0,.12);
+      transition: transform .22s ease, background .22s ease, box-shadow .22s ease;
+    }
+    .spirit-pet-switch:hover { background: rgba(255,255,255,.38); transform: rotate(22deg) scale(1.06); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+    .spirit-pet-switch:active { transform: rotate(180deg) scale(.92); }
+    .spirit-pet-switch:focus-visible { outline: 3px solid rgba(255,255,255,.85); outline-offset: 2px; }
+    .spirit-pet-chip { box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+    .spirit-pet-stage {
+      height: 270px !important;
+      display: grid !important;
+      place-items: center !important;
+      position: relative !important;
+      overflow: visible !important;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+    .spirit-pet-canvas {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      width: 340px !important;
+      height: 340px !important;
+      transform: translate(-50%, -50%) !important;
+      z-index: 1 !important;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .spirit-pet-video {
+      position: relative !important;
+      z-index: 2 !important;
+      display: block !important;
+      width: var(--video-pet-size) !important;
+      height: var(--video-pet-size) !important;
+      max-width: 100% !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      margin: 0 auto !important;
+      transform-origin: 50% 58%;
+      transform: translate3d(var(--pet-display-x, 0px), calc(var(--pet-float) + var(--pet-display-y, 0px)), 0) rotate(var(--pet-wobble)) scale(var(--pet-breathe)) scale(var(--pet-display-scale, 1));
+      filter:
+        drop-shadow(0 0 calc(12px * var(--pet-glow)) var(--flame-mid))
+        drop-shadow(0 0 calc(28px * var(--pet-glow)) color-mix(in srgb, var(--flame-main), transparent 18%));
+      will-change: transform, filter, opacity;
+      transition: opacity .18s ease, transform .24s ease, filter .24s ease;
+    }
+    .spirit-pet-video.is-switching { opacity: 0; transform: translate3d(var(--pet-display-x, 0px), calc(var(--pet-float) + var(--pet-display-y, 0px)), 0) scale(.92); }
+    #spiritPetCard.spirit-pet-card--pet2 {
+      --flame-main: #49b883; --flame-mid: #9ee7bd; --flame-core: #effff5; --flame-magic: #58d6b0;
+      background: radial-gradient(circle at 50% 35%, rgba(235,255,243,.74), transparent 40%), linear-gradient(180deg, rgba(222,255,236,.52), rgba(177,239,208,.26));
+      box-shadow: 0 24px 70px rgba(15,124,79,.22), inset 0 1px 0 rgba(255,255,255,.55);
+    }
+    .spirit-pet-card--pet2::after { background: radial-gradient(ellipse, rgba(26,126,76,.28), transparent 68%); }
+    .spirit-pet-card--pet2 .spirit-pet-video { --video-pet-size: 300px; --pet-display-scale: 1.08; --pet-display-x: 0px; --pet-display-y: 4px; }
+    .spirit-pet-card--pet2.spirit-pet--lv10 .spirit-pet-video { --video-pet-size: 320px; --pet-display-scale: 1.12; --pet-display-y: 6px; }
+    .spirit-pet-stage:hover .spirit-pet-video { filter: brightness(1.08) drop-shadow(0 0 34px var(--flame-mid)) drop-shadow(0 0 30px var(--flame-main)); }
+    .spirit-pet-card--pet2 .spirit-pet-video { mix-blend-mode: screen; }
+    .spirit-pet-progress { position: relative; z-index: 4; margin-top: 2px; }
+    .spirit-pet-desc { position: relative; z-index: 4; min-height: 40px; }
+    .spirit-pet--lv1 { --video-pet-size: 202px; }
+    .spirit-pet--lv2 { --video-pet-size: 210px; }
+    .spirit-pet--lv3 { --video-pet-size: 218px; }
+    .spirit-pet--lv4 { --video-pet-size: 226px; }
+    .spirit-pet--lv5 { --video-pet-size: 236px; }
+    .spirit-pet--lv6 { --video-pet-size: 244px; }
+    .spirit-pet--lv7 { --video-pet-size: 252px; }
+    .spirit-pet--lv8 { --video-pet-size: 260px; }
+    .spirit-pet--lv9 { --video-pet-size: 268px; }
+    .spirit-pet--lv10 { --video-pet-size: 292px; }
+    .spirit-pet-card.pet-pop .spirit-pet-video { animation: videoPetBurst .9s cubic-bezier(.17,.67,.2,1.25); }
+    @keyframes videoPetBurst {
+      0% { transform: translate3d(0, var(--pet-float), 0) rotate(var(--pet-wobble)) scale(var(--pet-breathe)); filter: brightness(1); }
+      34% { transform: translate3d(0, calc(var(--pet-float) - 14px), 0) rotate(-7deg) scale(calc(var(--pet-breathe) * 1.25)); filter: brightness(1.85) saturate(1.55); }
+      68% { transform: translate3d(0, calc(var(--pet-float) - 4px), 0) rotate(5deg) scale(calc(var(--pet-breathe) * 1.08)); }
+      100% { transform: translate3d(0, var(--pet-float), 0) rotate(var(--pet-wobble)) scale(var(--pet-breathe)); filter: brightness(1); }
+    }
+    .profile-tabs {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: var(--shadow-sm);
+      gap: 6px;
+    }
+    .profile-tab { border-radius: 18px; border-bottom: 0; }
+    .profile-tab.active { background: var(--orange-xlight); color: var(--orange-dark); border-bottom-color: transparent; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--orange), transparent 78%); }
+    .profile-panel.active { animation: fadeUp .35s ease; }
+    @media (max-width: 980px) {
+      .profile-hero__inner { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .profile-hero__info { width: min(560px, 100%); }
+      .profile-hero__badges, .profile-xp-label { justify-content: center; }
+      .profile-xp-wrap { margin-inline: auto; }
+      .spirit-pet-card { width: min(380px, 100%); }
+    }
+    @media (max-width: 520px) {
+      .spirit-pet-card { min-height: 390px; }
+      .spirit-pet-stage { height: 250px !important; }
+      .spirit-pet-canvas { width: 305px !important; height: 305px !important; }
+      .spirit-pet--lv10 { --video-pet-size: 262px; }
+      .spirit-pet-card--pet2 .spirit-pet-video { --video-pet-size: min(280px, 88vw); --pet-display-scale: 1.02; }
+      .spirit-pet-card--pet2.spirit-pet--lv10 .spirit-pet-video { --video-pet-size: min(296px, 90vw); --pet-display-scale: 1.04; }
+    }
+    .profile-page {
+      position: relative;
+      min-height: 100vh;
+      isolation: isolate;
+      overflow-x: hidden;
+    }
+    .profile-page::before { display: none; }
+    .profile-hero::before { display: none; }
+    .profile-hero__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .profile-avatar,
+    .profile-hero__info,
+    .profile-badge,
+    .profile-xp-wrap,
+    .spirit-pet-card {
+      position: relative;
+      z-index: 2;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    .profile-page,
+    .profile-page .container,
+    .profile-hero,
+    .profile-hero__inner,
+    .profile-hero__info,
+    .profile-tabs-section,
+    .settings-card,
+    .activity-section,
+    .spirit-pet-card {
+      max-width: 100%;
+    }
+    .profile-page img,
+    .profile-page video,
+    .profile-page canvas,
+    .profile-page svg {
+      max-width: 100%;
+      height: auto;
+    }
+    .profile-page h1,
+    .profile-page h2,
+    .profile-page h3,
+    .profile-page p,
+    .profile-page span,
+    .profile-page div {
+      overflow-wrap: anywhere;
+    }
+    @media (max-width: 768px) {
+      .profile-page .container {
+        width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .profile-hero {
+        min-height: auto;
+      }
+      .profile-hero__inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+      }
+      .profile-hero__info,
+      .settings-card__body,
+      .activity-section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .setting-row > div[style*="display:flex"],
+      .goal-slider-wrap {
+        max-width: 100%;
+        flex-wrap: wrap;
+      }
+      .header__actions {
+        gap: 6px;
+        min-width: 0;
+      }
+      .header__actions .streak-badge {
+        padding: 4px 8px;
+        font-size: .82rem;
+      }
+      #firebaseUserBox {
+        max-width: 86px;
+        font-size: 12px !important;
+      }
+      #firebaseUserBox img,
+      #firebaseUserBox span[style*="width:32px"] {
+        width: 28px !important;
+        height: 28px !important;
+      }
+      .hamburger {
+        padding: 5px;
+        flex: 0 0 auto;
+      }
+      #settingName { width: min(100%, 200px) !important; }
+    }
+    @media (max-width: 480px) {
+      .overview-grid,
+      .achievements,
+      .history-item {
+        grid-template-columns: 1fr;
+      }
+      .profile-tabs { max-width: 100%; }
+      .header__actions .streak-badge {
+        padding: 3px 7px;
+      }
+      #firebaseUserBox span:last-child {
+        display: none;
+      }
+      #firebaseUserBox {
+        max-width: 32px;
+      }
+      .spirit-pet-card { width: 100%; }
+      .spirit-pet-stage {
+        background:
+          radial-gradient(circle at 50% 45%, rgba(255,246,220,.96), rgba(255,255,255,.56) 54%, rgba(255,226,180,.62) 100%) !important;
+        border-radius: 24px;
+        overflow: visible !important;
+      }
+      .spirit-pet-video {
+        background: transparent !important;
+      }
+      .spirit-pet-canvas {
+        width: min(280px, 90vw) !important;
+        height: min(280px, 90vw) !important;
+      }
+      .spirit-pet--lv10 { --video-pet-size: min(235px, 76vw); }
+    }
+  </style>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+  (function () {
+    /* Firebase Auth is handled only by assets/js/firebase-auth.js */
+
+    /* ── Render state ── */
+    function render() {
+      console.log("redirect reason:", "firebase-auth controls profile auth state");
+      renderHeatmap();
+      renderHistory();
+    }
+
+    /* Auth forms, OAuth and logout are handled by assets/js/firebase-auth.js. */
+
+    /* ── Auth tab switch ── */
+    window.switchAuthTab = function (tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.auth === tab));
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.toggle('active', p.id === tab + 'Panel'));
+    };
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+      tab.addEventListener('click', () => switchAuthTab(tab.dataset.auth));
+    });
+
+    /* ── Profile tabs ── */
+    document.querySelectorAll('.profile-tab').forEach(tab => {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.profile-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('panel-' + this.dataset.ptab).classList.add('active');
+      });
+    });
+
+    /* ── Settings sub-nav ── */
+    document.querySelectorAll('.settings-nav-item').forEach(item => {
+      item.addEventListener('click', function () {
+        document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('spanel-' + this.dataset.spanel).classList.add('active');
+      });
+    });
+
+    /* Save name is handled by assets/js/firebase-auth.js. */
+
+    /* ── Daily goal slider ── */
+    window.updateGoalDisplay = function (val) {
+      document.getElementById('goalDisplay').textContent = val + ' XP';
+    };
+
+    /* ── Dark mode toggle ── */
+    const dmToggle = document.getElementById('darkModeToggle');
+    if (dmToggle) {
+      dmToggle.addEventListener('change', function () {
+        document.body.classList.toggle('dark-mode', this.checked);
+        localStorage.setItem('cc_darkMode', this.checked);
+        document.getElementById('darkModeLabel').textContent = this.checked ? 'Bật' : 'Tắt';
+        showToast(this.checked ? '🌙 Chế độ tối đã bật' : '☀️ Chế độ sáng đã bật');
+      });
+    }
+
+    /* ── Header login btn (scroll to auth) ── */
+    document.getElementById('headerLoginBtn')?.addEventListener('click', () => {
+      document.getElementById('authPage')?.scrollIntoView({ behavior: 'smooth' });
+    });
+    document.getElementById('mobileLoginBtn')?.addEventListener('click', () => {
+      document.getElementById('mobileNav')?.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.body.style.overflow = '';
+      document.getElementById('authPage')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ── Heatmap ── */
+    function renderHeatmap() {
+      const el = document.getElementById('heatmap');
+      if (!el) return;
+      el.innerHTML = '';
+    }
+
+    /* ── History ── */
+    const HISTORY = [];
+
+    function renderHistory() {
+      const el = document.getElementById('historyList');
+      if (!el) return;
+      el.innerHTML = HISTORY.map(h => `
+        <div class="history-item">
+          <div class="history-item__icon">${h.icon}</div>
+          <div>
+            <div class="history-item__title">${h.title}</div>
+            <div class="history-item__meta">${h.meta}</div>
+          </div>
+          <div>
+            <div class="history-item__xp">+${h.xp} XP</div>
+            <div class="history-item__date">${h.date}</div>
+          </div>
+        </div>`).join('');
+    }
+
+    /* ── Toast ── */
+    window.showToast = function (msg) {
+      const existing = document.querySelector('.cc-toast');
+      existing?.remove();
+      const t = document.createElement('div');
+      t.className = 'cc-toast';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:3000;background:var(--charcoal);color:#fff;padding:12px 20px;border-radius:12px;font-family:Poppins,sans-serif;font-size:.875rem;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.25);transform:translateY(16px);opacity:0;transition:all .25s ease;max-width:320px';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      requestAnimationFrame(() => requestAnimationFrame(() => { t.style.transform = 'translateY(0)'; t.style.opacity = '1'; }));
+      setTimeout(() => { t.style.transform = 'translateY(16px)'; t.style.opacity = '0'; t.addEventListener('transitionend', () => t.remove()); }, 3000);
+    };
+
+    /* ── Hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger?.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    /* ── Header scroll ── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* ── Ripple ── */
+    function addRipple(e) {
+      const btn = e.currentTarget, wave = document.createElement('span');
+      const r = btn.getBoundingClientRect();
+      const size = Math.max(r.width, r.height);
+      wave.classList.add('ripple-wave');
+      wave.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-r.left-size/2}px;top:${e.clientY-r.top-size/2}px`;
+      btn.appendChild(wave);
+      wave.addEventListener('animationend', () => wave.remove());
+    }
+    document.querySelectorAll('.ripple').forEach(b => b.addEventListener('click', addRipple));
+
+    /* ── Init ── */
+    render();
+  })();
+  </script>
+
+  <script src="assets/js/spirit-pet.js?v=pet2"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

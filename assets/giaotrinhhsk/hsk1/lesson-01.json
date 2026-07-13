@@ -1,0 +1,183 @@
+{
+  "lessonId": 1,
+  "level": 1,
+  "title": "Xin chào",
+  "meta": {
+    "estimatedMinutes": 20,
+    "difficulty": "HSK1",
+    "version": 2
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk1/lesson01/"
+  },
+  "vocabulary": [
+    {
+      "id": "ni",
+      "hanzi": "你",
+      "pinyin": "nǐ",
+      "meaning": "bạn",
+      "note": "Đại từ ngôi thứ hai.",
+      "example": "你好吗？",
+      "audio": "vocab/ni.mp3"
+    },
+    {
+      "id": "hao",
+      "hanzi": "好",
+      "pinyin": "hǎo",
+      "meaning": "tốt, khỏe",
+      "example": "我很好。",
+      "audio": "vocab/hao.mp3"
+    },
+    {
+      "id": "nihao",
+      "hanzi": "你好",
+      "pinyin": "nǐ hǎo",
+      "meaning": "xin chào",
+      "example": "你好，我叫安娜。",
+      "audio": "vocab/nihao.mp3"
+    },
+    {
+      "id": "wo",
+      "hanzi": "我",
+      "pinyin": "wǒ",
+      "meaning": "tôi, mình",
+      "example": "我是越南人。",
+      "audio": "vocab/wo.mp3"
+    },
+    {
+      "id": "jiao",
+      "hanzi": "叫",
+      "pinyin": "jiào",
+      "meaning": "tên là, gọi là",
+      "example": "我叫明。",
+      "audio": "vocab/jiao.mp3"
+    },
+    {
+      "id": "ma",
+      "hanzi": "吗",
+      "pinyin": "ma",
+      "meaning": "trợ từ nghi vấn",
+      "example": "你好吗？",
+      "audio": "vocab/ma.mp3"
+    },
+    {
+      "id": "hen",
+      "hanzi": "很",
+      "pinyin": "hěn",
+      "meaning": "rất",
+      "example": "我很好。",
+      "audio": "vocab/hen.mp3"
+    }
+  ],
+  "lessonText": [
+    {
+      "speaker": "A:",
+      "chinese": "你好！",
+      "pinyin": "Nǐ hǎo!",
+      "vietnamese": "Xin chào!",
+      "audio": "dialogue/001.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "你好！",
+      "pinyin": "Nǐ hǎo!",
+      "vietnamese": "Xin chào!",
+      "audio": "dialogue/002.mp3"
+    },
+    {
+      "speaker": "A:",
+      "chinese": "你好吗？",
+      "pinyin": "Nǐ hǎo ma?",
+      "vietnamese": "Bạn khỏe không?",
+      "audio": "dialogue/003.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "我很好。",
+      "pinyin": "Wǒ hěn hǎo.",
+      "vietnamese": "Tôi rất khỏe.",
+      "audio": "dialogue/004.mp3"
+    },
+    {
+      "speaker": "A:",
+      "chinese": "我叫明，你呢？",
+      "pinyin": "Wǒ jiào Míng, nǐ ne?",
+      "vietnamese": "Tôi tên là Minh, còn bạn?",
+      "audio": "dialogue/005.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "我叫安娜。",
+      "pinyin": "Wǒ jiào Ānnà.",
+      "vietnamese": "Tôi tên là Anna.",
+      "audio": "dialogue/006.mp3"
+    }
+  ],
+  "grammar": [
+    {
+      "title": "Câu chào hỏi với 你好",
+      "pattern": "你 + 好 = 你好",
+      "structure": "Đại từ / Danh xưng + 好",
+      "explanation": "<span class='hl'>你好</span> là cách chào cơ bản, dùng khi mới gặp hoặc bắt đầu nói chuyện.",
+      "examples": [
+        "<span class='hl'>你好</span>！Xin chào!",
+        "老师，<span class='hl'>你好</span>！Thầy/cô ơi, xin chào!"
+      ]
+    },
+    {
+      "title": "Câu hỏi với 吗",
+      "pattern": "Câu khẳng định + 吗？",
+      "structure": "S + V/O/Adj + 吗？",
+      "explanation": "Thêm <span class='hl'>吗</span> ở cuối câu để biến câu đó thành câu hỏi có/không.",
+      "examples": [
+        "你好吗？Bạn khỏe không?",
+        "你是学生吗？Bạn là học sinh à?"
+      ]
+    },
+    {
+      "title": "Giới thiệu tên với 叫",
+      "pattern": "我叫 + tên",
+      "structure": "S + 叫 + tên",
+      "explanation": "Dùng <span class='hl'>叫</span> để nói ai đó tên là gì.",
+      "examples": [
+        "我叫明。Tôi tên là Minh.",
+        "我叫安娜。Tôi tên là Anna."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "你好 nghĩa là gì?",
+      "options": [
+        "Tạm biệt",
+        "Xin chào",
+        "Cảm ơn",
+        "Xin lỗi"
+      ],
+      "answer": "Xin chào"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Muốn nói 'Tôi tên là Minh' bằng tiếng Trung, chọn câu đúng.",
+      "options": [
+        "我好明。",
+        "我叫明。",
+        "你叫明。",
+        "我吗明。"
+      ],
+      "answer": "我叫明。"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 你好吗？",
+      "answer": "Bạn khỏe không"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Tôi rất khỏe.",
+      "answer": "我很好"
+    }
+  ]
+}

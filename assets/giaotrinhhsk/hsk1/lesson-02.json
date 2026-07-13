@@ -1,0 +1,207 @@
+{
+  "lessonId": 2,
+  "level": 1,
+  "title": "Tiếng Hán không khó lắm",
+  "meta": {
+    "estimatedMinutes": 20,
+    "difficulty": "HSK1",
+    "version": 2
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk1/lesson02/"
+  },
+  "vocabulary": [
+    {
+      "id": "hanyu",
+      "hanzi": "汉语",
+      "pinyin": "Hànyǔ",
+      "meaning": "tiếng Hán, tiếng Trung",
+      "example": "我学习汉语。",
+      "audio": "vocab/hanyu.mp3"
+    },
+    {
+      "id": "nan",
+      "hanzi": "难",
+      "pinyin": "nán",
+      "meaning": "khó",
+      "example": "汉语难吗？",
+      "audio": "vocab/nan.mp3"
+    },
+    {
+      "id": "tai",
+      "hanzi": "太",
+      "pinyin": "tài",
+      "meaning": "quá, lắm",
+      "note": "Thường đi với 不 để nói mức độ không quá cao.",
+      "example": "不太难。",
+      "audio": "vocab/tai.mp3"
+    },
+    {
+      "id": "bu",
+      "hanzi": "不",
+      "pinyin": "bù",
+      "meaning": "không",
+      "example": "我不忙。",
+      "audio": "vocab/bu.mp3"
+    },
+    {
+      "id": "mang",
+      "hanzi": "忙",
+      "pinyin": "máng",
+      "meaning": "bận",
+      "example": "你忙吗？",
+      "audio": "vocab/mang.mp3"
+    },
+    {
+      "id": "hen",
+      "hanzi": "很",
+      "pinyin": "hěn",
+      "meaning": "rất",
+      "example": "我很忙。",
+      "audio": "vocab/hen.mp3"
+    },
+    {
+      "id": "baba",
+      "hanzi": "爸爸",
+      "pinyin": "bàba",
+      "meaning": "bố, ba",
+      "example": "我爸爸很忙。",
+      "audio": "vocab/baba.mp3"
+    },
+    {
+      "id": "mama",
+      "hanzi": "妈妈",
+      "pinyin": "māma",
+      "meaning": "mẹ",
+      "example": "我妈妈不忙。",
+      "audio": "vocab/mama.mp3"
+    },
+    {
+      "id": "gege",
+      "hanzi": "哥哥",
+      "pinyin": "gēge",
+      "meaning": "anh trai",
+      "example": "我哥哥学习汉语。",
+      "audio": "vocab/gege.mp3"
+    },
+    {
+      "id": "didi",
+      "hanzi": "弟弟",
+      "pinyin": "dìdi",
+      "meaning": "em trai",
+      "example": "我弟弟很好。",
+      "audio": "vocab/didi.mp3"
+    }
+  ],
+  "lessonText": [
+    {
+      "speaker": "A:",
+      "chinese": "你忙吗？",
+      "pinyin": "Nǐ máng ma?",
+      "vietnamese": "Bạn bận không?",
+      "audio": "dialogue/001.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "我不忙。",
+      "pinyin": "Wǒ bù máng.",
+      "vietnamese": "Tôi không bận.",
+      "audio": "dialogue/002.mp3"
+    },
+    {
+      "speaker": "A:",
+      "chinese": "汉语难吗？",
+      "pinyin": "Hànyǔ nán ma?",
+      "vietnamese": "Tiếng Hán khó không?",
+      "audio": "dialogue/003.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "汉语不太难。",
+      "pinyin": "Hànyǔ bú tài nán.",
+      "vietnamese": "Tiếng Hán không khó lắm.",
+      "audio": "dialogue/004.mp3"
+    },
+    {
+      "speaker": "A:",
+      "chinese": "你爸爸忙吗？",
+      "pinyin": "Nǐ bàba máng ma?",
+      "vietnamese": "Bố bạn bận không?",
+      "audio": "dialogue/005.mp3"
+    },
+    {
+      "speaker": "B:",
+      "chinese": "他很忙。",
+      "pinyin": "Tā hěn máng.",
+      "vietnamese": "Ông ấy rất bận.",
+      "audio": "dialogue/006.mp3"
+    }
+  ],
+  "grammar": [
+    {
+      "title": "Phủ định với 不",
+      "pattern": "不 + tính từ / động từ",
+      "structure": "S + 不 + Adj/V",
+      "explanation": "Dùng <span class='hl'>不</span> để phủ định ở hiện tại hoặc thói quen. Khi đứng trước âm 4, <span class='hl'>不</span> thường đọc thành bú.",
+      "examples": [
+        "我<span class='hl'>不</span>忙。Tôi không bận.",
+        "汉语<span class='hl'>不</span>难。Tiếng Hán không khó."
+      ]
+    },
+    {
+      "title": "Hỏi có/không với 吗",
+      "pattern": "Câu khẳng định + 吗？",
+      "structure": "S + Adj/V + 吗？",
+      "explanation": "Đặt <span class='hl'>吗</span> cuối câu để hỏi dạng có/không.",
+      "examples": [
+        "你忙<span class='hl'>吗</span>？Bạn bận không?",
+        "汉语难<span class='hl'>吗</span>？Tiếng Hán khó không?"
+      ]
+    },
+    {
+      "title": "Không quá... với 不太",
+      "pattern": "不太 + tính từ",
+      "structure": "S + 不太 + Adj",
+      "explanation": "<span class='hl'>不太</span> nghĩa là không quá, không lắm; sắc thái nhẹ hơn 不.",
+      "examples": [
+        "汉语<span class='hl'>不太</span>难。Tiếng Hán không khó lắm.",
+        "我<span class='hl'>不太</span>忙。Tôi không bận lắm."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "汉语不太难 nghĩa là gì?",
+      "options": [
+        "Tiếng Hán rất khó",
+        "Tiếng Hán không khó lắm",
+        "Tôi học tiếng Hán",
+        "Bạn bận không"
+      ],
+      "answer": "Tiếng Hán không khó lắm"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Muốn hỏi 'Bạn bận không?' chọn câu đúng.",
+      "options": [
+        "你忙吗？",
+        "你不忙。",
+        "汉语难吗？",
+        "我很忙。"
+      ],
+      "answer": "你忙吗？"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 我不忙。",
+      "answer": "Tôi không bận"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Tiếng Hán không khó lắm.",
+      "answer": "汉语不太难"
+    }
+  ]
+}

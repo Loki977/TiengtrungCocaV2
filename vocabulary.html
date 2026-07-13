@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Từ vựng – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <style>
+    /* ── Search Hero ── */
+    .vocab-hero {
+      background: linear-gradient(145deg, #2D2D2D 0%, #3D3D3D 60%, #2D2D2D 100%);
+      padding: calc(var(--header-h) + 56px) 0 72px;
+      position: relative;
+      text-align: center;
+    }
+    .vocab-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,122,0,.12) 0%, transparent 70%);
+    }
+    .vocab-hero h1 { color: #fff; margin-bottom: 8px; font-size: clamp(1.8rem, 4vw, 2.6rem); }
+    .vocab-hero p  { color: rgba(255,255,255,.6); font-size: .95rem; margin-bottom: 36px; }
+
+    /* ── Search Bar ── */
+    .search-wrap {
+      position: relative;
+      max-width: 680px;
+      margin-inline: auto;
+    }
+    .search-icon {
+      position: absolute; left: 20px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem; opacity: .7; pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 18px 60px 18px 54px;
+      border-radius: var(--r-xl);
+      border: 2px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      backdrop-filter: blur(8px);
+      transition: border-color var(--t-fast), background var(--t-fast);
+    }
+    .search-input::placeholder { color: rgba(255,255,255,.4); }
+    .search-input:focus { border-color: var(--orange); background: rgba(255,255,255,.14); }
+    .search-clear {
+      position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; border-radius: 50%;
+      border: none; background: rgba(255,255,255,.15);
+      color: rgba(255,255,255,.7); font-size: .85rem; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      transition: background var(--t-fast);
+    }
+    .search-clear.visible { display: flex; }
+    .search-clear:hover { background: rgba(255,255,255,.25); }
+
+    /* ── Filter chips ── */
+    .filter-chips {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 20px;
+    }
+    .chip {
+      padding: 5px 14px; border-radius: var(--r-full);
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.07);
+      color: rgba(255,255,255,.7);
+      font-size: .8rem; font-weight: 600;
+      cursor: pointer; transition: all var(--t-fast);
+    }
+    .chip:hover, .chip.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+    /* ── Quick suggestions ── */
+    .quick-suggestions {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px;
+    }
+    .quick-btn {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.75); padding: 4px 12px; border-radius: var(--r-full);
+      font-size: .8rem; cursor: pointer; font-family: 'Baloo 2', cursive; font-weight: 600;
+      transition: all var(--t-fast);
+    }
+    .quick-btn:hover { background: rgba(255,122,0,.3); border-color: var(--orange); color: #fff; }
+
+    .vocab-hero__wave { line-height: 0; }
+    .vocab-hero__wave svg { width: 100%; height: 60px; display: block; }
+
+    /* ── Main content ── */
+    .vocab-content { background: var(--bg); padding-block: 48px; }
+    .vocab-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── No Results / Placeholder ── */
+    .vocab-placeholder {
+      background: var(--bg-card);
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+      padding: 64px 32px;
+      text-align: center;
+    }
+    .vocab-placeholder__icon { font-size: 4rem; margin-bottom: 16px; }
+    .vocab-placeholder h3 { margin-bottom: 8px; }
+    .vocab-placeholder p  { color: var(--text-muted); font-size: .9rem; }
+
+    /* ── Dictionary Entry ── */
+    .dict-entry {
+      display: none;
+      background: var(--bg-card);
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp .3s ease;
+    }
+    .dict-entry.show { display: block; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Entry header */
+    .dict-header {
+      background: linear-gradient(135deg, var(--charcoal) 0%, #3A3A3A 100%);
+      padding: 36px 40px;
+      display: flex; align-items: flex-start; gap: 32px; flex-wrap: wrap;
+    }
+    .dict-hanzi {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(4rem, 10vw, 6.5rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 4px 20px rgba(0,0,0,.3);
+    }
+    .dict-header__info { flex: 1; min-width: 200px; }
+    .dict-pinyin {
+      font-size: 1.5rem; font-weight: 600;
+      color: var(--orange-light); margin-bottom: 8px;
+      letter-spacing: .05em;
+    }
+    .dict-types { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .dict-type-badge {
+      padding: 3px 12px; border-radius: var(--r-full);
+      font-size: .72rem; font-weight: 700;
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.85);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .dict-header__btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .dict-audio-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: var(--r-full);
+      border: 2px solid rgba(255,122,0,.5);
+      background: rgba(255,122,0,.15);
+      color: var(--orange-light); font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: all var(--t-fast);
+    }
+    .dict-audio-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .dict-audio-btn.playing { animation: pulse .8s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    .dict-save-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: var(--r-full);
+      border: 2px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: rgba(255,255,255,.7); font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: all var(--t-fast);
+    }
+    .dict-save-btn:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    .dict-save-btn.saved { border-color: var(--yellow); color: var(--yellow); }
+
+    /* Entry body */
+    .dict-body { padding: 32px 40px; }
+    .dict-section { margin-bottom: 28px; }
+    .dict-section:last-child { margin-bottom: 0; }
+    .dict-section__title {
+      font-family: 'Baloo 2', cursive; font-size: .9rem; font-weight: 700;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .dict-section__title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* Definitions list */
+    .dict-defs { display: flex; flex-direction: column; gap: 10px; }
+    .dict-def {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 16px; border-radius: var(--r-md);
+      background: var(--bg-section); border: 1px solid transparent;
+      transition: border-color var(--t-fast);
+    }
+    .dict-def:hover { border-color: var(--orange); }
+    .dict-def__num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--orange-xlight); color: var(--orange-dark);
+      font-size: .72rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .dict-def__text { flex: 1; }
+    .dict-def__vi { font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+    .dict-def__en { font-size: .82rem; color: var(--text-muted); }
+
+    /* Example sentences */
+    .dict-examples { display: flex; flex-direction: column; gap: 12px; }
+    .dict-example {
+      padding: 14px 18px;
+      border-left: 3px solid var(--orange);
+      background: var(--bg-section);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+    }
+    .dict-example__zh { font-size: 1.05rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .dict-example__pinyin { font-size: .8rem; color: var(--orange); margin-bottom: 2px; }
+    .dict-example__vi { font-size: .85rem; color: var(--text-muted); }
+
+    /* Related words */
+    .dict-related { display: flex; flex-wrap: wrap; gap: 8px; }
+    .dict-related-word {
+      padding: 6px 14px; border-radius: var(--r-full);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .9rem;
+      color: var(--charcoal); cursor: pointer;
+      transition: all var(--t-fast);
+    }
+    .dict-related-word:hover { border-color: var(--orange); color: var(--orange); background: var(--orange-xlight); }
+
+    /* No results */
+    .dict-noresult {
+      display: none; padding: 48px; text-align: center;
+      background: var(--bg-card); border-radius: var(--r-xl); border: 1px solid var(--border);
+    }
+    .dict-noresult.show { display: block; animation: fadeUp .3s ease; }
+    .dict-noresult__icon { font-size: 3rem; margin-bottom: 12px; }
+
+    /* ── Sidebar ── */
+    .vocab-sidebar { position: sticky; top: calc(var(--header-h) + 24px); }
+    .sidebar-card {
+      background: var(--bg-card);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .sidebar-card__head {
+      padding: 16px 20px;
+      background: var(--bg-section);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: .95rem;
+      color: var(--charcoal); display: flex; align-items: center; gap: 8px;
+    }
+    .sidebar-card__body { padding: 16px 20px; }
+
+    /* Recent searches */
+    .recent-list { display: flex; flex-direction: column; gap: 4px; }
+    .recent-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: var(--r-md);
+      cursor: pointer; transition: background var(--t-fast);
+    }
+    .recent-item:hover { background: var(--bg-section); }
+    .recent-item__char { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1.1rem; color: var(--charcoal); min-width: 36px; }
+    .recent-item__info { flex: 1; min-width: 0; }
+    .recent-item__pinyin { font-size: .75rem; color: var(--orange); font-weight: 500; }
+    .recent-item__meaning { font-size: .8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Word of the day */
+    .wod-card { text-align: center; padding: 20px; }
+    .wod-hanzi { font-family: 'Baloo 2', cursive; font-size: 3.5rem; font-weight: 800; color: var(--charcoal); line-height: 1; }
+    .wod-pinyin { font-size: .95rem; color: var(--orange); font-weight: 600; margin-block: 6px; }
+    .wod-meaning { font-size: .85rem; color: var(--text-muted); margin-bottom: 14px; }
+
+    /* HSK quick stats sidebar */
+    .hsk-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hsk-quick-item {
+      text-align: center; padding: 10px 6px;
+      background: var(--bg-section); border-radius: var(--r-md);
+      border: 1px solid var(--border);
+    }
+    .hsk-quick-item__num { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.2rem; color: var(--charcoal); }
+    .hsk-quick-item__lbl { font-size: .65rem; color: var(--text-muted); }
+
+    /* Autocomplete dropdown */
+    .search-dropdown {
+      position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+      background: var(--bg-card);
+      border-radius: var(--r-lg); border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); z-index: 100;
+      display: none; max-height: 280px; overflow-y: auto;
+    }
+    .search-dropdown.show { display: block; }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; cursor: pointer;
+      transition: background var(--t-fast);
+    }
+    .dropdown-item:hover { background: var(--bg-section); }
+    .dropdown-item:not(:last-child) { border-bottom: 1px solid var(--border); }
+    .dropdown-item__char { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.3rem; color: var(--charcoal); min-width: 40px; }
+    .dropdown-item__info { flex: 1; }
+    .dropdown-item__pinyin { font-size: .78rem; color: var(--orange); font-weight: 600; }
+    .dropdown-item__meaning { font-size: .82rem; color: var(--text-muted); }
+    .dropdown-item__hsk { font-size: .7rem; background: var(--orange-xlight); color: var(--orange-dark); padding: 2px 7px; border-radius: var(--r-full); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .vocab-layout { grid-template-columns: 1fr; }
+      .vocab-sidebar { position: static; }
+    }
+    @media (max-width: 580px) {
+      .dict-header { padding: 24px 20px; }
+      .dict-body   { padding: 20px; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">HSK</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__link">Trang chủ</a>
+        <a href="hsk.html" class="nav__link">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link active">Từ vựng</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge" title="Streak 7 ngày">
+          <span class="streak-badge__icon">🔥</span>
+          <span class="streak-badge__count" data-progress="streak">0</span>
+        </div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+        <a href="profile.html" class="btn btn--primary">Hồ sơ</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="index.html" class="nav__link">Trang chủ</a>
+      <a href="hsk.html" class="nav__link">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+      <a href="flashcard.html" class="nav__link">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link active">Từ vựng</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+      <a href="profile.html" class="btn btn--primary btn--full" style="text-align:center">Hồ sơ</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- Search Hero -->
+    <section class="vocab-hero">
+      <div class="container" style="position:relative;z-index:1">
+        <span class="badge" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);margin-bottom:14px">📖 Từ điển Hán - Việt</span>
+        <h1>Tra từ điển</h1>
+        <p>Tìm kiếm từ bằng chữ Hán, Pinyin hoặc nghĩa tiếng Việt</p>
+
+        <!-- Search Box -->
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            class="search-input"
+            id="searchInput"
+            placeholder="Tìm kiếm bằng chữ Hán, Pinyin hoặc Tiếng Việt..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-clear" id="searchClear" aria-label="Xóa tìm kiếm">✕</button>
+          <div class="search-dropdown" id="searchDropdown"></div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chips">
+          <button class="chip active" data-filter="all">Tất cả</button>
+          <button class="chip" data-filter="Danh từ">Danh từ</button>
+          <button class="chip" data-filter="Động từ">Động từ</button>
+          <button class="chip" data-filter="Tính từ">Tính từ</button>
+          <button class="chip" data-filter="Trạng từ">Trạng từ</button>
+          <button class="chip" data-filter="Lời chào">Lời chào</button>
+        </div>
+
+        <!-- Quick word buttons -->
+        <div class="quick-suggestions">
+          <span style="color:rgba(255,255,255,.5);font-size:.78rem;align-self:center">Thử ngay:</span>
+          <button class="quick-btn" onclick="doSearch('你好')">你好</button>
+          <button class="quick-btn" onclick="doSearch('朋友')">朋友</button>
+          <button class="quick-btn" onclick="doSearch('学习')">学习</button>
+          <button class="quick-btn" onclick="doSearch('中国')">中国</button>
+          <button class="quick-btn" onclick="doSearch('工作')">工作</button>
+          <button class="quick-btn" onclick="doSearch('喜欢')">喜欢</button>
+        </div>
+      </div>
+      <div class="vocab-hero__wave">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#FFFDF9" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="vocab-content">
+      <div class="container">
+        <div class="vocab-layout">
+          <!-- Main column -->
+          <div class="vocab-main">
+            <!-- Placeholder -->
+            <div class="vocab-placeholder" id="vocabPlaceholder">
+              <div class="vocab-placeholder__icon">🀄</div>
+              <h3>Tìm kiếm từ vựng</h3>
+              <p>Nhập chữ Hán, Pinyin hoặc nghĩa tiếng Việt vào ô tìm kiếm phía trên để tra cứu.</p>
+            </div>
+
+            <!-- Dictionary Entry -->
+            <div class="dict-entry" id="dictEntry">
+              <div class="dict-header">
+                <div class="dict-hanzi" id="entryHanzi">你好</div>
+                <div class="dict-header__info">
+                  <div class="dict-pinyin" id="entryPinyin">nǐ hǎo</div>
+                  <div class="dict-types" id="entryTypes"></div>
+                  <div class="dict-header__btns">
+                    <button class="dict-audio-btn" id="dictAudioBtn" onclick="speakEntry()">
+                      🔊 Phát âm
+                    </button>
+                    <button class="dict-audio-btn" id="dictAudioSlowBtn" onclick="speakEntry(true)" style="font-size:.8rem">
+                      🐢 Chậm
+                    </button>
+                    <button class="dict-save-btn" id="dictSaveBtn" onclick="toggleSave()">
+                      ☆ Lưu
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="dict-body">
+                <div class="dict-section">
+                  <div class="dict-section__title">📋 Định nghĩa</div>
+                  <div class="dict-defs" id="entryDefs"></div>
+                </div>
+                <div class="dict-section">
+                  <div class="dict-section__title">💬 Ví dụ câu</div>
+                  <div class="dict-examples" id="entryExamples"></div>
+                </div>
+                <div class="dict-section">
+                  <div class="dict-section__title">🔗 Từ liên quan</div>
+                  <div class="dict-related" id="entryRelated"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- No result -->
+            <div class="dict-noresult" id="dictNoResult">
+              <div class="dict-noresult__icon">🔎</div>
+              <h3>Không tìm thấy kết quả</h3>
+              <p style="color:var(--text-muted)">Thử tìm với từ khóa khác hoặc chọn từ gợi ý bên dưới.</p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="vocab-sidebar">
+            <!-- Word of the Day -->
+            <div class="sidebar-card">
+              <div class="sidebar-card__head">⭐ Từ trong ngày</div>
+              <div class="sidebar-card__body wod-card">
+                <div class="wod-hanzi" id="wodHanzi">幸福</div>
+                <div class="wod-pinyin" id="wodPinyin">xìng fú</div>
+                <div class="wod-meaning" id="wodMeaning">Hạnh phúc</div>
+                <button class="btn btn--sm btn--primary ripple" onclick="doSearch('幸福')">Tra cứu từ này</button>
+              </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="sidebar-card">
+              <div class="sidebar-card__head">🕐 Tìm kiếm gần đây</div>
+              <div class="sidebar-card__body">
+                <div class="recent-list" id="recentList">
+                  <p style="font-size:.82rem;color:var(--text-muted);text-align:center;padding:8px 0">Chưa có lịch sử tìm kiếm</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick HSK Stats -->
+            <div class="sidebar-card">
+              <div class="sidebar-card__head">📊 Từ vựng theo cấp</div>
+              <div class="sidebar-card__body">
+                <div class="hsk-quick">
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#4CAF50">150</div><div class="hsk-quick-item__lbl">HSK 1</div></div>
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#FF7A00">300</div><div class="hsk-quick-item__lbl">HSK 2</div></div>
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#2196F3">600</div><div class="hsk-quick-item__lbl">HSK 3</div></div>
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#9C27B0">1200</div><div class="hsk-quick-item__lbl">HSK 4</div></div>
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#F44336">2500</div><div class="hsk-quick-item__lbl">HSK 5</div></div>
+                  <div class="hsk-quick-item"><div class="hsk-quick-item__num" style="color:#212121">5000</div><div class="hsk-quick-item__lbl">HSK 6</div></div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo logo--white">
+          <span class="logo__icon">🍊</span>
+          <span class="logo__text">Cam &amp; Coca</span>
+        </a>
+        <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo.</p>
+        <div class="footer__social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <h4>Học tập</h4>
+        <a href="hsk.html">Lộ trình HSK</a>
+        <a href="flashcard.html">Flashcard</a>
+        <a href="vocabulary.html">Từ vựng</a>
+      </div>
+      <div class="footer__links">
+        <h4>Cộng đồng</h4>
+        <a href="#">Diễn đàn</a>
+        <a href="#">Bảng xếp hạng</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer__links">
+        <h4>Hỗ trợ</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Liên hệ</a>
+        <a href="#">Điều khoản</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2024 Tiếng Trung Cam &amp; Coca. Made with ❤️ in Vietnam</p>
+      <p class="footer__tagline">学中文，乐无穷</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="modal__close" id="modalClose">✕</button>
+      <div class="modal__logo">🍊</div>
+      <h2 class="modal__title">Chào mừng trở lại!</h2>
+      <p class="modal__subtitle">Đăng nhập để lưu từ vựng yêu thích</p>
+      <form class="modal__form" id="loginForm">
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Mật khẩu</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn--primary btn--full ripple">Đăng nhập</button>
+        <div style="margin:16px 0;text-align:center;color:#888;">hoặc</div>
+
+<button type="button" id="googleLogin" class="btn btn--outline btn--full">
+  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+       width="20"
+       style="vertical-align:middle;margin-right:8px;">
+  Đăng nhập bằng Google
+</button>
+      </form>
+      <p class="modal__footer-text">Chưa có tài khoản? <a href="profile.html">Đăng ký ngay</a></p>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+  (function () {
+    /* ── Dictionary Data ── */
+    let DICT = [];
+    async function loadDictionary(file = "assets/data/all.json") {
+
+    try {
+
+        const response = await fetch(file);
+
+        const raw = await response.json();
+
+        DICT = raw.map(item => ({
+
+            id: item.id,
+
+            hanzi: item.hanzi || "",
+
+            pinyin: item.pinyin || "",
+
+            hsk: item.hsk || 1,
+
+            lesson: item.lesson || 1,
+
+            types: item.type
+                ? [item.type]
+                : [],
+
+            defs: [
+                {
+                    vi: item.meaning_vi || "",
+                    en: item.meaning_en || ""
+                }
+            ],
+
+            examples: (item.examples || []).map(e => ({
+
+                zh: e.hanzi || "",
+
+                pinyin: e.pinyin || "",
+
+                vi: e.translation || ""
+
+            })),
+
+            related: item.related || []
+
+        }));
+
+        console.log("Đã tải", DICT.length, "từ");
+
+        renderRecent();
+
+        updateWordOfDay();
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+loadDictionary();
+
+
+    let currentFilter = 'all';
+    let savedWords = new Set();
+    let recentSearches = [];
+    let currentWord = null;
+
+    /* ── Search Logic ── */
+   function search(query) {
+
+    query = query.trim().toLowerCase();
+
+    if (!query) return [];
+
+    return DICT.filter(w => {
+
+        const matchFilter =
+            currentFilter === "all" ||
+            (w.types && w.types.some(t =>
+                t.toLowerCase().includes(currentFilter.toLowerCase())
+            ));
+
+        const matchQuery =
+
+            (w.hanzi || "").includes(query)
+
+            ||
+
+            (w.pinyin || "")
+                .toLowerCase()
+                .includes(query)
+
+            ||
+
+            (w.defs || []).some(d =>
+
+                (d.vi || "")
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                (d.en || "")
+                    .toLowerCase()
+                    .includes(query)
+
+            );
+
+        return matchFilter && matchQuery;
+
+    });
+
+}
+
+    /* ── Show Entry ── */
+   function showEntry(word) {
+
+    currentWord = word;
+
+    document.getElementById("vocabPlaceholder").style.display = "none";
+    document.getElementById("dictNoResult").classList.remove("show");
+
+    const entry = document.getElementById("dictEntry");
+
+    entry.classList.add("show");
+
+    document.getElementById("entryHanzi").textContent =
+        word.hanzi || "";
+
+    document.getElementById("entryPinyin").textContent =
+        word.pinyin || "";
+
+    /* ===== Types ===== */
+
+    const typesEl = document.getElementById("entryTypes");
+
+    typesEl.innerHTML = "";
+
+    if (word.types && word.types.length) {
+
+        typesEl.innerHTML += word.types.map(type =>
+
+            `<span class="dict-type-badge">${type}</span>`
+
+        ).join("");
+
+    }
+
+    typesEl.innerHTML +=
+
+        `<span class="dict-type-badge"
+            style="background:rgba(255,122,0,.2);
+                   border-color:rgba(255,122,0,.3)">
+            HSK ${word.hsk}
+        </span>`;
+
+
+
+    /* ===== Definitions ===== */
+
+    const defs = word.defs || [];
+
+    document.getElementById("entryDefs").innerHTML =
+
+        defs.map((d,index)=>`
+
+        <div class="dict-def">
+
+            <div class="dict-def__num">
+
+                ${index+1}
+
+            </div>
+
+            <div class="dict-def__text">
+
+                <div class="dict-def__vi">
+
+                    ${d.vi || ""}
+
+                </div>
+
+                <div class="dict-def__en">
+
+                    ${d.en || ""}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+
+
+    /* ===== Examples ===== */
+
+    const examples = word.examples || [];
+
+    document.getElementById("entryExamples").innerHTML =
+
+        examples.map(e=>`
+
+        <div class="dict-example">
+
+            <div class="dict-example__zh">
+
+                ${e.zh || ""}
+
+            </div>
+
+            <div class="dict-example__pinyin">
+
+                ${e.pinyin || ""}
+
+            </div>
+
+            <div class="dict-example__vi">
+
+                ${e.vi || ""}
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+
+
+    /* ===== Related ===== */
+
+    const related = word.related || [];
+
+    document.getElementById("entryRelated").innerHTML =
+
+        related.map(r=>`
+
+        <span
+            class="dict-related-word"
+            onclick="doSearch('${r}')">
+
+            ${r}
+
+        </span>
+
+    `).join("");
+
+
+
+    /* ===== Save Button ===== */
+
+    const saveBtn =
+        document.getElementById("dictSaveBtn");
+
+    const saved =
+        savedWords.has(word.hanzi);
+
+    saveBtn.textContent =
+        saved
+            ? "★ Đã lưu"
+            : "☆ Lưu";
+
+    saveBtn.classList.toggle(
+        "saved",
+        saved
+    );
+
+}
+
+    /* ── Audio ── */
+    window.speakEntry = function (slow) {
+      if (!currentWord) return;
+      const btn = document.getElementById(slow ? 'dictAudioSlowBtn' : 'dictAudioBtn');
+      btn?.classList.add('playing');
+      window.CCSpeech?.speak({ text: currentWord.hanzi, audioSrc: currentWord.audio || '', rate: slow ? 0.75 : 1, lang: 'zh-CN' })
+        .catch(() => {})
+        .finally(() => btn?.classList.remove('playing'));
+    };
+
+    /* ── Save ── */
+    window.toggleSave = async function () {
+      if (!currentWord) return;
+      const firebase = window.CCFirebase;
+      if (!firebase?.getCurrentUser()) {
+        alert('Vui lòng đăng nhập để lưu từ theo tài khoản.');
+        return;
+      }
+      if (savedWords.has(currentWord.hanzi)) savedWords.delete(currentWord.hanzi);
+      else savedWords.add(currentWord.hanzi);
+      await firebase.saveUserData('vocabulary', { saved: [...savedWords], recent: recentSearches });
+      const saveBtn = document.getElementById('dictSaveBtn');
+      saveBtn.textContent = savedWords.has(currentWord.hanzi) ? '★ Đã lưu' : '☆ Lưu';
+      saveBtn.classList.toggle('saved', savedWords.has(currentWord.hanzi));
+    };
+
+    /* ── Recent ── */
+    function addToRecent(term) {
+      const word = DICT.find(w => w.hanzi === term || w.pinyin.toLowerCase().includes(term.toLowerCase()));
+      if (!word) return;
+      recentSearches = [word.hanzi, ...recentSearches.filter(r => r !== word.hanzi)].slice(0, 6);
+      window.CCFirebase?.getCurrentUser() && window.CCFirebase.saveUserData('vocabulary', { saved: [...savedWords], recent: recentSearches });
+      renderRecent();
+    }
+
+    function renderRecent() {
+      const el = document.getElementById('recentList');
+      if (!recentSearches.length) {
+        el.innerHTML = '<p style="font-size:.82rem;color:var(--text-muted);text-align:center;padding:8px 0">Chưa có lịch sử tìm kiếm</p>';
+        return;
+      }
+      el.innerHTML = recentSearches.map(h => {
+        const w = DICT.find(d => d.hanzi === h);
+        if (!w) return '';
+        return `<div class="recent-item" onclick="doSearch('${w.hanzi}')">
+          <div class="recent-item__char">${w.hanzi}</div>
+          <div class="recent-item__info">
+            <div class="recent-item__pinyin">${w.pinyin}</div>
+            <div class="recent-item__meaning">${w.defs[0].vi}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    renderRecent();
+
+    window.addEventListener('cc:user-stats', async (event) => {
+      const firebase = window.CCFirebase;
+      if (!event.detail.user || !firebase?.getCurrentUser()) {
+        savedWords = new Set();
+        recentSearches = [];
+        renderRecent();
+        if (currentWord) showEntry(currentWord);
+        return;
+      }
+
+      const vocabData = await firebase.getUserData('vocabulary', { saved: [], recent: [] });
+      savedWords = new Set(vocabData?.saved || []);
+      recentSearches = Array.isArray(vocabData?.recent) ? vocabData.recent : [];
+      renderRecent();
+      if (currentWord) showEntry(currentWord);
+    });
+
+    /* ── Search Input ── */
+    const inp  = document.getElementById('searchInput');
+    const drop = document.getElementById('searchDropdown');
+    const clrBtn = document.getElementById('searchClear');
+
+    inp.addEventListener('input', function () {
+      const q = this.value.trim();
+      clrBtn.classList.toggle('visible', q.length > 0);
+      if (q.length < 1) { drop.classList.remove('show'); return; }
+
+      const results = search(q);
+      if (!results || !results.length) { drop.classList.remove('show'); return; }
+
+      drop.innerHTML = results.slice(0, 6).map(w =>
+        `<div class="dropdown-item" onclick="doSearch('${w.hanzi}')">
+          <div class="dropdown-item__char">${w.hanzi}</div>
+          <div class="dropdown-item__info">
+            <div class="dropdown-item__pinyin">${w.pinyin}</div>
+            <div class="dropdown-item__meaning">${w.defs[0].vi}</div>
+          </div>
+          <span class="dropdown-item__hsk">HSK ${w.hsk}</span>
+        </div>`).join('');
+      drop.classList.add('show');
+    });
+
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); doSearch(inp.value); }
+    });
+
+    clrBtn.addEventListener('click', () => {
+      inp.value = '';
+      clrBtn.classList.remove('visible');
+      drop.classList.remove('show');
+      document.getElementById('vocabPlaceholder').style.display = '';
+      document.getElementById('dictEntry').classList.remove('show');
+      document.getElementById('dictNoResult').classList.remove('show');
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-wrap')) drop.classList.remove('show');
+    });
+
+    /* ── Filter chips ── */
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', function () {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+      });
+    });
+
+    /* ── Word of Day audio ── */
+    const wods = DICT.filter(w => w.hanzi === '幸福');
+    if (wods.length) {
+      document.getElementById('wodHanzi').textContent  = wods[0].hanzi;
+      document.getElementById('wodPinyin').textContent = wods[0].pinyin;
+      document.getElementById('wodMeaning').textContent = wods[0].defs[0].vi;
+    }
+  })();
+  </script>
+  <script src="assets/js/speech-service.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

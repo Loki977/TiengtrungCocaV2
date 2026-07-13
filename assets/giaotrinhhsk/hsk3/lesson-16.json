@@ -1,0 +1,493 @@
+{
+  "lessonId": 16,
+  "level": 4,
+  "title": "Núi cao thế này, bạn có leo lên được không",
+  "meta": {
+    "estimatedMinutes": 40,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 16 + mở rộng bổ ngữ khả năng",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson16/"
+  },
+  "vocabulary": [
+    {
+      "id": "lanche",
+      "hanzi": "缆车",
+      "pinyin": "lǎnchē",
+      "meaning": "xe cáp treo",
+      "example": "山太高了，我们可以坐缆车上去。",
+      "audio": "vocab/lanche.mp3"
+    },
+    {
+      "id": "chuanqi",
+      "hanzi": "喘气",
+      "pinyin": "chuǎn qì",
+      "meaning": "thở dốc",
+      "example": "他跑了十分钟，累得直喘气。",
+      "audio": "vocab/chuanqi.mp3"
+    },
+    {
+      "id": "dong",
+      "hanzi": "动",
+      "pinyin": "dòng",
+      "meaning": "động, lay chuyển",
+      "example": "这张桌子太重，我搬不动。",
+      "audio": "vocab/dong.mp3"
+    },
+    {
+      "id": "daodi",
+      "hanzi": "到底",
+      "pinyin": "dàodǐ",
+      "meaning": "đến cùng, rốt cuộc",
+      "example": "只要坚持到底，就能成功。",
+      "audio": "vocab/daodi.mp3"
+    },
+    {
+      "id": "shengli",
+      "hanzi": "胜利",
+      "pinyin": "shènglì",
+      "meaning": "thắng lợi",
+      "example": "坚持就是胜利。",
+      "audio": "vocab/shengli.mp3"
+    },
+    {
+      "id": "jiayou",
+      "hanzi": "加油",
+      "pinyin": "jiā yóu",
+      "meaning": "cố lên, cố gắng",
+      "example": "大家一起为他加油。",
+      "audio": "vocab/jiayou.mp3"
+    },
+    {
+      "id": "chuhan",
+      "hanzi": "出汗",
+      "pinyin": "chū hàn",
+      "meaning": "ra mồ hôi",
+      "example": "爬山爬得我出汗了。",
+      "audio": "vocab/chuhan.mp3"
+    },
+    {
+      "id": "han",
+      "hanzi": "汗",
+      "pinyin": "hàn",
+      "meaning": "mồ hôi",
+      "example": "他擦了擦脸上的汗。",
+      "audio": "vocab/han.mp3"
+    },
+    {
+      "id": "shen",
+      "hanzi": "身",
+      "pinyin": "shēn",
+      "meaning": "thân, cơ thể",
+      "example": "他出了一身汗。",
+      "audio": "vocab/shen.mp3"
+    },
+    {
+      "id": "jiezhe",
+      "hanzi": "接着",
+      "pinyin": "jiēzhe",
+      "meaning": "tiếp theo, tiếp tục",
+      "example": "休息了一会儿，我们接着往上爬。",
+      "audio": "vocab/jiezhe.mp3"
+    },
+    {
+      "id": "weixian",
+      "hanzi": "危险",
+      "pinyin": "wēixiǎn",
+      "meaning": "nguy hiểm",
+      "example": "别从那儿上，太危险了。",
+      "audio": "vocab/weixian.mp3"
+    },
+    {
+      "id": "bi",
+      "hanzi": "比",
+      "pinyin": "bǐ",
+      "meaning": "so sánh, đọ với",
+      "example": "我比不了你们年轻人。",
+      "audio": "vocab/bi.mp3"
+    },
+    {
+      "id": "jiji",
+      "hanzi": "积极",
+      "pinyin": "jījí",
+      "meaning": "tích cực",
+      "example": "同学们都在积极准备节目。",
+      "audio": "vocab/jiji.mp3"
+    },
+    {
+      "id": "xiangsheng",
+      "hanzi": "相声",
+      "pinyin": "xiàngsheng",
+      "meaning": "tấu hài, đối khẩu",
+      "example": "他们准备说一个相声。",
+      "audio": "vocab/xiangsheng.mp3"
+    },
+    {
+      "id": "taici",
+      "hanzi": "台词",
+      "pinyin": "táicí",
+      "meaning": "lời thoại",
+      "example": "他把台词背得很熟。",
+      "audio": "vocab/taici.mp3"
+    },
+    {
+      "id": "bei",
+      "hanzi": "背",
+      "pinyin": "bèi",
+      "meaning": "học thuộc, đọc thuộc lòng",
+      "example": "我总是背不住台词。",
+      "audio": "vocab/bei.mp3"
+    },
+    {
+      "id": "huaju",
+      "hanzi": "话剧",
+      "pinyin": "huàjù",
+      "meaning": "kịch nói",
+      "example": "我们班要表演一个话剧。",
+      "audio": "vocab/huaju.mp3"
+    },
+    {
+      "id": "pailian",
+      "hanzi": "排练",
+      "pinyin": "páiliàn",
+      "meaning": "tập luyện, tập diễn",
+      "example": "他们每天晚上都排练。",
+      "audio": "vocab/pailian.mp3"
+    },
+    {
+      "id": "shoushang",
+      "hanzi": "受伤",
+      "pinyin": "shòu shāng",
+      "meaning": "bị thương",
+      "example": "玛丽的腿受伤了。",
+      "audio": "vocab/shoushang.mp3"
+    },
+    {
+      "id": "jiuzheng",
+      "hanzi": "纠正",
+      "pinyin": "jiūzhèng",
+      "meaning": "sửa, uốn nắn",
+      "example": "老师帮我纠正发音。",
+      "audio": "vocab/jiuzheng.mp3"
+    },
+    {
+      "id": "yan",
+      "hanzi": "演",
+      "pinyin": "yǎn",
+      "meaning": "diễn, biểu diễn",
+      "example": "这次联欢会你演什么节目？",
+      "audio": "vocab/yan.mp3"
+    },
+    {
+      "id": "zhiyaojiu",
+      "hanzi": "只要……就……",
+      "pinyin": "zhǐyào...jiù...",
+      "meaning": "chỉ cần... thì...",
+      "example": "只要认真练，就一定能演好。",
+      "audio": "vocab/zhiyaojiu.mp3"
+    },
+    {
+      "id": "shishang",
+      "hanzi": "世上",
+      "pinyin": "shìshàng",
+      "meaning": "trên đời, trên thế giới",
+      "example": "世上无难事，只怕有心人。",
+      "audio": "vocab/shishang.mp3"
+    },
+    {
+      "id": "wu",
+      "hanzi": "无",
+      "pinyin": "wú",
+      "meaning": "không có",
+      "example": "世上无难事。",
+      "audio": "vocab/wu.mp3"
+    },
+    {
+      "id": "pa",
+      "hanzi": "怕",
+      "pinyin": "pà",
+      "meaning": "sợ, e rằng",
+      "example": "我怕自己演不好。",
+      "audio": "vocab/pa.mp3"
+    },
+    {
+      "id": "xin",
+      "hanzi": "心",
+      "pinyin": "xīn",
+      "meaning": "tim, tấm lòng, ý chí",
+      "example": "只怕有心人。",
+      "audio": "vocab/xin.mp3"
+    },
+    {
+      "id": "zixin",
+      "hanzi": "自信",
+      "pinyin": "zìxìn",
+      "meaning": "tự tin",
+      "example": "你要有自信，相信自己。",
+      "audio": "vocab/zixin.mp3"
+    },
+    {
+      "id": "xiangxin",
+      "hanzi": "相信",
+      "pinyin": "xiāngxìn",
+      "meaning": "tin tưởng",
+      "example": "我相信你能做好。",
+      "audio": "vocab/xiangxin.mp3"
+    },
+    {
+      "id": "zhengqu",
+      "hanzi": "争取",
+      "pinyin": "zhēngqǔ",
+      "meaning": "tranh thủ, cố gắng đạt được",
+      "example": "我们争取演出成功。",
+      "audio": "vocab/zhengqu.mp3"
+    },
+    {
+      "id": "kongpa",
+      "hanzi": "恐怕",
+      "pinyin": "kǒngpà",
+      "meaning": "e rằng, có lẽ",
+      "example": "恐怕我今天爬不上去了。",
+      "audio": "vocab/kongpa.mp3"
+    },
+    {
+      "id": "shou",
+      "hanzi": "首",
+      "pinyin": "shǒu",
+      "meaning": "bài, lượng từ cho bài hát/thơ",
+      "example": "老师准备了一首歌。",
+      "audio": "vocab/shou.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "山顶",
+      "pinyin": "shāndǐng",
+      "meaning": "đỉnh núi",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "山路",
+      "pinyin": "shānlù",
+      "meaning": "đường núi",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "节目单",
+      "pinyin": "jiémùdān",
+      "meaning": "danh sách tiết mục",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "舞台",
+      "pinyin": "wǔtái",
+      "meaning": "sân khấu",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "坚持到山顶",
+      "chinese": "《坚持到山顶》\n周末，我们班去爬山。刚到山脚下，大家就看见了一条很长的山路。小林说：“山这么高，我们爬得上去吗？要不要坐缆车？”老师笑着说：“别着急，慢慢爬，爬不动的时候就休息一会儿。”开始的时候，同学们走得很快，一边聊天一边拍照。可是爬了半个小时以后，很多人都出了一身汗，有的人累得直喘气。小林坐在石头上说：“我恐怕爬不上去了。”老师说：“只要坚持，就能到山顶。世上无难事，只怕有心人。”听了这句话，大家又有了信心。接着，我们互相加油，一步一步往上爬。最后，大家终于爬到了山顶。虽然每个人都很累，但是看着远处的风景，大家觉得这次经历特别有意义。"
+    }
+  ],
+  "story": [
+    {
+      "title": "只要不放弃",
+      "chinese": "学校联欢会快到了，我们班准备表演一个话剧。开始排练的时候，很多同学都不自信。小王背不住台词，小李说话声音太小，小林总担心自己演不好。老师没有批评大家，只是一句一句地帮他们纠正。每天放学以后，同学们都留在教室里接着练。有人累了，就坐下来休息一会儿；有人忘了台词，旁边的同学就小声提醒。一个星期以后，大家的表演越来越自然。演出那天，教室里坐满了人。节目开始前，小林还紧张得直出汗。老师对他说：“只要相信自己，就一定能演好。”最后，他们的节目演得非常成功。大家明白了：困难并不可怕，可怕的是还没开始就说自己做不到。"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: Câu “世上无难事，只怕有心人”",
+      "content": "Đây là một câu tục ngữ Hán ngữ quen thuộc, nghĩa là trên đời không có việc gì quá khó, chỉ sợ người làm không có quyết tâm. Câu này thường dùng để động viên người khác kiên trì vượt qua khó khăn."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "可能补语（2）- Động từ + 得/不 + 动",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 16",
+      "pattern": "动词 + 得 / 不 + 动",
+      "structure": "Động từ + 得/不 + 动",
+      "explanation": "Động từ “动” làm bổ ngữ khả năng, biểu thị hành động có thể hoặc không thể làm cho người/vật thay đổi vị trí, di chuyển hoặc lay động được. Thường dùng với 搬、拿、推、走、爬、跑 等 động từ.",
+      "examples": [
+        "这张桌子不重，我搬得动。"
+      ],
+      "wrongExamples": [
+        "* 这张桌子不重，我搬动得。"
+      ],
+      "usage": "Dùng khi muốn nói “làm nổi / không làm nổi” về sức lực hoặc khả năng di chuyển một vật/người. Phủ định là 动词 + 不 + 动, ví dụ 搬不动、爬不动、走不动。"
+    },
+    {
+      "title": "可能补语（2）- Động từ + 得/不 + 好",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 16",
+      "pattern": "动词 + 得 / 不 + 好",
+      "structure": "Động từ + 得/不 + 好",
+      "explanation": "Hình dung từ “好” làm bổ ngữ khả năng, biểu thị một hành động có thể hoặc không thể hoàn thành tốt, đạt mức vừa ý hay không. Đây là điểm rất hay dùng khi nói về biểu diễn, học tập, luyện tập, chuẩn bị công việc.",
+      "examples": [
+        "只要认真练，你一定演得好。"
+      ],
+      "wrongExamples": [
+        "* 只要认真练，你一定演好得。"
+      ],
+      "usage": "Dùng với các động từ như 演、唱、说、写、学、准备. Phủ định là 演不好、唱不好、学不好, nghĩa là không thể làm tốt."
+    },
+    {
+      "title": "可能补语（2）- Động từ + 得/不 + 住",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 16",
+      "pattern": "动词 + 得 / 不 + 住",
+      "structure": "Động từ + 得/不 + 住",
+      "explanation": "Động từ “住” làm bổ ngữ khả năng, biểu thị có thể hoặc không thể làm cho sự vật cố định, giữ lại, nhớ lại hoặc dừng ở một trạng thái nào đó. Trong bài thường gặp 背得住、记得住、坐得下 等 cách nói.",
+      "examples": [
+        "这些台词不多，我背得住。"
+      ],
+      "wrongExamples": [
+        "* 这些台词不多，我背住得。"
+      ],
+      "usage": "Hay dùng với 记、背、停、坐、站 等 động từ. Ví dụ 记不住 = không nhớ nổi; 停不住 = không dừng lại được; 坐不下 = không ngồi đủ chỗ."
+    },
+    {
+      "title": "可能补语 và 状态补语 - Phân biệt bổ ngữ khả năng và bổ ngữ trạng thái",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 16 + mở rộng",
+      "pattern": "可能补语: 演得好 / 演不好；状态补语: 演得很好 / 演得不好",
+      "structure": "Khả năng: V + 得/不 + kết quả; Trạng thái: V + 得 + mức độ/trạng thái",
+      "explanation": "可能补语 biểu thị kết quả có thể thực hiện được hay không; trọng âm thường rơi vào động từ. 状态补语 biểu thị kết quả hoặc trạng thái đã xảy ra, thường dùng để đánh giá mức độ; trọng âm rơi vào bổ ngữ phía sau. Hình thức phủ định và câu hỏi chính phản cũng khác nhau.",
+      "examples": [
+        "这个节目她演得好。（状态补语：评价她已经演得不错。）"
+      ],
+      "wrongExamples": [
+        "* 她演得不好这个节目。"
+      ],
+      "usage": "可能补语 có thể mang tân ngữ: 我演不好这个节目。状态补语 thường không trực tiếp mang tân ngữ sau bổ ngữ: không nói *她演得不好这个节目。"
+    },
+    {
+      "title": "只要……就…… - Chỉ cần... thì...",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 16",
+      "pattern": "只要 + điều kiện，就 + kết quả",
+      "structure": "只要……，就……",
+      "explanation": "“只要……就……” dùng để nối câu phức điều kiện. “只要” nêu ra điều kiện cần thiết, phía sau “就” là kết quả có thể xảy ra khi điều kiện đó được thỏa mãn. Trong khẩu ngữ có thể dùng 就 hoặc 就一定 để nhấn mạnh kết quả.",
+      "examples": [
+        "只要努力，就一定能学好。"
+      ],
+      "wrongExamples": [
+        "* 就努力，只要一定能学好。"
+      ],
+      "usage": "Dùng để động viên, đưa ra điều kiện, hoặc nói về quan hệ nguyên nhân - kết quả đơn giản. Ví dụ: 只要坚持，就会成功。"
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "Trong câu 这张桌子太重，我搬不动, 搬不动 nghĩa là gì?",
+      "options": [
+        "không bê nổi",
+        "bê rất nhanh",
+        "đã bê xong",
+        "muốn bê"
+      ],
+      "answer": "không bê nổi"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng 只要……就…… đúng?",
+      "options": [
+        "只要你努力，就会进步。",
+        "就你努力，只要会进步。",
+        "你只要就努力会进步。",
+        "只要会进步，你努力就。"
+      ],
+      "answer": "只要你努力，就会进步。"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào là bổ ngữ khả năng?",
+      "options": [
+        "我背不住这些台词。",
+        "他背得很快。",
+        "她唱得很好听。",
+        "我们走得很慢。"
+      ],
+      "answer": "我背不住这些台词。"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 山这么高，你爬___上去吗？",
+      "answer": "得"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 我太累了，走___动了。",
+      "answer": "不"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: ___你有自信，就一定能演好。",
+      "answer": "只要"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 只要 / 坚持 / 就 / 能 / 胜利",
+      "answer": "只要坚持就能胜利"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 这些 / 台词 / 我 / 背得住",
+      "answer": "这些台词我背得住"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 太重 / 这张桌子 / 搬不动 / 我",
+      "answer": "这张桌子太重，我搬不动"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 我搬动不这张桌子。",
+      "answer": "我搬不动这张桌子"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 就你努力，只要能学好。",
+      "answer": "只要你努力，就能学好"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Chỉ cần bạn luyện tập nghiêm túc, bạn nhất định diễn tốt.",
+      "answer": "只要你认真练，就一定能演好"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Tôi không nhớ nổi những lời thoại này.",
+      "answer": "我记不住这些台词"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 世上无难事，只怕有心人。",
+      "answer": "Trên đời không có việc gì khó, chỉ sợ người không có quyết tâm"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: Trong bài đọc, ai nói mình có lẽ không leo lên được nữa?",
+      "answer": "小林"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: Vì sao cuối cùng mọi người vẫn leo được lên đỉnh núi?",
+      "answer": "因为大家互相加油，坚持往上爬"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 只要……就…… để động viên người khác.",
+      "answer": "只要你相信自己，就一定能成功"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

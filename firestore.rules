@@ -1,0 +1,73 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && request.auth.token.email == "nqthanhforwork@gmail.com";
+    }
+
+    match /feedbacks/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /accessLogs/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /visits/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /users/{uid} {
+      allow create: if isSignedIn() && request.auth.uid == uid;
+      allow read, update, delete: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+
+      match /private/{docId} {
+        allow create: if isSignedIn() && request.auth.uid == uid;
+        allow read, update, delete: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+      }
+    }
+
+    match /adminSettings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /lessonOverrides/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if isAdmin();
+
+      match /lessons/{lessonId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+
+    match /lessonContents/{lessonId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /cmsSettings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,531 @@
+{
+  "lessonId": 15,
+  "level": 4,
+  "title": "Kinh kịch tôi xem hiểu nhưng nghe không hiểu",
+  "meta": {
+    "estimatedMinutes": 35,
+    "difficulty": "HSK4",
+    "version": 4,
+    "sourceLesson": "Giáo trình Hán ngữ 4 - Bài 15",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk4/lesson15/"
+  },
+  "vocabulary": [
+    {
+      "id": "yanchu",
+      "hanzi": "演出",
+      "pinyin": "yǎnchū",
+      "meaning": "diễn xuất, biểu diễn; buổi biểu diễn",
+      "example": "这场京剧演出很精彩。",
+      "audio": "vocab/yanchu.mp3"
+    },
+    {
+      "id": "cai",
+      "hanzi": "猜",
+      "pinyin": "cāi",
+      "meaning": "đoán",
+      "example": "我猜得出这个故事的大概意思。",
+      "audio": "vocab/cai.mp3"
+    },
+    {
+      "id": "yanyuan",
+      "hanzi": "演员",
+      "pinyin": "yǎnyuán",
+      "meaning": "diễn viên",
+      "example": "这些演员唱得很好。",
+      "audio": "vocab/yanyuan.mp3"
+    },
+    {
+      "id": "wuda",
+      "hanzi": "武打",
+      "pinyin": "wǔdǎ",
+      "meaning": "múa võ, động tác võ thuật trên sân khấu",
+      "example": "京剧里的武打动作很精彩。",
+      "audio": "vocab/wuda.mp3"
+    },
+    {
+      "id": "dongzuo",
+      "hanzi": "动作",
+      "pinyin": "dòngzuò",
+      "meaning": "động tác",
+      "example": "他的动作很快，我看不清楚。",
+      "audio": "vocab/dongzuo.mp3"
+    },
+    {
+      "id": "jingcai",
+      "hanzi": "精彩",
+      "pinyin": "jīngcǎi",
+      "meaning": "đặc sắc, tuyệt vời",
+      "example": "今天晚上的演出十分精彩。",
+      "audio": "vocab/jingcai.mp3"
+    },
+    {
+      "id": "lianpu",
+      "hanzi": "脸谱",
+      "pinyin": "liǎnpǔ",
+      "meaning": "mặt nạ, kiểu vẽ mặt trong kinh kịch",
+      "example": "京剧脸谱可以表现人物的性格。",
+      "audio": "vocab/lianpu.mp3"
+    },
+    {
+      "id": "biaoxian",
+      "hanzi": "表现",
+      "pinyin": "biǎoxiàn",
+      "meaning": "biểu hiện, thể hiện",
+      "example": "脸谱能表现人物的特点。",
+      "audio": "vocab/biaoxian.mp3"
+    },
+    {
+      "id": "renwu",
+      "hanzi": "人物",
+      "pinyin": "rénwù",
+      "meaning": "nhân vật",
+      "example": "这个人物很勇敢。",
+      "audio": "vocab/renwu.mp3"
+    },
+    {
+      "id": "shehui",
+      "hanzi": "社会",
+      "pinyin": "shèhuì",
+      "meaning": "xã hội",
+      "example": "京剧也表现了古代社会的生活。",
+      "audio": "vocab/shehui.mp3"
+    },
+    {
+      "id": "diwei",
+      "hanzi": "地位",
+      "pinyin": "dìwèi",
+      "meaning": "địa vị, vị trí",
+      "example": "不同的服装可以表现人物的社会地位。",
+      "audio": "vocab/diwei.mp3"
+    },
+    {
+      "id": "xingge",
+      "hanzi": "性格",
+      "pinyin": "xìnggé",
+      "meaning": "tính cách",
+      "example": "红色脸谱常常表现勇敢的性格。",
+      "audio": "vocab/xingge.mp3"
+    },
+    {
+      "id": "shifen",
+      "hanzi": "十分",
+      "pinyin": "shífēn",
+      "meaning": "rất, vô cùng",
+      "example": "这个故事十分有趣。",
+      "audio": "vocab/shifen.mp3"
+    },
+    {
+      "id": "youqu",
+      "hanzi": "有趣",
+      "pinyin": "yǒuqù",
+      "meaning": "thú vị, lý thú",
+      "example": "京剧的脸谱十分有趣。",
+      "audio": "vocab/youqu.mp3"
+    },
+    {
+      "id": "fuzhuang",
+      "hanzi": "服装",
+      "pinyin": "fúzhuāng",
+      "meaning": "trang phục",
+      "example": "演员的服装非常漂亮。",
+      "audio": "vocab/fuzhuang.mp3"
+    },
+    {
+      "id": "yingxiang",
+      "hanzi": "影响",
+      "pinyin": "yǐngxiǎng",
+      "meaning": "ảnh hưởng; ảnh hưởng đến",
+      "example": "中文老师对我影响很大。",
+      "audio": "vocab/yingxiang.mp3"
+    },
+    {
+      "id": "chuantong",
+      "hanzi": "传统",
+      "pinyin": "chuántǒng",
+      "meaning": "truyền thống; có tính truyền thống",
+      "example": "京剧是中国的传统艺术。",
+      "audio": "vocab/chuantong.mp3"
+    },
+    {
+      "id": "yishu",
+      "hanzi": "艺术",
+      "pinyin": "yìshù",
+      "meaning": "nghệ thuật",
+      "example": "我想了解中国传统艺术。",
+      "audio": "vocab/yishu.mp3"
+    },
+    {
+      "id": "liaojie",
+      "hanzi": "了解",
+      "pinyin": "liǎojiě",
+      "meaning": "hiểu rõ, tìm hiểu",
+      "example": "学习汉语也要了解中国文化。",
+      "audio": "vocab/liaojie.mp3"
+    },
+    {
+      "id": "dehua",
+      "hanzi": "……的话",
+      "pinyin": "…… de huà",
+      "meaning": "nếu..., trong trường hợp...",
+      "example": "有时间的话，我们一起去看京剧。",
+      "audio": "vocab/dehua.mp3"
+    },
+    {
+      "id": "yue",
+      "hanzi": "约",
+      "pinyin": "yuē",
+      "meaning": "hẹn, mời trước",
+      "example": "我约山本晚上去看演出。",
+      "audio": "vocab/yue.mp3"
+    },
+    {
+      "id": "liao",
+      "hanzi": "了",
+      "pinyin": "liǎo",
+      "meaning": "xong, hoàn thành; dùng với 得/不 biểu thị khả năng",
+      "example": "今天晚上我有事，去不了。",
+      "audio": "vocab/liao.mp3"
+    },
+    {
+      "id": "jueding",
+      "hanzi": "决定",
+      "pinyin": "juédìng",
+      "meaning": "quyết định; sự quyết định",
+      "example": "我们决定周末去看京剧。",
+      "audio": "vocab/jueding.mp3"
+    },
+    {
+      "id": "shangxiaban",
+      "hanzi": "上下班",
+      "pinyin": "shàngxiàbān",
+      "meaning": "đi làm và tan làm",
+      "example": "上下班时间路上人很多。",
+      "audio": "vocab/shangxiaban.mp3"
+    },
+    {
+      "id": "danxin",
+      "hanzi": "担心",
+      "pinyin": "dānxīn",
+      "meaning": "lo lắng",
+      "example": "别担心，票肯定买得到。",
+      "audio": "vocab/danxin.mp3"
+    },
+    {
+      "id": "kending",
+      "hanzi": "肯定",
+      "pinyin": "kěndìng",
+      "meaning": "chắc chắn; khẳng định",
+      "example": "这么早去，肯定买得到票。",
+      "audio": "vocab/kending.mp3"
+    },
+    {
+      "id": "pai",
+      "hanzi": "排",
+      "pinyin": "pái",
+      "meaning": "hàng, dãy, loại; xếp hàng",
+      "example": "我们买的是第十二排的票。",
+      "audio": "vocab/pai.mp3"
+    },
+    {
+      "id": "guji",
+      "hanzi": "估计",
+      "pinyin": "gūjì",
+      "meaning": "ước chừng, phỏng đoán",
+      "example": "我估计这个剧场坐得下一千人。",
+      "audio": "vocab/guji.mp3"
+    },
+    {
+      "id": "xia",
+      "hanzi": "下",
+      "pinyin": "xià",
+      "meaning": "chỉ sức chứa, không gian chứa được",
+      "example": "这个包太小，装不下这件衣服。",
+      "audio": "vocab/xia.mp3"
+    },
+    {
+      "id": "kaiyan",
+      "hanzi": "开演",
+      "pinyin": "kāiyǎn",
+      "meaning": "bắt đầu biểu diễn",
+      "example": "离开演还有十分钟。",
+      "audio": "vocab/kaiyan.mp3"
+    },
+    {
+      "id": "man",
+      "hanzi": "满",
+      "pinyin": "mǎn",
+      "meaning": "đầy",
+      "example": "剧场里差不多坐满了。",
+      "audio": "vocab/man.mp3"
+    },
+    {
+      "id": "shuomingshu",
+      "hanzi": "说明书",
+      "pinyin": "shuōmíngshū",
+      "meaning": "bản thuyết minh, sách hướng dẫn",
+      "example": "我买了一本京剧说明书。",
+      "audio": "vocab/shuomingshu.mp3"
+    },
+    {
+      "id": "shuoming",
+      "hanzi": "说明",
+      "pinyin": "shuōmíng",
+      "meaning": "thuyết minh, giải thích; sự giải thích",
+      "example": "看说明书以后，我看懂了这个故事。",
+      "audio": "vocab/shuoming.mp3"
+    },
+    {
+      "id": "gudai",
+      "hanzi": "古代",
+      "pinyin": "gǔdài",
+      "meaning": "cổ đại",
+      "example": "这个故事发生在古代。",
+      "audio": "vocab/gudai.mp3"
+    },
+    {
+      "id": "shenhua",
+      "hanzi": "神话",
+      "pinyin": "shénhuà",
+      "meaning": "thần thoại",
+      "example": "这是一出古代神话故事。",
+      "audio": "vocab/shenhua.mp3"
+    },
+    {
+      "id": "tianshang",
+      "hanzi": "天上",
+      "pinyin": "tiānshàng",
+      "meaning": "trên trời, thiên thượng",
+      "example": "故事里有一个天上的仙女。",
+      "audio": "vocab/tianshang.mp3"
+    },
+    {
+      "id": "xiannu",
+      "hanzi": "仙女",
+      "pinyin": "xiānnǚ",
+      "meaning": "tiên nữ",
+      "example": "仙女偷偷来到人间。",
+      "audio": "vocab/xiannu.mp3"
+    },
+    {
+      "id": "xianmu",
+      "hanzi": "羡慕",
+      "pinyin": "xiànmù",
+      "meaning": "ngưỡng mộ, ghen tị tích cực",
+      "example": "她羡慕人间的生活。",
+      "audio": "vocab/xianmu.mp3"
+    },
+    {
+      "id": "renjian",
+      "hanzi": "人间",
+      "pinyin": "rénjiān",
+      "meaning": "nhân gian, trần gian",
+      "example": "仙女很羡慕人间的生活。",
+      "audio": "vocab/renjian.mp3"
+    },
+    {
+      "id": "toutou",
+      "hanzi": "偷偷",
+      "pinyin": "tōutōu",
+      "meaning": "lén lút, vụng trộm",
+      "example": "她偷偷来到剧场门口。",
+      "audio": "vocab/toutou.mp3"
+    },
+    {
+      "id": "neirong",
+      "hanzi": "内容",
+      "pinyin": "nèiróng",
+      "meaning": "nội dung",
+      "example": "后边的内容我也看不懂。",
+      "audio": "vocab/neirong.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "字幕",
+      "pinyin": "zìmù",
+      "meaning": "phụ đề",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "剧院",
+      "pinyin": "jùyuàn",
+      "meaning": "nhà hát",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "传统文化",
+      "pinyin": "chuántǒng wénhuà",
+      "meaning": "văn hóa truyền thống",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "title": "第一次看京剧",
+      "chinese": "《第一次看京剧》\n周末晚上，玛丽约山本一起去看京剧。因为是上下班时间，路上人很多，他们担心买不到好票。山本说：“别担心，早点儿去，肯定买得到。”到了剧场以后，他们只买到了最后几排的票。剧场不大，可是差不多坐满了人。演出开始以后，演员的服装很美，脸谱也十分有趣。玛丽听不懂演员唱的是什么，但是看得懂大概的故事。山本买了一本说明书，上面写着：这是一个古代神话故事，讲的是天上的仙女羡慕人间的生活，偷偷来到人间。看完说明书以后，玛丽说：“我现在看得懂一点儿了，可是还是听不懂。”山本笑着说：“没关系，第一次看京剧能看懂大概意思就很好了。以后有时间的话，我们还来看。”"
+    }
+  ],
+  "story": [
+    {
+      "title": "看懂了，也听不懂",
+      "chinese": "《看懂了，也听不懂》\n小林第一次去看京剧。演出还没开演，他就买了一本说明书，认真地看了起来。说明书上说，这个故事发生在古代，一个仙女偷偷来到人间，羡慕普通人的生活。小林觉得内容很有趣。开演以后，演员穿着漂亮的服装，脸上画着各种脸谱，武打动作也十分精彩。小林虽然听不懂他们唱的每一句话，但是能从动作和脸谱中猜得出人物的性格和社会地位。旁边的中国朋友问他：“你看得懂吗？”小林说：“故事看得懂，动作也看得懂，可是唱词听不懂。”朋友笑着说：“别担心，很多中国年轻人第一次看京剧也听不懂。多看几次，就会越来越有意思。”小林点点头说：“那下次有票的话，一定要约我。”"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: Kinh kịch và mặt nạ",
+      "content": "Kinh kịch là một loại hình nghệ thuật truyền thống Trung Quốc. Trong kinh kịch, màu sắc và hình vẽ trên mặt diễn viên thường dùng để biểu hiện tính cách, thân phận và đặc điểm của nhân vật."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "可能补语（1） - Bổ ngữ khả năng",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 15",
+      "pattern": "动词 + 得 / 不 + 结果补语 / 趋向补语",
+      "structure": "Động từ + 得/不 + bổ ngữ kết quả / bổ ngữ xu hướng",
+      "explanation": "可能补语表示主客观条件能否允许进行某种动作或实现某种结果和变化。Dùng để nói một hành động có thể xảy ra hay có thể đạt kết quả hay không. Dạng khẳng định dùng 得, dạng phủ định dùng 不. Trong giao tiếp, dạng phủ định thường gặp nhiều hơn.",
+      "examples": [
+        "我看得懂这个故事。"
+      ],
+      "usage": "Khi động từ có tân ngữ, tân ngữ có thể đặt sau bổ ngữ hoặc đưa lên làm chủ ngữ, nhưng không đặt giữa động từ và bổ ngữ. Câu có bổ ngữ khả năng biểu thị khả năng nên không dùng với 把字句."
+    },
+    {
+      "title": "动作能否发生或完成：动词 + 得 / 不 + 了（liǎo）",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 15",
+      "pattern": "动词 + 得 / 不 + 了",
+      "structure": "Động từ + 得/不 + 了",
+      "explanation": "表示动作行为能否发生或完成。“了” có nghĩa gần với “完”, nhấn mạnh hành động có thể xảy ra hoặc hoàn thành hay không.",
+      "examples": [
+        "今天晚上我有事，去不了。"
+      ],
+      "usage": "Dùng khi muốn nói có thể đi được/không đi được, ăn hết/không ăn hết, làm xong/không làm xong... Ví dụ: 去得了、去不了、吃得了、吃不了。"
+    },
+    {
+      "title": "空间能否容纳：动词 + 得 / 不 + 下",
+      "source": "PDF Giáo trình Hán ngữ 4 - Bài 15",
+      "pattern": "动词 + 得 / 不 + 下",
+      "structure": "Động từ + 得/不 + 下",
+      "explanation": "表示空间能否容纳。Dùng để nói không gian, chỗ chứa có đủ để chứa người hoặc vật hay không.",
+      "examples": [
+        "这个剧场坐得下一千人。"
+      ],
+      "usage": "Thường đi với các động từ như 坐、装、放. Ví dụ: 坐得下、坐不下、装得下、装不下。"
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "“京剧我看得懂，但是听不懂” nghĩa là gì?",
+      "options": [
+        "Tôi xem hiểu kinh kịch nhưng nghe không hiểu",
+        "Tôi nghe hiểu kinh kịch nhưng không xem",
+        "Tôi không thích kinh kịch",
+        "Tôi đã biểu diễn kinh kịch"
+      ],
+      "answer": "Tôi xem hiểu kinh kịch nhưng nghe không hiểu"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng bổ ngữ khả năng đúng?",
+      "options": [
+        "我看得懂这个故事。",
+        "我看懂得这个故事。",
+        "我把这个故事看得懂。",
+        "我得看懂这个故事。"
+      ],
+      "answer": "我看得懂这个故事。"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "“坐不下” diễn tả điều gì?",
+      "options": [
+        "không ngồi đủ / không chứa đủ chỗ",
+        "không muốn ngồi",
+        "không biết ngồi",
+        "ngồi xuống rồi"
+      ],
+      "answer": "không ngồi đủ / không chứa đủ chỗ"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Theo bài đọc, 玛丽 vì sao vẫn thấy kinh kịch thú vị?",
+      "options": [
+        "因为服装、脸谱和动作都很精彩",
+        "因为她听懂了所有唱词",
+        "因为她是演员",
+        "因为她买不到票"
+      ],
+      "answer": "因为服装、脸谱和动作都很精彩"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 这个故事我看___懂。",
+      "answer": "得"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 演员唱得太快了，我听___懂。",
+      "answer": "不"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 今天晚上我有事，去___了。",
+      "answer": "不"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 这个剧场太小，坐___下一千人。",
+      "answer": "不"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 看得懂 / 我 / 这个故事",
+      "answer": "我看得懂这个故事"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 听不懂 / 我 / 演员唱的 / 是什么",
+      "answer": "我听不懂演员唱的是什么"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 我把老师的话听不懂。",
+      "answer": "老师的话我听不懂"
+    },
+    {
+      "type": "error-correction",
+      "question": "Sửa câu sai: 这个包太小，装不这件衣服下。",
+      "answer": "这个包太小，装不下这件衣服"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Tôi xem hiểu câu chuyện này.",
+      "answer": "我看得懂这个故事"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Hôm nay tôi không đi được.",
+      "answer": "今天我去不了"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: Trong bài đọc, 玛丽买了什么？",
+      "answer": "一本说明书"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 得/不 + 补语 để nói bạn nghe/xem/đọc có hiểu hay không.",
+      "answer": "我听得懂老师的话"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}

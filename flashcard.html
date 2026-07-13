@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <style>
+    /* ── Flashcard Page Layout ── */
+    .fc-page {
+      min-height: 100vh;
+      padding-top: var(--header-h);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,255,255,.92), transparent 28%),
+        linear-gradient(135deg, #eaf7f8 0%, #f8fbf2 48%, #fffaf0 100%);
+    }
+
+    /* ── Deck Selector Banner ── */
+    .deck-banner {
+      background:
+        linear-gradient(135deg, rgba(226,247,248,.96), rgba(255,251,238,.94)),
+        radial-gradient(circle at 82% 12%, rgba(255,194,26,.2), transparent 30%);
+      padding: 38px 0 0; position: relative;
+    }
+    .deck-banner::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 40px; background: #f8fbf2;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .deck-selector {
+      display: flex; align-items: center; gap: 14px;
+      flex-wrap: wrap; justify-content: center; padding-bottom: 42px;
+    }
+    .deck-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      min-width: 104px; justify-content: center;
+      padding: 12px 18px; border-radius: 18px;
+      border: 2px solid color-mix(in srgb, var(--hsk-color) 35%, white);
+      background: var(--hsk-soft);
+      color: var(--hsk-color);
+      font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem;
+      cursor: pointer; transition: all var(--t-base);
+      white-space: nowrap;
+      box-shadow: 0 8px 18px rgba(45,45,45,.05);
+    }
+    .deck-btn:hover { transform: translateY(-2px); border-color: var(--hsk-color); box-shadow: 0 12px 22px color-mix(in srgb, var(--hsk-color) 18%, transparent); }
+    .deck-btn.active { background: var(--hsk-color); color: #fff; border-color: var(--hsk-color); box-shadow: 0 14px 28px color-mix(in srgb, var(--hsk-color) 28%, transparent); }
+    .deck-btn-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.64); border-radius: var(--r-full);
+      padding: 0 7px; font-size: .7rem; min-width: 22px; height: 18px;
+    }
+    .deck-btn.active .deck-btn-count { background: rgba(255,255,255,.25); color: #fff; }
+
+    .deck-banner__title { text-align: center; color: var(--charcoal); margin-bottom: 16px; font-size: clamp(1.25rem, 3vw, 1.85rem); }
+    .deck-banner__sub   { display: none; }
+
+    /* ── Deck Progress ── */
+    .deck-progress { max-width: 600px; margin: 0 auto; padding: 0 24px; }
+    .deck-progress__info { display: flex; justify-content: space-between; font-size: .78rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+    .deck-progress__bar  { height: 6px; background: rgba(255,255,255,.85); border-radius: var(--r-full); overflow: hidden; }
+    .deck-progress__fill { height: 100%; background: linear-gradient(90deg, #f7b400, #ff8a2a); border-radius: var(--r-full); transition: width .6s ease; }
+
+    /* ── Main flashcard area ── */
+    .fc-main    { padding: 56px 0; }
+    .fc-container { max-width: 680px; margin-inline: auto; padding-inline: 24px; }
+
+    /* ── Lesson label ── */
+    .fc-lesson-label {
+      text-align: center; font-size: .75rem; font-weight: 600;
+      color: var(--text-muted); margin-bottom: 8px;
+      background: var(--bg-section); border-radius: var(--r-full);
+      padding: 4px 16px; display: inline-block;
+    }
+    .fc-lesson-row { text-align: center; margin-bottom: 14px; }
+
+    /* ── 3D Card ── */
+    .fc-scene {
+      perspective: 1200px; width: 100%; max-width: 520px;
+      margin: 0 auto 32px; cursor: pointer;
+    }
+    .fc-card {
+      position: relative; width: 100%; padding-top: 62%;
+      transform-style: preserve-3d;
+      transition: transform .6s cubic-bezier(.4, 0, .2, 1);
+      border-radius: var(--r-xl);
+      filter: drop-shadow(0 20px 40px rgba(45,45,45,.18));
+    }
+    .fc-card.flipped { transform: rotateY(180deg); }
+    .fc-card.card--mastered { filter: drop-shadow(0 20px 40px rgba(76,175,80,.35)); }
+    .fc-card.card--learning  { filter: drop-shadow(0 20px 40px rgba(255,122,0,.35)); }
+
+    .fc-card__face {
+      position: absolute; inset: 0; border-radius: var(--r-xl);
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px; text-align: center;
+    }
+
+    /* Front face */
+    .fc-card__front {
+      background: linear-gradient(145deg, #fff 0%, #FFFDF9 100%);
+      border: 2px solid var(--border);
+    }
+    .fc-front__hanzi {
+      font-family: 'Baloo 2', cursive; font-size: clamp(3.5rem, 10vw, 6rem);
+      font-weight: 800; color: var(--charcoal); line-height: 1; margin-bottom: 16px;
+      text-shadow: 0 4px 16px rgba(45,45,45,.08);
+    }
+    .fc-front__pinyin   { font-size: 1.2rem; font-weight: 600; color: var(--orange); margin-bottom: 12px; letter-spacing: .04em; }
+    .fc-front__type     { display: inline-block; padding: 3px 12px; border-radius: var(--r-full); font-size: .75rem; font-weight: 700; background: var(--orange-xlight); color: var(--orange-dark); margin-bottom: 16px; }
+    .fc-front__audio    {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--orange); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #fff;
+      transition: transform var(--t-fast), box-shadow var(--t-fast);
+      box-shadow: 0 4px 16px rgba(255,122,0,.35); position: relative; z-index: 1;
+    }
+    .fc-front__audio:hover { transform: scale(1.12); box-shadow: 0 6px 20px rgba(255,122,0,.45); }
+    .fc-front__audio.playing { animation: audioSpin .6s linear; }
+    @keyframes audioSpin { from{transform:scale(1)} 50%{transform:scale(1.25)} to{transform:scale(1)} }
+    .fc-front__hint { position: absolute; bottom: 14px; font-size: .72rem; color: var(--text-light); display: flex; align-items: center; gap: 4px; }
+
+    /* Back face */
+    .fc-card__back { background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 100%); transform: rotateY(180deg); }
+    .fc-back__meaning  { font-family: 'Baloo 2', cursive; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+    .fc-back__pinyin   { font-size: 1rem; color: rgba(255,255,255,.9); font-weight: 500; margin-bottom: 14px; }
+    .fc-back__example  { background: rgba(255,255,255,.15); border-radius: var(--r-md); padding: 14px 18px; text-align: left; width: 100%; }
+    .fc-back__ex-zh    { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .fc-back__ex-vi    { font-size: .85rem; color: rgba(255,255,255,.85); }
+    .fc-back__flip-hint { position: absolute; bottom: 14px; font-size: .72rem; color: rgba(255,255,255,.6); }
+
+    /* Flip instruction badge */
+    .fc-flip-badge {
+      text-align: center; font-size: .8rem; color: var(--text-muted); margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .fc-flip-badge span { font-size: 1rem; animation: flipHint 2s ease-in-out infinite; display: inline-block; }
+    @keyframes flipHint { 0%,100%{transform:rotateY(0)} 50%{transform:rotateY(30deg)} }
+
+    /* ── Action Buttons ── */
+    .fc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+    .fc-btn-learning {
+      background: linear-gradient(135deg, #FFF0E0, #FFE4C8); color: var(--orange-dark);
+      border: 2px solid rgba(255,122,0,.2); border-radius: var(--r-lg); padding: 16px;
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all var(--t-base);
+    }
+    .fc-btn-learning:hover { background: linear-gradient(135deg, #FFE4C8, #FFD4A8); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,122,0,.2); }
+    .fc-btn-mastered {
+      background: linear-gradient(135deg, var(--green-light), #C8F0CC); color: var(--green-dark);
+      border: 2px solid rgba(76,175,80,.2); border-radius: var(--r-lg); padding: 16px;
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all var(--t-base);
+    }
+    .fc-btn-mastered:hover { background: linear-gradient(135deg, #C8F0CC, #A8E8AC); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(76,175,80,.2); }
+
+    /* ── Navigation ── */
+    .fc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); }
+    .fc-nav__btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 2px solid var(--border); background: var(--bg-card);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: all var(--t-fast);
+    }
+    .fc-nav__btn:hover:not(:disabled) { border-color: var(--orange); background: var(--orange-xlight); color: var(--orange); }
+    .fc-nav__btn:disabled { opacity: .35; cursor: not-allowed; }
+    .fc-nav__counter { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 1.1rem; color: var(--charcoal); text-align: center; flex: 1; }
+    .fc-nav__counter small { display: block; font-size: .72rem; font-weight: 400; color: var(--text-muted); font-family: 'Poppins', sans-serif; }
+
+    /* ── Stats ── */
+    .fc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+    .fc-stat { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; text-align: center; }
+    .fc-stat__val { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.4rem; color: var(--charcoal); }
+    .fc-stat__lbl { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+    .fc-stat--green .fc-stat__val  { color: var(--green); }
+    .fc-stat--orange .fc-stat__val { color: var(--orange); }
+
+    /* ── Keyboard hints ── */
+    .fc-keyboard-hints { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    .kbd-hint { display: flex; align-items: center; gap: 6px; font-size: .75rem; color: var(--text-muted); }
+    .kbd {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: 6px; padding: 2px 8px; font-size: .7rem;
+      font-family: monospace; font-weight: 700; color: var(--charcoal);
+      box-shadow: 0 2px 0 var(--border);
+    }
+
+    /* ── Completion ── */
+    .fc-complete {
+      display: none; flex-direction: column; align-items: center; text-align: center;
+      padding: 48px 24px; background: var(--bg-card);
+      border-radius: var(--r-xl); border: 2px solid var(--border); box-shadow: var(--shadow-md);
+    }
+    .fc-complete.show { display: flex; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .fc-complete__emoji { font-size: 5rem; margin-bottom: 16px; animation: bounceIn .5s ease; }
+    @keyframes bounceIn { 0%{transform:scale(0)} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
+    .fc-complete h2 { margin-bottom: 8px; }
+    .fc-complete p  { color: var(--text-muted); margin-bottom: 28px; }
+
+    @media (max-width: 480px) {
+      .fc-front__hanzi { font-size: 3rem; }
+      .fc-actions { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">HSK</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__link">Trang chủ</a>
+        <a href="hsk.html" class="nav__link">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+        <a href="flashcard.html" class="nav__link active">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge" title="Streak 7 ngày">
+          <span class="streak-badge__icon">🔥</span>
+          <span class="streak-badge__count" data-progress="streak">0</span>
+        </div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+        <a href="profile.html" class="btn btn--primary">Hồ sơ</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="index.html" class="nav__link">Trang chủ</a>
+      <a href="hsk.html" class="nav__link">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">HSK Luyện viết</a>
+      <a href="flashcard.html" class="nav__link active">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link">Từ vựng</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+      <a href="profile.html" class="btn btn--primary btn--full" style="text-align:center">Hồ sơ</a>
+    </div>
+  </div>
+
+  <div class="fc-page">
+    <!-- Deck Banner -->
+    <div class="deck-banner">
+      <div class="container">
+        <h2 class="deck-banner__title">Chọn cấp độ HSK</h2>
+        <p class="deck-banner__sub">Lật thẻ để xem nghĩa – ôn tập từ vựng mỗi ngày</p>
+        <!-- Deck buttons injected by flashcard.js -->
+        <div class="deck-selector" id="deckSelector"></div>
+        <div class="deck-progress">
+          <div class="deck-progress__info">
+            <span id="deckProgressLabel">Tất cả HSK 1</span>
+            <span id="deckProgressPct">0 / 40 đã thành thạo</span>
+          </div>
+          <div class="deck-progress__bar">
+            <div class="deck-progress__fill" id="deckProgressFill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Area -->
+    <main class="fc-main">
+      <div class="fc-container">
+
+        <!-- Active card view -->
+        <div id="fcActive">
+          <div class="fc-lesson-row">
+            <span class="fc-lesson-label" id="fcLessonLabel">Bài 1: Chào hỏi &amp; Giới thiệu</span>
+          </div>
+
+          <div class="fc-flip-badge">
+            <span>🔄</span> Click vào thẻ hoặc nhấn <kbd style="font-size:.7rem;padding:1px 6px;border:1.5px solid var(--border);border-radius:5px;font-family:monospace">Space</kbd> để lật
+          </div>
+
+          <!-- 3D Card Scene -->
+          <div class="fc-scene" id="fcScene" tabindex="0" role="button" aria-label="Lật thẻ">
+            <div class="fc-card" id="fcCard">
+              <!-- Front -->
+              <div class="fc-card__face fc-card__front" id="fcFront">
+                <div class="fc-front__hanzi" id="fcHanzi">你好</div>
+                <div class="fc-front__pinyin" id="fcPinyin">nǐ hǎo</div>
+                <div class="fc-front__type" id="fcType">Lời chào</div>
+                <button class="fc-front__audio" id="fcAudioBtn" title="Nghe phát âm (S)">🔊</button>
+                <div class="fc-front__hint">🖱️ Click để lật · Phím Space</div>
+              </div>
+              <!-- Back -->
+              <div class="fc-card__face fc-card__back" id="fcBack">
+                <div class="fc-back__meaning" id="fcMeaning">Xin chào</div>
+                <div class="fc-back__pinyin" id="fcBackPinyin">nǐ hǎo</div>
+                <div class="fc-back__example" id="fcExample">
+                  <div class="fc-back__ex-zh" id="fcExZh">你好，我叫小明。</div>
+                  <div class="fc-back__ex-vi" id="fcExVi">Xin chào, tôi tên là Tiểu Minh.</div>
+                </div>
+                <div class="fc-back__flip-hint">🖱️ Click để lật lại</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="fc-actions">
+            <button class="fc-btn-learning" id="btnLearning">😅 Chưa nhớ</button>
+            <button class="fc-btn-mastered" id="btnMastered">✅ Đã thuộc!</button>
+          </div>
+
+          <!-- Navigation -->
+          <div class="fc-nav">
+            <button class="fc-nav__btn" id="btnPrev" title="Thẻ trước (←)">←</button>
+            <div class="fc-nav__counter">
+              Thẻ <span id="navCurrent">1</span> / <span id="navTotal">40</span>
+              <small id="navDeckName">Tất cả HSK 1</small>
+            </div>
+            <button class="fc-nav__btn" id="btnNext" title="Thẻ tiếp (→)">→</button>
+          </div>
+
+          <!-- Stats -->
+          <div class="fc-stats">
+            <div class="fc-stat">
+              <div class="fc-stat__val" id="statTotal">40</div>
+              <div class="fc-stat__lbl">Tổng thẻ</div>
+            </div>
+            <div class="fc-stat fc-stat--green">
+              <div class="fc-stat__val" id="statMastered">0</div>
+              <div class="fc-stat__lbl">Đã thuộc</div>
+            </div>
+            <div class="fc-stat fc-stat--orange">
+              <div class="fc-stat__val" id="statLearning">0</div>
+              <div class="fc-stat__lbl">Đang học</div>
+            </div>
+          </div>
+
+          <!-- Keyboard hints -->
+          <div class="fc-keyboard-hints">
+            <span class="kbd-hint"><kbd class="kbd">Space</kbd> Lật thẻ</span>
+            <span class="kbd-hint"><kbd class="kbd">←</kbd> Thẻ trước</span>
+            <span class="kbd-hint"><kbd class="kbd">→</kbd> Thẻ tiếp</span>
+            <span class="kbd-hint"><kbd class="kbd">S</kbd> Phát âm</span>
+            <span class="kbd-hint"><kbd class="kbd">1</kbd> Chưa nhớ</span>
+            <span class="kbd-hint"><kbd class="kbd">2</kbd> Đã thuộc</span>
+          </div>
+        </div>
+
+        <!-- Completion screen -->
+        <div class="fc-complete" id="fcComplete">
+          <div class="fc-complete__emoji">🎉</div>
+          <h2>Hoàn thành bộ thẻ!</h2>
+          <p id="fcCompleteMsg">Bạn đã học xong bộ thẻ này!</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+            <button class="btn btn--primary ripple" id="btnRestart">Học lại từ đầu</button>
+            <button class="btn btn--outline" id="btnReview">Ôn lại chưa thuộc</button>
+            <a href="hsk.html" class="btn btn--ghost">Về khóa học</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo logo--white">
+          <span class="logo__icon">🍊</span>
+          <span class="logo__text">Cam &amp; Coca</span>
+        </a>
+        <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo.</p>
+        <div class="footer__social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="social-btn" aria-label="TikTok">♪</a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <h4>Học tập</h4>
+        <a href="hsk.html">Lộ trình HSK</a>
+        <a href="flashcard.html">Flashcard</a>
+        <a href="vocabulary.html">Từ vựng</a>
+      </div>
+      <div class="footer__links">
+        <h4>Cộng đồng</h4>
+        <a href="#">Diễn đàn</a>
+        <a href="#">Bảng xếp hạng</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer__links">
+        <h4>Hỗ trợ</h4>
+        <a href="#">FAQ</a>
+        <a href="#">Liên hệ</a>
+        <a href="#">Điều khoản</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2024 Tiếng Trung Cam &amp; Coca. Made with ❤️ in Vietnam</p>
+      <p class="footer__tagline">学中文，乐无穷</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="modal__close" id="modalClose">✕</button>
+      <div class="modal__logo">🍊</div>
+      <h2 class="modal__title">Chào mừng trở lại!</h2>
+      <p class="modal__subtitle">Đăng nhập để lưu tiến độ học</p>
+      <form class="modal__form" id="loginForm">
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Mật khẩu</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn--primary btn--full ripple">Đăng nhập</button>
+      </form>
+      <p class="modal__footer-text">Chưa có tài khoản? <a href="profile.html">Đăng ký ngay</a></p>
+    </div>
+  </div>
+
+  <!-- Scripts: page logic, then shared app -->
+  <script src="assets/js/flashcard.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/speech-service.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

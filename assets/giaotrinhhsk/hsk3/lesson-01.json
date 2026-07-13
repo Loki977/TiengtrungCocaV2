@@ -1,0 +1,465 @@
+{
+  "lessonId": 1,
+  "level": 3,
+  "title": "Tôi thích âm nhạc hơn bạn",
+  "meta": {
+    "estimatedMinutes": 35,
+    "difficulty": "HSK3",
+    "version": 3,
+    "sourceLesson": "Giáo trình Hán ngữ 3 - Bài 1",
+    "passThreshold": 89
+  },
+  "audio": {
+    "enabled": false,
+    "basePath": "assets/audio/hsk3/lesson01/"
+  },
+  "vocabulary": [
+    {
+      "id": "bianhua",
+      "hanzi": "变化",
+      "pinyin": "biànhuà",
+      "meaning": "biến hóa, thay đổi",
+      "example": "这几年城市变化很大。",
+      "audio": "vocab/bianhua.mp3",
+      "note": "Có thể là động từ hoặc danh từ."
+    },
+    {
+      "id": "shujia",
+      "hanzi": "暑假",
+      "pinyin": "shǔjià",
+      "meaning": "kỳ nghỉ hè",
+      "example": "暑假我想去上海旅行。",
+      "audio": "vocab/shujia.mp3"
+    },
+    {
+      "id": "hai",
+      "hanzi": "还",
+      "pinyin": "hái",
+      "meaning": "vẫn, còn",
+      "example": "我还是喜欢古典音乐。",
+      "audio": "vocab/hai.mp3"
+    },
+    {
+      "id": "bi",
+      "hanzi": "比",
+      "pinyin": "bǐ",
+      "meaning": "so với, hơn",
+      "example": "上海比北京热。",
+      "audio": "vocab/bi.mp3",
+      "note": "Dùng trong câu so sánh: A 比 B + tính từ."
+    },
+    {
+      "id": "renkou",
+      "hanzi": "人口",
+      "pinyin": "rénkǒu",
+      "meaning": "dân số",
+      "example": "上海的人口很多。",
+      "audio": "vocab/renkou.mp3"
+    },
+    {
+      "id": "zui",
+      "hanzi": "最",
+      "pinyin": "zuì",
+      "meaning": "nhất",
+      "example": "这是我最喜欢的歌。",
+      "audio": "vocab/zui.mp3"
+    },
+    {
+      "id": "chengshi",
+      "hanzi": "城市",
+      "pinyin": "chéngshì",
+      "meaning": "thành phố",
+      "example": "这个城市很漂亮。",
+      "audio": "vocab/chengshi.mp3"
+    },
+    {
+      "id": "zengjia",
+      "hanzi": "增加",
+      "pinyin": "zēngjiā",
+      "meaning": "tăng thêm",
+      "example": "新建筑增加了不少。",
+      "audio": "vocab/zengjia.mp3"
+    },
+    {
+      "id": "jianzhu",
+      "hanzi": "建筑",
+      "pinyin": "jiànzhù",
+      "meaning": "kiến trúc, xây dựng",
+      "example": "上海有很多现代建筑。",
+      "audio": "vocab/jianzhu.mp3"
+    },
+    {
+      "id": "guoqu",
+      "hanzi": "过去",
+      "pinyin": "guòqù",
+      "meaning": "quá khứ, trước đây",
+      "example": "上海比过去漂亮多了。",
+      "audio": "vocab/guoqu.mp3"
+    },
+    {
+      "id": "bian",
+      "hanzi": "变",
+      "pinyin": "biàn",
+      "meaning": "biến, trở nên khác",
+      "example": "天气变冷了。",
+      "audio": "vocab/bian.mp3"
+    },
+    {
+      "id": "geng",
+      "hanzi": "更",
+      "pinyin": "gèng",
+      "meaning": "hơn, càng",
+      "example": "我更喜欢民歌。",
+      "audio": "vocab/geng.mp3"
+    },
+    {
+      "id": "piaoliang",
+      "hanzi": "漂亮",
+      "pinyin": "piàoliang",
+      "meaning": "đẹp",
+      "example": "这个公园比以前更漂亮。",
+      "audio": "vocab/piaoliang.mp3"
+    },
+    {
+      "id": "dongtian",
+      "hanzi": "冬天",
+      "pinyin": "dōngtiān",
+      "meaning": "mùa đông",
+      "example": "北京的冬天很冷。",
+      "audio": "vocab/dongtian.mp3"
+    },
+    {
+      "id": "nuanhuo",
+      "hanzi": "暖和",
+      "pinyin": "nuǎnhuo",
+      "meaning": "ấm áp",
+      "example": "屋子里很暖和。",
+      "audio": "vocab/nuanhuo.mp3"
+    },
+    {
+      "id": "keshi",
+      "hanzi": "可是",
+      "pinyin": "kěshì",
+      "meaning": "nhưng",
+      "example": "我喜欢音乐，可是唱得不好。",
+      "audio": "vocab/keshi.mp3"
+    },
+    {
+      "id": "nuanqi",
+      "hanzi": "暖气",
+      "pinyin": "nuǎnqì",
+      "meaning": "hệ thống sưởi",
+      "example": "北方的房子里有暖气。",
+      "audio": "vocab/nuanqi.mp3"
+    },
+    {
+      "id": "tianqi",
+      "hanzi": "天气",
+      "pinyin": "tiānqì",
+      "meaning": "thời tiết",
+      "example": "今天的天气不错。",
+      "audio": "vocab/tianqi.mp3"
+    },
+    {
+      "id": "yubao",
+      "hanzi": "预报",
+      "pinyin": "yùbào",
+      "meaning": "dự báo",
+      "example": "天气预报说明天会下雨。",
+      "audio": "vocab/yubao.mp3"
+    },
+    {
+      "id": "qiwen",
+      "hanzi": "气温",
+      "pinyin": "qìwēn",
+      "meaning": "nhiệt độ không khí",
+      "example": "上海的气温比北京高。",
+      "audio": "vocab/qiwen.mp3"
+    },
+    {
+      "id": "gudian",
+      "hanzi": "古典",
+      "pinyin": "gǔdiǎn",
+      "meaning": "cổ điển",
+      "example": "我喜欢古典音乐。",
+      "audio": "vocab/gudian.mp3"
+    },
+    {
+      "id": "xiandai",
+      "hanzi": "现代",
+      "pinyin": "xiàndài",
+      "meaning": "hiện đại",
+      "example": "现代音乐很流行。",
+      "audio": "vocab/xiandai.mp3"
+    },
+    {
+      "id": "mingqu",
+      "hanzi": "名曲",
+      "pinyin": "míngqǔ",
+      "meaning": "bài nhạc nổi tiếng",
+      "example": "他喜欢听世界名曲。",
+      "audio": "vocab/mingqu.mp3"
+    },
+    {
+      "id": "minge",
+      "hanzi": "民歌",
+      "pinyin": "míngē",
+      "meaning": "dân ca",
+      "example": "我觉得民歌的歌词很好。",
+      "audio": "vocab/minge.mp3"
+    },
+    {
+      "id": "liuxing",
+      "hanzi": "流行",
+      "pinyin": "liúxíng",
+      "meaning": "thịnh hành",
+      "example": "年轻人喜欢流行歌曲。",
+      "audio": "vocab/liuxing.mp3"
+    },
+    {
+      "id": "gequ",
+      "hanzi": "歌曲",
+      "pinyin": "gēqǔ",
+      "meaning": "bài hát",
+      "example": "这首歌曲很好听。",
+      "audio": "vocab/gequ.mp3"
+    },
+    {
+      "id": "nianqing",
+      "hanzi": "年轻",
+      "pinyin": "niánqīng",
+      "meaning": "trẻ",
+      "example": "年轻人不一定都喜欢流行音乐。",
+      "audio": "vocab/nianqing.mp3"
+    },
+    {
+      "id": "geci",
+      "hanzi": "歌词",
+      "pinyin": "gēcí",
+      "meaning": "lời bài hát",
+      "example": "这首歌的歌词写得很好。",
+      "audio": "vocab/geci.mp3"
+    },
+    {
+      "id": "youxie",
+      "hanzi": "有些",
+      "pinyin": "yǒuxiē",
+      "meaning": "một vài",
+      "example": "有些流行歌曲也不错。",
+      "audio": "vocab/youxie.mp3"
+    },
+    {
+      "id": "yaoyuan",
+      "hanzi": "遥远",
+      "pinyin": "yáoyuǎn",
+      "meaning": "xa xôi",
+      "example": "在那遥远的地方。",
+      "audio": "vocab/yaoyuan.mp3"
+    }
+  ],
+  "extendedVocabulary": [
+    {
+      "hanzi": "播放列表",
+      "pinyin": "bōfàng lièbiǎo",
+      "meaning": "playlist",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "耳机",
+      "pinyin": "ěrjī",
+      "meaning": "tai nghe",
+      "tag": "mở rộng"
+    },
+    {
+      "hanzi": "演唱会",
+      "pinyin": "yǎnchànghuì",
+      "meaning": "buổi hòa nhạc",
+      "tag": "mở rộng"
+    }
+  ],
+  "lessonText": [
+    {
+      "speaker": "旁白:",
+      "chinese": "今天，Cam 和 Coca 打算开一家小咖啡店。",
+      "pinyin": "Jīntiān, Cam hé Coca dǎsuàn kāi yì jiā xiǎo kāfēi diàn.",
+      "vietnamese": "Hôm nay, Cam và Coca định mở một quán cà phê nhỏ.",
+      "audio": "dialogue/001.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "我觉得店里应该放古典音乐，比较安静。",
+      "pinyin": "Wǒ juéde diàn lǐ yīnggāi fàng gǔdiǎn yīnyuè, bǐjiào ānjìng.",
+      "vietnamese": "Tôi nghĩ trong quán nên mở nhạc cổ điển, khá yên tĩnh.",
+      "audio": "dialogue/002.mp3"
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "不行，年轻人更喜欢流行歌曲。",
+      "pinyin": "Bù xíng, niánqīng rén gèng xǐhuan liúxíng gēqǔ.",
+      "vietnamese": "Không được, người trẻ thích nhạc thịnh hành hơn.",
+      "audio": "dialogue/003.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "可是古典音乐比流行音乐安静得多。",
+      "pinyin": "Kěshì gǔdiǎn yīnyuè bǐ liúxíng yīnyuè ānjìng de duō.",
+      "vietnamese": "Nhưng nhạc cổ điển yên tĩnh hơn nhạc thịnh hành nhiều.",
+      "audio": "dialogue/004.mp3"
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "怎么说呢？流行歌曲的歌词也有些写得很好。",
+      "pinyin": "Zěnme shuō ne? Liúxíng gēqǔ de gēcí yě yǒuxiē xiě de hěn hǎo.",
+      "vietnamese": "Nói thế nào nhỉ? Lời của một số ca khúc thịnh hành cũng viết rất hay.",
+      "audio": "dialogue/005.mp3"
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "那我们放民歌吧，听起来比你我的意见都更安全。",
+      "pinyin": "Nà wǒmen fàng míngē ba, tīng qǐlái bǐ nǐ wǒ de yìjiàn dōu gèng ānquán.",
+      "vietnamese": "Vậy mở dân ca đi, nghe có vẻ an toàn hơn ý kiến của cả hai.",
+      "audio": "dialogue/006.mp3"
+    },
+    {
+      "speaker": "客人:",
+      "chinese": "你们先别吵，咖啡比音乐重要。",
+      "pinyin": "Nǐmen xiān bié chǎo, kāfēi bǐ yīnyuè zhòngyào.",
+      "vietnamese": "Hai người khoan cãi đã, cà phê quan trọng hơn âm nhạc.",
+      "audio": "dialogue/007.mp3"
+    }
+  ],
+  "story": [
+    {
+      "title": "Truyện vui: Quán cà phê chưa có cà phê",
+      "chinese": "Cam 和 Coca 讨论了一个小时音乐，可是他们忘了买咖啡机。客人说：你们的音乐不错，可是我能喝一杯水吗？",
+      "pinyin": "Cam hé Coca tǎolùn le yí ge xiǎoshí yīnyuè, kěshì tāmen wàng le mǎi kāfēi jī. Kèrén shuō: Nǐmen de yīnyuè búcuò, kěshì wǒ néng hē yì bēi shuǐ ma?",
+      "vietnamese": "Cam và Coca bàn nhạc một tiếng nhưng quên mua máy pha cà phê. Khách nói: Nhạc hay đấy, nhưng tôi uống một cốc nước được không?"
+    }
+  ],
+  "culture": [
+    {
+      "title": "Góc văn hóa: KTV ở Trung Quốc",
+      "content": "KTV là karaoke kiểu Trung Quốc, rất phổ biến với bạn bè và đồng nghiệp. Vì vậy chủ đề âm nhạc rất hữu ích trong giao tiếp hằng ngày."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "Câu so sánh với 比",
+      "pattern": "A 比 B + tính từ",
+      "structure": "A + 比 + B + Adj",
+      "explanation": "Dùng <span class='hl'>比</span> để so sánh sự khác biệt giữa hai người hoặc hai sự vật.",
+      "examples": [
+        "上海<span class='hl'>比</span>北京热。",
+        "古典音乐<span class='hl'>比</span>流行音乐安静。"
+      ]
+    },
+    {
+      "title": "更 và 最",
+      "pattern": "更 = hơn nữa / 最 = nhất",
+      "structure": "更 + Adj / 最 + Adj",
+      "explanation": "<span class='hl'>更</span> tăng mức độ so sánh, <span class='hl'>最</span> chỉ mức cao nhất.",
+      "examples": [
+        "我<span class='hl'>更</span>喜欢民歌。",
+        "这是我<span class='hl'>最</span>喜欢的歌曲。"
+      ]
+    },
+    {
+      "title": "还是 để lựa chọn",
+      "pattern": "A 还是 B？",
+      "structure": "Lựa chọn 1 + 还是 + lựa chọn 2",
+      "explanation": "Dùng <span class='hl'>还是</span> trong câu hỏi lựa chọn.",
+      "examples": [
+        "你喜欢古典音乐<span class='hl'>还是</span>现代音乐？"
+      ]
+    },
+    {
+      "title": "得多 / 一点儿 / 一些",
+      "pattern": "A 比 B + Adj + 得多/一点儿",
+      "structure": "A 比 B + tính từ + mức độ",
+      "explanation": "Dùng để nói mức chênh lệch lớn hoặc nhỏ.",
+      "examples": [
+        "上海的气温比北京高<span class='hl'>得多</span>。"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "multiple-choice",
+      "question": "变化 nghĩa là gì?",
+      "options": [
+        "thay đổi",
+        "dân số",
+        "thời tiết",
+        "nhà hàng"
+      ],
+      "answer": "thay đổi"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Câu nào dùng 比 đúng?",
+      "options": [
+        "我比你很高。",
+        "我比你高。",
+        "我很比你高。",
+        "我高比你。"
+      ],
+      "answer": "我比你高。"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 上海___北京热。",
+      "answer": "比"
+    },
+    {
+      "type": "fill-blank",
+      "question": "Điền từ: 这是我___喜欢的歌曲。",
+      "answer": "最"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 喜欢 / 我 / 古典音乐 / 更",
+      "answer": "我更喜欢古典音乐"
+    },
+    {
+      "type": "sentence-order",
+      "question": "Xếp câu: 比 / 上海 / 北京 / 热",
+      "answer": "上海比北京热"
+    },
+    {
+      "type": "error-correction",
+      "question": "Tìm lỗi sai và viết lại: 飞机比汽车很快。",
+      "answer": "飞机比汽车快"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Việt: 我还是喜欢古典音乐。",
+      "answer": "Tôi vẫn thích nhạc cổ điển"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Thượng Hải nóng hơn Bắc Kinh rất nhiều.",
+      "answer": "上海比北京热得多"
+    },
+    {
+      "type": "translation",
+      "question": "Dịch sang tiếng Trung: Bạn thích nhạc cổ điển hay nhạc hiện đại?",
+      "answer": "你喜欢古典音乐还是现代音乐"
+    },
+    {
+      "type": "reading",
+      "question": "Đọc hiểu: 客人觉得什么比音乐重要？",
+      "answer": "咖啡"
+    },
+    {
+      "type": "writing",
+      "question": "Viết 1 câu dùng 比 để so sánh hai thứ bạn thích.",
+      "answer": "我比以前更喜欢中文"
+    }
+  ],
+  "smartCheck": {
+    "translationPassPercent": 89,
+    "ignorePunctuation": true,
+    "ignoreSpaces": true,
+    "allowAlternativeAnswers": true
+  }
+}
