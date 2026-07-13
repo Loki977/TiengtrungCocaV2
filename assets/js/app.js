@@ -66,12 +66,27 @@
   const loginBtnMob  = document.getElementById('loginBtnMobile');
   const modalClose   = document.getElementById('modalClose');
   const loginForm    = document.getElementById('loginForm');
+  const authPanels   = loginModal?.querySelectorAll('[data-auth-panel]') || [];
+  const authTitle    = loginModal?.querySelector('[data-auth-title]');
+  const authSubtitle = loginModal?.querySelector('[data-auth-subtitle]');
+
+  function switchAuthMode(mode) {
+    const isRegister = mode === 'register';
+    authPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.authPanel === mode));
+    if (authTitle) authTitle.textContent = isRegister ? 'Tạo tài khoản mới' : 'Chào mừng trở lại!';
+    if (authSubtitle) authSubtitle.textContent = isRegister
+      ? authSubtitle.dataset.registerSubtitle
+      : authSubtitle.dataset.loginSubtitle;
+    window.requestAnimationFrame(() => {
+      loginModal?.querySelector(`[data-auth-panel="${mode}"] input`)?.focus();
+    });
+  }
 
   function openModal() {
     if (!loginModal) return;
+    switchAuthMode('register');
     loginModal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    loginModal.querySelector('input')?.focus();
   }
 
   function closeModal() {
@@ -93,6 +108,12 @@
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeModal();
+  });
+  loginModal?.querySelectorAll('[data-auth-switch]').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      switchAuthMode(link.dataset.authSwitch);
+    });
   });
 
   loginForm?.addEventListener('submit', e => {

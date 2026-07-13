@@ -574,6 +574,12 @@ h4 { font-size: 1rem; }
 .modal__title { margin-bottom: 4px; }
 .modal__subtitle { color: var(--text-muted); font-size: .9rem; margin-bottom: 24px; }
 .modal__form { text-align: left; }
+.modal-auth-panel { display: none; }
+.modal-auth-panel.active { display: block; animation: modal-auth-swap var(--t-base); }
+@keyframes modal-auth-swap {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .form-group { margin-bottom: 16px; }
 .form-group label {
   display: block;

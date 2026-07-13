@@ -556,8 +556,29 @@
     <div class="modal">
       <button class="modal__close" id="modalClose">✕</button>
       <div class="modal__logo">🍊</div>
-      <h2 class="modal__title">Chào mừng trở lại!</h2>
-      <p class="modal__subtitle">Đăng nhập để lưu từ vựng yêu thích</p>
+      <h2 class="modal__title" data-auth-title>Tạo tài khoản mới</h2>
+      <p class="modal__subtitle" data-auth-subtitle data-register-subtitle="Đăng ký để bắt đầu hành trình học tiếng Trung" data-login-subtitle="Đăng nhập để lưu từ vựng yêu thích">Đăng ký để bắt đầu hành trình học tiếng Trung</p>
+
+      <div class="modal-auth-panel active" data-auth-panel="register">
+        <form class="modal__form" id="registerFormPage">
+          <div class="form-group">
+            <label for="regName">Tên hiển thị</label>
+            <input type="text" id="regName" placeholder="Nguyễn Văn A" required />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="regPwd">Mật khẩu</label>
+            <input type="password" id="regPwd" placeholder="Tối thiểu 6 ký tự" required />
+          </div>
+          <button type="submit" class="btn btn--primary btn--full ripple">Tạo tài khoản miễn phí</button>
+        </form>
+        <p class="modal__footer-text">Đã có tài khoản? <a href="#" data-auth-switch="login">Đăng nhập ngay</a></p>
+      </div>
+
+      <div class="modal-auth-panel" data-auth-panel="login">
       <form class="modal__form" id="loginForm">
         <div class="form-group">
           <label for="emailInput">Email</label>
@@ -582,7 +603,8 @@
 </button>
 <p id="facebook-login-status" class="facebook-login-status" role="status" aria-live="polite"></p>
       </form>
-      <p class="modal__footer-text">Chưa có tài khoản? <a href="profile.html">Đăng ký ngay</a></p>
+      <p class="modal__footer-text">Chưa có tài khoản? <a href="#" data-auth-switch="register">Đăng ký ngay</a></p>
+      </div>
     </div>
   </div>
 
