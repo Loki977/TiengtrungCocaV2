@@ -576,6 +576,11 @@
        style="vertical-align:middle;margin-right:8px;">
   Đăng nhập bằng Google
 </button>
+<button type="button" id="facebook-login-btn" class="btn btn--full facebook-login-btn">
+  <span class="facebook-login-btn__icon" aria-hidden="true">f</span>
+  Đăng nhập bằng Facebook
+</button>
+<p id="facebook-login-status" class="facebook-login-status" role="status" aria-live="polite"></p>
       </form>
       <p class="modal__footer-text">Chưa có tài khoản? <a href="profile.html">Đăng ký ngay</a></p>
     </div>
@@ -992,6 +997,7 @@ loadDictionary();
   </script>
   <script src="assets/js/speech-service.js"></script>
   <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>
 </html>

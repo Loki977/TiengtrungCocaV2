@@ -163,6 +163,36 @@ h4 { font-size: 1rem; }
   background: var(--orange-xlight);
   transform: translateY(-2px);
 }
+.facebook-login-btn {
+  width: 100%;
+  margin-top: 10px;
+  border: 0;
+  background: #1877F2;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(24,119,242,.28);
+}
+.facebook-login-btn:hover { background: #0f62cf; transform: translateY(-2px); }
+.facebook-login-btn:disabled,
+.facebook-login-btn.is-loading { cursor: wait; opacity: .72; transform: none; }
+.facebook-login-btn__icon {
+  display: inline-grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #1877F2;
+  font-family: Arial, sans-serif;
+  font-weight: 800;
+}
+.facebook-login-status {
+  min-height: 1.25em;
+  margin: 8px 0 0;
+  color: #b42318;
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.facebook-login-status[data-type="info"] { color: #155eef; }
 .btn--ghost {
   background: rgba(255,255,255,.15);
   color: var(--charcoal);

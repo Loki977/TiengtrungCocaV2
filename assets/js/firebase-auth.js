@@ -206,6 +206,9 @@ function getFriendlyAuthError(error) {
     "auth/popup-blocked": "Trình duyệt đang chặn popup đăng nhập.",
     "auth/unauthorized-domain": "Domain hiện tại chưa được thêm vào Firebase Authorized domains.",
     "auth/operation-not-allowed": "Phương thức đăng nhập này chưa được bật trong Firebase Console.",
+    "auth/operation-not-supported-in-this-environment": "Trình duyệt hiện tại không hỗ trợ phương thức đăng nhập này.",
+    "auth/network-request-failed": "Kết nối mạng không ổn định. Vui lòng thử lại.",
+    "auth/account-exists-with-different-credential": "Email này đã được đăng ký bằng Google hoặc Email. Hãy đăng nhập bằng phương thức cũ trước.",
     "auth/web-storage-unsupported": "Trình duyệt hiện tại không hỗ trợ đăng nhập an toàn. Hãy mở bằng Chrome hoặc Safari.",
     "auth/cancelled-popup-request": "Yêu cầu đăng nhập trước đó đã bị hủy.",
     "auth/disallowed-useragent": "Google chặn trình duyệt nhúng. Hãy mở bằng Chrome hoặc Safari."
