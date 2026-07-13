@@ -94,7 +94,9 @@
   .hero__content { order: 1; }
   .hero__visual  { order: 0; }
 
-  .hero__title { font-size: 2rem; }
+  .hero__title { font-size: clamp(2.3rem, 10vw, 3.25rem); }
+  .hero__title .text-orange { align-items: center; }
+  .hero__slogan-line--second { margin-left: 0; }
   .hero__desc  { margin-inline: auto; font-size: .95rem; }
   .hero__cta   { justify-content: center; }
   .hero__stats { justify-content: center; gap: 16px; }

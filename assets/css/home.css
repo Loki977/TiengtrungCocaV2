@@ -36,38 +36,54 @@
 
 .hero__title {
   margin-block: 16px;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  line-height: 1.1;
-  font-family: 'Baloo 2', cursive;
-  font-weight: 900;
-  color: transparent;
-  background:
-    linear-gradient(110deg, transparent 0%, transparent 42%, rgba(255,255,255,.78) 50%, transparent 58%, transparent 100%),
-    linear-gradient(90deg, #2F80ED 0%, #5FA8FF 100%);
-  background-size: 240% 100%, 100% 100%;
-  background-position: -160% 0, 0 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 12px rgba(0,0,0,.18);
-  animation: heroTitleWave 3s ease-in-out infinite;
+  font-size: clamp(2.55rem, 5.7vw, 4.45rem);
+  line-height: 1.06;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  letter-spacing: -.045em;
 }
 .hero__title .text-orange {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .08em;
   color: #FF8C2B;
   background: none;
   -webkit-text-fill-color: #FF8C2B;
-  text-shadow: inherit;
-  animation: heroTitleWave 3s ease-in-out infinite;
+  text-shadow: none;
+  animation: none;
 }
-
-@keyframes heroTitleWave {
-  0% {
-    background-position: -160% 0, 0 0;
-  }
-  55%,
-  100% {
-    background-position: 160% 0, 0 0;
-  }
+.hero__slogan-line {
+  position: relative;
+  display: block;
+  color: #FF8C2B;
+  -webkit-text-fill-color: #FF8C2B;
+  text-shadow: 0 3px 0 rgba(255,255,255,.72), 0 10px 20px rgba(209,104,25,.18);
+}
+.hero__slogan-line--first::after {
+  content: '✦';
+  position: absolute;
+  top: -.28em;
+  right: -.55em;
+  color: #FFD166;
+  font-size: .35em;
+  text-shadow: none;
+  transform: rotate(12deg);
+}
+.hero__slogan-line--second {
+  margin-left: .52em;
+  color: #F36F3A;
+  -webkit-text-fill-color: #F36F3A;
+}
+.hero__slogan-line--second::before {
+  content: '♡';
+  position: absolute;
+  left: -.72em;
+  bottom: .14em;
+  color: #FF9A76;
+  font-family: 'Baloo 2', cursive;
+  font-size: .42em;
+  text-shadow: none;
 }
 
 .hero__desc {
