@@ -207,8 +207,8 @@ function bindEvents() {
 
   document.getElementById("prevBtn").addEventListener("click", goPrev);
   document.getElementById("nextBtn").addEventListener("click", goNext);
-  document.getElementById("listenBtn").addEventListener("click", () => speakCurrent(TTS_NORMAL_RATE));
-  document.getElementById("slowListenBtn").addEventListener("click", () => speakCurrent(TTS_SLOW_RATE));
+  document.getElementById("listenBtn").addEventListener("click", () => playCurrentWithButton("listenBtn", TTS_NORMAL_RATE));
+  document.getElementById("slowListenBtn").addEventListener("click", () => playCurrentWithButton("slowListenBtn", TTS_SLOW_RATE));
   document.getElementById("saveBtn").addEventListener("click", saveCurrentWord);
   document.getElementById("showAnswerBtn").addEventListener("click", revealCurrentAnswer);
   document.getElementById("modeViToCn").addEventListener("change", (event) => {
@@ -651,13 +651,27 @@ function setFeedback(message, type = "") {
   feedback.className = type ? `feedback ${type}` : "feedback";
 }
 
+async function playCurrentWithButton(buttonId, rate) {
+  const button = document.getElementById(buttonId);
+  if (!button || button.disabled) return;
+  button.disabled = true;
+  button.setAttribute("aria-busy", "true");
+  try {
+    await speakCurrent(rate, { silentOnUnsupported: true });
+  } finally {
+    button.disabled = false;
+    button.removeAttribute("aria-busy");
+  }
+}
+
 async function speakCurrent(rate = TTS_NORMAL_RATE, options = {}) {
   const item = getCurrentItem();
   if (!item?.chinese) return;
   try {
-    await window.CCSpeech.speak({
+    await window.CCAudio.speak({
       text: formatChineseSpeechText(item.chinese),
-      audioSrc: item.audio || item.audioPath || '',
+      mode: state.currentPhase === "sentence" ? "sentence" : "vocabulary",
+      audioUrl: item.audio || item.audioPath || '',
       rate,
       pitch: TTS_PITCH,
       volume: TTS_VOLUME,
@@ -670,47 +684,21 @@ async function speakCurrent(rate = TTS_NORMAL_RATE, options = {}) {
 
 function speakChineseAndWait(text) {
   const spokenText = formatChineseSpeechText(text);
-  if (!spokenText || !window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+  if (!spokenText || !window.CCAudio?.speak) {
     return Promise.resolve();
   }
-
-  cancelSpeech();
-  const requestId = state.speechRequestId;
-
-  return new Promise((resolve) => {
-    let settled = false;
-    let fallbackTimer;
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      window.clearTimeout(fallbackTimer);
-      if (requestId === state.speechRequestId) state.currentUtterance = null;
-      resolve();
-    };
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    const voices = window.speechSynthesis.getVoices?.() || [];
-    const preferredVoice = voices.find((voice) => TTS_VOICE_PRIORITIES.includes(voice.name))
-      || voices.find((voice) => /^zh(?:-|_)/i.test(voice.lang));
-    if (preferredVoice) utterance.voice = preferredVoice;
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.72;
-    utterance.pitch = TTS_PITCH;
-    utterance.volume = Math.min(TTS_VOLUME, 0.9);
-    utterance.onend = finish;
-    utterance.onerror = finish;
-    state.currentUtterance = utterance;
-    fallbackTimer = window.setTimeout(finish, Math.min(18000, Math.max(5000, spokenText.length * 900)));
-
-    try {
-      window.speechSynthesis.speak(utterance);
-    } catch (_) {
-      finish();
-    }
-  });
+  return window.CCAudio.speak({
+    text: spokenText,
+    mode: "answer",
+    rate: 0.72,
+    pitch: TTS_PITCH,
+    volume: Math.min(TTS_VOLUME, 0.9),
+    lang: "zh-CN"
+  }).catch(() => {});
 }
 
 function cancelSpeech() {
-  window.CCSpeech?.stop?.();
+  window.CCAudio?.stop?.();
   state.currentUtterance = null;
   state.speechRequestId += 1;
 }

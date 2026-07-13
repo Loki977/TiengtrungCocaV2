@@ -112,6 +112,7 @@ export function normalizePinyin(value) {
 
 export function normalizeAnswer(value) {
   return String(value || "")
+    .replace(/[，。！？；：、,.!?;:()[\]{}"“”‘’]/g, "")
     .replace(/\s+/g, "")
     .toLowerCase()
     .trim();

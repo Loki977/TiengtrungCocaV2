@@ -152,16 +152,16 @@
 
   function playAudioOrSpeak(lesson, text, audioPath) {
     const url = lesson.audio?.enabled && audioPath ? getAudioUrl(lesson, audioPath) : '';
-    if (window.CCSpeech?.speak) {
-      window.CCSpeech.speak({ text, audioSrc: url, rate: 1, volume: 1, lang: 'zh-CN' }).catch(() => speakChinese(text));
+    if (window.CCAudio?.speak) {
+      window.CCAudio.speak({ text, mode: 'example', audioUrl: url, rate: 1, volume: 1, lang: 'zh-CN' }).catch(() => speakChinese(text));
       return;
     }
     speakChinese(text);
   }
 
   function speakChinese(text) {
-    if (window.CCSpeech?.speak) {
-      window.CCSpeech.speak({ text, lang: 'zh-CN', rate: 1, volume: 1 }).catch(() => alert('Trình duyệt này chưa hỗ trợ phát âm.'));
+    if (window.CCAudio?.speak) {
+      window.CCAudio.speak({ text, mode: 'example', lang: 'zh-CN', rate: 1, volume: 1 }).catch(() => alert('Trình duyệt này chưa hỗ trợ phát âm.'));
       return;
     }
     alert('Trình duyệt này chưa hỗ trợ phát âm.');

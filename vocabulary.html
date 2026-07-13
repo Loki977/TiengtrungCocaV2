@@ -886,7 +886,7 @@ loadDictionary();
       if (!currentWord) return;
       const btn = document.getElementById(slow ? 'dictAudioSlowBtn' : 'dictAudioBtn');
       btn?.classList.add('playing');
-      window.CCSpeech?.speak({ text: currentWord.hanzi, audioSrc: currentWord.audio || '', rate: slow ? 0.75 : 1, lang: 'zh-CN' })
+      window.CCAudio?.speak({ text: currentWord.hanzi, mode: 'vocabulary', audioUrl: currentWord.audio || '', rate: slow ? 0.75 : 1, lang: 'zh-CN' })
         .catch(() => {})
         .finally(() => btn?.classList.remove('playing'));
     };

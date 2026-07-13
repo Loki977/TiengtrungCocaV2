@@ -275,7 +275,7 @@
     const c = cards[currentIndex];
     if (!c) return;
     fcAudioBtn.classList.add('playing');
-    window.CCSpeech?.speak({ text: c.chinese, audioSrc: c.audio || '', rate: 0.85, lang: 'zh-CN' })
+    window.CCAudio?.speak({ text: c.chinese, mode: 'vocabulary', audioUrl: c.audio || '', rate: 0.85, lang: 'zh-CN' })
       .catch(() => {})
       .finally(() => fcAudioBtn.classList.remove('playing'));
   }
