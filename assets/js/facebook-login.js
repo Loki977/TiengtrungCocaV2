@@ -1,3 +1,4 @@
+console.log("[FB LOGIN] file loaded");
 import {
   FacebookAuthProvider,
   signInWithPopup,
