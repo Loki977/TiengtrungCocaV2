@@ -531,3 +531,73 @@ mark {
 .gt-finished-box .gt-section-actions {
   justify-content: center;
 }
+
+/* ===== Vocabulary active practice ===== */
+.gt-vocab-practice {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(234, 88, 12, .28);
+}
+.gt-practice-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--charcoal);
+  font-size: .84rem;
+  font-weight: 800;
+}
+.gt-practice-input {
+  width: 100%;
+  min-height: 74px;
+  padding: 10px 12px;
+  resize: vertical;
+  border: 1.5px solid #fed7aa;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--charcoal);
+  font: inherit;
+  line-height: 1.5;
+  outline: none;
+}
+.gt-practice-input:focus {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 3px rgba(251, 146, 60, .14);
+}
+.gt-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+}
+.gt-practice-btn {
+  min-height: 38px;
+  padding: 8px 11px;
+  border: 0;
+  border-radius: 12px;
+  background: #fff7ed;
+  color: #9a3412;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .18s ease;
+}
+.gt-practice-btn:hover { transform: translateY(-1px); background: #ffedd5; }
+.gt-practice-btn.primary { background: #f97316; color: #fff; }
+.gt-practice-btn.listening { background: #fee2e2; color: #b91c1c; }
+.gt-practice-btn:disabled { opacity: .65; cursor: wait; transform: none; }
+.gt-practice-feedback {
+  display: none;
+  margin-top: 9px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.gt-practice-feedback.show { display: block; }
+.gt-practice-feedback.correct { background: #ecfdf5; color: #047857; }
+.gt-practice-feedback.wrong { background: #fff1f2; color: #be123c; }
+@media (max-width: 560px) {
+  .gt-practice-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .gt-practice-btn.primary { grid-column: 1 / -1; }
+}

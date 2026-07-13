@@ -348,7 +348,7 @@
             const hanzi = item.hanzi || item.chinese || item.word || '';
             const meaning = item.meaning || item.meaning_vi || item.vietnamese || item.translation || '';
             return `
-              <div class="gt-vocab-card">
+              <div class="gt-vocab-card" data-level="${escapeHtml(getLessonLevelKey(lesson))}" data-lesson-id="${escapeHtml(lesson.lessonId || '')}" data-word-key="${escapeHtml(key)}" data-word="${escapeHtml(hanzi)}">
                 <div class="gt-vocab-top">
                   <div class="gt-hanzi">${escapeHtml(hanzi)}</div>
                   <div class="gt-vocab-actions">
@@ -359,7 +359,16 @@
                 <div class="gt-pinyin">${escapeHtml(item.pinyin || '')}</div>
                 <div class="gt-meaning">${escapeHtml(meaning)}</div>
                 ${item.note ? `<p class="gt-note">💡 ${escapeHtml(item.note)}</p>` : ''}
-                ${item.example ? `<p class="gt-example"><b>Ví dụ:</b> ${escapeHtml(item.example)}</p>` : ''}
+                <div class="gt-vocab-practice">
+                  <label class="gt-practice-label">Đặt một câu tiếng Trung có sử dụng “${escapeHtml(hanzi)}”</label>
+                  <textarea class="gt-practice-input" maxlength="120" placeholder="Nhập câu của bạn…"></textarea>
+                  <div class="gt-practice-actions">
+                    <button type="button" class="gt-practice-btn" data-practice-speak-word>🎤 Đọc từ</button>
+                    <button type="button" class="gt-practice-btn" data-practice-speak-sentence>🎤 Đọc câu</button>
+                    <button type="button" class="gt-practice-btn primary" data-practice-check>✓ Kiểm tra câu</button>
+                  </div>
+                  <div class="gt-practice-feedback" aria-live="polite"></div>
+                </div>
               </div>
             `;
           }).join('')}
