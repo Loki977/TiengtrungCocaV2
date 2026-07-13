@@ -31,7 +31,10 @@ const state = {
   ttsVoicesReady: false,
   currentUtterance: null,
   speechRequestId: 0,
-  completionSaved: false
+  completionSaved: false,
+  isCompletingAnswer: false,
+  isReadingAnswer: false,
+  hasCompletedCurrentQuestion: false
 };
 
 init();
@@ -121,9 +124,9 @@ function renderShell() {
             <p class="instruction" id="instruction">Nhìn tiếng Việt, gõ pinyin hoặc chữ Hán.</p>
             <h2 class="prompt-word" id="promptWord"></h2>
             <input class="answer-input" id="answerInput" autocomplete="off" spellcheck="false" />
+            <div class="writing-token-progress" id="answerMeter" aria-label="Tiến độ theo từng từ"></div>
             <button class="check-answer-btn" id="checkAnswerBtn" type="button">Kết quả</button>
-            <div class="answer-meter" id="answerMeter" aria-label="Tiến độ nhập đáp án"></div>
-            <div class="feedback" id="feedback"></div>
+            <div class="feedback" id="feedback" aria-live="polite"></div>
           </div>
         </article>
 
@@ -234,13 +237,17 @@ function renderCurrentCard() {
   const isAnswered = state.answered.has(getCurrentCardKey());
   const prompt = getPrompt(item);
 
+  state.isCompletingAnswer = false;
+  state.isReadingAnswer = false;
+  state.hasCompletedCurrentQuestion = isAnswered;
+
   document.getElementById("progressLabel").textContent = `${globalIndex + 1}/${total}`;
   document.getElementById("progressBar").style.width = `${((globalIndex + 1) / total) * 100}%`;
   document.getElementById("pageTitle").textContent = `${state.lesson.title} – ${isSentence ? "Luyện viết câu" : "Từ vựng"}`;
   document.getElementById("cardBadge").textContent = isSentence ? "Luyện viết câu" : "Từ vựng";
   document.getElementById("promptWord").textContent = prompt;
   document.getElementById("instruction").textContent = getInstructionText(isSentence);
-  renderAnswerMeter(item, isAnswered ? getExpectedAnswerValue(item) : "", isAnswered ? "correct" : "");
+  renderAnswerMeter(item, isAnswered ? getExpectedAnswerValue(item) : "");
   document.getElementById("saveBtn").disabled = isSentence;
 
   const input = document.getElementById("answerInput");
@@ -253,7 +260,7 @@ function renderCurrentCard() {
   document.getElementById("feedback").textContent = isAnswered ? "Chính xác." : "";
   document.getElementById("feedback").className = isAnswered ? "feedback good" : "feedback";
   document.getElementById("prevBtn").disabled = globalIndex === 0;
-  document.getElementById("nextBtn").disabled = !canGoNext();
+  setNextButtonState(!canGoNext());
 
   if (isRevealed || isAnswered) {
     renderMemory(item);
@@ -266,20 +273,32 @@ function renderCurrentCard() {
 function handleAnswerInput(event) {
   const input = event.target;
 
+  if (state.isCompletingAnswer || state.hasCompletedCurrentQuestion) {
+    return;
+  }
+
   if (!input.value.trim()) {
     input.classList.remove("correct", "wrong");
     setFeedback("");
-    renderAnswerMeter(getCurrentItem(), "", "");
+    renderAnswerMeter(getCurrentItem(), "");
     return;
   }
 
   input.classList.remove("correct", "wrong");
   setFeedback("");
-  renderAnswerMeter(getCurrentItem(), input.value, "");
+  renderAnswerMeter(getCurrentItem(), input.value);
+
+  if (state.currentPhase === "sentence" && isCorrectAnswer(input.value, getCurrentItem())) {
+    submitCurrentAnswer(input);
+  }
 }
 
 function submitCurrentAnswer(input) {
   const item = getCurrentItem();
+
+  if (state.isCompletingAnswer || state.hasCompletedCurrentQuestion || input.disabled) {
+    return;
+  }
 
   if (!input.value.trim()) {
     input.classList.remove("correct", "wrong");
@@ -288,24 +307,112 @@ function submitCurrentAnswer(input) {
   }
 
   if (isCorrectAnswer(input.value, item)) {
+    if (state.currentPhase === "sentence") {
+      completeCurrentSentence(input, item);
+      return;
+    }
+
     state.answered.add(getCurrentCardKey());
+    state.hasCompletedCurrentQuestion = true;
     input.classList.add("correct");
     input.classList.remove("wrong");
     input.disabled = true;
     document.getElementById("checkAnswerBtn").disabled = true;
     setFeedback("Chính xác.", "good");
-    renderAnswerMeter(item, getExpectedAnswerValue(item), "correct");
+    renderAnswerMeter(item, getExpectedAnswerValue(item));
     renderMemory(item);
-    document.getElementById("nextBtn").disabled = false;
-    speakCurrent(TTS_NORMAL_RATE, { silentOnUnsupported: true });
+    setNextButtonState(false);
     return;
   }
 
   input.classList.add("wrong");
   input.classList.remove("correct");
   setFeedback("Chưa đúng, thử lại nhé.", "bad");
-  renderAnswerMeter(item, input.value, "wrong");
-  speakCurrent(TTS_NORMAL_RATE, { silentOnUnsupported: true });
+  renderAnswerMeter(item, input.value);
+}
+
+async function completeCurrentSentence(input, item) {
+  const cardKey = getCurrentCardKey();
+  state.isCompletingAnswer = true;
+  state.hasCompletedCurrentQuestion = true;
+  state.answered.add(cardKey);
+
+  input.classList.add("correct");
+  input.classList.remove("wrong");
+  input.disabled = true;
+  document.getElementById("checkAnswerBtn").disabled = true;
+  renderAnswerMeter(item, getExpectedAnswerValue(item));
+  renderMemory(item);
+  setFeedback("Chính xác. Đang đọc đáp án...", "good");
+  setNextButtonState(true, "Đang đọc đáp án...");
+
+  playSuccessSound();
+  launchWritingCelebration();
+  state.isReadingAnswer = true;
+  await speakChineseAndWait(item.chinese);
+
+  if (cardKey !== getCurrentCardKey()) return;
+
+  state.isReadingAnswer = false;
+  state.isCompletingAnswer = false;
+  setFeedback("Chính xác.", "good");
+  setNextButtonState(false);
+}
+
+function setNextButtonState(disabled, label = "Tiếp") {
+  const nextButton = document.getElementById("nextBtn");
+  if (!nextButton) return;
+  nextButton.disabled = disabled;
+  const text = nextButton.querySelector("span:last-child");
+  if (text) text.textContent = label;
+}
+
+function playSuccessSound() {
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    const context = new AudioContextClass();
+    const now = context.currentTime;
+    const gain = context.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.055, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
+    gain.connect(context.destination);
+
+    [523.25, 659.25].forEach((frequency, index) => {
+      const oscillator = context.createOscillator();
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, now + index * 0.08);
+      oscillator.connect(gain);
+      oscillator.start(now + index * 0.08);
+      oscillator.stop(now + 0.34);
+    });
+
+    window.setTimeout(() => context.close().catch(() => {}), 500);
+  } catch (_) {
+    // Audio is optional when a browser blocks sound playback.
+  }
+}
+
+function launchWritingCelebration() {
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+  document.querySelector(".writing-celebration")?.remove();
+  const celebration = document.createElement("div");
+  celebration.className = "writing-celebration";
+  celebration.setAttribute("aria-hidden", "true");
+  const count = window.matchMedia?.("(max-width: 768px)").matches ? 18 : 30;
+
+  celebration.innerHTML = Array.from({ length: count }, (_, index) => {
+    const side = index % 2 ? "right" : "left";
+    const rise = 30 + (index * 17) % 58;
+    const drift = 16 + (index * 13) % 34;
+    const delay = (index % 6) * 35;
+    const horizontalOffset = side === "left" ? drift : -drift;
+    return `<i class="writing-confetti writing-confetti--${side}" style="--x:${horizontalOffset}vw;--y:-${rise}vh;--delay:${delay}ms;--hue:${(index * 47) % 360}"></i>`;
+  }).join("");
+  document.body.appendChild(celebration);
+  window.setTimeout(() => celebration.remove(), 2600);
 }
 
 function revealCurrentAnswer() {
@@ -364,6 +471,7 @@ function goNext() {
 }
 
 function canGoNext() {
+  if (state.isCompletingAnswer || state.isReadingAnswer) return false;
   if (DISABLE_SEQUENTIAL_LESSON_LOCK) return true;
   return state.answered.has(getCurrentCardKey()) || state.revealed.has(getCurrentCardKey());
 }
@@ -447,25 +555,71 @@ function getExpectedAnswerValue(item) {
   return normalizePinyin(item.pinyin) || normalizeAnswer(item.chinese);
 }
 
-function getMeterInputValue(value) {
-  if (state.mode === "cn-to-vi") {
-    return normalizeAnswer(value);
+function getAnswerTokens(item) {
+  const sourceTokens = Array.isArray(item?.answerTokens) ? item.answerTokens : null;
+
+  if (sourceTokens?.length) {
+    return sourceTokens
+      .map((token) => typeof token === "string" ? token : token?.answer || token?.pinyin || token?.hanzi || "")
+      .map((token) => normalizeToken(token))
+      .filter(Boolean);
   }
 
-  return normalizePinyin(value) || normalizeAnswer(value);
+  const source = state.mode === "cn-to-vi" ? item?.vietnamese : item?.pinyin;
+  const tokens = String(source || "")
+    .trim()
+    .split(/\s+/)
+    .map((token) => normalizeToken(token))
+    .filter(Boolean);
+
+  // Chinese text without a supplied token structure remains one unit, never split by character.
+  return tokens.length ? tokens : [normalizeToken(item?.chinese)].filter(Boolean);
 }
 
-function renderAnswerMeter(item, inputValue = "", result = "") {
-  const meter = document.getElementById("answerMeter");
-  const expected = getExpectedAnswerValue(item);
-  const expectedLength = Math.max(expected.length, 1);
-  const inputLength = Math.min(getMeterInputValue(inputValue).length, expectedLength);
+function normalizeToken(value) {
+  const text = String(value || "").replace(/[，。！？；：、,.!?;:()[\]{}"“”]/g, "").trim();
+  return state.mode === "cn-to-vi" ? normalizeAnswer(text) : normalizePinyin(text);
+}
 
-  meter.className = result ? `answer-meter ${result}` : "answer-meter";
-  meter.style.setProperty("--meter-count", expectedLength);
-  meter.innerHTML = Array.from({ length: expectedLength }, (_, index) => {
-    const isFilled = index < inputLength;
-    return `<span class="answer-meter__segment${isFilled ? " filled" : ""}"></span>`;
+function getInputTokens(value) {
+  return String(value || "")
+    .trim()
+    .split(/\s+/)
+    .map((token) => normalizeToken(token))
+    .filter(Boolean);
+}
+
+function getTokenStates(item, inputValue) {
+  const expectedTokens = getAnswerTokens(item);
+
+  if (isCorrectAnswer(inputValue, item)) {
+    return expectedTokens.map(() => "correct");
+  }
+
+  const inputTokens = getInputTokens(inputValue);
+  return expectedTokens.map((expected, index) => {
+    const entered = inputTokens[index];
+    if (!entered) return "pending";
+    if (entered === expected) return "correct";
+    return expected.startsWith(entered) ? "typing" : "wrong";
+  });
+}
+
+function renderAnswerMeter(item, inputValue = "") {
+  const meter = document.getElementById("answerMeter");
+  const states = getTokenStates(item, inputValue);
+  const stateLabels = {
+    pending: "chưa nhập",
+    typing: "đang nhập",
+    correct: "đúng",
+    wrong: "sai"
+  };
+
+  meter.className = "writing-token-progress";
+  meter.style.setProperty("--token-count", Math.max(states.length, 1));
+  meter.innerHTML = states.map((tokenState, index) => {
+    const label = stateLabels[tokenState];
+    return `<span class="writing-token-bar is-${tokenState}" data-state="${tokenState}" aria-label="Từ ${index + 1}: ${label}" title="Từ ${index + 1}: ${label}"></span>`;
   }).join("");
 }
 
@@ -512,6 +666,47 @@ async function speakCurrent(rate = TTS_NORMAL_RATE, options = {}) {
   } catch (error) {
     if (!options.silentOnUnsupported) setFeedback("Trình duyệt chưa hỗ trợ đọc âm thanh.", "bad");
   }
+}
+
+function speakChineseAndWait(text) {
+  const spokenText = formatChineseSpeechText(text);
+  if (!spokenText || !window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+    return Promise.resolve();
+  }
+
+  cancelSpeech();
+  const requestId = state.speechRequestId;
+
+  return new Promise((resolve) => {
+    let settled = false;
+    let fallbackTimer;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(fallbackTimer);
+      if (requestId === state.speechRequestId) state.currentUtterance = null;
+      resolve();
+    };
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    const voices = window.speechSynthesis.getVoices?.() || [];
+    const preferredVoice = voices.find((voice) => TTS_VOICE_PRIORITIES.includes(voice.name))
+      || voices.find((voice) => /^zh(?:-|_)/i.test(voice.lang));
+    if (preferredVoice) utterance.voice = preferredVoice;
+    utterance.lang = "zh-CN";
+    utterance.rate = 0.72;
+    utterance.pitch = TTS_PITCH;
+    utterance.volume = Math.min(TTS_VOLUME, 0.9);
+    utterance.onend = finish;
+    utterance.onerror = finish;
+    state.currentUtterance = utterance;
+    fallbackTimer = window.setTimeout(finish, Math.min(18000, Math.max(5000, spokenText.length * 900)));
+
+    try {
+      window.speechSynthesis.speak(utterance);
+    } catch (_) {
+      finish();
+    }
+  });
 }
 
 function cancelSpeech() {

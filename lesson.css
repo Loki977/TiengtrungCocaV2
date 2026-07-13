@@ -331,34 +331,41 @@ button {
   box-shadow: none;
 }
 
-.answer-meter {
+.writing-token-progress {
   display: grid;
-  grid-template-columns: repeat(var(--meter-count, 1), minmax(10px, 1fr));
+  grid-template-columns: repeat(var(--token-count, 1), minmax(18px, 1fr));
   gap: 6px;
   width: min(520px, 100%);
-  margin: 18px auto 0;
+  margin: 14px auto 0;
 }
 
-.answer-meter__segment {
+.writing-token-bar {
   height: 9px;
   border-radius: 999px;
   background: rgba(39, 62, 92, 0.12);
-  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-.answer-meter__segment.filled {
+.writing-token-bar.is-typing {
   background: var(--yellow);
   box-shadow: 0 5px 12px rgba(247, 180, 0, 0.2);
 }
 
-.answer-meter.correct .answer-meter__segment.filled {
+.writing-token-bar.is-correct {
   background: #2ab56f;
   box-shadow: 0 5px 12px rgba(42, 181, 111, 0.22);
 }
 
-.answer-meter.wrong .answer-meter__segment.filled {
+.writing-token-bar.is-wrong {
   background: #f4484d;
   box-shadow: 0 5px 12px rgba(244, 72, 77, 0.2);
+  animation: writing-token-shake 250ms ease;
+}
+
+@keyframes writing-token-shake {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(-3px); }
+  70% { transform: translateX(3px); }
 }
 
 .feedback {
@@ -586,6 +593,42 @@ button {
   text-align: center;
 }
 
+.writing-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.writing-confetti {
+  position: absolute;
+  bottom: 10vh;
+  width: 9px;
+  height: 14px;
+  border-radius: 3px;
+  background: hsl(var(--hue), 88%, 62%);
+  opacity: 0;
+  animation: writing-confetti-burst 1600ms cubic-bezier(.18, .72, .3, 1) var(--delay) forwards;
+}
+
+.writing-confetti--left {
+  left: 7vw;
+}
+
+.writing-confetti--right {
+  right: 7vw;
+}
+
+@keyframes writing-confetti-burst {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+  12% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--x), var(--y), 0) rotate(520deg);
+  }
+}
+
 @media (max-width: 1020px) {
   .topbar {
     grid-template-columns: 52px minmax(0, 1fr);
@@ -646,6 +689,14 @@ button {
     font-size: 21px;
   }
 
+  .writing-token-progress {
+    gap: 4px;
+  }
+
+  .writing-token-bar {
+    height: 7px;
+  }
+
   .bottom-nav {
     gap: 12px;
     padding: 14px;
@@ -696,5 +747,13 @@ button {
   .mode-icon svg {
     width: 22px;
     height: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .writing-token-bar,
+  .writing-confetti {
+    animation: none;
+    transition: none;
   }
 }

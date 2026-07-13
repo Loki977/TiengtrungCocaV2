@@ -97,12 +97,16 @@ export async function getLessonContent(level, lessonId) {
 
 export function normalizePinyin(value) {
   return String(value || "")
+    .normalize("NFKC")
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ü/g, "u")
-    .replace(/v/g, "u")
-    .replace(/\s+/g, "")
     .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[üÜ]/g, "u")
+    .replace(/v/g, "u")
+    .replace(/[1-5]/g, "")
+    .replace(/[’'·]/g, "")
+    .replace(/[^a-z\s]/g, "")
+    .replace(/\s+/g, "")
     .trim();
 }
 
@@ -122,7 +126,8 @@ function normalizeVocabulary(item) {
     ? item.examples.map((example) => ({
       chinese: example.hanzi || example.chinese || "",
       pinyin: example.pinyin || "",
-      vietnamese: example.translation || example.meaning_vi || example.meaning || ""
+      vietnamese: example.translation || example.meaning_vi || example.meaning || "",
+      answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null
     })).filter((example) => example.chinese || example.pinyin || example.vietnamese)
     : [];
 
@@ -161,7 +166,8 @@ function collectSentences(vocabularies) {
       vocabulary: item,
       chinese: example.chinese,
       pinyin: example.pinyin,
-      vietnamese: example.vietnamese
+      vietnamese: example.vietnamese,
+      answerTokens: example.answerTokens
     }));
   }).filter((item) => {
     if (!item.chinese && !item.pinyin && !item.vietnamese) {
