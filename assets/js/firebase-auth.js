@@ -4,6 +4,8 @@ import {
   setPersistence,
   browserLocalPersistence,
   GoogleAuthProvider,
+  FacebookAuthProvider,
+  EmailAuthProvider,
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
@@ -12,13 +14,17 @@ import {
   sendPasswordResetEmail,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  reauthenticateWithPopup,
+  reauthenticateWithCredential,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
   getFirestore,
   doc,
   getDoc,
   setDoc,
+  deleteDoc,
   runTransaction,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
@@ -200,6 +206,7 @@ function getFriendlyAuthError(error) {
     "auth/user-not-found": "Không tìm thấy tài khoản với email này.",
     "auth/wrong-password": "Mật khẩu không đúng.",
     "auth/invalid-credential": "Email hoặc mật khẩu không đúng.",
+    "auth/requires-recent-login": "Vui lòng đăng nhập lại để xác nhận thao tác này.",
     "auth/email-already-in-use": "Email này đã được đăng ký.",
     "auth/weak-password": "Mật khẩu cần ít nhất 6 ký tự.",
     "auth/popup-closed-by-user": "Bạn đã đóng cửa sổ đăng nhập.",
@@ -453,6 +460,74 @@ async function resetPassword(email) {
 
 async function logout() {
   await signOut(auth);
+}
+
+async function reauthenticateForAccountDeletion(user) {
+  const providerIds = user.providerData.map((entry) => entry.providerId);
+
+  if (providerIds.includes("google.com")) {
+    return reauthenticateWithPopup(user, provider);
+  }
+
+  if (providerIds.includes("facebook.com")) {
+    const facebookProvider = new FacebookAuthProvider();
+    facebookProvider.addScope("email");
+    return reauthenticateWithPopup(user, facebookProvider);
+  }
+
+  if (providerIds.includes("password")) {
+    const password = window.prompt("Nhập mật khẩu để xác nhận xóa tài khoản:");
+    if (!password) {
+      const error = new Error("reauthentication_cancelled");
+      error.code = "auth/requires-recent-login";
+      throw error;
+    }
+    return reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, password));
+  }
+
+  const error = new Error("unsupported_account_provider");
+  error.code = "auth/operation-not-supported-in-this-environment";
+  throw error;
+}
+
+function clearDeletedAccountCache(uid) {
+  try {
+    localStorage.removeItem("cc_user");
+    localStorage.removeItem(userStatsCacheKey(uid));
+  } catch (_) {}
+}
+
+async function deleteCurrentAccount() {
+  const user = auth.currentUser;
+  if (!user) {
+    showToast("Vui lòng đăng nhập trước khi xóa tài khoản.", "error");
+    return;
+  }
+
+  const confirmation = window.prompt("Thao tác này không thể hoàn tác. Nhập XÓA để tiếp tục:");
+  if (!["XÓA", "XOA"].includes(String(confirmation || "").trim().toUpperCase())) return;
+
+  const deleteButton = document.getElementById("deleteAccountBtn");
+  if (deleteButton?.disabled) return;
+  if (deleteButton) deleteButton.disabled = true;
+
+  try {
+    showToast("Đang xác nhận và xóa tài khoản...");
+    await reauthenticateForAccountDeletion(user);
+    await Promise.all([
+      deleteDoc(userStatsDocRef(user.uid)),
+      deleteDoc(userDocRef(user.uid))
+    ]);
+    await deleteUser(user);
+    clearDeletedAccountCache(user.uid);
+    showToast("Tài khoản và dữ liệu học đã được xóa.");
+    window.location.replace("index.html");
+  } catch (error) {
+    console.error("[firebase-auth] Không thể xóa tài khoản", error);
+    showToast(getFriendlyAuthError(error), "error");
+  } finally {
+    if (deleteButton) deleteButton.disabled = false;
+  }
 }
 
 async function saveUserStats(partial = {}) {
@@ -902,6 +977,8 @@ function bindAuthControls() {
     try { await logout(); showToast("Đã đăng xuất."); } catch (error) { console.error(error); showToast(getFriendlyAuthError(error), "error"); }
   };
 
+  window.deleteAccount = deleteCurrentAccount;
+
   window.saveName = async () => {
     if (!auth.currentUser) return showToast("Vui lòng đăng nhập trước.", "error");
     const newName = document.getElementById("settingName")?.value?.trim();
@@ -930,6 +1007,7 @@ window.CCFirebase = {
   registerEmail,
   resetPassword,
   logout,
+  deleteCurrentAccount,
   isDisallowedEmbeddedBrowser,
   isEmbeddedFrame,
   canUseRedirectAuth,
