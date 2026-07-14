@@ -622,6 +622,59 @@
     }
   }
 
+  function playCourseFeedbackSound(kind) {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const context = new AudioContextClass();
+      const notes = kind === 'success' ? [523.25, 659.25, 783.99, 1046.5] : [392, 349.23, 293.66];
+      notes.forEach((frequency, index) => {
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        const start = context.currentTime + index * (kind === 'success' ? 0.11 : 0.18);
+        oscillator.type = kind === 'success' ? 'sine' : 'triangle';
+        oscillator.frequency.setValueAtTime(frequency, start);
+        gain.gain.setValueAtTime(kind === 'success' ? 0.08 : 0.065, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + (kind === 'success' ? 0.28 : 0.42));
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(start);
+        oscillator.stop(start + (kind === 'success' ? 0.3 : 0.45));
+      });
+      window.setTimeout(() => context.close().catch(() => {}), 1300);
+    } catch (_) {}
+  }
+
+  function launchCourseFireworks() {
+    document.querySelector('.gt-answer-fireworks')?.remove();
+    const box = document.createElement('div');
+    box.className = 'gt-answer-fireworks';
+    box.setAttribute('aria-hidden', 'true');
+    [8, 92].forEach((startX, side) => {
+      for (let index = 0; index < 20; index += 1) {
+        const particle = document.createElement('i');
+        particle.className = 'gt-answer-firework';
+        particle.style.setProperty('--start-x', `${startX}vw`);
+        particle.style.setProperty('--travel-x', `${(side === 0 ? 1 : -1) * (20 + Math.random() * 150)}px`);
+        particle.style.setProperty('--travel-y', `-${80 + Math.random() * 150}px`);
+        particle.style.setProperty('--hue', Math.floor(Math.random() * 360));
+        particle.style.animationDelay = `${Math.random() * 90}ms`;
+        box.appendChild(particle);
+      }
+    });
+    document.body.appendChild(box);
+    window.setTimeout(() => box.remove(), 1200);
+  }
+
+  function showCourseWrongAnswer() {
+    const reaction = document.createElement('span');
+    reaction.className = 'gt-wrong-reaction';
+    reaction.textContent = '😢';
+    reaction.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(reaction);
+    window.setTimeout(() => reaction.remove(), 850);
+  }
+
   function bindLessonRenderEvents(root = document) {
     root.addEventListener('click', function (e) {
       const lesson = window.__currentLessonData;
@@ -656,7 +709,14 @@
           b.disabled = true;
           if (b.dataset.value === b.dataset.answer) b.classList.add('correct');
         });
-        if (btn.dataset.value !== btn.dataset.answer) btn.classList.add('wrong');
+        if (btn.dataset.value !== btn.dataset.answer) {
+          btn.classList.add('wrong');
+          showCourseWrongAnswer();
+          playCourseFeedbackSound('sad');
+        } else {
+          launchCourseFireworks();
+          playCourseFeedbackSound('success');
+        }
       }
 
       if (e.target.classList.contains('gt-submit-btn')) {
@@ -677,9 +737,13 @@
 
         if (userAnswer === correctAnswer) {
           feedback.classList.add('correct');
+          launchCourseFireworks();
+          playCourseFeedbackSound('success');
           feedback.textContent = 'Chính xác!';
         } else {
           feedback.classList.add('wrong');
+          showCourseWrongAnswer();
+          playCourseFeedbackSound('sad');
           feedback.innerHTML = `Chưa đúng. Đáp án gợi ý: <b>${escapeHtml(input.dataset.answer)}</b>`;
         }
       }

@@ -620,6 +620,22 @@ button {
   right: 7vw;
 }
 
+.writing-wrong-reaction {
+  position: fixed;
+  left: 50%;
+  top: 42%;
+  z-index: 61;
+  pointer-events: none;
+  font-size: clamp(4rem, 12vw, 6rem);
+  animation: writing-wrong-reaction 780ms ease-out forwards;
+}
+
+@keyframes writing-wrong-reaction {
+  0% { opacity: 0; transform: translate(-50%, -25%) scale(.45); }
+  42% { opacity: 1; transform: translate(-50%, -55%) scale(1.14); }
+  100% { opacity: 0; transform: translate(-50%, -82%) scale(.9); }
+}
+
 @keyframes writing-confetti-burst {
   0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
   12% { opacity: 1; }

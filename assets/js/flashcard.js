@@ -341,23 +341,12 @@
     window.setTimeout(() => box.remove(), 1200);
   }
 
-  function showLearningReaction() {
-    const icon = document.createElement('span');
-    icon.className = 'fc-learning-reaction';
-    icon.textContent = '😢';
-    icon.setAttribute('aria-hidden', 'true');
-    fcScene.appendChild(icon);
-    window.setTimeout(() => icon.remove(), 850);
-  }
-
   function handleLearning() {
     if (!cards.length) return;
     if (!isFlipped) { flipCard(true); return; }
     learning.add(currentIndex);
     mastered.delete(currentIndex);
     fcCard.classList.add('card--learning');
-    showLearningReaction();
-    playFeedbackSound('sad');
     setTimeout(() => {
       fcCard.classList.remove('card--learning');
       if (currentIndex < cards.length - 1) { currentIndex++; updateCard(); }

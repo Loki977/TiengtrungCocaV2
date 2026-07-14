@@ -90,7 +90,7 @@
       border-radius: var(--r-xl);
       filter: drop-shadow(0 20px 40px rgba(45,45,45,.18));
     }
-    .fc-card.flipped { transform: rotateY(180deg); }
+    .fc-card.flipped { transform: rotateY(180deg) rotateZ(360deg); -webkit-transform: rotateY(180deg) rotateZ(360deg); }
     .fc-card.card--mastered { filter: drop-shadow(0 20px 40px rgba(76,175,80,.35)); }
     .fc-card.card--learning  { filter: drop-shadow(0 20px 40px rgba(255,122,0,.35)); }
 
@@ -127,8 +127,6 @@
     @keyframes audioSpin { from{transform:scale(1)} 50%{transform:scale(1.25)} to{transform:scale(1)} }
     .fc-front__hint { position: absolute; bottom: 14px; font-size: .72rem; color: var(--text-light); display: flex; align-items: center; gap: 4px; }
 
-    .fc-learning-reaction { position: absolute; left: 50%; top: 50%; z-index: 4; font-size: clamp(4rem,12vw,6rem); pointer-events: none; animation: fcSadReaction .78s ease-out forwards; }
-    @keyframes fcSadReaction { 0%{opacity:0;transform:translate(-50%,-35%) scale(.45)} 42%{opacity:1;transform:translate(-50%,-62%) scale(1.14)} 100%{opacity:0;transform:translate(-50%,-85%) scale(.9)} }
     .fc-fireworks { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
     .fc-firework { position: absolute; left: var(--start-x); top: 76%; width: 9px; height: 9px; border-radius: 50%; background: hsl(var(--hue),95%,62%); box-shadow: 0 0 12px currentColor; animation: fcFireworkBurst .95s cubic-bezier(.13,.7,.32,1) forwards; }
     @keyframes fcFireworkBurst { 0%{opacity:1;transform:translate(0,0) scale(.55)} 68%{opacity:1} 100%{opacity:0;transform:translate(var(--travel-x),var(--travel-y)) scale(1.15)} }
@@ -219,7 +217,7 @@
       .fc-actions { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .fc-learning-reaction, .fc-firework { animation-duration: .01ms; }
+      .fc-firework { animation-duration: .01ms; }
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />

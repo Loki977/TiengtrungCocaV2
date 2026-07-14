@@ -322,11 +322,15 @@ function submitCurrentAnswer(input) {
     renderAnswerMeter(item, getExpectedAnswerValue(item));
     renderMemory(item);
     setNextButtonState(false);
+    playSuccessSound();
+    launchWritingCelebration();
     return;
   }
 
   input.classList.add("wrong");
   input.classList.remove("correct");
+  showWrongAnswerReaction();
+  playFeedbackSound("sad");
   setFeedback("Chưa đúng, thử lại nhé.", "bad");
   renderAnswerMeter(item, input.value);
 }
@@ -367,31 +371,43 @@ function setNextButtonState(disabled, label = "Tiếp") {
   if (text) text.textContent = label;
 }
 
-function playSuccessSound() {
+function playFeedbackSound(kind = "success") {
   try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
     const context = new AudioContextClass();
-    const now = context.currentTime;
-    const gain = context.createGain();
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.055, now + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.32);
-    gain.connect(context.destination);
-
-    [523.25, 659.25].forEach((frequency, index) => {
+    const notes = kind === "success" ? [523.25, 659.25, 783.99, 1046.5] : [392, 349.23, 293.66];
+    notes.forEach((frequency, index) => {
       const oscillator = context.createOscillator();
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(frequency, now + index * 0.08);
+      const gain = context.createGain();
+      const start = context.currentTime + index * (kind === "success" ? 0.11 : 0.18);
+      oscillator.type = kind === "success" ? "sine" : "triangle";
+      oscillator.frequency.setValueAtTime(frequency, start);
+      gain.gain.setValueAtTime(kind === "success" ? 0.08 : 0.065, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + (kind === "success" ? 0.28 : 0.42));
       oscillator.connect(gain);
-      oscillator.start(now + index * 0.08);
-      oscillator.stop(now + 0.34);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + (kind === "success" ? 0.3 : 0.45));
     });
 
-    window.setTimeout(() => context.close().catch(() => {}), 500);
+    window.setTimeout(() => context.close().catch(() => {}), 1300);
   } catch (_) {
     // Audio is optional when a browser blocks sound playback.
   }
+}
+
+function playSuccessSound() {
+  playFeedbackSound("success");
+}
+
+function showWrongAnswerReaction() {
+  const reaction = document.createElement("span");
+  reaction.className = "writing-wrong-reaction";
+  reaction.textContent = "😢";
+  reaction.setAttribute("aria-hidden", "true");
+  document.body.appendChild(reaction);
+  window.setTimeout(() => reaction.remove(), 850);
 }
 
 function launchWritingCelebration() {

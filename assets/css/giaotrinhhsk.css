@@ -465,6 +465,12 @@ mark {
   color: #991b1b;
 }
 
+.gt-answer-fireworks { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+.gt-answer-firework { position: absolute; left: var(--start-x); top: 76%; width: 9px; height: 9px; border-radius: 50%; background: hsl(var(--hue), 95%, 62%); box-shadow: 0 0 12px currentColor; animation: gt-answer-firework 950ms cubic-bezier(.13,.7,.32,1) forwards; }
+@keyframes gt-answer-firework { 0% { opacity: 1; transform: translate(0, 0) scale(.55); } 68% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--travel-x), var(--travel-y)) scale(1.15); } }
+.gt-wrong-reaction { position: fixed; left: 50%; top: 42%; z-index: 9999; pointer-events: none; font-size: clamp(4rem, 12vw, 6rem); animation: gt-wrong-reaction 780ms ease-out forwards; }
+@keyframes gt-wrong-reaction { 0% { opacity: 0; transform: translate(-50%, -25%) scale(.45); } 42% { opacity: 1; transform: translate(-50%, -55%) scale(1.14); } 100% { opacity: 0; transform: translate(-50%, -82%) scale(.9); } }
+
 @media (max-width: 640px) {
   .gt-hero {
     flex-direction: column;
