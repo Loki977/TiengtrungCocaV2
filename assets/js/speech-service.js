@@ -1,9 +1,7 @@
-/* Shared Chinese audio service: existing audio -> local cache -> AI cache -> browser voice. */
+/* Shared Chinese audio service using the browser SpeechSynthesis API only. */
 (function () {
   'use strict';
 
-  const API_TIMEOUT_MS = 22_000;
-  const AUDIO_CACHE_LIMIT = 48;
   const MODE_SETTINGS = Object.freeze({
     vocabulary: { rate: 0.78 },
     example: { rate: 0.84 },
@@ -18,10 +16,6 @@
       .replace(/[\u0000-\u001F\u007F]/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
-  }
-
-  function getLookupKey(text, mode) {
-    return `${mode}:${normalizeText(text).toLowerCase()}`;
   }
 
   class IndexedAudioCache {
@@ -225,82 +219,25 @@
 
   class SpeechService {
     constructor() {
-      this.player = new AudioPlayer();
       this.browser = new BrowserSpeechEngine();
-      this.cache = new IndexedAudioCache();
-      this.pendingRequests = new Map();
       this.requestId = 0;
     }
 
     get isSpeaking() {
-      return Boolean(this.player.current || this.browser.currentFinish);
+      return Boolean(this.browser.currentFinish);
     }
 
     stop() {
       this.requestId += 1;
-      this.player.stop();
       this.browser.stop();
     }
 
     async speak({ text = '', mode = 'sentence', audioUrl = '', audioSrc = '', rate, pitch = 0.94, volume = 1, lang = 'zh-CN' } = {}) {
       const cleanText = normalizeText(text);
       if (!cleanText) return;
-      const requestId = this.requestId + 1;
       this.stop();
       const settings = { ...MODE_SETTINGS[mode], rate: rate ?? MODE_SETTINGS[mode]?.rate ?? 0.84, pitch, volume, lang };
-      const directAudio = audioUrl || audioSrc;
-      if (directAudio) {
-        try { return await this.player.play(directAudio, settings); } catch (_) { return this.speakWithBrowser(cleanText, settings); }
-      }
-
-      const lookupKey = getLookupKey(cleanText, mode);
-      try {
-        const localAudio = await this.cache.get(lookupKey);
-        if (requestId !== this.requestId) return;
-        if (localAudio) return await this.player.play(localAudio, settings);
-
-        const generated = await this.fetchGeneratedAudio(cleanText, mode, lookupKey);
-        if (requestId !== this.requestId) return;
-        if (generated?.blob) return await this.player.play(generated.blob, settings);
-        if (generated?.audioUrl) return await this.player.play(generated.audioUrl, settings);
-      } catch (_) {
-        // Browser speech is the required non-blocking fallback for every AI/cache failure.
-      }
-      if (requestId !== this.requestId) return;
       return this.speakWithBrowser(cleanText, settings);
-    }
-
-    async fetchGeneratedAudio(text, mode, lookupKey) {
-      const pendingKey = `${lookupKey}`;
-      if (!this.pendingRequests.has(pendingKey)) {
-        const request = this.requestGeneratedAudio(text, mode, lookupKey).finally(() => this.pendingRequests.delete(pendingKey));
-        this.pendingRequests.set(pendingKey, request);
-      }
-      return this.pendingRequests.get(pendingKey);
-    }
-
-    async requestGeneratedAudio(text, mode, lookupKey) {
-      const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), API_TIMEOUT_MS);
-      try {
-        const response = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text, mode }),
-          signal: controller.signal
-        });
-        if (!response.ok) throw new Error('TTS API unavailable');
-        const payload = await response.json();
-        if (!payload?.audioUrl || !payload?.cacheKey) throw new Error('Invalid TTS response');
-        const audioResponse = await fetch(payload.audioUrl, { signal: controller.signal });
-        if (!audioResponse.ok) throw new Error('Cached audio unavailable');
-        const blob = await audioResponse.blob();
-        if (!blob.size || !/^audio\//i.test(blob.type || 'audio/wav')) throw new Error('Invalid cached audio');
-        await this.cache.set(lookupKey, payload.cacheKey, blob);
-        return { blob };
-      } finally {
-        clearTimeout(timeout);
-      }
     }
 
     async speakWithBrowser(text, settings) {
