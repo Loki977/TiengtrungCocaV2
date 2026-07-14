@@ -4,7 +4,11 @@ const { put } = require('@vercel/blob');
 
 const VALID_MODES = new Set(['vocabulary', 'example', 'sentence', 'passage', 'answer']);
 const MAX_TEXT_LENGTH = 500;
-const REQUEST_TIMEOUT_MS = 20_000;
+const REQUEST_TIMEOUT_MS = 8_000;
+const GEMINI_MAX_ATTEMPTS = 3;
+const GEMINI_RETRY_DELAYS_MS = [0, 1_000, 2_500];
+const GEMINI_MAX_RETRY_DELAY_MS = 5_000;
+const FIRESTORE_TIMEOUT_MS = 8_000;
 const GENERATION_LOCK_MS = 90_000;
 const RATE_WINDOW_MS = 60_000;
 const RATE_LIMIT = 24;
@@ -44,7 +48,7 @@ function getAdmin() {
 
   const required = ['FIREBASE_PROJECT_ID', 'FIREBASE_CLIENT_EMAIL', 'FIREBASE_PRIVATE_KEY'];
   const missing = required.filter((name) => !process.env[name]);
-  if (missing.length) throw new ApiError(503, 'TTS cache is not configured.');
+  if (missing.length) throw new ApiError(503, 'Firebase TTS cache is not configured.', 'firebase_not_configured');
 
   try {
     admin.initializeApp({
@@ -121,8 +125,32 @@ function hasValidAudioUrl(value) {
   }
 }
 
+async function runFirestore(stage, operation) {
+  let timeoutId;
+  try {
+    const result = await Promise.race([
+      Promise.resolve().then(operation),
+      new Promise((_, reject) => {
+        timeoutId = setTimeout(
+          () => reject(new ApiError(503, 'TTS metadata cache timed out.', 'firestore_timeout')),
+          FIRESTORE_TIMEOUT_MS
+        );
+      })
+    ]);
+    return result;
+  } catch (error) {
+    const code = error instanceof ApiError ? error.code : String(error?.code || 'firestore_error');
+    const message = error instanceof ApiError ? error.message : String(error?.message || 'Firestore operation failed.');
+    console.error(`[tts] ${stage}: ${code}: ${message}`);
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(503, 'TTS metadata cache is unavailable.', 'firestore_unavailable');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function getReadyCache(db, cacheKey) {
-  const snapshot = await db.collection('ttsCache').doc(cacheKey).get();
+  const snapshot = await runFirestore('firestore_read', () => db.collection('ttsCache').doc(cacheKey).get());
   const data = snapshot.data();
   if (!snapshot.exists || !hasValidAudioUrl(data?.audioUrl)) return null;
   return { ...data, cacheKey };
@@ -132,7 +160,7 @@ async function claimGeneration(db, cacheKey, metadata) {
   const ref = db.collection('ttsCache').doc(cacheKey);
   const generatorId = crypto.randomUUID();
   const now = Date.now();
-  return db.runTransaction(async (transaction) => {
+  return runFirestore('firestore_transaction', () => db.runTransaction(async (transaction) => {
     const snapshot = await transaction.get(ref);
     const current = snapshot.data();
     if (snapshot.exists && hasValidAudioUrl(current?.audioUrl)) {
@@ -151,7 +179,7 @@ async function claimGeneration(db, cacheKey, metadata) {
       createdAt: current?.createdAt || admin.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
     return { state: 'generate', generatorId };
-  });
+  }));
 }
 
 async function waitForCache(db, cacheKey) {
@@ -191,7 +219,57 @@ function isValidWav(buffer) {
     && buffer.subarray(8, 12).toString('ascii') === 'WAVE';
 }
 
-async function requestGeminiAudio(text, mode) {
+function getRetryDelayMs(payload) {
+  const details = Array.isArray(payload?.error?.details) ? payload.error.details : [];
+  const retryDelay = details.find((item) => String(item?.['@type'] || '').includes('RetryInfo'))?.retryDelay;
+  const seconds = typeof retryDelay === 'string' && /^\d+(?:\.\d+)?s$/.test(retryDelay)
+    ? Number.parseFloat(retryDelay)
+    : NaN;
+  return Number.isFinite(seconds) ? Math.min(Math.round(seconds * 1000), GEMINI_MAX_RETRY_DELAY_MS) : null;
+}
+
+function logGeminiFailure({ attempt, httpStatus = null, errorStatus = null, errorCode = null, retryDelay = null }) {
+  console.error(`[tts] gemini_retry: ${JSON.stringify({
+    attempt,
+    httpStatus,
+    errorStatus,
+    errorCode,
+    retryDelay,
+    model: ttsConfig.model
+  })}`);
+}
+
+function getGeminiErrorLog(attempt, httpStatus, payload) {
+  const error = payload?.error || {};
+  return {
+    attempt,
+    httpStatus,
+    errorStatus: error.status || null,
+    errorCode: `gemini_http_${httpStatus}`,
+    retryDelay: getRetryDelayMs(payload),
+    model: ttsConfig.model
+  };
+}
+
+function isRetryableGeminiError(error) {
+  return error?.code === 'gemini_network_error'
+    || error?.code === 'gemini_timeout'
+    || /^gemini_http_(429|500|502|503|504)$/.test(String(error?.code || ''));
+}
+
+function retryDelayForAttempt(attempt, error) {
+  const preferredDelay = Number(error?.retryDelayMs);
+  const baseDelay = Number.isFinite(preferredDelay)
+    ? Math.min(preferredDelay, GEMINI_MAX_RETRY_DELAY_MS)
+    : GEMINI_RETRY_DELAYS_MS[attempt - 1];
+  return Math.min(baseDelay + Math.floor(Math.random() * 250), GEMINI_MAX_RETRY_DELAY_MS);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function requestGeminiAttempt(text, mode, attempt) {
   if (!process.env.GEMINI_API_KEY) throw new ApiError(503, 'AI TTS is not configured.', 'gemini_not_configured');
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
@@ -227,12 +305,28 @@ async function requestGeminiAudio(text, mode) {
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
+      console.error(`[tts] gemini_retry: ${JSON.stringify(getGeminiErrorLog(attempt, response.status, payload))}`);
+      if (response.status === 429) {
+        const error = new ApiError(429, 'Gemini TTS is temporarily rate-limited.', 'gemini_http_429');
+        error.retryDelayMs = getRetryDelayMs(payload);
+        throw error;
+      }
       const status = response.status === 429 ? 429 : 502;
-      throw new ApiError(status, 'AI speech generation failed.', `gemini_http_${response.status}`);
+      const message = response.status === 429
+        ? 'Gemini TTS đang tạm bị giới hạn lượt gọi.'
+        : response.status >= 500
+          ? 'Gemini TTS tạm thời không khả dụng.'
+          : 'Gemini TTS không thể tạo âm thanh cho yêu cầu này.';
+      const error = new ApiError(status, message, `gemini_http_${response.status}`);
+      error.retryDelayMs = getRetryDelayMs(payload);
+      throw error;
     }
     const encodedAudio = payload?.candidates?.[0]?.content?.parts
       ?.find((part) => part?.inlineData?.data)?.inlineData?.data;
-    if (!encodedAudio) throw new ApiError(502, 'AI returned no audio.');
+    if (!encodedAudio) {
+      logGeminiFailure({ attempt, httpStatus: response.status, errorStatus: 'NO_AUDIO', errorCode: 'gemini_no_audio' });
+      throw new ApiError(502, 'Gemini returned no audio.', 'gemini_no_audio');
+    }
     const pcm = Buffer.from(encodedAudio, 'base64');
     if (!pcm.length) throw new ApiError(502, 'AI returned invalid audio.');
     const wavBuffer = toWavBuffer(pcm);
@@ -240,21 +334,49 @@ async function requestGeminiAudio(text, mode) {
     return wavBuffer;
   } catch (error) {
     if (error instanceof ApiError) throw error;
-    if (error.name === 'AbortError') throw new ApiError(504, 'AI speech generation timed out.');
-    throw new ApiError(502, 'AI speech service is unavailable.');
+    if (error.name === 'AbortError') {
+      logGeminiFailure({ attempt, errorStatus: 'TIMEOUT', errorCode: 'gemini_timeout' });
+      throw new ApiError(504, 'AI speech generation timed out.', 'gemini_timeout');
+    }
+    logGeminiFailure({ attempt, errorStatus: 'NETWORK_ERROR', errorCode: 'gemini_network_error' });
+    throw new ApiError(502, 'AI speech service is unavailable.', 'gemini_network_error');
   } finally {
     clearTimeout(timeout);
   }
 }
 
+async function requestGeminiAudio(text, mode) {
+  let lastError;
+  for (let attempt = 1; attempt <= GEMINI_MAX_ATTEMPTS; attempt += 1) {
+    if (attempt > 1) await sleep(retryDelayForAttempt(attempt, lastError));
+    try {
+      return await requestGeminiAttempt(text, mode, attempt);
+    } catch (error) {
+      lastError = error;
+      if (!isRetryableGeminiError(error) || attempt === GEMINI_MAX_ATTEMPTS) throw error;
+    }
+  }
+  throw lastError;
+}
+
 async function getOrCreateAudio(text, mode) {
-  const firebase = getAdmin();
-  const db = firebase.firestore();
+  let db;
+  try {
+    const firebase = getAdmin();
+    db = firebase.firestore();
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    const code = String(error?.code || 'firebase_admin_error');
+    const message = String(error?.message || 'Firebase Admin initialization failed.');
+    console.error(`[tts] firebase_admin: ${code}: ${message}`);
+    throw new ApiError(503, 'Firebase TTS cache is unavailable.', 'firebase_admin_error');
+  }
   const cacheKey = createCacheKey(text, mode);
   let existing;
   try {
     existing = await getReadyCache(db, cacheKey);
-  } catch (_) {
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
     throw new ApiError(500, 'TTS metadata cache is unavailable.', 'firestore_error');
   }
   if (existing) return {
@@ -327,7 +449,7 @@ async function getOrCreateAudio(text, mode) {
     }
     if (!hasValidAudioUrl(blob?.url)) throw new ApiError(502, 'Blob upload returned an invalid URL.');
     const audioUrl = blob.url;
-    await ref.set({
+    await runFirestore('firestore_write', () => ref.set({
       text,
       normalizedText: text,
       mode,
@@ -342,7 +464,7 @@ async function getOrCreateAudio(text, mode) {
       generationExpiresAt: admin.firestore.FieldValue.delete(),
       generatorId: admin.firestore.FieldValue.delete(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+    }, { merge: true }));
     return { audioUrl, cacheKey, cached: false, source: 'gemini', mimeType: 'audio/wav' };
   } catch (error) {
     const snapshot = await ref.get().catch(() => null);
@@ -378,10 +500,13 @@ module.exports = async (req, res) => {
     return res.status(200).json(result);
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 500;
+    const code = errorCodeForStatus(status, error instanceof ApiError ? error.code : '');
+    const message = error instanceof ApiError ? error.message : 'Unexpected TTS server error.';
+    if (!code.startsWith('gemini_')) console.error(`[tts] ${code}: ${message}`);
     return res.status(status).json({
       error: {
-        code: errorCodeForStatus(status, error instanceof ApiError ? error.code : ''),
-        message: 'Unable to generate speech right now.'
+        code,
+        message
       }
     });
   } finally {

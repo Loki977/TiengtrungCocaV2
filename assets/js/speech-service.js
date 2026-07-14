@@ -230,7 +230,6 @@
       this.cache = new IndexedAudioCache();
       this.pendingRequests = new Map();
       this.requestId = 0;
-      this.didNotifyFallback = false;
     }
 
     get isSpeaking() {
@@ -305,14 +304,10 @@
     }
 
     async speakWithBrowser(text, settings) {
-      if (!this.didNotifyFallback) {
-        this.didNotifyFallback = true;
-        window.CCFirebase?.showToast?.('AI tạm thời không khả dụng, đang dùng giọng đọc trên thiết bị.', 'info');
-      }
       try {
         await this.browser.speak(text, settings);
       } catch (_) {
-        // Both providers failed; resolve so callers never leave controls locked.
+        window.CCFirebase?.showToast?.('Kh\u00f4ng th\u1ec3 ph\u00e1t \u00e2m.', 'warning');
       }
     }
 
