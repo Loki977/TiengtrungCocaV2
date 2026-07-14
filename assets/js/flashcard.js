@@ -297,12 +297,67 @@
       `Bạn đã học xong ${total} thẻ! 🎊 Đã thuộc: ${mastered.size} | Chưa thuộc: ${learning.size}`;
   }
 
+  function playFeedbackSound(kind) {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const context = new AudioContextClass();
+      const notes = kind === 'success' ? [523.25, 659.25, 783.99, 1046.5] : [392, 349.23, 293.66];
+      notes.forEach((frequency, index) => {
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        const start = context.currentTime + index * (kind === 'success' ? 0.11 : 0.18);
+        oscillator.type = kind === 'success' ? 'sine' : 'triangle';
+        oscillator.frequency.setValueAtTime(frequency, start);
+        gain.gain.setValueAtTime(kind === 'success' ? 0.08 : 0.065, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + (kind === 'success' ? 0.28 : 0.42));
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(start);
+        oscillator.stop(start + (kind === 'success' ? 0.3 : 0.45));
+      });
+      window.setTimeout(() => context.close().catch(() => {}), 1300);
+    } catch (_) {}
+  }
+
+  function launchSideFireworks() {
+    const box = document.createElement('div');
+    box.className = 'fc-fireworks';
+    box.setAttribute('aria-hidden', 'true');
+    [8, 92].forEach((startX, side) => {
+      for (let index = 0; index < 20; index += 1) {
+        const particle = document.createElement('i');
+        const distance = 80 + Math.random() * 150;
+        particle.className = 'fc-firework';
+        particle.style.setProperty('--start-x', `${startX}vw`);
+        particle.style.setProperty('--travel-x', `${(side === 0 ? 1 : -1) * (20 + Math.random() * 150)}px`);
+        particle.style.setProperty('--travel-y', `-${distance}px`);
+        particle.style.setProperty('--hue', Math.floor(Math.random() * 360));
+        particle.style.animationDelay = `${Math.random() * 90}ms`;
+        box.appendChild(particle);
+      }
+    });
+    document.body.appendChild(box);
+    window.setTimeout(() => box.remove(), 1200);
+  }
+
+  function showLearningReaction() {
+    const icon = document.createElement('span');
+    icon.className = 'fc-learning-reaction';
+    icon.textContent = '😢';
+    icon.setAttribute('aria-hidden', 'true');
+    fcScene.appendChild(icon);
+    window.setTimeout(() => icon.remove(), 850);
+  }
+
   function handleLearning() {
     if (!cards.length) return;
     if (!isFlipped) { flipCard(true); return; }
     learning.add(currentIndex);
     mastered.delete(currentIndex);
     fcCard.classList.add('card--learning');
+    showLearningReaction();
+    playFeedbackSound('sad');
     setTimeout(() => {
       fcCard.classList.remove('card--learning');
       if (currentIndex < cards.length - 1) { currentIndex++; updateCard(); }
@@ -317,6 +372,8 @@
     mastered.add(currentIndex);
     learning.delete(currentIndex);
     fcCard.classList.add('card--mastered');
+    launchSideFireworks();
+    playFeedbackSound('success');
     setTimeout(() => {
       fcCard.classList.remove('card--mastered');
       if (currentIndex < cards.length - 1) { currentIndex++; updateCard(); }

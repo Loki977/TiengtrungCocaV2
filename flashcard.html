@@ -81,11 +81,11 @@
     /* ── 3D Card ── */
     .fc-scene {
       perspective: 1200px; width: 100%; max-width: 520px;
-      margin: 0 auto 32px; cursor: pointer;
+      margin: 0 auto 32px; cursor: pointer; position: relative;
     }
     .fc-card {
       position: relative; width: 100%; padding-top: 62%;
-      transform-style: preserve-3d;
+      transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
       transition: transform .6s cubic-bezier(.4, 0, .2, 1);
       border-radius: var(--r-xl);
       filter: drop-shadow(0 20px 40px rgba(45,45,45,.18));
@@ -105,6 +105,7 @@
     .fc-card__front {
       background: linear-gradient(145deg, #fff 0%, #FFFDF9 100%);
       border: 2px solid var(--border);
+      transform: rotateY(0deg) translateZ(1px); -webkit-transform: rotateY(0deg) translateZ(1px);
     }
     .fc-front__hanzi {
       font-family: 'Baloo 2', cursive; font-size: clamp(3.5rem, 10vw, 6rem);
@@ -126,8 +127,14 @@
     @keyframes audioSpin { from{transform:scale(1)} 50%{transform:scale(1.25)} to{transform:scale(1)} }
     .fc-front__hint { position: absolute; bottom: 14px; font-size: .72rem; color: var(--text-light); display: flex; align-items: center; gap: 4px; }
 
+    .fc-learning-reaction { position: absolute; left: 50%; top: 50%; z-index: 4; font-size: clamp(4rem,12vw,6rem); pointer-events: none; animation: fcSadReaction .78s ease-out forwards; }
+    @keyframes fcSadReaction { 0%{opacity:0;transform:translate(-50%,-35%) scale(.45)} 42%{opacity:1;transform:translate(-50%,-62%) scale(1.14)} 100%{opacity:0;transform:translate(-50%,-85%) scale(.9)} }
+    .fc-fireworks { position: fixed; inset: 0; z-index: 9999; pointer-events: none; overflow: hidden; }
+    .fc-firework { position: absolute; left: var(--start-x); top: 76%; width: 9px; height: 9px; border-radius: 50%; background: hsl(var(--hue),95%,62%); box-shadow: 0 0 12px currentColor; animation: fcFireworkBurst .95s cubic-bezier(.13,.7,.32,1) forwards; }
+    @keyframes fcFireworkBurst { 0%{opacity:1;transform:translate(0,0) scale(.55)} 68%{opacity:1} 100%{opacity:0;transform:translate(var(--travel-x),var(--travel-y)) scale(1.15)} }
+
     /* Back face */
-    .fc-card__back { background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 100%); transform: rotateY(180deg); }
+    .fc-card__back { background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 100%); transform: rotateY(180deg) translateZ(1px); -webkit-transform: rotateY(180deg) translateZ(1px); }
     .fc-back__meaning  { font-family: 'Baloo 2', cursive; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; color: #fff; margin-bottom: 8px; line-height: 1.2; }
     .fc-back__pinyin   { font-size: 1rem; color: rgba(255,255,255,.9); font-weight: 500; margin-bottom: 14px; }
     .fc-back__example  { background: rgba(255,255,255,.15); border-radius: var(--r-md); padding: 14px 18px; text-align: left; width: 100%; }
@@ -210,6 +217,9 @@
     @media (max-width: 480px) {
       .fc-front__hanzi { font-size: 3rem; }
       .fc-actions { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fc-learning-reaction, .fc-firework { animation-duration: .01ms; }
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
