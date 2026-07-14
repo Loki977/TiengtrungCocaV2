@@ -78,34 +78,40 @@
     }
     .fc-lesson-row { text-align: center; margin-bottom: 14px; }
 
-    /* ── 3D Card ── */
+    /* ── Card reveal with a tactile 3D press ── */
     .fc-scene {
       perspective: 1200px; width: 100%; max-width: 520px;
       margin: 0 auto 32px; cursor: pointer; position: relative;
     }
     .fc-card {
       position: relative; width: 100%; padding-top: 62%;
-      transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
-      transition: transform .6s cubic-bezier(.4, 0, .2, 1);
+      transform: translateZ(0);
+      transition: filter .22s ease;
       border-radius: var(--r-xl);
       filter: drop-shadow(0 20px 40px rgba(45,45,45,.18));
     }
-    .fc-card.flipped { transform: rotateY(180deg) rotateZ(360deg); -webkit-transform: rotateY(180deg) rotateZ(360deg); }
+    .fc-card.card--pressed { animation: fcCardPress .42s cubic-bezier(.2,.75,.3,1); }
     .fc-card.card--mastered { filter: drop-shadow(0 20px 40px rgba(76,175,80,.35)); }
     .fc-card.card--learning  { filter: drop-shadow(0 20px 40px rgba(255,122,0,.35)); }
+    @keyframes fcCardPress {
+      0%   { transform: translateY(0) scale(1); }
+      38%  { transform: translateY(7px) scale(.978); }
+      72%  { transform: translateY(-4px) scale(1.012); }
+      100% { transform: translateY(0) scale(1); }
+    }
 
     .fc-card__face {
       position: absolute; inset: 0; border-radius: var(--r-xl);
-      backface-visibility: hidden; -webkit-backface-visibility: hidden;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 32px; text-align: center;
+      transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
     }
 
     /* Front face */
     .fc-card__front {
       background: linear-gradient(145deg, #fff 0%, #FFFDF9 100%);
       border: 2px solid var(--border);
-      transform: rotateY(0deg) translateZ(1px); -webkit-transform: rotateY(0deg) translateZ(1px);
+      z-index: 2; opacity: 1; transform: translateZ(1px) scale(1);
     }
     .fc-front__hanzi {
       font-family: 'Baloo 2', cursive; font-size: clamp(3.5rem, 10vw, 6rem);
@@ -131,8 +137,10 @@
     .fc-firework { position: absolute; left: var(--start-x); top: 76%; width: 9px; height: 9px; border-radius: 50%; background: hsl(var(--hue),95%,62%); box-shadow: 0 0 12px currentColor; animation: fcFireworkBurst .95s cubic-bezier(.13,.7,.32,1) forwards; }
     @keyframes fcFireworkBurst { 0%{opacity:1;transform:translate(0,0) scale(.55)} 68%{opacity:1} 100%{opacity:0;transform:translate(var(--travel-x),var(--travel-y)) scale(1.15)} }
 
-    /* Back face */
-    .fc-card__back { background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 100%); transform: rotateY(180deg) translateZ(1px); -webkit-transform: rotateY(180deg) translateZ(1px); }
+    /* Back content fades in without rotating the card. */
+    .fc-card__back { background: linear-gradient(145deg, #FF7A00 0%, #FF9A33 100%); z-index: 1; opacity: 0; visibility: hidden; transform: translateZ(1px) scale(.975); }
+    .fc-card.flipped .fc-card__front { opacity: 0; visibility: hidden; transform: translateZ(1px) scale(.975); }
+    .fc-card.flipped .fc-card__back { z-index: 2; opacity: 1; visibility: visible; transform: translateZ(1px) scale(1); }
     .fc-back__meaning  { font-family: 'Baloo 2', cursive; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; color: #fff; margin-bottom: 8px; line-height: 1.2; }
     .fc-back__pinyin   { font-size: 1rem; color: rgba(255,255,255,.9); font-weight: 500; margin-bottom: 14px; }
     .fc-back__example  { background: rgba(255,255,255,.15); border-radius: var(--r-md); padding: 14px 18px; text-align: left; width: 100%; }
@@ -140,13 +148,13 @@
     .fc-back__ex-vi    { font-size: .85rem; color: rgba(255,255,255,.85); }
     .fc-back__flip-hint { position: absolute; bottom: 14px; font-size: .72rem; color: rgba(255,255,255,.6); }
 
-    /* Flip instruction badge */
+    /* Card reveal instruction */
     .fc-flip-badge {
       text-align: center; font-size: .8rem; color: var(--text-muted); margin-bottom: 24px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .fc-flip-badge span { font-size: 1rem; animation: flipHint 2s ease-in-out infinite; display: inline-block; }
-    @keyframes flipHint { 0%,100%{transform:rotateY(0)} 50%{transform:rotateY(30deg)} }
+    .fc-flip-badge span { font-size: 1rem; animation: pressHint 2s ease-in-out infinite; display: inline-block; }
+    @keyframes pressHint { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(2px) scale(.9)} }
 
     /* ── Action Buttons ── */
     .fc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
@@ -217,7 +225,7 @@
       .fc-actions { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .fc-firework { animation-duration: .01ms; }
+      .fc-firework, .fc-card.card--pressed, .fc-flip-badge span { animation-duration: .01ms; }
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
@@ -266,7 +274,7 @@
     <div class="deck-banner">
       <div class="container">
         <h2 class="deck-banner__title">Chọn cấp độ HSK</h2>
-        <p class="deck-banner__sub">Lật thẻ để xem nghĩa – ôn tập từ vựng mỗi ngày</p>
+        <p class="deck-banner__sub">Chạm thẻ để xem nghĩa – ôn tập từ vựng mỗi ngày</p>
         <!-- Deck buttons injected by flashcard.js -->
         <div class="deck-selector" id="deckSelector"></div>
         <div class="deck-progress">
@@ -292,11 +300,11 @@
           </div>
 
           <div class="fc-flip-badge">
-            <span>🔄</span> Click vào thẻ hoặc nhấn <kbd style="font-size:.7rem;padding:1px 6px;border:1.5px solid var(--border);border-radius:5px;font-family:monospace">Space</kbd> để lật
+            <span>👇</span> Click vào thẻ hoặc nhấn <kbd style="font-size:.7rem;padding:1px 6px;border:1.5px solid var(--border);border-radius:5px;font-family:monospace">Space</kbd> để xem nghĩa
           </div>
 
           <!-- 3D Card Scene -->
-          <div class="fc-scene" id="fcScene" tabindex="0" role="button" aria-label="Lật thẻ">
+            <div class="fc-scene" id="fcScene" tabindex="0" role="button" aria-label="Xem nghĩa của thẻ">
             <div class="fc-card" id="fcCard">
               <!-- Front -->
               <div class="fc-card__face fc-card__front" id="fcFront">
@@ -304,7 +312,7 @@
                 <div class="fc-front__pinyin" id="fcPinyin">nǐ hǎo</div>
                 <div class="fc-front__type" id="fcType">Lời chào</div>
                 <button class="fc-front__audio" id="fcAudioBtn" title="Nghe phát âm (S)">🔊</button>
-                <div class="fc-front__hint">🖱️ Click để lật · Phím Space</div>
+                <div class="fc-front__hint">🖱️ Click để xem nghĩa · Phím Space</div>
               </div>
               <!-- Back -->
               <div class="fc-card__face fc-card__back" id="fcBack">
@@ -314,7 +322,7 @@
                   <div class="fc-back__ex-zh" id="fcExZh">你好，我叫小明。</div>
                   <div class="fc-back__ex-vi" id="fcExVi">Xin chào, tôi tên là Tiểu Minh.</div>
                 </div>
-                <div class="fc-back__flip-hint">🖱️ Click để lật lại</div>
+                <div class="fc-back__flip-hint">🖱️ Click để xem lại từ</div>
               </div>
             </div>
           </div>
@@ -353,7 +361,7 @@
 
           <!-- Keyboard hints -->
           <div class="fc-keyboard-hints">
-            <span class="kbd-hint"><kbd class="kbd">Space</kbd> Lật thẻ</span>
+            <span class="kbd-hint"><kbd class="kbd">Space</kbd> Xem nghĩa</span>
             <span class="kbd-hint"><kbd class="kbd">←</kbd> Thẻ trước</span>
             <span class="kbd-hint"><kbd class="kbd">→</kbd> Thẻ tiếp</span>
             <span class="kbd-hint"><kbd class="kbd">S</kbd> Phát âm</span>

@@ -269,6 +269,9 @@
     if (!cards.length) return;
     isFlipped = toState !== undefined ? toState : !isFlipped;
     fcCard.classList.toggle('flipped', isFlipped);
+    fcCard.classList.remove('card--pressed');
+    void fcCard.offsetWidth;
+    fcCard.classList.add('card--pressed');
   }
 
   function speakCurrent() {
