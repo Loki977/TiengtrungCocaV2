@@ -204,6 +204,16 @@ body{
   background:linear-gradient(138deg,rgba(255,255,255,.98) 0%,rgba(255,251,235,.92) 46%,rgba(255,239,184,.56) 100%)!important;
   box-shadow:0 18px 42px rgba(39,62,92,.12)!important;
 }
+/* Keep the revealed Flashcard side legible after the shared paper-card styling. */
+.fc-card__back{
+  background:linear-gradient(145deg,#FF7A00 0%,#FF9A33 100%)!important;
+  color:#fff!important;
+}
+.fc-card__back .fc-back__meaning,
+.fc-card__back .fc-back__ex-zh{color:#fff!important;}
+.fc-card__back .fc-back__pinyin{color:rgba(255,255,255,.9)!important;}
+.fc-card__back .fc-back__ex-vi,
+.fc-card__back .fc-back__flip-hint{color:rgba(255,255,255,.82)!important;}
 .lesson-item:hover,.fc-scene:hover .fc-card{filter:drop-shadow(0 24px 50px rgba(39,62,92,.17));}
 .spirit-pet-card{
   color:var(--navy)!important;
