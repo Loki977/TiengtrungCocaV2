@@ -412,15 +412,109 @@
     }).join('');
   }
 
+  function sliceReadingSegments(line, start, end) {
+    const segments = Array.isArray(line.segments) ? line.segments : [];
+    if (!segments.length) return [];
+
+    let cursor = 0;
+    return segments.reduce((result, segment) => {
+      const text = String(segment.text || '');
+      const segmentStart = cursor;
+      const segmentEnd = cursor + text.length;
+      cursor = segmentEnd;
+
+      const sliceStart = Math.max(start, segmentStart);
+      const sliceEnd = Math.min(end, segmentEnd);
+      if (sliceStart >= sliceEnd) return result;
+
+      result.push({
+        ...segment,
+        text: text.slice(sliceStart - segmentStart, sliceEnd - segmentStart)
+      });
+      return result;
+    }, []);
+  }
+
+  function splitReadingContent(line) {
+    const chinese = String(line.chinese || '');
+    const paragraphs = [];
+    const paragraphPattern = /[^\r\n]+/g;
+    let match;
+
+    while ((match = paragraphPattern.exec(chinese))) {
+      const raw = match[0];
+      const text = raw.trim();
+      if (!text) continue;
+      const offset = raw.indexOf(text);
+      paragraphs.push({
+        text,
+        start: match.index + offset,
+        end: match.index + offset + text.length
+      });
+    }
+
+    const titleMarker = line.title ? `《${line.title}》` : '';
+    const contentParagraphs = paragraphs[0]
+      && (paragraphs[0].text === titleMarker || /^《[^》]+》$/.test(paragraphs[0].text))
+      ? paragraphs.slice(1)
+      : paragraphs;
+    const noteIndex = contentParagraphs.findIndex(({ text }) => (
+      text.startsWith('复述文章时，')
+      || text.startsWith('为了把材料转化为本课可练习的HSK6表达，')
+      || text.startsWith('本课的重点词语是：')
+    ));
+
+    let bodyParagraphs = contentParagraphs;
+    let noteParagraphs = [];
+    if (noteIndex >= 0 && contentParagraphs[noteIndex].text.startsWith('本课的重点词语是：')) {
+      bodyParagraphs = contentParagraphs.slice(noteIndex + 1);
+      noteParagraphs = contentParagraphs.slice(0, noteIndex + 1);
+    } else if (noteIndex >= 0) {
+      bodyParagraphs = contentParagraphs.slice(0, noteIndex);
+      noteParagraphs = contentParagraphs.slice(noteIndex);
+    }
+
+    if (!bodyParagraphs.length) {
+      bodyParagraphs = contentParagraphs;
+      noteParagraphs = [];
+    }
+
+    const toReadingLine = paragraph => ({
+      ...line,
+      chinese: chinese.slice(paragraph.start, paragraph.end),
+      segments: sliceReadingSegments(line, paragraph.start, paragraph.end)
+    });
+    const bodyStart = bodyParagraphs[0]?.start || 0;
+    const bodyEnd = bodyParagraphs.at(-1)?.end || chinese.length;
+
+    return {
+      bodyText: chinese.slice(bodyStart, bodyEnd),
+      bodyLine: {
+        ...line,
+        chinese: chinese.slice(bodyStart, bodyEnd),
+        segments: sliceReadingSegments(line, bodyStart, bodyEnd)
+      },
+      notes: noteParagraphs.map(paragraph => ({
+        text: paragraph.text,
+        line: toReadingLine(paragraph)
+      }))
+    };
+  }
+
   function renderInteractiveReading(line) {
-    const chinese = line.chinese || '';
+    const reading = splitReadingContent(line);
     return `
       <article class="gt-reading-card gt-interactive-reading">
         <div class="gt-reading-heading">
           ${line.title ? `<h4>${escapeHtml(line.title)}</h4>` : '<span></span>'}
-          <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(chinese)}" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
+          <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(reading.bodyText)}" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
         </div>
-        <div class="gt-reading-chinese">${renderReadingSegments(line)}</div>
+        <div class="gt-reading-chinese">${renderReadingSegments(reading.bodyLine)}</div>
+        ${reading.notes.length ? `
+          <div class="gt-reading-annotation" data-reading-annotation aria-label="Giới thiệu và chú thích">
+            ${reading.notes.map(note => `<p>${renderReadingSegments(note.line)}</p>`).join('')}
+          </div>
+        ` : ''}
       </article>
     `;
   }

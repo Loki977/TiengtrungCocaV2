@@ -57,7 +57,11 @@ async function advanceToSection(page, sectionName, maxSteps = 50) {
   check(tokenCount > 150, `Bài đọc HSK5 chỉ có ${tokenCount} cụm tra cứu.`);
   const renderedChinese = await page.locator('.gt-reading-chinese').innerText();
   const sourceChinese = await page.evaluate(() => window.__currentLessonData.lessonText[0].chinese);
-  check(renderedChinese === sourceChinese, 'Chuỗi tiếng Trung hiển thị bị thay đổi.');
+  const annotation = page.locator('[data-reading-annotation]');
+  const annotationText = await annotation.innerText();
+  check(sourceChinese.includes(renderedChinese), 'Nội dung chính của bài đọc HSK5 bị thay đổi.');
+  check(annotationText && sourceChinese.includes(annotationText.split('\n')[0]), 'Thiếu phần giới thiệu/chú thích HSK5.');
+  check(await annotation.evaluate(element => getComputedStyle(element).fontStyle) === 'italic', 'Giới thiệu/chú thích HSK5 chưa dùng chữ nghiêng.');
 
   const firstToken = page.locator('.gt-reading-token').first();
   await firstToken.click();

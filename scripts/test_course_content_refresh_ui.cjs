@@ -115,8 +115,17 @@ async function checkLookup(page, expectedText = '') {
     const tokenCount = await page.locator('.gt-reading-token').count();
     check(tokenCount > 120, `HSK${level} có quá ít token tra cứu (${tokenCount}).`);
     const rendered = await page.locator('.gt-reading-chinese').innerText();
+    const annotation = page.locator('[data-reading-annotation]');
+    const annotationText = await annotation.innerText();
     const sourceText = await page.evaluate(() => window.__currentLessonData.lessonText[0].chinese);
-    check(rendered === sourceText, `HSK${level} hiển thị sai chuỗi bài đọc.`);
+    check(sourceText.includes(rendered), `HSK${level} hiển thị sai phần nội dung bài đọc.`);
+    check(annotationText && sourceText.includes(annotationText.split('\n')[0]), `HSK${level} thiếu phần giới thiệu/chú thích.`);
+    const annotationStyle = await annotation.evaluate(element => ({
+      followsReading: Boolean(element.previousElementSibling?.classList.contains('gt-reading-chinese')),
+      fontStyle: getComputedStyle(element).fontStyle
+    }));
+    check(annotationStyle.followsReading, `HSK${level} chưa đặt chú thích dưới cuối bài đọc.`);
+    check(annotationStyle.fontStyle === 'italic', `HSK${level} chưa hiển thị chú thích bằng chữ nghiêng.`);
     await checkLookup(page);
     await page.locator('.gt-reading-listen').click();
     if (level === 6) {
