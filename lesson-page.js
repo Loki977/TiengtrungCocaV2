@@ -793,7 +793,7 @@ function readCompletedLessonMap(value) {
 }
 
 function getEstimatedCourseProgress() {
-  const knownLessonTotals = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 10, hsk5: 10, hsk6: 40 };
+  const knownLessonTotals = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
   const totalLessons = knownLessonTotals[level] || Math.max(lessonId, 1);
   return Math.min(100, Math.round((lessonId / totalLessons) * 100));
 }

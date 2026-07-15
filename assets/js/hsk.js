@@ -60,7 +60,7 @@
   }
 
   function defaultLearningSettings() {
-    const totals = { hsk1:15, hsk2:15, hsk3:20, hsk4:10, hsk5:10, hsk6:40 };
+    const totals = { hsk1:15, hsk2:15, hsk3:20, hsk4:20, hsk5:36, hsk6:40 };
     const courses = {};
     Object.entries(totals).forEach(([level,total]) => {
       courses[level] = { enabled: true, lessons: {} };

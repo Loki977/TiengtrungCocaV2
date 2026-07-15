@@ -915,7 +915,7 @@ function getCurrentUser() {
 }
 
 function getCourseTotalLessons(level) {
-  const totals = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 10, hsk5: 10, hsk6: 40 };
+  const totals = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
   return totals[String(level || "hsk1").toLowerCase()] || 1;
 }
 

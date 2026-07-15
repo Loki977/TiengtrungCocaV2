@@ -336,6 +336,7 @@
     const pages = getSectionPages(lesson, section);
     const items = pages[page] || [];
     const title = sectionName(section);
+    const enhancedVocabulary = Number(lesson.level || 0) >= 4 && Number(lesson.meta?.version || 0) >= 2;
 
     return `
       <section class="gt-section gt-current-section" data-learning-section="${section}">
@@ -347,6 +348,9 @@
             const marked = readState(lesson).bookmarks?.[key];
             const hanzi = item.hanzi || item.chinese || item.word || '';
             const meaning = item.meaning || item.meaning_vi || item.vietnamese || item.translation || '';
+            const example = item.example || item.examples?.[0]?.hanzi || '';
+            const examplePinyin = item.examplePinyin || item.examples?.[0]?.pinyin || '';
+            const exampleTranslation = item.exampleTranslation || item.examples?.[0]?.translation || '';
             return `
               <div class="gt-vocab-card" data-level="${escapeHtml(getLessonLevelKey(lesson))}" data-lesson-id="${escapeHtml(lesson.lessonId || '')}" data-word-key="${escapeHtml(key)}" data-word="${escapeHtml(hanzi)}">
                 <div class="gt-vocab-top">
@@ -358,7 +362,18 @@
                 </div>
                 <div class="gt-pinyin">${escapeHtml(item.pinyin || '')}</div>
                 <div class="gt-meaning">${escapeHtml(meaning)}</div>
+                ${enhancedVocabulary && item.partOfSpeech ? `<div class="gt-word-type">${escapeHtml(item.partOfSpeech)}</div>` : ''}
                 ${item.note ? `<p class="gt-note">💡 ${escapeHtml(item.note)}</p>` : ''}
+                ${enhancedVocabulary && example ? `
+                  <div class="gt-vocab-example">
+                    <div class="gt-vocab-example-head">
+                      <span>${escapeHtml(example)}</span>
+                      <button class="gt-speak-btn" data-speak="${escapeHtml(example)}" title="Nghe câu ví dụ">🔊</button>
+                    </div>
+                    ${examplePinyin ? `<div class="gt-pinyin">${escapeHtml(examplePinyin)}</div>` : ''}
+                    ${exampleTranslation ? `<div class="gt-example-translation">${escapeHtml(exampleTranslation)}</div>` : ''}
+                  </div>
+                ` : ''}
                 <div class="gt-vocab-practice">
                   <label class="gt-practice-label">Đặt một câu tiếng Trung có sử dụng “${escapeHtml(hanzi)}”</label>
                   <textarea class="gt-practice-input" maxlength="120" placeholder="Nhập câu của bạn…"></textarea>
@@ -378,9 +393,56 @@
     `;
   }
 
+  function renderReadingSegments(line) {
+    const segments = Array.isArray(line.segments) ? line.segments : [];
+    if (!segments.length) return escapeHtml(line.chinese || '');
+
+    return segments.map(segment => {
+      const text = segment.text || '';
+      const clickable = segment.clickable !== false && (segment.pinyin || segment.meaning || segment.partOfSpeech || segment.note);
+      if (!clickable) return escapeHtml(text);
+
+      return `<button type="button" class="gt-reading-token"
+        data-reading-text="${escapeHtml(text)}"
+        data-reading-pinyin="${escapeHtml(segment.pinyin || '')}"
+        data-reading-meaning="${escapeHtml(segment.meaning || '')}"
+        data-reading-type="${escapeHtml(segment.partOfSpeech || '')}"
+        data-reading-note="${escapeHtml(segment.note || '')}"
+        aria-label="Tra nghĩa ${escapeHtml(text)}">${escapeHtml(text)}</button>`;
+    }).join('');
+  }
+
+  function renderInteractiveReading(line) {
+    const chinese = line.chinese || '';
+    return `
+      <article class="gt-reading-card gt-interactive-reading">
+        <div class="gt-reading-heading">
+          ${line.title ? `<h4>${escapeHtml(line.title)}</h4>` : '<span></span>'}
+          <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(chinese)}" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
+        </div>
+        <div class="gt-reading-chinese">${renderReadingSegments(line)}</div>
+      </article>
+    `;
+  }
+
+  function renderReadingLookup() {
+    return `
+      <aside class="gt-reading-lookup" data-reading-lookup hidden role="dialog" aria-label="Tra nghĩa trong bài đọc" aria-live="polite">
+        <button type="button" class="gt-reading-lookup-close" data-reading-lookup-close aria-label="Đóng bảng tra nghĩa">×</button>
+        <strong class="gt-reading-lookup-word" data-reading-lookup-word></strong>
+        <span class="gt-reading-lookup-pinyin" data-reading-lookup-pinyin></span>
+        <span class="gt-reading-lookup-type" data-reading-lookup-type hidden></span>
+        <p class="gt-reading-lookup-meaning" data-reading-lookup-meaning></p>
+        <p class="gt-reading-lookup-note" data-reading-lookup-note hidden></p>
+        <button type="button" class="gt-reading-lookup-speak gt-speak-btn" data-speak="" title="Nghe phát âm">🔊 Nghe phát âm</button>
+      </aside>
+    `;
+  }
+
   function renderLessonText(lesson, page) {
     const pages = getSectionPages(lesson, 'lessonText');
     const lines = pages[page] || [];
+    const hasInteractiveReading = lines.some(line => Array.isArray(line.segments) && line.segments.length);
 
     return `
       <section class="gt-section gt-current-section" data-learning-section="lessonText">
@@ -389,6 +451,7 @@
         <div class="gt-dialogue">
           ${lines.map(line => {
             const chinese = line.chinese || '';
+            if (Array.isArray(line.segments) && line.segments.length) return renderInteractiveReading(line);
             return `
               <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-audio="${escapeHtml(line.audio || '')}">
                 <b>${escapeHtml(line.speaker || '')}</b> ${escapeHtml(chinese)}<br>
@@ -398,7 +461,8 @@
             `;
           }).join('')}
         </div>
-        <p class="gt-hint">Bấm vào từng câu để nghe phát âm.</p>
+        ${hasInteractiveReading ? renderReadingLookup() : ''}
+        <p class="gt-hint">${hasInteractiveReading ? 'Bấm vào từ hoặc cụm từ được đánh dấu để xem pinyin, nghĩa và nghe phát âm.' : 'Bấm vào từng câu để nghe phát âm.'}</p>
         ${renderNav(lesson, 'lessonText', page, pages.length)}
       </section>
     `;
@@ -675,9 +739,65 @@
     window.setTimeout(() => reaction.remove(), 850);
   }
 
+  function closeReadingLookup() {
+    const lookup = document.querySelector('[data-reading-lookup]');
+    if (!lookup) return;
+    lookup.hidden = true;
+    lookup.classList.remove('open');
+  }
+
+  function showReadingLookup(token) {
+    const lookup = document.querySelector('[data-reading-lookup]');
+    if (!lookup) return;
+
+    const text = token.dataset.readingText || token.textContent || '';
+    const pinyin = token.dataset.readingPinyin || '';
+    const meaning = token.dataset.readingMeaning || '';
+    const type = token.dataset.readingType || '';
+    const note = token.dataset.readingNote || '';
+
+    lookup.querySelector('[data-reading-lookup-word]').textContent = text;
+    lookup.querySelector('[data-reading-lookup-pinyin]').textContent = pinyin;
+    lookup.querySelector('[data-reading-lookup-meaning]').textContent = meaning;
+
+    const typeEl = lookup.querySelector('[data-reading-lookup-type]');
+    typeEl.textContent = type;
+    typeEl.hidden = !type;
+
+    const noteEl = lookup.querySelector('[data-reading-lookup-note]');
+    noteEl.textContent = note;
+    noteEl.hidden = !note;
+
+    const speakButton = lookup.querySelector('[data-speak]');
+    speakButton.dataset.speak = text;
+    lookup.hidden = false;
+    lookup.classList.add('open');
+
+    if (window.matchMedia('(max-width: 640px)').matches) {
+      lookup.style.removeProperty('left');
+      lookup.style.removeProperty('top');
+      return;
+    }
+
+    const margin = 12;
+    const tokenRect = token.getBoundingClientRect();
+    const lookupRect = lookup.getBoundingClientRect();
+    const left = Math.min(window.innerWidth - lookupRect.width - margin, Math.max(margin, tokenRect.left));
+    let top = tokenRect.bottom + 10;
+    if (top + lookupRect.height > window.innerHeight - margin) top = tokenRect.top - lookupRect.height - 10;
+    lookup.style.left = `${left}px`;
+    lookup.style.top = `${Math.max(margin, top)}px`;
+  }
+
   function bindLessonRenderEvents(root = document) {
     root.addEventListener('click', function (e) {
       const lesson = window.__currentLessonData;
+
+      const readingToken = e.target.closest('.gt-reading-token');
+      if (readingToken) showReadingLookup(readingToken);
+
+      if (e.target.closest('[data-reading-lookup-close]')) closeReadingLookup();
+      if (!readingToken && !e.target.closest('[data-reading-lookup]')) closeReadingLookup();
 
       const speakBtn = e.target.closest('[data-speak]');
       if (lesson && speakBtn && (speakBtn.classList.contains('gt-speak-btn') || speakBtn.classList.contains('gt-dialogue-line'))) {
@@ -747,6 +867,10 @@
           feedback.innerHTML = `Chưa đúng. Đáp án gợi ý: <b>${escapeHtml(input.dataset.answer)}</b>`;
         }
       }
+    });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeReadingLookup();
     });
   }
 

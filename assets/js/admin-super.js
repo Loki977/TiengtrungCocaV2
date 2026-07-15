@@ -15,7 +15,7 @@ const functions = getFunctions(auth.app);
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false };
-const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 10, hsk5: 10, hsk6: 40 };
+const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 
 const callListAuthUsers = httpsCallable(functions, 'adminListUsers');
 const callSetDisabled = httpsCallable(functions, 'adminSetUserDisabled');
