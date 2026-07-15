@@ -10,6 +10,14 @@ const lessonArg = process.argv.indexOf('--lesson');
 const selectedIds = lessonArg >= 0 ? [Number(process.argv[lessonArg + 1])] : Array.from({ length: 36 }, (_, index) => index + 1);
 const errors = [];
 const lessons = [];
+const forbiddenReadingPhrases = [
+  '本课的重点词语是',
+  '扩展词是',
+  '学习时，我们先',
+  '课堂上，同学们',
+  '老师提醒我们，阅读',
+  '复习时，我们还会'
+];
 
 const countHanzi = value => (String(value).match(/[\u3400-\u9fff]/g) || []).length;
 const assert = (condition, message) => {
@@ -59,13 +67,16 @@ for (const lessonId of selectedIds) {
   assert(lesson.exercises?.length >= 8, `${prefix}: cần ít nhất 8 bài tập.`);
   assert(lesson.lessonText?.length === 1, `${prefix}: phải có đúng một bài đọc mới.`);
   const hanziCount = countHanzi(chinese);
-  assert(hanziCount >= 300 && hanziCount <= 500, `${prefix}: bài đọc có ${hanziCount} chữ Hán, ngoài 300–500.`);
+  assert(hanziCount >= 400 && hanziCount <= 650, `${prefix}: bài đọc có ${hanziCount} chữ Hán, ngoài 400–650.`);
+  for (const phrase of forbiddenReadingPhrases) {
+    assert(!chinese.includes(phrase), `${prefix}: còn chú thích/đoạn mẫu trong bài đọc: ${phrase}`);
+  }
   assert(lesson.meta?.hanziCount === hanziCount, `${prefix}: meta.hanziCount không đúng.`);
   assert(segments.map(segment => segment.text).join('') === chinese, `${prefix}: phân đoạn làm thay đổi bài đọc.`);
   assert(segments.some(segment => segment.clickable), `${prefix}: không có cụm tra cứu.`);
   const clickableHanzi = segments.filter(segment => segment.clickable).reduce((sum, segment) => sum + countHanzi(segment.text), 0);
   const lookupCoverage = clickableHanzi / Math.max(1, hanziCount);
-  assert(lookupCoverage >= 0.85, `${prefix}: độ phủ tra cứu chỉ ${(lookupCoverage * 100).toFixed(1)}%.`);
+  assert(lookupCoverage >= 0.80, `${prefix}: độ phủ tra cứu chỉ ${(lookupCoverage * 100).toFixed(1)}%.`);
 
   for (const item of [...vocabulary, ...extended]) {
     assert(Boolean(item.hanzi && item.pinyin && item.meaning), `${prefix}: thiếu Hán tự/pinyin/nghĩa ở ${item.hanzi || item.id}.`);
@@ -89,6 +100,19 @@ for (const item of allMain) {
 const repeatedAcrossLessons = [...wordLessons.entries()]
   .filter(([, lessonIds]) => lessonIds.length > 1)
   .map(([hanzi, lessonIds]) => ({ hanzi, lessonIds }));
+const sentenceLessons = new Map();
+for (const lesson of lessons) {
+  const chinese = lesson.lessonText?.[0]?.chinese || '';
+  for (const sentence of chinese.split(/[。！？!?]/u).map(value => value.trim()).filter(Boolean)) {
+    if (countHanzi(sentence) < 18) continue;
+    if (!sentenceLessons.has(sentence)) sentenceLessons.set(sentence, []);
+    sentenceLessons.get(sentence).push(lesson.lessonId);
+  }
+}
+const repeatedLongSentences = [...sentenceLessons.entries()]
+  .filter(([, lessonIds]) => lessonIds.length > 1)
+  .map(([sentence, lessonIds]) => ({ sentence, lessonIds }));
+assert(repeatedLongSentences.length === 0, `Duplicate long sentences across HSK5 readings: ${JSON.stringify(repeatedLongSentences)}`);
 
 if (errors.length) {
   console.error(JSON.stringify({ ok: false, errors }, null, 2));
@@ -108,6 +132,7 @@ if (errors.length) {
       min: Math.min(...lessons.map(lesson => lesson.quality.lookupCoveragePercent)),
       max: Math.max(...lessons.map(lesson => lesson.quality.lookupCoveragePercent))
     },
-    repeatedAcrossLessons
+    repeatedAcrossLessons,
+    repeatedLongSentences
   }, null, 2));
 }

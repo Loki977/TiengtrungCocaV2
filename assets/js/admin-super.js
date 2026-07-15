@@ -14,7 +14,7 @@ const functions = getFunctions(auth.app);
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false };
+const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false, cmsEditorBaseline: {} };
 const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 
 const callListAuthUsers = httpsCallable(functions, 'adminListUsers');
@@ -428,12 +428,36 @@ function bindCmsControls(){
 async function initCms(){
   const level = $('#cmsLevel')?.value || 'hsk1';
   const select = $('#cmsLesson'); if(!select) return;
+  const total = COURSE_TOTALS[level] || 0;
+  const status = $('#cmsCatalogStatus');
+  select.disabled = true;
+  if(status) status.textContent = `Đang nạp ${total} bài...`;
   try{
-    const res = await fetch(`assets/giaotrinhhsk/${level}/index.json`);
-    state.cmsIndex = res.ok ? await res.json() : [];
-    select.innerHTML = state.cmsIndex.map(row => `<option value="${row.lessonId}">Bài ${row.lessonId} - ${safeText(row.title || '')}</option>`).join('');
+    const res = await fetch(`assets/giaotrinhhsk/${level}/index.json`, { cache:'no-store' });
+    const indexedRows = res.ok ? await res.json() : [];
+    const rowsById = new Map(indexedRows.map(row => [Number(row.lessonId), row]));
+    state.cmsIndex = Array.from({ length:total }, (_, index) => {
+      const lessonId = index + 1;
+      return rowsById.get(lessonId) || {
+        lessonId,
+        title:`Bài ${lessonId}`,
+        file:`lesson-${String(lessonId).padStart(2, '0')}.json`
+      };
+    });
+    select.innerHTML = state.cmsIndex.map(row => `<option value="${row.lessonId}">Bài ${row.lessonId} - ${safeText(row.title || row.chineseTitle || '')}</option>`).join('');
+    if(status) status.textContent = `${level.toUpperCase()}: ${state.cmsIndex.length}/${total} bài`;
     if(state.cmsIndex.length) await loadCmsLesson();
-  }catch(e){ select.innerHTML = '<option>Không tải được index</option>'; }
+  }catch(e){
+    state.cmsIndex = Array.from({ length:total }, (_, index) => ({
+      lessonId:index + 1,
+      title:`Bài ${index + 1}`,
+      file:`lesson-${String(index + 1).padStart(2, '0')}.json`
+    }));
+    select.innerHTML = state.cmsIndex.map(row => `<option value="${row.lessonId}">Bài ${row.lessonId}</option>`).join('');
+    if(status) status.textContent = `${level.toUpperCase()}: ${state.cmsIndex.length}/${total} bài (dự phòng)`;
+  } finally {
+    select.disabled = false;
+  }
 }
 async function loadCmsLesson(){
   const level = $('#cmsLevel').value; const lessonId = Number($('#cmsLesson').value || 1);
@@ -457,10 +481,10 @@ function switchCmsTab(tab){
   $$('.cms-pane').forEach(p => p.classList.toggle('hidden', p.dataset.cmsPane !== tab));
 }
 function joinParts(parts){ return parts.map(x => String(x ?? '').replace(/\n/g, ' ').trim()).join(' | '); }
-function linesToVocab(text){ return String(text||'').split('\n').map((line, idx)=>{ const [hanzi='',pinyin='',meaning='',example='',audio='']=line.split('|').map(x=>x.trim()); return hanzi ? { id:`vocab-${idx+1}`, hanzi, pinyin, meaning, example, ...(audio?{audio}:{}) } : null; }).filter(Boolean); }
+function linesToVocab(text, originals=[]){ return String(text||'').split('\n').map((line, idx)=>{ const [hanzi='',pinyin='',meaning='',example='',audio='']=line.split('|').map(x=>x.trim()); if(!hanzi) return null; const original=originals[idx]||{}; return { ...original, id:original.id||`vocab-${idx+1}`, hanzi, pinyin, meaning, example, ...(audio?{audio}:{}) }; }).filter(Boolean); }
 function vocabToLines(arr){ return (arr||[]).map(v => joinParts([v.hanzi||v.word||'', v.pinyin||'', v.meaning||v.vi||v.vietnamese||'', v.example||'', v.audio||''])).join('\n'); }
 function lessonTextToLines(arr){ return (arr||[]).map(v => joinParts([v.speaker||v.title||'', v.chinese||v.content||v.text||'', v.vietnamese||v.translation||'', v.audio||''])).join('\n'); }
-function linesToLessonText(text){ return String(text||'').split('\n').map((line,idx)=>{ const [speaker='',chinese='',vietnamese='',audio='']=line.split('|').map(x=>x.trim()); return (speaker||chinese) ? { ...(speaker?{speaker}:{}), chinese, vietnamese, ...(audio?{audio}:{}) } : null; }).filter(Boolean); }
+function linesToLessonText(text, originals=[]){ return String(text||'').split('\n').map((line,idx)=>{ const [label='',chinese='',vietnamese='',audio='']=line.split('|').map(x=>x.trim()); if(!label&&!chinese) return null; const original=originals[idx]||{}; const next={ ...original, chinese, vietnamese, ...(audio?{audio}:{}) }; if(Object.prototype.hasOwnProperty.call(original,'title') || !Object.prototype.hasOwnProperty.call(original,'speaker')) { next.title=label; delete next.speaker; } else { next.speaker=label; } if(chinese !== String(original.chinese||original.content||original.text||'').replace(/\n/g,' ').trim()) delete next.segments; return next; }).filter(Boolean); }
 function simpleBlockToLines(arr){ return (arr||[]).map(v => joinParts([v.title||'', v.chinese||v.content||'', v.vietnamese||v.translation||''])).join('\n'); }
 function linesToSimpleBlock(text, contentKey='content'){ return String(text||'').split('\n').map(line=>{ const [title='',content='',vietnamese='']=line.split('|').map(x=>x.trim()); return (title||content) ? { title, [contentKey]:content, ...(vietnamese?{vietnamese}:{}) } : null; }).filter(Boolean); }
 function grammarToLines(arr){ return (arr||[]).map(g => joinParts([g.title||'', g.pattern||g.structure||'', g.explanation||'', Array.isArray(g.examples)?g.examples.join(' ; '):(g.examples||'')])).join('\n'); }
@@ -483,7 +507,12 @@ function fillCmsForm(data){
   $('#cmsGrammarEditor').value = grammarToLines(data.grammar || []);
   $('#cmsExercisesEditor').value = exercisesToLines(data.exercises || []);
   $('#cmsJson').value = JSON.stringify(data, null, 2);
+  state.cmsEditorBaseline = Object.fromEntries([
+    'cmsVocabEditor','cmsExtendedEditor','cmsReadingEditor','cmsStoryEditor',
+    'cmsCultureEditor','cmsGrammarEditor','cmsExercisesEditor'
+  ].map(id => [id, $(`#${id}`)?.value || '']));
 }
+function cmsEditorChanged(id){ return ($(`#${id}`)?.value || '') !== (state.cmsEditorBaseline?.[id] || ''); }
 function syncQuickFieldsToData(){
   const data = JSON.parse($('#cmsJson').value || '{}');
   data.title = $('#cmsTitle').value.trim();
@@ -491,13 +520,13 @@ function syncQuickFieldsToData(){
   data.xp = Number($('#cmsXp').value || data.xp || 20);
   data.isLocked = $('#cmsLocked').checked;
   data.visible = $('#cmsVisible').checked;
-  data.vocabulary = linesToVocab($('#cmsVocabEditor')?.value || $('#cmsVocabText')?.value || '');
-  data.extendedVocabulary = linesToVocab($('#cmsExtendedEditor')?.value || '');
-  data.lessonText = linesToLessonText($('#cmsReadingEditor')?.value || '');
-  data.story = linesToSimpleBlock($('#cmsStoryEditor')?.value || '', 'chinese');
-  data.culture = String($('#cmsCultureEditor')?.value || '').split('\n').map(line=>{ const [title='',content='']=line.split('|').map(x=>x.trim()); return (title||content) ? { title, content } : null; }).filter(Boolean);
-  data.grammar = linesToGrammar($('#cmsGrammarEditor')?.value || '');
-  data.exercises = linesToExercises($('#cmsExercisesEditor')?.value || '');
+  if(cmsEditorChanged('cmsVocabEditor')) data.vocabulary = linesToVocab($('#cmsVocabEditor')?.value || '', data.vocabulary || []);
+  if(cmsEditorChanged('cmsExtendedEditor')) data.extendedVocabulary = linesToVocab($('#cmsExtendedEditor')?.value || '', data.extendedVocabulary || []);
+  if(cmsEditorChanged('cmsReadingEditor')) data.lessonText = linesToLessonText($('#cmsReadingEditor')?.value || '', data.lessonText || []);
+  if(cmsEditorChanged('cmsStoryEditor')) data.story = linesToSimpleBlock($('#cmsStoryEditor')?.value || '', 'chinese');
+  if(cmsEditorChanged('cmsCultureEditor')) data.culture = String($('#cmsCultureEditor')?.value || '').split('\n').map(line=>{ const [title='',content='']=line.split('|').map(x=>x.trim()); return (title||content) ? { title, content } : null; }).filter(Boolean);
+  if(cmsEditorChanged('cmsGrammarEditor')) data.grammar = linesToGrammar($('#cmsGrammarEditor')?.value || '');
+  if(cmsEditorChanged('cmsExercisesEditor')) data.exercises = linesToExercises($('#cmsExercisesEditor')?.value || '');
   $('#cmsJson').value = JSON.stringify(data, null, 2);
   return data;
 }
@@ -535,6 +564,7 @@ async function saveCmsLesson(){
     cfg.courses[level] = c;
     state.learningSettings = cfg; await setDoc(learningRef(), stripUndefined({ courses: cfg.courses, updatedAt:serverTimestamp(), updatedBy:admin.email }), { merge:true });
     state.cmsOriginalData = structuredCloneSafe(data);
+    state.cmsEditorBaseline = Object.fromEntries(Object.keys(state.cmsEditorBaseline || {}).map(id => [id, $(`#${id}`)?.value || '']));
     toast('Đã lưu bài học lên web');
     setCmsStatus('Đã lưu', 'ok');
     renderLearningSettings();

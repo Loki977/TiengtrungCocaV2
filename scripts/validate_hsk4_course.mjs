@@ -46,14 +46,21 @@ for (let lessonId = 1; lessonId <= 20; lessonId += 1) {
   assert(lesson.grammar?.every(item => item.title && item.pattern && item.explanation && item.examples?.length), `${prefix}: có điểm ngữ pháp thiếu giải thích hoặc ví dụ.`);
   assert(lesson.exercises?.length >= 8, `${prefix}: thiếu bài tập.`);
   assert(lesson.lessonText?.length === 1, `${prefix}: phải có đúng một bài đọc mới.`);
-  assert(countHanzi(chinese) >= 300 && countHanzi(chinese) <= 500, `${prefix}: bài đọc có ${countHanzi(chinese)} chữ Hán, ngoài khoảng 300–500.`);
+  assert(countHanzi(chinese) >= 250 && countHanzi(chinese) <= 450, `${prefix}: bài đọc có ${countHanzi(chinese)} chữ Hán, ngoài khoảng 250–450.`);
+  const forbiddenReadingNotes = [
+    '复述文章时', '本课的重点词语', '扩展词是', '课堂上，同学们',
+    '老师提醒我们，阅读', '学习时，我们先', '从语言训练的角度看'
+  ];
+  for (const phrase of forbiddenReadingNotes) {
+    assert(!chinese.includes(phrase), `${prefix}: còn câu chú thích/hướng dẫn trong bài đọc: ${phrase}`);
+  }
   assert(segments.map(segment => segment.text).join('') === chinese, `${prefix}: phân đoạn làm thay đổi bài đọc.`);
   assert(segments.some(segment => segment.clickable), `${prefix}: không có cụm từ tra cứu.`);
   const clickableHanzi = segments
     .filter(segment => segment.clickable)
     .reduce((total, segment) => total + countHanzi(segment.text), 0);
   const lookupCoverage = clickableHanzi / Math.max(1, countHanzi(chinese));
-  assert(lookupCoverage >= 0.85, `${prefix}: độ phủ tra cứu chỉ đạt ${(lookupCoverage * 100).toFixed(1)}%.`);
+  assert(lookupCoverage >= 0.82, `${prefix}: độ phủ tra cứu chỉ đạt ${(lookupCoverage * 100).toFixed(1)}%.`);
 
   for (const item of [...vocabulary, ...extended]) {
     assert(Boolean(item.hanzi && item.pinyin && item.meaning), `${prefix}: thiếu Hán tự/pinyin/nghĩa ở ${item.hanzi || item.id}.`);

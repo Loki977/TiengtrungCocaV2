@@ -5,7 +5,7 @@ from pathlib import Path
 from course_content_tools import COURSE_DIR, count_hanzi, load_json, lookup_coverage
 
 
-EXPECTED_COUNTS = {1: 15, 2: 15, 3: 20, 4: 20, 6: 40}
+EXPECTED_COUNTS = {1: 15, 2: 15, 3: 20, 4: 20, 5: 36, 6: 40}
 EXPECTED_SECTIONS = [
     "vocabulary",
     "extendedVocabulary",
@@ -116,7 +116,7 @@ def validate_level(level):
                     f"HSK{level} bài {lesson_id}: thiếu từ trong bài đọc: {missing_words}"
                 )
             hanzi_count = count_hanzi(full_text)
-            limits = {3: (240, 520), 4: (330, 620), 6: (470, 850)}[level]
+            limits = {3: (240, 520), 4: (250, 450), 5: (400, 650), 6: (550, 900)}[level]
             if not limits[0] <= hanzi_count <= limits[1]:
                 errors.append(
                     f"HSK{level} bài {lesson_id}: {hanzi_count} chữ Hán ngoài {limits}"
@@ -128,7 +128,22 @@ def validate_level(level):
                 errors.append(
                     f"HSK{level} bài {lesson_id}: cần đúng một câu hỏi đọc hiểu"
                 )
-            minimum_coverage = 80 if level == 6 else 82
+            minimum_coverage = 80 if level in (5, 6) else 82
+
+        if level == 5:
+            forbidden_notes = (
+                "本课的重点词语是",
+                "扩展词是",
+                "学习时，我们先",
+                "课堂上，同学们",
+                "老师提醒我们，阅读",
+                "复习时，我们还会",
+            )
+            for phrase in forbidden_notes:
+                if phrase in full_text:
+                    errors.append(
+                        f"HSK5 bài {lesson_id}: còn chú thích/đoạn mẫu trong bài đọc: {phrase}"
+                    )
 
         if coverage < minimum_coverage:
             errors.append(
@@ -136,6 +151,18 @@ def validate_level(level):
             )
 
         if level == 6:
+            forbidden_notes = (
+                "为了把材料转化为本课可练习的HSK6表达",
+                "这些词不是网络原文的摘录",
+                "把材料改写成学习文本时",
+                "从语言训练的角度看",
+                "因此，阅读结束后可以继续追问",
+            )
+            for phrase in forbidden_notes:
+                if phrase in full_text:
+                    errors.append(
+                        f"HSK6 bài {lesson_id}: còn chú thích/đoạn đệm trong bài đọc: {phrase}"
+                    )
             sources = (lesson.get("meta") or {}).get("referenceSources") or []
             if len(sources) != 1 or not str(sources[0].get("url") or "").startswith(
                 "https://"

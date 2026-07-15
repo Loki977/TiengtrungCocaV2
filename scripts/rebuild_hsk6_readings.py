@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from course_content_tools import (
     COURSE_DIR,
@@ -103,6 +104,13 @@ SOURCES = {
         "url": "https://www.unesco.org/en/languages-education",
     },
 }
+
+READING_EXTENSIONS = json.loads(
+    Path(__file__).with_name("hsk6_reading_extensions.json").read_text(encoding="utf-8")
+)
+READING_CLOSINGS = json.loads(
+    Path(__file__).with_name("hsk6_reading_closings.json").read_text(encoding="utf-8")
+)
 
 
 def topic(title, chinese_title, source, body, answer):
@@ -399,13 +407,6 @@ TOPICS = {
 }
 
 
-FILLERS = [
-    "把材料改写成学习文本时，还需要区分事实、解释与价值判断。事实回答发生了什么，解释说明它为何发生，价值判断则讨论我们认为怎样更好。三者可以相互联系，却不能彼此代替。读者若能主动寻找证据、比较视角并指出仍不确定的部分，就不容易被一句有力量的话带走全部判断。",
-    "从语言训练的角度看，复述不应只是更换几个近义词。学习者可以先概括中心，再说明因果与转折，最后提出一个能够由材料支持的问题。这样既能练习复杂句式，也能避免为了使用高级词汇而牺牲准确性。真正的高级表达往往清楚、有层次，并知道什么时候需要保留意见。",
-    "因此，阅读结束后可以继续追问：谁提供了资料，谁的经验尚未出现，结论在什么条件下可能改变？这些问题不会削弱文章，反而使理解更可靠。面对复杂世界，成熟并不是迅速站到某一边，而是在行动之前尽可能看清关系，在行动之后愿意接受结果的检验。",
-]
-
-
 def move_marked_extended_vocabulary(lesson):
     vocabulary = lesson.get("vocabulary") or []
     extended = lesson.get("extendedVocabulary") or []
@@ -444,25 +445,17 @@ def move_marked_extended_vocabulary(lesson):
 
 
 def build_reading(lesson, topic_data):
-    reading = f"《{topic_data['chineseTitle']}》\n\n{topic_data['body']}"
+    extension = READING_EXTENSIONS[str(lesson["lessonId"])]
+    reading = (
+        f"《{topic_data['chineseTitle']}》\n\n{topic_data['body']}\n\n"
+        f"{extension.strip()}\n\n{READING_CLOSINGS[str(lesson['lessonId'])].strip()}"
+    )
     vocabulary = lesson.get("vocabulary") or []
     extended = lesson.get("extendedVocabulary") or []
     words = [item.get("hanzi", "") for item in [*vocabulary, *extended]]
-    missing = [word for word in words if word and word not in reading]
-    if missing:
-        reading += (
-            "\n\n为了把材料转化为本课可练习的HSK6表达，复述时还需主动使用："
-            + "、".join(missing)
-            + "。这些词不是网络原文的摘录，而是学习任务中的语言线索。"
-        )
-
-    for filler in FILLERS:
-        if count_hanzi(reading) >= 470:
-            break
-        reading += "\n\n" + filler
 
     hanzi_count = count_hanzi(reading)
-    if hanzi_count < 470 or hanzi_count > 850:
+    if hanzi_count < 550 or hanzi_count > 900:
         raise ValueError(
             f"HSK6 bài {lesson['lessonId']} có {hanzi_count} chữ Hán"
         )

@@ -6,6 +6,10 @@ const ROOT = process.cwd();
 const COURSE_DIR = path.join(ROOT, 'assets', 'giaotrinhhsk', 'hsk5');
 const SOURCE_FILE = path.join(ROOT, 'scripts', 'hsk5_course_source.json');
 const COURSE_SOURCE = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf8'));
+const READING_FILE = path.join(ROOT, 'scripts', 'hsk5_readings.json');
+const READING_SOURCE = JSON.parse(fs.readFileSync(READING_FILE, 'utf8'));
+const READING_ADDITIONS = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts', 'hsk5_reading_additions.json'), 'utf8'));
+const READING_CLOSINGS = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts', 'hsk5_reading_closings.json'), 'utf8'));
 const HSK5_WORDS = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'data', 'hsk5.json'), 'utf8'));
 const ALL_WORDS = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'data', 'all.json'), 'utf8'));
 
@@ -93,16 +97,19 @@ function extendedItem(hanzi, lessonId, index) {
 }
 
 function createReading(lesson, mainWords, extendedWords) {
-  const preview = mainWords.join('、');
-  const extensions = extendedWords.join('、');
-  let reading = `《${lesson.chineseTitle}》\n${lesson.summaryZh}\n本课的重点词语是：${preview}。扩展词是：${extensions}。学习时，我们先读准字音，再联系上下文理解意义，并注意常见搭配。\n课堂上，同学们围绕这个主题观察细节、查找背景、比较不同观点。有人根据自己的经验提出问题，有人用事实补充说明，也有人从事情的发展过程分析原因和影响。出现不同意见时，大家先听完对方的解释，再说明自己的判断，不急着争论。\n老师提醒我们，阅读不只是记住单个词，更要看清人物的选择、事件的变化和文章想表达的价值。讨论结束后，每个小组都用本课词语重新讲述内容，并把最有启发的一点写下来。这样复习，词语会进入真实语境，理解也会越来越深。`;
-  const fillers = [
-    '复习时，我们还会朗读重点句，比较近义表达，并检查词语在句子中的位置。',
-    '最后，大家把新词带回自己的生活，用简短而清楚的语言表达真实感受。'
-  ];
-  for (const filler of fillers) {
-    if (countHanzi(reading) >= 330) break;
-    reading += `\n${filler}`;
+  const body = READING_SOURCE[String(lesson.lessonId)];
+  if (!body) throw new Error(`Thiếu bài đọc HSK5 bài ${lesson.lessonId}.`);
+  const addition = READING_ADDITIONS[String(lesson.lessonId)] || '';
+  const closing = READING_CLOSINGS[String(lesson.lessonId)] || '';
+  const reading = [
+    `《${lesson.chineseTitle}》`,
+    body.trim(),
+    addition.trim(),
+    closing.trim()
+  ].filter(Boolean).join('\n\n');
+  const length = countHanzi(reading);
+  if (length < 400 || length > 650) {
+    throw new Error(`HSK5 bài ${lesson.lessonId} có ${length} chữ Hán; yêu cầu 400-650.`);
   }
   return reading;
 }
@@ -228,7 +235,7 @@ function buildLesson(source) {
   const lesson = { ...source, sourceLesson };
   const reading = createReading(lesson, mainWords, extendedWords);
   const hanziCount = countHanzi(reading);
-  if (hanziCount < 300 || hanziCount > 500) throw new Error(`Bài đọc HSK5 bài ${lessonId} có ${hanziCount} chữ Hán.`);
+  if (hanziCount < 400 || hanziCount > 650) throw new Error(`Bài đọc HSK5 bài ${lessonId} có ${hanziCount} chữ Hán; yêu cầu 400-650.`);
   const missing = [...mainWords, ...extendedWords].filter(word => !reading.includes(word));
   if (missing.length) throw new Error(`Bài ${lessonId} thiếu từ trong bài đọc: ${missing.join('、')}`);
   const grammar = grammarPoints(lesson, vocabulary);
