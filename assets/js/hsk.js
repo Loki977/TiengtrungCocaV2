@@ -13,7 +13,6 @@
 
   const COURSE = window.HSK_COURSE_DATA || {};
   const DISABLE_LESSON_LOCKS = false;
-  const ADMIN_FIREBASE_CONFIG = { apiKey:'AIzaSyDoTP-Rw5Jb-wYJPbmwiTLwkcjIpdM_bLA', authDomain:'tiengtrungcoca.firebaseapp.com', projectId:'tiengtrungcoca', storageBucket:'tiengtrungcoca.firebasestorage.app', messagingSenderId:'216281367513', appId:'1:216281367513:web:97cfffea1f595c997b8fc8' };
 
   const panelsWrap = document.getElementById('tabPanels');
   const detailWrap = document.getElementById('lessonDetail');
@@ -25,15 +24,28 @@
   let contentDbPromise = null;
   let adminLearningSettings = null;
 
-
+  function waitForSharedFirebase() {
+    if (window.CCFirebase?.db) return Promise.resolve(window.CCFirebase);
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        window.removeEventListener('firebase-ready', onReady);
+        reject(new Error('Firebase dùng chung chưa sẵn sàng.'));
+      }, 8000);
+      function onReady() {
+        if (!window.CCFirebase?.db) return;
+        clearTimeout(timeout);
+        resolve(window.CCFirebase);
+      }
+      window.addEventListener('firebase-ready', onReady, { once: true });
+    });
+  }
 
   async function getContentDb() {
     if (contentDbPromise) return contentDbPromise;
     contentDbPromise = (async () => {
-      const appMod = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js');
       const fsMod = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js');
-      const app = appMod.getApps().length ? appMod.getApps()[0] : appMod.initializeApp(ADMIN_FIREBASE_CONFIG);
-      return { db: fsMod.getFirestore(app), doc: fsMod.doc, getDoc: fsMod.getDoc };
+      const sharedFirebase = await waitForSharedFirebase();
+      return { db: sharedFirebase.db, doc: fsMod.doc, getDoc: fsMod.getDoc };
     })();
     return contentDbPromise;
   }

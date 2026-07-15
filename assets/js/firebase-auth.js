@@ -1,4 +1,4 @@
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp, getApp, getApps } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import {
   getAuth,
   setPersistence,
@@ -29,11 +29,16 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+const FIREBASE_HOSTING_AUTH_DOMAIN = "tiengtrungcoca.firebaseapp.com";
+const PRODUCTION_AUTH_PROXY_HOSTS = new Set(["tiengtrungcoca.vercel.app"]);
+const currentHostname = window.location.hostname.toLowerCase();
+const usesSameOriginAuthProxy = PRODUCTION_AUTH_PROXY_HOSTS.has(currentHostname);
+
 const firebaseConfig = {
   apiKey: "AIzaSyDoTP-Rw5Jb-wYJPbmwiTLwkcjIpdM_bLA",
-  // Dùng authDomain gốc của Firebase. Popup hoạt động ổn định hơn redirect
-  // trên Safari/iOS và không phụ thuộc proxy cookie của nền tảng deploy.
-  authDomain: "tiengtrungcoca.firebaseapp.com",
+  // Production dùng reverse proxy /__/auth/* trên cùng origin để redirect
+  // không phụ thuộc third-party storage. Localhost vẫn dùng Firebase Hosting.
+  authDomain: usesSameOriginAuthProxy ? currentHostname : FIREBASE_HOSTING_AUTH_DOMAIN,
   projectId: "tiengtrungcoca",
   storageBucket: "tiengtrungcoca.firebasestorage.app",
   messagingSenderId: "216281367513",
@@ -41,14 +46,8 @@ const firebaseConfig = {
   measurementId: "G-S8ZM43HKX1"
 };
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const authPersistenceReady = setPersistence(auth, browserLocalPersistence)
-  .then(() => null)
-  .catch((error) => {
-    console.warn("[firebase-auth] Không đặt được local persistence", error);
-    return error;
-  });
 const db = getFirestore(app);
 const ADMIN_EMAIL = 'nqthanhforwork@gmail.com';
 const provider = new GoogleAuthProvider();
@@ -104,12 +103,32 @@ let currentUser = null;
 let currentStats = structuredCloneSafe(DEFAULT_STATS);
 let authReady = false;
 let authStatus = "initializing";
+let persistenceInitializationError = null;
+let redirectCheckComplete = false;
+let completedUid = null;
+let completingUid = null;
+let completingUserPromise = null;
 let resolveAuthReady;
 const authReadyPromise = new Promise((resolve) => {
   resolveAuthReady = resolve;
 });
+const authInitializationPromise = initializeAuthentication();
 
 window.authReady = authReadyPromise;
+
+async function initializeAuthentication() {
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    console.info("[firebase-auth] Local persistence ready", {
+      authDomain: firebaseConfig.authDomain,
+      sameOriginProxy: usesSameOriginAuthProxy
+    });
+  } catch (error) {
+    persistenceInitializationError = error;
+    logAuthError(error, { flow: "initialization", step: "set-persistence" });
+  }
+  return { persistenceError: persistenceInitializationError };
+}
 
 function structuredCloneSafe(value) {
   return JSON.parse(JSON.stringify(value));
@@ -198,6 +217,86 @@ function showToast(message, type = "info") {
   setTimeout(() => toast.remove(), 3800);
 }
 
+function getAuthErrorHost() {
+  return document.querySelector("#authPage .auth-panel.active")
+    || document.querySelector("#loginModal .modal-auth-panel.active")
+    || document.querySelector("#loginModal .modal")
+    || null;
+}
+
+function clearPreviousAuthError() {
+  document.getElementById("ccAuthError")?.remove();
+}
+
+function showAuthError(errorOrMessage) {
+  const message = typeof errorOrMessage === "string"
+    ? errorOrMessage
+    : getFriendlyAuthError(errorOrMessage);
+  clearPreviousAuthError();
+  const host = getAuthErrorHost();
+  if (host) {
+    const errorBox = document.createElement("p");
+    errorBox.id = "ccAuthError";
+    errorBox.setAttribute("role", "alert");
+    errorBox.style.cssText = "margin:12px 0 0;padding:10px 12px;border-radius:10px;background:#fff1f0;color:#b42318;font-size:13px;font-weight:600;line-height:1.45;";
+    errorBox.textContent = message;
+    host.appendChild(errorBox);
+  }
+  showToast(message, "error");
+}
+
+function logAuthError(error, context = {}) {
+  const pending = readPendingGoogleLoginState();
+  console.error("[firebase-auth] Google/Auth error", {
+    code: error?.code || "unknown",
+    message: error?.message || String(error || "Unknown auth error"),
+    origin: window.location.origin,
+    authDomain: firebaseConfig.authDomain,
+    sameOriginAuthProxy: usesSameOriginAuthProxy,
+    pathname: window.location.pathname,
+    flow: context.flow || "unknown",
+    step: context.step || authStatus,
+    redirectPending: Boolean(pending)
+  });
+}
+
+function dispatchAuthError(error, context = {}) {
+  window.dispatchEvent(new CustomEvent("cc-auth-error", {
+    detail: {
+      code: error?.code || "unknown",
+      message: getFriendlyAuthError(error),
+      flow: context.flow || "unknown",
+      step: context.step || authStatus
+    }
+  }));
+}
+
+function setAuthStatus(nextStatus) {
+  authStatus = nextStatus;
+  renderAuthDebugPanel();
+}
+
+function renderAuthDebugPanel(extra = {}) {
+  const enabled = new URLSearchParams(window.location.search).get("authDebug") === "1";
+  document.getElementById("ccAuthDebug")?.remove();
+  if (!enabled) return;
+  const pending = readPendingGoogleLoginState();
+  const panel = document.createElement("pre");
+  panel.id = "ccAuthDebug";
+  panel.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:100000;max-width:min(430px,calc(100vw - 16px));max-height:42vh;overflow:auto;margin:0;padding:10px;border-radius:10px;background:rgba(20,20,20,.94);color:#d6ffd6;font:11px/1.45 Consolas,monospace;white-space:pre-wrap;";
+  panel.textContent = JSON.stringify({
+    origin: window.location.origin,
+    userAgent: (navigator.userAgent || "").slice(0, 140),
+    redirectLogin: shouldUseRedirectLogin(),
+    authStatus,
+    redirectPending: Boolean(pending),
+    redirectResult: extra.redirectResult || "unknown",
+    currentUid: currentUser?.uid || null,
+    step: extra.step || authStatus
+  }, null, 2);
+  document.body.appendChild(panel);
+}
+
 function getFriendlyAuthError(error) {
   const code = error?.code || "";
   const map = {
@@ -246,6 +345,9 @@ function hideAuthLoading() {
   document.getElementById("ccAuthLoading")?.remove();
 }
 
+const GOOGLE_OAUTH_PENDING_KEY = "cc_google_oauth_pending";
+const GOOGLE_OAUTH_PENDING_TTL_MS = 10 * 60 * 1000;
+
 function getPostLoginUrl() {
   const params = new URLSearchParams(window.location.search);
   const next = params.get("next") || params.get("redirect");
@@ -257,6 +359,14 @@ function getPostLoginUrl() {
   }
   if (window.location.pathname.endsWith("/profile.html")) return "";
   return "";
+}
+
+function getDefaultProfileUrl() {
+  return new URL("profile.html", window.location.href).href;
+}
+
+function getGoogleReturnUrl() {
+  return getPostLoginUrl() || getDefaultProfileUrl();
 }
 
 function getSafeRedirectUrl(rawUrl, fallback = "") {
@@ -272,6 +382,59 @@ function getSafeRedirectUrl(rawUrl, fallback = "") {
 function redirectAfterLogin(forceUrl = "") {
   const postLoginUrl = getSafeRedirectUrl(forceUrl, "") || getPostLoginUrl();
   if (postLoginUrl && postLoginUrl !== window.location.href) window.location.replace(postLoginUrl);
+}
+
+function savePendingGoogleLoginState(returnUrl = getGoogleReturnUrl()) {
+  const safeReturnUrl = getSafeRedirectUrl(returnUrl, getDefaultProfileUrl());
+  const pendingState = {
+    provider: "google",
+    pending: true,
+    startedAt: Date.now(),
+    returnUrl: safeReturnUrl
+  };
+  try {
+    sessionStorage.setItem(GOOGLE_OAUTH_PENDING_KEY, JSON.stringify(pendingState));
+    return pendingState;
+  } catch (error) {
+    logAuthError(error, { flow: "redirect", step: "save-pending-state" });
+    return null;
+  }
+}
+
+function clearPendingGoogleLoginState() {
+  try { sessionStorage.removeItem(GOOGLE_OAUTH_PENDING_KEY); } catch (_) {}
+}
+
+function readPendingGoogleLoginState() {
+  let parsed;
+  try {
+    parsed = JSON.parse(sessionStorage.getItem(GOOGLE_OAUTH_PENDING_KEY) || "null");
+  } catch (_) {
+    clearPendingGoogleLoginState();
+    return null;
+  }
+  const startedAt = Number(parsed?.startedAt);
+  const valid = parsed?.provider === "google"
+    && parsed?.pending === true
+    && Number.isFinite(startedAt)
+    && Date.now() - startedAt >= 0
+    && Date.now() - startedAt <= GOOGLE_OAUTH_PENDING_TTL_MS;
+  if (!valid) {
+    clearPendingGoogleLoginState();
+    return null;
+  }
+  const returnUrl = getSafeRedirectUrl(parsed.returnUrl, "");
+  if (!returnUrl) {
+    clearPendingGoogleLoginState();
+    return null;
+  }
+  return { ...parsed, returnUrl };
+}
+
+function navigateAfterGoogleLogin(returnUrl = "") {
+  const target = getSafeRedirectUrl(returnUrl, getDefaultProfileUrl());
+  clearPendingGoogleLoginState();
+  if (target !== window.location.href) window.location.replace(target);
 }
 
 function readLocalProgress() {
@@ -358,8 +521,94 @@ async function ensureUserData(user) {
   return mergedStats;
 }
 
-function isMobileDevice() {
-  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+function dispatchUserDataReady(user, stats, source) {
+  window.dispatchEvent(new CustomEvent("cc-user-data-ready", {
+    detail: { user, stats: structuredCloneSafe(stats), source }
+  }));
+}
+
+async function completeGoogleLogin(user, context = {}) {
+  if (!user?.uid) {
+    const error = new Error("Firebase không trả về người dùng hợp lệ.");
+    error.code = "auth/invalid-user";
+    throw error;
+  }
+
+  currentUser = user;
+  setAuthStatus("loading-user-data");
+  showAuthLoading("Đang tải dữ liệu tài khoản...");
+
+  const cachedStats = readCachedUserStats(user.uid);
+  currentStats = normalizeStats(cachedStats || DEFAULT_STATS);
+  writeCachedUser(user);
+  syncStatsUI(currentStats);
+
+  try {
+    const loadedStats = await ensureUserData(user);
+    if (auth.currentUser?.uid !== user.uid) {
+      try {
+        localStorage.removeItem("cc_user");
+        localStorage.removeItem(userStatsCacheKey(user.uid));
+      } catch (_) {}
+      return { user: null, stats: normalizeStats(DEFAULT_STATS), dataError: null, cancelled: true };
+    }
+    currentStats = loadedStats;
+    setAuthStatus("authenticated");
+    syncStatsUI(currentStats);
+    dispatchUserDataReady(user, currentStats, context.source || "unknown");
+    return { user, stats: currentStats, dataError: null };
+  } catch (error) {
+    if (auth.currentUser?.uid !== user.uid) {
+      return { user: null, stats: normalizeStats(DEFAULT_STATS), dataError: error, cancelled: true };
+    }
+    // Firestore lỗi không được làm mất phiên Firebase Auth.
+    setAuthStatus("error");
+    currentStats = normalizeStats(readCachedUserStats(user.uid) || currentStats || DEFAULT_STATS);
+    syncStatsUI(currentStats);
+    logAuthError(error, { flow: context.source || "observer", step: "load-user-data" });
+    dispatchAuthError(error, { flow: context.source || "observer", step: "load-user-data" });
+    const code = error?.code ? ` (${error.code})` : "";
+    showAuthError(`Đã đăng nhập nhưng chưa tải được dữ liệu tài khoản${code}. Vui lòng kiểm tra mạng rồi tải lại trang.`);
+    return { user, stats: currentStats, dataError: error };
+  } finally {
+    hideAuthLoading();
+  }
+}
+
+async function completeGoogleLoginOnce(user, context = {}) {
+  if (!user?.uid) return null;
+
+  let completion;
+  if (completingUid === user.uid && completingUserPromise) {
+    completion = completingUserPromise;
+  } else if (completedUid === user.uid) {
+    completion = Promise.resolve({ user, stats: currentStats, dataError: null });
+  } else {
+    completingUid = user.uid;
+    completingUserPromise = completeGoogleLogin(user, context);
+    completion = completingUserPromise;
+  }
+
+  try {
+    const result = await completion;
+    completedUid = user.uid;
+    if (context.navigate) {
+      navigateAfterGoogleLogin(context.returnUrl || readPendingGoogleLoginState()?.returnUrl || getGoogleReturnUrl());
+    }
+    return result;
+  } finally {
+    if (completingUid === user.uid) {
+      completingUid = null;
+      completingUserPromise = null;
+    }
+  }
+}
+
+function shouldUseRedirectLogin() {
+  const coarsePointer = window.matchMedia?.("(pointer: coarse)")?.matches;
+  const narrowViewport = window.matchMedia?.("(max-width: 900px)")?.matches;
+  const touchDevice = Number(navigator.maxTouchPoints || 0) > 0 || "ontouchstart" in window;
+  return Boolean(coarsePointer || (touchDevice && narrowViewport));
 }
 
 function isEmbeddedFrame() {
@@ -404,37 +653,88 @@ function showRedirectStorageHelp() {
   showToast("Không thể đăng nhập Google trong khung giả lập hoặc trình duyệt chặn bộ nhớ. Hãy mở trang trực tiếp bằng Chrome/Safari và tắt chế độ ẩn danh.", "error");
 }
 
-async function signInGoogle() {
-  if (isDisallowedEmbeddedBrowser()) {
-    showOpenInBrowserHelp();
-    const error = new Error("disallowed_useragent_webview");
-    error.code = "auth/disallowed-useragent";
-    error.handled = true;
-    throw error;
+function createGoogleAuthError(code, message) {
+  const error = new Error(message);
+  error.code = code;
+  return error;
+}
+
+function handleGoogleLoginError(error, context = {}) {
+  setAuthStatus("error");
+  hideAuthLoading();
+  logAuthError(error, context);
+  dispatchAuthError(error, context);
+  showAuthError(error);
+  error.handled = true;
+  return error;
+}
+
+async function startGoogleRedirect(returnUrl, source = "redirect") {
+  if (!canUseRedirectAuth()) {
+    throw createGoogleAuthError(
+      "auth/web-storage-unsupported",
+      "Trình duyệt không cho phép lưu trạng thái đăng nhập redirect."
+    );
   }
-  const persistenceError = await authPersistenceReady;
+  const pending = savePendingGoogleLoginState(returnUrl);
+  if (!pending) {
+    throw createGoogleAuthError(
+      "auth/web-storage-unsupported",
+      "Không thể lưu trạng thái đăng nhập Google trên trình duyệt này."
+    );
+  }
+  setAuthStatus("signing-in");
+  showAuthLoading("Đang chuyển tới Google...");
+  renderAuthDebugPanel({ step: `start-${source}`, redirectResult: "pending" });
+  return signInWithRedirect(auth, provider);
+}
+
+async function signInGoogle() {
+  clearPreviousAuthError();
+  const { persistenceError } = await authInitializationPromise;
   if (persistenceError) {
-    const error = new Error("web_storage_unavailable");
-    error.code = "auth/web-storage-unsupported";
-    throw error;
+    showAuthError("Trình duyệt không lưu được phiên đăng nhập lâu dài. Hệ thống sẽ thử tiếp tục với chế độ mặc định.");
   }
 
-  // Popup được gọi trực tiếp từ thao tác bấm của người dùng. Cách này tránh
-  // mất trạng thái đăng nhập do redirect/storage partition trên iOS và Android.
+  if (isDisallowedEmbeddedBrowser()) {
+    const error = createGoogleAuthError(
+      "auth/disallowed-useragent",
+      "Google chặn đăng nhập trong trình duyệt nhúng."
+    );
+    throw handleGoogleLoginError(error, { flow: "google", step: "embedded-browser-check" });
+  }
+
+  const returnUrl = getGoogleReturnUrl();
+  if (shouldUseRedirectLogin()) {
+    try {
+      return await startGoogleRedirect(returnUrl, "mobile-redirect");
+    } catch (error) {
+      throw handleGoogleLoginError(error, { flow: "redirect", step: "start-mobile-redirect" });
+    }
+  }
+
+  setAuthStatus("signing-in");
   try {
     const result = await signInWithPopup(auth, provider);
-    redirectAfterLogin();
+    await completeGoogleLoginOnce(result.user, {
+      source: "popup",
+      navigate: true,
+      returnUrl
+    });
     return result;
   } catch (error) {
-    // Chỉ dùng redirect như phương án dự phòng khi trình duyệt thực sự chặn popup.
-    if (error?.code !== "auth/popup-blocked") throw error;
-    if (!canUseRedirectAuth()) {
-      showRedirectStorageHelp();
-      error.handled = true;
-      throw error;
+    const canFallbackToRedirect = [
+      "auth/popup-blocked",
+      "auth/operation-not-supported-in-this-environment"
+    ].includes(error?.code);
+    if (canFallbackToRedirect) {
+      try {
+        return await startGoogleRedirect(returnUrl, "popup-fallback");
+      } catch (redirectError) {
+        throw handleGoogleLoginError(redirectError, { flow: "redirect", step: "popup-fallback" });
+      }
     }
-    showAuthLoading("Đang chuyển tới Google...");
-    return signInWithRedirect(auth, provider);
+    throw handleGoogleLoginError(error, { flow: "popup", step: "sign-in-popup" });
   }
 }
 
@@ -459,7 +759,13 @@ async function resetPassword(email) {
 }
 
 async function logout() {
+  const uid = auth.currentUser?.uid || readCachedUser()?.uid || "";
   await signOut(auth);
+  clearPendingGoogleLoginState();
+  try {
+    localStorage.removeItem("cc_user");
+    if (uid) localStorage.removeItem(userStatsCacheKey(uid));
+  } catch (_) {}
 }
 
 async function reauthenticateForAccountDeletion(user) {
@@ -799,7 +1105,7 @@ function updateHeaderUser(user, stats) {
 }
 
 function syncHomeCounters(stats, isLoggedIn) {
-  const data = isLoggedIn ? stats : normalizeStats(readLocalProgress() || DEFAULT_STATS);
+  const data = isLoggedIn ? stats : normalizeStats(DEFAULT_STATS);
   setText('[data-progress="streak"]', data.streak);
   setText('[data-progress="xp"]', formatNumber(data.xp));
   setText('[data-progress="level"]', data.currentLevel || data.level || "HSK 1");
@@ -883,6 +1189,43 @@ function dispatchAuthReady() {
   window.dispatchEvent(new CustomEvent("cc:user-stats", { detail }));
 }
 
+function dispatchAuthStateChanged(source = "observer") {
+  window.dispatchEvent(new CustomEvent("cc-auth-state-changed", {
+    detail: { user: currentUser, authStatus, source }
+  }));
+}
+
+function finalizeInitialAuthState() {
+  if (authReady) return;
+  authReady = true;
+  const detail = { user: currentUser, stats: getCurrentStats(), authStatus };
+  resolveAuthReady?.(detail);
+  resolveAuthReady = null;
+  dispatchAuthStateChanged("initialization");
+  dispatchAuthReady();
+}
+
+function clearSignedOutCache() {
+  const cachedUser = readCachedUser();
+  try {
+    localStorage.removeItem("cc_user");
+    if (cachedUser?.uid) localStorage.removeItem(userStatsCacheKey(cachedUser.uid));
+  } catch (_) {}
+}
+
+function handleConfirmedSignedOut(source = "observer") {
+  currentUser = null;
+  completedUid = null;
+  completingUid = null;
+  completingUserPromise = null;
+  currentStats = normalizeStats(DEFAULT_STATS);
+  setAuthStatus("signed-out");
+  clearSignedOutCache();
+  hideAuthLoading();
+  syncStatsUI(currentStats);
+  dispatchAuthStateChanged(source);
+}
+
 function syncStatsUI(stats) {
   updateHeaderUser(currentUser, stats);
   syncHomeCounters(stats, Boolean(currentUser));
@@ -919,7 +1262,7 @@ function bindAuthControls() {
   googleLogin?.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopImmediatePropagation();
-    try { await signInGoogle(); closeModal(); } catch (error) { console.error(error); if (!error?.handled) showToast(getFriendlyAuthError(error), "error"); }
+    try { await signInGoogle(); closeModal(); } catch (error) { if (!error?.handled) showAuthError(error); }
   }, true);
 
   document.getElementById("loginForm")?.addEventListener("submit", async (event) => {
@@ -970,7 +1313,7 @@ function bindAuthControls() {
       showToast("Hiện chỉ bật đăng nhập Google.", "error");
       return;
     }
-    try { await signInGoogle(); } catch (error) { console.error(error); if (!error?.handled) showToast(getFriendlyAuthError(error), "error"); }
+    try { await signInGoogle(); } catch (error) { if (!error?.handled) showAuthError(error); }
   };
 
   window.doLogout = async () => {
@@ -1003,17 +1346,23 @@ window.CCFirebase = {
   auth,
   db,
   signInGoogle,
+  completeGoogleLogin,
+  completeGoogleLoginOnce,
   signInEmail,
   registerEmail,
   resetPassword,
   logout,
   deleteCurrentAccount,
   isDisallowedEmbeddedBrowser,
+  shouldUseRedirectLogin,
   isEmbeddedFrame,
   canUseRedirectAuth,
   showOpenInBrowserHelp,
   showRedirectStorageHelp,
   showToast,
+  showAuthError,
+  readPendingGoogleLoginState,
+  clearPendingGoogleLoginState,
   ensureUserData,
   saveUserStats,
   completeLesson,
@@ -1028,67 +1377,131 @@ window.CCFirebase = {
   getUserData,
   saveUserData,
   isAuthReady: () => authReady,
+  authInitialization: authInitializationPromise,
   authReady: authReadyPromise,
   getAuthStatus: () => authStatus,
   DEFAULT_STATS: structuredCloneSafe(DEFAULT_STATS)
 };
 
 bindAuthControls();
-const bootCachedUser = readCachedUser();
-if (bootCachedUser?.uid) {
-  currentUser = bootCachedUser;
-  currentStats = normalizeStats(readCachedUserStats(bootCachedUser.uid) || DEFAULT_STATS);
-  syncStatsUI(currentStats);
-} else {
-  currentStats = normalizeStats(readLocalProgress() || DEFAULT_STATS);
-  syncStatsUI(currentStats);
-}
+currentUser = null;
+currentStats = normalizeStats(DEFAULT_STATS);
+syncStatsUI(currentStats);
 window.dispatchEvent(new Event("firebase-ready"));
 
-getRedirectResult(auth)
-  .then((result) => {
-    if (result?.user) console.info("[firebase-auth] Google redirect completed", result.user.uid);
-  })
-  .catch((error) => {
-    console.error("[firebase-auth] Google redirect failed", error);
-    authStatus = "redirect-error";
-    hideAuthLoading();
-    showToast(getFriendlyAuthError(error), "error");
+let latestObservedUser = null;
+let resolveFirstAuthState;
+const firstAuthStatePromise = new Promise((resolve) => { resolveFirstAuthState = resolve; });
+let firstAuthStateObserved = false;
+const signedInObserverWaiters = new Set();
+
+function waitForObservedUser(timeoutMs = 3000) {
+  if (latestObservedUser?.uid) return Promise.resolve(latestObservedUser);
+  return new Promise((resolve) => {
+    const finish = (user = null) => {
+      clearTimeout(timer);
+      signedInObserverWaiters.delete(finish);
+      resolve(user);
+    };
+    const timer = setTimeout(() => finish(null), timeoutMs);
+    signedInObserverWaiters.add(finish);
   });
+}
 
-onAuthStateChanged(auth, async (user) => {
-  currentUser = user;
-  authReady = true;
-  authStatus = user ? "signed-in-loading-data" : "signed-out";
+function registerAuthObserver() {
+  return onAuthStateChanged(auth, async (user) => {
+    latestObservedUser = user;
+    if (!firstAuthStateObserved) {
+      firstAuthStateObserved = true;
+      resolveFirstAuthState(user);
+    }
+    if (user?.uid) {
+      signedInObserverWaiters.forEach((resolve) => resolve(user));
+      try {
+        await completeGoogleLoginOnce(user, { source: "observer", navigate: false });
+        dispatchAuthStateChanged("observer");
+      } catch (error) {
+        handleGoogleLoginError(error, { flow: "observer", step: "complete-user" });
+      }
+      return;
+    }
+    if (!redirectCheckComplete) {
+      setAuthStatus("checking-redirect");
+      return;
+    }
+    handleConfirmedSignedOut("observer");
+  }, (error) => {
+    handleGoogleLoginError(error, { flow: "observer", step: "auth-state-listener" });
+  });
+}
 
-  if (!user) {
-    currentStats = normalizeStats(readLocalProgress() || DEFAULT_STATS);
-    localStorage.removeItem("cc_user");
-    hideAuthLoading();
-    syncStatsUI(currentStats);
-    resolveAuthReady?.({ user: null, stats: currentStats, authStatus });
-    return;
+async function initializeAuthFlow() {
+  setAuthStatus("initializing");
+  const { persistenceError } = await authInitializationPromise;
+  if (persistenceError) {
+    dispatchAuthError(persistenceError, { flow: "initialization", step: "set-persistence" });
+    showAuthError("Trình duyệt không lưu được phiên đăng nhập lâu dài. Hệ thống đang dùng persistence mặc định.");
   }
 
-  // Có user là đăng nhập đã thành công: render ngay bằng cache để mobile không bị quay lại màn hình login.
-  const cachedStats = readCachedUserStats(user.uid);
-  currentStats = normalizeStats(cachedStats || DEFAULT_STATS);
-  writeCachedUser(user);
-  syncStatsUI(currentStats);
+  const pending = readPendingGoogleLoginState();
+  if (pending) showAuthLoading("Đang khôi phục đăng nhập Google...");
+  setAuthStatus("checking-redirect");
+  registerAuthObserver();
 
+  let redirectResult = null;
+  let redirectError = null;
   try {
-    currentStats = await ensureUserData(user);
-    authStatus = "signed-in";
-    syncStatsUI(currentStats);
+    redirectResult = await getRedirectResult(auth);
+    renderAuthDebugPanel({
+      step: "redirect-result",
+      redirectResult: redirectResult?.user ? "user" : "null"
+    });
+    if (redirectResult?.user) {
+      console.info("[firebase-auth] Redirect result restored", {
+        uid: redirectResult.user.uid,
+        provider: redirectResult.providerId || "unknown"
+      });
+    }
   } catch (error) {
-    console.error("[firebase-auth] Không tải được dữ liệu người dùng", error);
-    authStatus = "signed-in-data-error";
-    currentStats = normalizeStats(readCachedUserStats(user.uid) || currentStats || DEFAULT_STATS);
-    syncStatsUI(currentStats);
-    const code = error?.code ? ` (${error.code})` : "";
-    showToast(`Không tải được dữ liệu người dùng từ Firebase${code}. Kiểm tra Firestore Rules / mạng.`, "error");
-  } finally {
-    hideAuthLoading();
-    resolveAuthReady?.({ user: currentUser, stats: currentStats, authStatus });
+    redirectError = error;
+    handleGoogleLoginError(error, { flow: "redirect", step: "get-redirect-result" });
   }
+
+  const firstObservedUser = await firstAuthStatePromise;
+  redirectCheckComplete = true;
+  let restoredUser = redirectResult?.user || firstObservedUser || auth.currentUser || latestObservedUser;
+
+  // Một số trình duyệt trả redirect result null nhưng observer vẫn khôi phục user.
+  if (!restoredUser && pending && !redirectError) {
+    restoredUser = await waitForObservedUser();
+  }
+
+  if (restoredUser?.uid) {
+    await completeGoogleLoginOnce(restoredUser, {
+      source: redirectResult?.user ? "redirect" : pending ? "redirect-observer" : "observer",
+      navigate: Boolean(pending),
+      returnUrl: pending?.returnUrl || ""
+    });
+  } else {
+    if (pending && !redirectError) {
+      const error = createGoogleAuthError(
+        "auth/redirect-result-missing",
+        "Google chưa trả về phiên đăng nhập hợp lệ. Vui lòng thử lại và kiểm tra cấu hình tên miền."
+      );
+      logAuthError(error, { flow: "redirect", step: "no-user-after-redirect" });
+      dispatchAuthError(error, { flow: "redirect", step: "no-user-after-redirect" });
+      showAuthError(error);
+    }
+    clearPendingGoogleLoginState();
+    handleConfirmedSignedOut("initialization");
+  }
+
+  finalizeInitialAuthState();
+}
+
+initializeAuthFlow().catch((error) => {
+  redirectCheckComplete = true;
+  handleGoogleLoginError(error, { flow: "initialization", step: "initialize-auth-flow" });
+  if (!currentUser) handleConfirmedSignedOut("initialization-error");
+  finalizeInitialAuthState();
 });

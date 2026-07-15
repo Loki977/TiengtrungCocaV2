@@ -1,3 +1,9 @@
 {
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/__/auth/:path*",
+      "destination": "https://tiengtrungcoca.firebaseapp.com/__/auth/:path*"
+    }
+  ]
 }
