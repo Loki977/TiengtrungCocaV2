@@ -179,8 +179,7 @@ function publicUserData(user) {
     uid: user.uid,
     displayName: user.displayName || "",
     email: user.email || "",
-    photoURL: user.photoURL || "",
-    updatedAt: serverTimestamp()
+    photoURL: user.photoURL || ""
   };
 }
 
@@ -454,6 +453,23 @@ function readCachedUserStats(uid) {
   try { return JSON.parse(localStorage.getItem(userStatsCacheKey(uid)) || "null"); } catch (_) { return null; }
 }
 
+function isPlainRecord(value) {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function readValidCachedUser(uid) {
+  const cachedUser = readCachedUser();
+  return isPlainRecord(cachedUser) && cachedUser.uid === uid ? cachedUser : null;
+}
+
+function readValidCachedUserStats(uid) {
+  const cachedStats = readCachedUserStats(uid);
+  if (!isPlainRecord(cachedStats)) return null;
+  const numericFields = ["xp", "coins", "streak", "completedLessons"];
+  const hasValidNumbers = numericFields.every((key) => Number.isFinite(Number(cachedStats[key])));
+  return hasValidNumbers && isPlainRecord(cachedStats.currentLesson) ? cachedStats : null;
+}
+
 function writeCachedUserStats(uid, stats) {
   if (!uid) return;
   try { localStorage.setItem(userStatsCacheKey(uid), JSON.stringify(normalizeStats(stats))); } catch (_) {}
@@ -499,22 +515,45 @@ async function ensureUserData(user) {
   const publicRef = userDocRef(user.uid);
   const statsRef = userStatsDocRef(user.uid);
   const [publicSnap, statsSnap] = await Promise.all([getDoc(publicRef), getDoc(statsRef)]);
-  const legacyProgress = publicSnap.exists() ? publicSnap.data()?.progress : null;
+  const existingPublicData = publicSnap.exists() ? publicSnap.data() : null;
+  const legacyProgress = existingPublicData?.progress || null;
   const savedStats = statsSnap.exists() ? statsSnap.data() : {};
   // Không tự merge cc_local_progress vào tài khoản mới để tránh tài khoản vừa đăng nhập đã nhận dữ liệu rác/demo từ máy.
   // Legacy users vẫn được migrate từ users/{uid}.progress nếu từng có dữ liệu cũ trên chính tài khoản đó.
   const mergedStats = normalizeStats(deepMerge(legacyProgress || {}, savedStats || {}));
+  const desiredPublicData = publicUserData(user);
+  const writes = [];
 
-  await setDoc(publicRef, {
-    ...publicUserData(user),
-    ...(publicSnap.exists() ? {} : { createdAt: serverTimestamp() })
-  }, { merge: true });
+  if (!publicSnap.exists()) {
+    writes.push(setDoc(publicRef, {
+      ...desiredPublicData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    }, { merge: true }));
+  } else {
+    const changedProfileFields = {};
+    for (const key of ["displayName", "email", "photoURL"]) {
+      if ((existingPublicData?.[key] || "") !== desiredPublicData[key]) {
+        changedProfileFields[key] = desiredPublicData[key];
+      }
+    }
+    if (Object.keys(changedProfileFields).length) {
+      writes.push(setDoc(publicRef, {
+        ...changedProfileFields,
+        updatedAt: serverTimestamp()
+      }, { merge: true }));
+    }
+  }
 
-  await setDoc(statsRef, {
-    ...mergedStats,
-    updatedAt: serverTimestamp(),
-    ...(statsSnap.exists() ? {} : { createdAt: serverTimestamp() })
-  }, { merge: true });
+  if (!statsSnap.exists()) {
+    writes.push(setDoc(statsRef, {
+      ...mergedStats,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    }, { merge: true }));
+  }
+
+  if (writes.length) await Promise.all(writes);
 
   writeCachedUser(user);
   writeCachedUserStats(user.uid, mergedStats);
@@ -535,10 +574,21 @@ async function completeGoogleLogin(user, context = {}) {
   }
 
   currentUser = user;
-  setAuthStatus("loading-user-data");
-  showAuthLoading("Đang tải dữ liệu tài khoản...");
+  const source = context.source || "unknown";
+  const loginWasAlreadyInProgress = authStatus === "signing-in";
+  const cachedUser = readValidCachedUser(user.uid);
+  const cachedStats = readValidCachedUserStats(user.uid);
+  const hasValidUidCache = Boolean(cachedUser && cachedStats);
+  const pendingGoogleLogin = readPendingGoogleLoginState();
+  const overlaySources = new Set(["popup", "redirect", "redirect-observer"]);
+  const shouldShowFullPageLoading = overlaySources.has(source)
+    || loginWasAlreadyInProgress
+    || Boolean(pendingGoogleLogin)
+    || !hasValidUidCache;
 
-  const cachedStats = readCachedUserStats(user.uid);
+  setAuthStatus("loading-user-data");
+  if (shouldShowFullPageLoading) showAuthLoading("Đang tải dữ liệu tài khoản...");
+
   currentStats = normalizeStats(cachedStats || DEFAULT_STATS);
   writeCachedUser(user);
   syncStatsUI(currentStats);
@@ -555,7 +605,7 @@ async function completeGoogleLogin(user, context = {}) {
     currentStats = loadedStats;
     setAuthStatus("authenticated");
     syncStatsUI(currentStats);
-    dispatchUserDataReady(user, currentStats, context.source || "unknown");
+    dispatchUserDataReady(user, currentStats, source);
     return { user, stats: currentStats, dataError: null };
   } catch (error) {
     if (auth.currentUser?.uid !== user.uid) {
@@ -563,15 +613,15 @@ async function completeGoogleLogin(user, context = {}) {
     }
     // Firestore lỗi không được làm mất phiên Firebase Auth.
     setAuthStatus("error");
-    currentStats = normalizeStats(readCachedUserStats(user.uid) || currentStats || DEFAULT_STATS);
+    currentStats = normalizeStats(readValidCachedUserStats(user.uid) || currentStats || DEFAULT_STATS);
     syncStatsUI(currentStats);
-    logAuthError(error, { flow: context.source || "observer", step: "load-user-data" });
-    dispatchAuthError(error, { flow: context.source || "observer", step: "load-user-data" });
+    logAuthError(error, { flow: source, step: "load-user-data" });
+    dispatchAuthError(error, { flow: source, step: "load-user-data" });
     const code = error?.code ? ` (${error.code})` : "";
     showAuthError(`Đã đăng nhập nhưng chưa tải được dữ liệu tài khoản${code}. Vui lòng kiểm tra mạng rồi tải lại trang.`);
     return { user, stats: currentStats, dataError: error };
   } finally {
-    hideAuthLoading();
+    if (shouldShowFullPageLoading) hideAuthLoading();
   }
 }
 
