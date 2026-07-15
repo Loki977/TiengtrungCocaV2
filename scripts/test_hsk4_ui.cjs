@@ -117,10 +117,9 @@ async function advanceToSection(page, sectionName, maxSteps = 40) {
   await page.locator('.hsk-tab[data-tab="1"]').click();
   await page.locator('.lesson-item[data-detail="1"]').click();
   await page.waitForSelector('[data-learning-section]');
-  check((await page.locator('.gt-vocab-example').count()) === 0, 'Giao diện thẻ từ vựng cũ của HSK1 bị thay đổi.');
   await advanceToSection(page, 'lessonText');
-  check((await page.locator('.gt-dialogue-line').count()) > 0, 'Renderer hội thoại cũ HSK1 không còn hoạt động.');
-  check((await page.locator('.gt-reading-token').count()) === 0, 'HSK1 bị chuyển nhầm sang renderer tra cứu HSK4.');
+  check((await page.locator('.gt-interactive-dialogue').count()) > 0, 'Renderer hội thoại tương tác HSK1 không hoạt động.');
+  check((await page.locator('.gt-reading-token').count()) > 0, 'HSK1 chưa được áp dụng tra từ trong hội thoại.');
 
   check(pageErrors.length === 0, `Có lỗi JavaScript trong trang: ${pageErrors.join(' | ')}`);
 
@@ -133,7 +132,7 @@ async function advanceToSection(page, sectionName, maxSteps = 40) {
     ttsCalls: await page.evaluate(() => window.__spoken.length),
     progressKey: progressKeyAfter,
     lesson20Opened: true,
-    legacyHsk1Renderer: true,
+    interactiveHsk1Renderer: true,
     horizontalOverflow: false,
     pageErrors
   }, null, 2));

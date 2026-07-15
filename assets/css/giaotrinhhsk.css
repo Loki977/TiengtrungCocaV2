@@ -292,8 +292,54 @@
   box-shadow: var(--shadow-md);
 }
 
-.gt-dialogue-line::after {
+.gt-dialogue-line:not(.gt-interactive-dialogue)::after {
   content: " 🔊";
+}
+
+.gt-interactive-dialogue {
+  cursor: default;
+}
+
+.gt-dialogue-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.gt-dialogue-heading > b {
+  color: var(--orange-dark);
+  font-size: .95rem;
+}
+
+.gt-dialogue-listen.gt-speak-btn {
+  width: auto;
+  height: auto;
+  min-height: 34px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.gt-dialogue-chinese {
+  color: var(--charcoal);
+  font-size: 1.28rem;
+  font-weight: 780;
+  line-height: 1.7;
+}
+
+.gt-interactive-dialogue .gt-pinyin {
+  margin-top: 5px;
+  line-height: 1.6;
+}
+
+.gt-dialogue-translation {
+  margin-top: 3px;
+  color: var(--text-muted);
+  line-height: 1.55;
 }
 
 .gt-hint {
@@ -694,6 +740,19 @@ mark {
 
   .gt-reading-token {
     padding: 3px 2px;
+  }
+
+  .gt-dialogue-heading {
+    align-items: flex-start;
+  }
+
+  .gt-dialogue-chinese {
+    font-size: 1.42rem;
+    line-height: 1.8;
+  }
+
+  .gt-dialogue-listen.gt-speak-btn {
+    flex: 0 0 auto;
   }
 
   .gt-reading-lookup {

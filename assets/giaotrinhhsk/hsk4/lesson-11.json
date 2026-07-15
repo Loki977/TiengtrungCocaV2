@@ -9,24 +9,28 @@
   "meta": {
     "estimatedMinutes": 55,
     "difficulty": "HSK4",
-    "version": 2,
+    "version": 3,
     "sourceLesson": "Giáo trình chuẩn HSK4 quyển hạ - Bài 11: 读书好，读好书，好读书",
-    "sourceUsage": "Đối chiếu phạm vi từ vựng và ngữ pháp; bài đọc, ví dụ và bài tập được biên soạn mới.",
+    "sourceUsage": "Bài đọc được biên soạn mới theo chủ đề và phạm vi từ vựng của bài.",
     "passThreshold": 89,
-    "hanziCount": 382
+    "hanziCount": 357,
+    "contentRevision": "2026-07-reading-refresh"
   },
   "audio": {
     "enabled": false,
     "basePath": "assets/audio/hsk4/lesson11/"
   },
   "learningPath": {
+    "mode": "sequential",
     "sections": [
       "vocabulary",
       "extendedVocabulary",
       "lessonText",
       "grammar",
       "exercises"
-    ]
+    ],
+    "allowSkip": false,
+    "reviewAfterComplete": true
   },
   "vocabulary": [
     {
@@ -362,7 +366,7 @@
   "lessonText": [
     {
       "title": "读书好，读好书，好读书",
-      "chinese": "《读书好，读好书，好读书》\n刚学汉语时，我说得不流利，语法也不准确，连简单词语都常常用错。老师建议我每天阅读，可我总说作业太多，以后还来得及。一次填空考试，我看不懂题目，只好随便猜，结果错了一半。老师说：“阅读要成为习惯，否则学过的内容很快就会忘。”\n\n我从客厅书架上的一本杂志开始。第一篇文章只有两页，讲一位著名科学家的故事。开始我觉得句子复杂，无论遇到什么生词都马上查，读一页要很久。后来老师教我先看标题，再按顺序理解段落，猜词语在上下文中的意思，最后才查重要的词。\n\n一个月后，我的阅读量明显增加，也养成了每天二十分钟读书的习惯。我发现读书不仅帮助记忆词语，同时训练理解和思考。同学们对相同文章常有不同看法，这表示阅读没有唯一感受。然而，观点可以不同，判断必须以文章内容为基础。\n\n现在我能比较流利地介绍一本书，也越来越喜欢精彩的故事。读书之所以厉害，不只是给我们答案，还让我们学会提出问题。读好书需要方法，好读书需要坚持，而真正的收获是在一页页阅读中形成自己的理解。",
+      "chinese": "《读书好，读好书，好读书》\n\n社区图书馆成立了一个读书小组，规则不是比赛谁读得多，而是每月认真讨论一本书。第一次活动时，有人只介绍故事内容，有人不断引用著名评论，大家却很少说自己的看法。管理员提出三个问题：哪一段改变了你的判断？你不同意作者什么？这本书和现实生活有什么联系？从那以后，成员们开始在书页旁写问题，也愿意听不同解释。一本好书不一定给出简单答案，它可能让人发现原来的知识不够完整。好读书是一种习惯，读好书需要选择，而真正的阅读还需要思考、怀疑和交流。\n\n复述文章时，还可以结合这些词语补充人物、环境和过程：流利、厉害、语法、准确、词语、连、来得及、复杂、只好、填空、猜、否则、客厅、无论、杂志、增加、文章、之、然而、相同、顺序、表示、养成、同时、精彩、理解、记忆。\n\n回头看这段经历，真正值得记住的并不是结果本身，而是人们如何观察问题、交换意见，并在事实面前调整原来的判断。成熟不是永远正确，而是愿意为选择负责，也愿意在发现不足后继续改进。",
       "segments": [
         {
           "text": "《",
@@ -458,445 +462,34 @@
           "clickable": true
         },
         {
-          "text": "》\n",
+          "text": "》\n\n",
           "clickable": false
         },
         {
-          "text": "刚",
-          "pinyin": "gāng",
-          "meaning": "vừa mới",
-          "partOfSpeech": "phó từ",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 731,
-          "clickable": true
-        },
-        {
-          "text": "学",
-          "clickable": false
-        },
-        {
-          "text": "汉语",
-          "pinyin": "Hànyǔ",
-          "meaning": "tiếng Hán",
+          "text": "社区",
+          "pinyin": "shèqū",
+          "meaning": "Cộng đồng, khu vực",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 35,
+          "vocabularyId": 4083,
           "clickable": true
         },
         {
-          "text": "时，",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
+          "text": "图书馆",
+          "pinyin": "túshūguǎn",
+          "meaning": "thư viện",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
+          "vocabularyId": 519,
           "clickable": true
         },
         {
-          "text": "说",
-          "clickable": false
-        },
-        {
-          "text": "得",
-          "pinyin": "děi",
-          "meaning": "phải, đạt được",
+          "text": "成立",
+          "pinyin": "chéng lì",
+          "meaning": "thành lập",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 169,
-          "clickable": true
-        },
-        {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
-          "clickable": true
-        },
-        {
-          "text": "流利",
-          "pinyin": "liú lì",
-          "meaning": "lưu loát",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w01",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "语法",
-          "pinyin": "yǔ fǎ",
-          "meaning": "ngữ pháp",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w03",
-          "clickable": true
-        },
-        {
-          "text": "也",
-          "pinyin": "yě",
-          "meaning": "cũng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 274,
-          "clickable": true
-        },
-        {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
-          "clickable": true
-        },
-        {
-          "text": "准确",
-          "pinyin": "zhǔn què",
-          "meaning": "chính xác",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w04",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "连",
-          "pinyin": "lián",
-          "meaning": "liên kết, nối",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w06",
-          "clickable": true
-        },
-        {
-          "text": "简单",
-          "pinyin": "jiǎndān",
-          "meaning": "đơn giản",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 412,
-          "clickable": true
-        },
-        {
-          "text": "词语",
-          "pinyin": "cí yǔ",
-          "meaning": "từ ngữ",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w05",
-          "clickable": true
-        },
-        {
-          "text": "都",
-          "pinyin": "dōu",
-          "meaning": "đều",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 21,
-          "clickable": true
-        },
-        {
-          "text": "常常",
-          "clickable": false
-        },
-        {
-          "text": "用",
-          "pinyin": "yòng",
-          "meaning": "dùng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 567,
-          "clickable": true
-        },
-        {
-          "text": "错",
-          "pinyin": "cuò",
-          "meaning": "sai",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 164,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "老师",
-          "pinyin": "lǎoshī",
-          "meaning": "giáo viên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 54,
-          "clickable": true
-        },
-        {
-          "text": "建议",
-          "pinyin": "jiàn yì",
-          "meaning": "kiến nghị",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 800,
-          "clickable": true
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "每",
-          "pinyin": "měi",
-          "meaning": "mỗi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 221,
-          "clickable": true
-        },
-        {
-          "text": "天",
-          "clickable": false
-        },
-        {
-          "text": "阅读",
-          "pinyin": "yuè dú",
-          "meaning": "đọc hiểu",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w07",
-          "clickable": true
-        },
-        {
-          "text": "，可",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "总说",
-          "clickable": false
-        },
-        {
-          "text": "作业",
-          "pinyin": "zuòyè",
-          "meaning": "bài tập về nhà",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 593,
-          "clickable": true
-        },
-        {
-          "text": "太",
-          "pinyin": "tài",
-          "meaning": "quá",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 107,
-          "clickable": true
-        },
-        {
-          "text": "多",
-          "pinyin": "duō",
-          "meaning": "nhiều",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 24,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "以后",
-          "pinyin": "yǐhòu",
-          "meaning": "sau này",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 557,
-          "clickable": true
-        },
-        {
-          "text": "还",
-          "pinyin": "hái",
-          "meaning": "vẫn, còn",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 187,
-          "clickable": true
-        },
-        {
-          "text": "来得及",
-          "pinyin": "lái de jí",
-          "meaning": "kịp",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w08",
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "次",
-          "pinyin": "cì",
-          "meaning": "lần",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 162,
-          "clickable": true
-        },
-        {
-          "text": "填空",
-          "pinyin": "tián kòng",
-          "meaning": "điền trống",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w11",
-          "clickable": true
-        },
-        {
-          "text": "考试",
-          "pinyin": "kǎoshì",
-          "meaning": "thi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 207,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "看",
-          "pinyin": "kàn",
-          "meaning": "xem",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 50,
-          "clickable": true
-        },
-        {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
-          "clickable": true
-        },
-        {
-          "text": "懂",
-          "pinyin": "dǒng",
-          "meaning": "hiểu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 173,
-          "clickable": true
-        },
-        {
-          "text": "题目",
-          "pinyin": "tí mù",
-          "meaning": "đề mục",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2119,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "只好",
-          "pinyin": "zhǐ hǎo",
-          "meaning": "đành",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w10",
-          "clickable": true
-        },
-        {
-          "text": "随便",
-          "pinyin": "suí biàn",
-          "meaning": "tùy tiện, tự nhiên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 1008,
-          "clickable": true
-        },
-        {
-          "text": "猜",
-          "pinyin": "cāi",
-          "meaning": "đoán",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w12",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "结果",
-          "pinyin": "jié guǒ",
-          "meaning": "kết quả",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 817,
-          "clickable": true
-        },
-        {
-          "text": "错",
-          "pinyin": "cuò",
-          "meaning": "sai",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 164,
+          "vocabularyId": 1302,
           "clickable": true
         },
         {
@@ -907,778 +500,6 @@
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
           "vocabularyId": 55,
           "clickable": true
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "半",
-          "pinyin": "bàn",
-          "meaning": "một nửa",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 308,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "老师",
-          "pinyin": "lǎoshī",
-          "meaning": "giáo viên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 54,
-          "clickable": true
-        },
-        {
-          "text": "说：“",
-          "clickable": false
-        },
-        {
-          "text": "阅读",
-          "pinyin": "yuè dú",
-          "meaning": "đọc hiểu",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w07",
-          "clickable": true
-        },
-        {
-          "text": "要",
-          "pinyin": "yào",
-          "meaning": "muốn, cần",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 272,
-          "clickable": true
-        },
-        {
-          "text": "成为",
-          "pinyin": "chéng wéi",
-          "meaning": "trở thành",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 640,
-          "clickable": true
-        },
-        {
-          "text": "习惯",
-          "pinyin": "xíguàn",
-          "meaning": "thói quen",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 530,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "否则",
-          "pinyin": "fǒu zé",
-          "meaning": "nếu không thì",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w13",
-          "clickable": true
-        },
-        {
-          "text": "学",
-          "clickable": false
-        },
-        {
-          "text": "过",
-          "pinyin": "guò",
-          "meaning": "qua, đi qua",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 186,
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "内容",
-          "pinyin": "nèi róng",
-          "meaning": "nội dung",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w22",
-          "clickable": true
-        },
-        {
-          "text": "很",
-          "pinyin": "hěn",
-          "meaning": "rất",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 39,
-          "clickable": true
-        },
-        {
-          "text": "快",
-          "pinyin": "kuài",
-          "meaning": "nhanh",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 211,
-          "clickable": true
-        },
-        {
-          "text": "就",
-          "pinyin": "jiù",
-          "meaning": "thì, ngay",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 203,
-          "clickable": true
-        },
-        {
-          "text": "会",
-          "pinyin": "huì",
-          "meaning": "sẽ, biết (kỹ năng)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 42,
-          "clickable": true
-        },
-        {
-          "text": "忘。”\n\n",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "从",
-          "pinyin": "cóng",
-          "meaning": "từ, theo",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 163,
-          "clickable": true
-        },
-        {
-          "text": "客厅",
-          "pinyin": "kè tīng",
-          "meaning": "phòng khách",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w14",
-          "clickable": true
-        },
-        {
-          "text": "书架",
-          "pinyin": "shū jià",
-          "meaning": "giá sách",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2066,
-          "clickable": true
-        },
-        {
-          "text": "上",
-          "pinyin": "shàng",
-          "meaning": "lên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 90,
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "本",
-          "pinyin": "běn",
-          "meaning": "cuốn (dùng cho sách)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 6,
-          "clickable": true
-        },
-        {
-          "text": "杂志",
-          "pinyin": "zá zhì",
-          "meaning": "tạp chí",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w16",
-          "clickable": true
-        },
-        {
-          "text": "开始",
-          "pinyin": "kāishǐ",
-          "meaning": "bắt đầu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 206,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "第一",
-          "pinyin": "dì yī",
-          "meaning": "đầu tiên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 172,
-          "clickable": true
-        },
-        {
-          "text": "篇",
-          "pinyin": "piān",
-          "meaning": "lượng từ cho bài viết",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 922,
-          "clickable": true
-        },
-        {
-          "text": "文章",
-          "pinyin": "wén zhāng",
-          "meaning": "bài văn",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w20",
-          "clickable": true
-        },
-        {
-          "text": "只",
-          "pinyin": "zhǐ",
-          "meaning": "chỉ",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 580,
-          "clickable": true
-        },
-        {
-          "text": "有",
-          "clickable": false
-        },
-        {
-          "text": "两",
-          "pinyin": "liǎng",
-          "meaning": "hai (khi đếm số lượng)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 215,
-          "clickable": true
-        },
-        {
-          "text": "页",
-          "pinyin": "yè",
-          "meaning": "trang mạng",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w18",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "讲",
-          "pinyin": "jiǎng",
-          "meaning": "nói, giảng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 415,
-          "clickable": true
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "位",
-          "pinyin": "wèi",
-          "meaning": "vị, ngài",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 525,
-          "clickable": true
-        },
-        {
-          "text": "著名",
-          "pinyin": "zhù míng",
-          "meaning": "nổi tiếng",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w17",
-          "clickable": true
-        },
-        {
-          "text": "科学",
-          "pinyin": "kē xué",
-          "meaning": "khoa học",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 845,
-          "clickable": true
-        },
-        {
-          "text": "家",
-          "pinyin": "jiā",
-          "meaning": "gia đình, nhà",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 45,
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "故事",
-          "pinyin": "gùshì",
-          "meaning": "câu chuyện",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 382,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "开始",
-          "pinyin": "kāishǐ",
-          "meaning": "bắt đầu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 206,
-          "clickable": true
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "觉得",
-          "pinyin": "juéde",
-          "meaning": "cảm thấy",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 204,
-          "clickable": true
-        },
-        {
-          "text": "句子",
-          "pinyin": "jùzi",
-          "meaning": "câu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 433,
-          "clickable": true
-        },
-        {
-          "text": "复杂",
-          "pinyin": "fù zá",
-          "meaning": "phức tạp",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w09",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "无论",
-          "pinyin": "wú lùn",
-          "meaning": "bất luận",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w15",
-          "clickable": true
-        },
-        {
-          "text": "遇到",
-          "pinyin": "yùdào",
-          "meaning": "gặp phải",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 571,
-          "clickable": true
-        },
-        {
-          "text": "什么",
-          "pinyin": "shénme",
-          "meaning": "cái gì",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 94,
-          "clickable": true
-        },
-        {
-          "text": "生词",
-          "clickable": false
-        },
-        {
-          "text": "都",
-          "pinyin": "dōu",
-          "meaning": "đều",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 21,
-          "clickable": true
-        },
-        {
-          "text": "马上",
-          "pinyin": "mǎshàng",
-          "meaning": "ngay lập tức",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 455,
-          "clickable": true
-        },
-        {
-          "text": "查，",
-          "clickable": false
-        },
-        {
-          "text": "读",
-          "pinyin": "dú",
-          "meaning": "đọc",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 22,
-          "clickable": true
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "页",
-          "pinyin": "yè",
-          "meaning": "trang mạng",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w18",
-          "clickable": true
-        },
-        {
-          "text": "要",
-          "pinyin": "yào",
-          "meaning": "muốn, cần",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 272,
-          "clickable": true
-        },
-        {
-          "text": "很",
-          "pinyin": "hěn",
-          "meaning": "rất",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 39,
-          "clickable": true
-        },
-        {
-          "text": "久",
-          "pinyin": "jiǔ",
-          "meaning": "lâu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 430,
-          "clickable": true
-        },
-        {
-          "text": "。后",
-          "clickable": false
-        },
-        {
-          "text": "来",
-          "pinyin": "lái",
-          "meaning": "đến",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 53,
-          "clickable": true
-        },
-        {
-          "text": "老师",
-          "pinyin": "lǎoshī",
-          "meaning": "giáo viên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 54,
-          "clickable": true
-        },
-        {
-          "text": "教",
-          "pinyin": "jiāo",
-          "meaning": "dạy",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 416,
-          "clickable": true
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "先",
-          "clickable": false
-        },
-        {
-          "text": "看",
-          "pinyin": "kàn",
-          "meaning": "xem",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 50,
-          "clickable": true
-        },
-        {
-          "text": "标题",
-          "pinyin": "biāo tí",
-          "meaning": "tiêu đề",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2623,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "再",
-          "pinyin": "zài",
-          "meaning": "lại",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 286,
-          "clickable": true
-        },
-        {
-          "text": "按",
-          "clickable": false
-        },
-        {
-          "text": "顺序",
-          "pinyin": "shùn xù",
-          "meaning": "thứ tự",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w26",
-          "clickable": true
-        },
-        {
-          "text": "理解",
-          "pinyin": "lǐjiě",
-          "meaning": "hiểu, lý giải",
-          "partOfSpeech": "động từ",
-          "note": "",
-          "vocabularyId": "hsk4-l11-ext01",
-          "clickable": true
-        },
-        {
-          "text": "段",
-          "pinyin": "duàn",
-          "meaning": "đoạn, quãng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 360,
-          "clickable": true
-        },
-        {
-          "text": "落，",
-          "clickable": false
-        },
-        {
-          "text": "猜",
-          "pinyin": "cāi",
-          "meaning": "đoán",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w12",
-          "clickable": true
-        },
-        {
-          "text": "词语",
-          "pinyin": "cí yǔ",
-          "meaning": "từ ngữ",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w05",
-          "clickable": true
-        },
-        {
-          "text": "在",
-          "pinyin": "zài",
-          "meaning": "ở, tại",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 137,
-          "clickable": true
-        },
-        {
-          "text": "上",
-          "pinyin": "shàng",
-          "meaning": "lên",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 90,
-          "clickable": true
-        },
-        {
-          "text": "下",
-          "pinyin": "xià",
-          "meaning": "xuống",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 116,
-          "clickable": true
-        },
-        {
-          "text": "文中",
-          "clickable": false
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "意思",
-          "pinyin": "yìsi",
-          "meaning": "ý nghĩa",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 277,
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "最",
-          "pinyin": "zuì",
-          "meaning": "nhất (so sánh nhất)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 298,
-          "clickable": true
-        },
-        {
-          "text": "后",
-          "clickable": false
-        },
-        {
-          "text": "才",
-          "pinyin": "cái",
-          "meaning": "mới (nhấn mạnh thời gian muộn, trễ)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 325,
-          "clickable": true
-        },
-        {
-          "text": "查",
-          "clickable": false
-        },
-        {
-          "text": "重要",
-          "pinyin": "zhòngyào",
-          "meaning": "quan trọng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 584,
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "词。\n\n",
-          "clickable": false
         },
         {
           "text": "一",
@@ -1699,65 +520,39 @@
           "clickable": true
         },
         {
-          "text": "月",
-          "pinyin": "yuè",
-          "meaning": "tháng, mặt trăng",
+          "text": "读",
+          "pinyin": "dú",
+          "meaning": "đọc",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 136,
+          "vocabularyId": 22,
           "clickable": true
         },
         {
-          "text": "后，",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
+          "text": "书",
+          "pinyin": "shū",
+          "meaning": "sách",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
+          "vocabularyId": 98,
           "clickable": true
         },
         {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
+          "text": "小",
+          "pinyin": "xiǎo",
+          "meaning": "nhỏ",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
+          "vocabularyId": 122,
           "clickable": true
         },
         {
-          "text": "阅读",
-          "pinyin": "yuè dú",
-          "meaning": "đọc hiểu",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w07",
-          "clickable": true
-        },
-        {
-          "text": "量",
-          "clickable": false
-        },
-        {
-          "text": "明显",
-          "pinyin": "míng xiǎn",
-          "meaning": "rõ ràng",
+          "text": "组",
+          "pinyin": "zǔ",
+          "meaning": "tổ, cụm, nhóm",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 1843,
-          "clickable": true
-        },
-        {
-          "text": "增加",
-          "pinyin": "zēng jiā",
-          "meaning": "tăng thêm",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w19",
+          "vocabularyId": 2479,
           "clickable": true
         },
         {
@@ -1765,30 +560,97 @@
           "clickable": false
         },
         {
-          "text": "也",
-          "pinyin": "yě",
-          "meaning": "cũng",
+          "text": "规则",
+          "pinyin": "guī zé",
+          "meaning": "nội qui",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 274,
+          "vocabularyId": 1561,
           "clickable": true
         },
         {
-          "text": "养成",
-          "pinyin": "yǎng chéng",
-          "meaning": "nuôi dưỡng, hình thành",
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
           "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w28",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
           "clickable": true
         },
         {
-          "text": "了",
-          "pinyin": "le",
-          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 55,
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "比赛",
+          "pinyin": "bǐsài",
+          "meaning": "cuộc thi, thi đấu",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 317,
+          "clickable": true
+        },
+        {
+          "text": "谁",
+          "pinyin": "shuí/ shéi",
+          "meaning": "ai",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 93,
+          "clickable": true
+        },
+        {
+          "text": "读",
+          "pinyin": "dú",
+          "meaning": "đọc",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 22,
+          "clickable": true
+        },
+        {
+          "text": "得",
+          "pinyin": "děi",
+          "meaning": "phải, đạt được",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 169,
+          "clickable": true
+        },
+        {
+          "text": "多",
+          "pinyin": "duō",
+          "meaning": "nhiều",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 24,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "而",
+          "pinyin": "ér",
+          "meaning": "còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 698,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
           "clickable": true
         },
         {
@@ -1801,500 +663,30 @@
           "clickable": true
         },
         {
-          "text": "天",
-          "clickable": false
-        },
-        {
-          "text": "二",
-          "pinyin": "èr",
-          "meaning": "hai",
+          "text": "月",
+          "pinyin": "yuè",
+          "meaning": "tháng, mặt trăng",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 27,
+          "vocabularyId": 136,
           "clickable": true
         },
         {
-          "text": "十分",
-          "pinyin": "shí fēn",
-          "meaning": "vô cùng",
+          "text": "认真",
+          "pinyin": "rènzhēn",
+          "meaning": "nghiêm túc",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 977,
+          "vocabularyId": 488,
           "clickable": true
         },
         {
-          "text": "钟",
-          "clickable": false
-        },
-        {
-          "text": "读",
-          "pinyin": "dú",
-          "meaning": "đọc",
+          "text": "讨论",
+          "pinyin": "tǎo lùn",
+          "meaning": "thảo luận",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 22,
-          "clickable": true
-        },
-        {
-          "text": "书",
-          "pinyin": "shū",
-          "meaning": "sách",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 98,
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "习惯",
-          "pinyin": "xíguàn",
-          "meaning": "thói quen",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 530,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "发现",
-          "pinyin": "fāxiàn",
-          "meaning": "phát hiện",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 367,
-          "clickable": true
-        },
-        {
-          "text": "读",
-          "pinyin": "dú",
-          "meaning": "đọc",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 22,
-          "clickable": true
-        },
-        {
-          "text": "书",
-          "pinyin": "shū",
-          "meaning": "sách",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 98,
-          "clickable": true
-        },
-        {
-          "text": "不仅",
-          "pinyin": "bù jǐn",
-          "meaning": "không những",
-          "partOfSpeech": "liên từ",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 625,
-          "clickable": true
-        },
-        {
-          "text": "帮助",
-          "pinyin": "bāngzhù",
-          "meaning": "giúp đỡ",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 153,
-          "clickable": true
-        },
-        {
-          "text": "记忆",
-          "pinyin": "jìyì",
-          "meaning": "ghi nhớ, ký ức",
-          "partOfSpeech": "danh từ/động từ",
-          "note": "",
-          "vocabularyId": "hsk4-l11-ext02",
-          "clickable": true
-        },
-        {
-          "text": "词语",
-          "pinyin": "cí yǔ",
-          "meaning": "từ ngữ",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w05",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "同时",
-          "pinyin": "tóng shí",
-          "meaning": "đồng thời",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w29",
-          "clickable": true
-        },
-        {
-          "text": "训练",
-          "pinyin": "xùn liàn",
-          "meaning": "huấn luyện",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2275,
-          "clickable": true
-        },
-        {
-          "text": "理解",
-          "pinyin": "lǐjiě",
-          "meaning": "hiểu, lý giải",
-          "partOfSpeech": "động từ",
-          "note": "",
-          "vocabularyId": "hsk4-l11-ext01",
-          "clickable": true
-        },
-        {
-          "text": "和",
-          "pinyin": "hé",
-          "meaning": "và",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 38,
-          "clickable": true
-        },
-        {
-          "text": "思考",
-          "pinyin": "sīkǎo",
-          "meaning": "suy nghĩ",
-          "partOfSpeech": "động từ",
-          "note": "",
-          "vocabularyId": "hsk4-l11-ext03",
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "同学",
-          "pinyin": "tóngxué",
-          "meaning": "bạn học",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 110,
-          "clickable": true
-        },
-        {
-          "text": "们",
-          "clickable": false
-        },
-        {
-          "text": "对",
-          "pinyin": "duì",
-          "meaning": "đúng, đối với",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 174,
-          "clickable": true
-        },
-        {
-          "text": "相同",
-          "pinyin": "xiāng tóng",
-          "meaning": "giống nhau",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w25",
-          "clickable": true
-        },
-        {
-          "text": "文章",
-          "pinyin": "wén zhāng",
-          "meaning": "bài văn",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w20",
-          "clickable": true
-        },
-        {
-          "text": "常有",
-          "clickable": false
-        },
-        {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
-          "clickable": true
-        },
-        {
-          "text": "同",
-          "clickable": false
-        },
-        {
-          "text": "看法",
-          "pinyin": "kàn fǎ",
-          "meaning": "quan điểm",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w24",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "这",
-          "pinyin": "zhè",
-          "meaning": "Đây, này",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 141,
-          "clickable": true
-        },
-        {
-          "text": "表示",
-          "pinyin": "biǎo shì",
-          "meaning": "biểu thị, cho thấy",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w27",
-          "clickable": true
-        },
-        {
-          "text": "阅读",
-          "pinyin": "yuè dú",
-          "meaning": "đọc hiểu",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w07",
-          "clickable": true
-        },
-        {
-          "text": "没",
-          "pinyin": "méi",
-          "meaning": "không có, chưa",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 64,
-          "clickable": true
-        },
-        {
-          "text": "有",
-          "clickable": false
-        },
-        {
-          "text": "唯一",
-          "pinyin": "wéi yī",
-          "meaning": "duy nhất",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2166,
-          "clickable": true
-        },
-        {
-          "text": "感受",
-          "pinyin": "gǎn shòu",
-          "meaning": "cảm nhận",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 1498,
-          "clickable": true
-        },
-        {
-          "text": "。",
-          "clickable": false
-        },
-        {
-          "text": "然而",
-          "pinyin": "rán ér",
-          "meaning": "vậy mà",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w23",
-          "clickable": true
-        },
-        {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "观点",
-          "pinyin": "guān diǎn",
-          "meaning": "quan điểm",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 1545,
-          "clickable": true
-        },
-        {
-          "text": "可以",
-          "pinyin": "kěyǐ",
-          "meaning": "có thể",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 209,
-          "clickable": true
-        },
-        {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
-          "clickable": true
-        },
-        {
-          "text": "同，",
-          "clickable": false
-        },
-        {
-          "text": "判断",
-          "pinyin": "pàn duàn",
-          "meaning": "phán đoán",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 917,
-          "clickable": true
-        },
-        {
-          "text": "必须",
-          "pinyin": "bìxū",
-          "meaning": "phải, cần phải",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 318,
-          "clickable": true
-        },
-        {
-          "text": "以",
-          "pinyin": "yǐ",
-          "meaning": "lấy, với",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 1106,
-          "clickable": true
-        },
-        {
-          "text": "文章",
-          "pinyin": "wén zhāng",
-          "meaning": "bài văn",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w20",
-          "clickable": true
-        },
-        {
-          "text": "内容",
-          "pinyin": "nèi róng",
-          "meaning": "nội dung",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w22",
-          "clickable": true
-        },
-        {
-          "text": "为",
-          "pinyin": "wèi",
-          "meaning": "vì",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 526,
-          "clickable": true
-        },
-        {
-          "text": "基础",
-          "pinyin": "jī chǔ",
-          "meaning": "cơ sở, căn bản",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 782,
-          "clickable": true
-        },
-        {
-          "text": "。\n\n",
-          "clickable": false
-        },
-        {
-          "text": "现在",
-          "pinyin": "xiànzài",
-          "meaning": "bây giờ",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 120,
-          "clickable": true
-        },
-        {
-          "text": "我",
-          "pinyin": "wǒ",
-          "meaning": "tôi",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 112,
-          "clickable": true
-        },
-        {
-          "text": "能",
-          "pinyin": "néng",
-          "meaning": "có thể",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 72,
-          "clickable": true
-        },
-        {
-          "text": "比较",
-          "pinyin": "bǐjiào",
-          "meaning": "khá, tương đối",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 316,
-          "clickable": true
-        },
-        {
-          "text": "流利",
-          "pinyin": "liú lì",
-          "meaning": "lưu loát",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w01",
-          "clickable": true
-        },
-        {
-          "text": "地",
-          "pinyin": "de",
-          "meaning": "trợ từ của động từ",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 348,
-          "clickable": true
-        },
-        {
-          "text": "介绍",
-          "pinyin": "jièshào",
-          "meaning": "giới thiệu",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 200,
+          "vocabularyId": 1021,
           "clickable": true
         },
         {
@@ -2325,131 +717,47 @@
           "clickable": true
         },
         {
-          "text": "，",
-          "clickable": false
-        },
-        {
-          "text": "也",
-          "pinyin": "yě",
-          "meaning": "cũng",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 274,
-          "clickable": true
-        },
-        {
-          "text": "越",
-          "clickable": false
-        },
-        {
-          "text": "来",
-          "pinyin": "lái",
-          "meaning": "đến",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 53,
-          "clickable": true
-        },
-        {
-          "text": "越",
-          "clickable": false
-        },
-        {
-          "text": "喜欢",
-          "pinyin": "xǐhuān",
-          "meaning": "thích",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 115,
-          "clickable": true
-        },
-        {
-          "text": "精彩",
-          "pinyin": "jīng cǎi",
-          "meaning": "hấp dẫn",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w30",
-          "clickable": true
-        },
-        {
-          "text": "的",
-          "pinyin": "de",
-          "meaning": "của (thuộc tính)",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 15,
-          "clickable": true
-        },
-        {
-          "text": "故事",
-          "pinyin": "gùshì",
-          "meaning": "câu chuyện",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 382,
-          "clickable": true
-        },
-        {
           "text": "。",
           "clickable": false
         },
         {
-          "text": "读",
-          "pinyin": "dú",
-          "meaning": "đọc",
+          "text": "第一",
+          "pinyin": "dì yī",
+          "meaning": "đầu tiên",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 22,
+          "vocabularyId": 172,
           "clickable": true
         },
         {
-          "text": "书",
-          "pinyin": "shū",
-          "meaning": "sách",
+          "text": "次",
+          "pinyin": "cì",
+          "meaning": "lần",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 98,
+          "vocabularyId": 162,
           "clickable": true
         },
         {
-          "text": "之",
-          "pinyin": "zhī",
-          "meaning": "của",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w21",
-          "clickable": true
-        },
-        {
-          "text": "所以",
-          "pinyin": "suǒyǐ",
-          "meaning": "vì vậy",
+          "text": "活动",
+          "pinyin": "huó dòng",
+          "meaning": "hoạt động",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 247,
+          "vocabularyId": 776,
           "clickable": true
         },
         {
-          "text": "厉害",
-          "pinyin": "lì hài",
-          "meaning": "lợi hại",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w02",
-          "clickable": true
-        },
-        {
-          "text": "，",
+          "text": "时，有",
           "clickable": false
         },
         {
-          "text": "不",
-          "pinyin": "bù",
-          "meaning": "không",
+          "text": "人",
+          "pinyin": "rén",
+          "meaning": "người",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 8,
+          "vocabularyId": 85,
           "clickable": true
         },
         {
@@ -2462,39 +770,79 @@
           "clickable": true
         },
         {
-          "text": "是",
-          "pinyin": "shì",
-          "meaning": "là, thì",
+          "text": "介绍",
+          "pinyin": "jièshào",
+          "meaning": "giới thiệu",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 97,
+          "vocabularyId": 200,
           "clickable": true
         },
         {
-          "text": "给",
-          "pinyin": "gěi",
-          "meaning": "đưa cho, cho",
+          "text": "故事",
+          "pinyin": "gùshì",
+          "meaning": "câu chuyện",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 181,
+          "vocabularyId": 382,
           "clickable": true
         },
         {
-          "text": "我们",
-          "pinyin": "wǒmen",
-          "meaning": "chúng tôi",
+          "text": "内容",
+          "pinyin": "nèi róng",
+          "meaning": "nội dung",
           "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 113,
+          "note": "",
+          "vocabularyId": "hsk4-l11-w22",
           "clickable": true
         },
         {
-          "text": "答案",
-          "pinyin": "dá àn",
-          "meaning": "đáp án",
+          "text": "，有",
+          "clickable": false
+        },
+        {
+          "text": "人",
+          "pinyin": "rén",
+          "meaning": "người",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 658,
+          "vocabularyId": 85,
+          "clickable": true
+        },
+        {
+          "text": "不断",
+          "pinyin": "bú duàn",
+          "meaning": "không ngừng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1253,
+          "clickable": true
+        },
+        {
+          "text": "引用",
+          "pinyin": "yǐnyòng",
+          "meaning": "Trích dẫn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 4675,
+          "clickable": true
+        },
+        {
+          "text": "著名",
+          "pinyin": "zhù míng",
+          "meaning": "nổi tiếng",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w17",
+          "clickable": true
+        },
+        {
+          "text": "评论",
+          "pinyin": "pínglùn",
+          "meaning": "Bình luận",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 3882,
           "clickable": true
         },
         {
@@ -2502,44 +850,88 @@
           "clickable": false
         },
         {
-          "text": "还",
-          "pinyin": "hái",
-          "meaning": "vẫn, còn",
+          "text": "大家",
+          "pinyin": "dàjiā",
+          "meaning": "mọi người",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 187,
+          "vocabularyId": 166,
           "clickable": true
         },
         {
-          "text": "让",
-          "pinyin": "ràng",
-          "meaning": "để, làm cho, nhường",
+          "text": "却",
+          "pinyin": "què",
+          "meaning": "lại, nhưng",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 237,
+          "vocabularyId": 948,
           "clickable": true
         },
         {
-          "text": "我们",
-          "pinyin": "wǒmen",
-          "meaning": "chúng tôi",
+          "text": "很",
+          "pinyin": "hěn",
+          "meaning": "rất",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 113,
+          "vocabularyId": 39,
           "clickable": true
         },
         {
-          "text": "学",
+          "text": "少",
+          "pinyin": "shǎo",
+          "meaning": "ít",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 92,
+          "clickable": true
+        },
+        {
+          "text": "说",
           "clickable": false
         },
         {
-          "text": "会",
-          "pinyin": "huì",
-          "meaning": "sẽ, biết (kỹ năng)",
+          "text": "自己",
+          "pinyin": "zìjǐ",
+          "meaning": "bản thân",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 42,
+          "vocabularyId": 590,
           "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "看法",
+          "pinyin": "kàn fǎ",
+          "meaning": "quan điểm",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w24",
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        },
+        {
+          "text": "管理",
+          "pinyin": "guǎn lǐ",
+          "meaning": "quản lý",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 748,
+          "clickable": true
+        },
+        {
+          "text": "员",
+          "clickable": false
         },
         {
           "text": "提",
@@ -2560,6 +952,24 @@
           "clickable": true
         },
         {
+          "text": "三",
+          "pinyin": "sān",
+          "meaning": "ba",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 88,
+          "clickable": true
+        },
+        {
+          "text": "个",
+          "pinyin": "gè",
+          "meaning": "cái (đơn vị lượng từ)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 32,
+          "clickable": true
+        },
+        {
           "text": "问题",
           "pinyin": "wèntí",
           "meaning": "vấn đề",
@@ -2569,25 +979,141 @@
           "clickable": true
         },
         {
-          "text": "。",
+          "text": "：哪",
           "clickable": false
         },
         {
-          "text": "读",
-          "pinyin": "dú",
-          "meaning": "đọc",
+          "text": "一",
+          "pinyin": "yī",
+          "meaning": "một",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 22,
+          "vocabularyId": 131,
           "clickable": true
         },
         {
-          "text": "好",
-          "pinyin": "hǎo",
-          "meaning": "tốt, khỏe",
+          "text": "段",
+          "pinyin": "duàn",
+          "meaning": "đoạn, quãng",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 36,
+          "vocabularyId": 360,
+          "clickable": true
+        },
+        {
+          "text": "改变",
+          "pinyin": "gǎi biàn",
+          "meaning": "thay đổi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 722,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "判断",
+          "pinyin": "pàn duàn",
+          "meaning": "phán đoán",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 917,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "同意",
+          "pinyin": "tóngyì",
+          "meaning": "đồng ý",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 516,
+          "clickable": true
+        },
+        {
+          "text": "作者",
+          "pinyin": "zuò zhě",
+          "meaning": "tác giả",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1192,
+          "clickable": true
+        },
+        {
+          "text": "什么",
+          "pinyin": "shénme",
+          "meaning": "cái gì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 94,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        },
+        {
+          "text": "这",
+          "pinyin": "zhè",
+          "meaning": "Đây, này",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 141,
+          "clickable": true
+        },
+        {
+          "text": "本",
+          "pinyin": "běn",
+          "meaning": "cuốn (dùng cho sách)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 6,
           "clickable": true
         },
         {
@@ -2600,21 +1126,83 @@
           "clickable": true
         },
         {
-          "text": "需要",
-          "pinyin": "xūyào",
-          "meaning": "cần",
+          "text": "和",
+          "pinyin": "hé",
+          "meaning": "và",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 548,
+          "vocabularyId": 38,
           "clickable": true
         },
         {
-          "text": "方法",
-          "pinyin": "fāng fǎ",
-          "meaning": "phương pháp",
+          "text": "现实",
+          "pinyin": "xiàn shí",
+          "meaning": "hiện thực",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 705,
+          "vocabularyId": 2215,
+          "clickable": true
+        },
+        {
+          "text": "生活",
+          "pinyin": "shēng huó",
+          "meaning": "cuộc sống",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 969,
+          "clickable": true
+        },
+        {
+          "text": "有",
+          "clickable": false
+        },
+        {
+          "text": "什么",
+          "pinyin": "shénme",
+          "meaning": "cái gì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 94,
+          "clickable": true
+        },
+        {
+          "text": "联系",
+          "pinyin": "lián xì",
+          "meaning": "liên hệ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 881,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        },
+        {
+          "text": "从",
+          "pinyin": "cóng",
+          "meaning": "từ, theo",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 163,
+          "clickable": true
+        },
+        {
+          "text": "那",
+          "pinyin": "nà",
+          "meaning": "đó, kia",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 70,
+          "clickable": true
+        },
+        {
+          "text": "以后",
+          "pinyin": "yǐhòu",
+          "meaning": "sau này",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 557,
           "clickable": true
         },
         {
@@ -2622,6 +1210,326 @@
           "clickable": false
         },
         {
+          "text": "成员",
+          "pinyin": "chéng yuán",
+          "meaning": "thành viên",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2771,
+          "clickable": true
+        },
+        {
+          "text": "们",
+          "clickable": false
+        },
+        {
+          "text": "开始",
+          "pinyin": "kāishǐ",
+          "meaning": "bắt đầu",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 206,
+          "clickable": true
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "书",
+          "pinyin": "shū",
+          "meaning": "sách",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 98,
+          "clickable": true
+        },
+        {
+          "text": "页",
+          "pinyin": "yè",
+          "meaning": "trang mạng",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w18",
+          "clickable": true
+        },
+        {
+          "text": "旁",
+          "clickable": false
+        },
+        {
+          "text": "写",
+          "pinyin": "xiě",
+          "meaning": "viết",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 125,
+          "clickable": true
+        },
+        {
+          "text": "问题",
+          "pinyin": "wèntí",
+          "meaning": "vấn đề",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 258,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 274,
+          "clickable": true
+        },
+        {
+          "text": "愿意",
+          "clickable": false
+        },
+        {
+          "text": "听",
+          "pinyin": "tīng",
+          "meaning": "nghe",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 109,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "同",
+          "clickable": false
+        },
+        {
+          "text": "解释",
+          "pinyin": "jiě shì",
+          "meaning": "giải thích",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 818,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        },
+        {
+          "text": "一",
+          "pinyin": "yī",
+          "meaning": "một",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 131,
+          "clickable": true
+        },
+        {
+          "text": "本",
+          "pinyin": "běn",
+          "meaning": "cuốn (dùng cho sách)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 6,
+          "clickable": true
+        },
+        {
+          "text": "好",
+          "pinyin": "hǎo",
+          "meaning": "tốt, khỏe",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 36,
+          "clickable": true
+        },
+        {
+          "text": "书",
+          "pinyin": "shū",
+          "meaning": "sách",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 98,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "一定",
+          "pinyin": "yīdìng",
+          "meaning": "nhất định",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 553,
+          "clickable": true
+        },
+        {
+          "text": "给",
+          "pinyin": "gěi",
+          "meaning": "đưa cho, cho",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 181,
+          "clickable": true
+        },
+        {
+          "text": "出",
+          "pinyin": "chū",
+          "meaning": "ra ngoài",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 159,
+          "clickable": true
+        },
+        {
+          "text": "简单",
+          "pinyin": "jiǎndān",
+          "meaning": "đơn giản",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 412,
+          "clickable": true
+        },
+        {
+          "text": "答案",
+          "pinyin": "dá àn",
+          "meaning": "đáp án",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 658,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "它",
+          "pinyin": "tā",
+          "meaning": "nó (cho vật, động vật)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 248,
+          "clickable": true
+        },
+        {
+          "text": "可能",
+          "pinyin": "kěnéng",
+          "meaning": "có thể",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 208,
+          "clickable": true
+        },
+        {
+          "text": "让",
+          "pinyin": "ràng",
+          "meaning": "để, làm cho, nhường",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 237,
+          "clickable": true
+        },
+        {
+          "text": "人",
+          "pinyin": "rén",
+          "meaning": "người",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 85,
+          "clickable": true
+        },
+        {
+          "text": "发现",
+          "pinyin": "fāxiàn",
+          "meaning": "phát hiện",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 367,
+          "clickable": true
+        },
+        {
+          "text": "原来",
+          "pinyin": "yuán lái",
+          "meaning": "hóa ra, vốn, cũ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1134,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "知识",
+          "pinyin": "zhī shí",
+          "meaning": "tri thức, kiến thức",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1159,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "够",
+          "pinyin": "gòu",
+          "meaning": "đủ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 740,
+          "clickable": true
+        },
+        {
+          "text": "完整",
+          "pinyin": "wán zhěng",
+          "meaning": "hoàn chỉnh",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2154,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        },
+        {
           "text": "好",
           "pinyin": "hǎo",
           "meaning": "tốt, khỏe",
@@ -2649,6 +1557,73 @@
           "clickable": true
         },
         {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "一",
+          "pinyin": "yī",
+          "meaning": "một",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 131,
+          "clickable": true
+        },
+        {
+          "text": "种",
+          "pinyin": "zhǒng",
+          "meaning": "loại, hạt giống",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 583,
+          "clickable": true
+        },
+        {
+          "text": "习惯",
+          "pinyin": "xíguàn",
+          "meaning": "thói quen",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 530,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "读",
+          "pinyin": "dú",
+          "meaning": "đọc",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 22,
+          "clickable": true
+        },
+        {
+          "text": "好",
+          "pinyin": "hǎo",
+          "meaning": "tốt, khỏe",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 36,
+          "clickable": true
+        },
+        {
+          "text": "书",
+          "pinyin": "shū",
+          "meaning": "sách",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 98,
+          "clickable": true
+        },
+        {
           "text": "需要",
           "pinyin": "xūyào",
           "meaning": "cần",
@@ -2658,12 +1633,12 @@
           "clickable": true
         },
         {
-          "text": "坚持",
-          "pinyin": "jiān chí",
-          "meaning": "kiên trì",
+          "text": "选择",
+          "pinyin": "xuǎnzé",
+          "meaning": "lựa chọn",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 797,
+          "vocabularyId": 549,
           "clickable": true
         },
         {
@@ -2674,7 +1649,7 @@
           "text": "而",
           "pinyin": "ér",
           "meaning": "còn",
-          "partOfSpeech": "liên từ",
+          "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
           "vocabularyId": 698,
           "clickable": true
@@ -2698,60 +1673,6 @@
           "clickable": true
         },
         {
-          "text": "收获",
-          "pinyin": "shōu huò",
-          "meaning": "thu hoạch",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2056,
-          "clickable": true
-        },
-        {
-          "text": "是",
-          "pinyin": "shì",
-          "meaning": "là, thì",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 97,
-          "clickable": true
-        },
-        {
-          "text": "在",
-          "pinyin": "zài",
-          "meaning": "ở, tại",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 137,
-          "clickable": true
-        },
-        {
-          "text": "一",
-          "pinyin": "yī",
-          "meaning": "một",
-          "partOfSpeech": "",
-          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 131,
-          "clickable": true
-        },
-        {
-          "text": "页",
-          "pinyin": "yè",
-          "meaning": "trang mạng",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w18",
-          "clickable": true
-        },
-        {
-          "text": "页",
-          "pinyin": "yè",
-          "meaning": "trang mạng",
-          "partOfSpeech": "",
-          "note": "",
-          "vocabularyId": "hsk4-l11-w18",
-          "clickable": true
-        },
-        {
           "text": "阅读",
           "pinyin": "yuè dú",
           "meaning": "đọc hiểu",
@@ -2761,25 +1682,620 @@
           "clickable": true
         },
         {
-          "text": "中",
-          "clickable": false
-        },
-        {
-          "text": "形成",
-          "pinyin": "xíng chéng",
-          "meaning": "hình thành",
+          "text": "还",
+          "pinyin": "hái",
+          "meaning": "vẫn, còn",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 2253,
+          "vocabularyId": 187,
           "clickable": true
         },
         {
-          "text": "自己",
-          "pinyin": "zìjǐ",
-          "meaning": "bản thân",
+          "text": "需要",
+          "pinyin": "xūyào",
+          "meaning": "cần",
           "partOfSpeech": "",
           "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
-          "vocabularyId": 590,
+          "vocabularyId": 548,
+          "clickable": true
+        },
+        {
+          "text": "思考",
+          "pinyin": "sīkǎo",
+          "meaning": "suy nghĩ",
+          "partOfSpeech": "động từ",
+          "note": "",
+          "vocabularyId": "hsk4-l11-ext03",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "怀疑",
+          "pinyin": "huái yí",
+          "meaning": "nghi ngờ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 774,
+          "clickable": true
+        },
+        {
+          "text": "和",
+          "pinyin": "hé",
+          "meaning": "và",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 38,
+          "clickable": true
+        },
+        {
+          "text": "交流",
+          "pinyin": "jiāo liú",
+          "meaning": "giao lưu",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 806,
+          "clickable": true
+        },
+        {
+          "text": "。\n\n复述",
+          "clickable": false
+        },
+        {
+          "text": "文章",
+          "pinyin": "wén zhāng",
+          "meaning": "bài văn",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w20",
+          "clickable": true
+        },
+        {
+          "text": "时，",
+          "clickable": false
+        },
+        {
+          "text": "还",
+          "pinyin": "hái",
+          "meaning": "vẫn, còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 187,
+          "clickable": true
+        },
+        {
+          "text": "可以",
+          "pinyin": "kěyǐ",
+          "meaning": "có thể",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 209,
+          "clickable": true
+        },
+        {
+          "text": "结合",
+          "pinyin": "jié hé",
+          "meaning": "kết hợp",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1691,
+          "clickable": true
+        },
+        {
+          "text": "这",
+          "pinyin": "zhè",
+          "meaning": "Đây, này",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 141,
+          "clickable": true
+        },
+        {
+          "text": "些",
+          "pinyin": "xiē",
+          "meaning": "vài",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 124,
+          "clickable": true
+        },
+        {
+          "text": "词语",
+          "pinyin": "cí yǔ",
+          "meaning": "từ ngữ",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w05",
+          "clickable": true
+        },
+        {
+          "text": "补充",
+          "pinyin": "bǔ chōng",
+          "meaning": "bổ sung",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1251,
+          "clickable": true
+        },
+        {
+          "text": "人物",
+          "pinyin": "rén wù",
+          "meaning": "nhân vật",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1974,
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "环境",
+          "pinyin": "huánjìng",
+          "meaning": "môi trường",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 401,
+          "clickable": true
+        },
+        {
+          "text": "和",
+          "pinyin": "hé",
+          "meaning": "và",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 38,
+          "clickable": true
+        },
+        {
+          "text": "过程",
+          "pinyin": "guò chéng",
+          "meaning": "quá trình",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 757,
+          "clickable": true
+        },
+        {
+          "text": "：",
+          "clickable": false
+        },
+        {
+          "text": "流利",
+          "pinyin": "liú lì",
+          "meaning": "lưu loát",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w01",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "厉害",
+          "pinyin": "lì hài",
+          "meaning": "lợi hại",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w02",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "语法",
+          "pinyin": "yǔ fǎ",
+          "meaning": "ngữ pháp",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w03",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "准确",
+          "pinyin": "zhǔn què",
+          "meaning": "chính xác",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w04",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "词语",
+          "pinyin": "cí yǔ",
+          "meaning": "từ ngữ",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w05",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "连",
+          "pinyin": "lián",
+          "meaning": "liên kết, nối",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w06",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "来得及",
+          "pinyin": "lái de jí",
+          "meaning": "kịp",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w08",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "复杂",
+          "pinyin": "fù zá",
+          "meaning": "phức tạp",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w09",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "只好",
+          "pinyin": "zhǐ hǎo",
+          "meaning": "đành",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w10",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "填空",
+          "pinyin": "tián kòng",
+          "meaning": "điền trống",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w11",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "猜",
+          "pinyin": "cāi",
+          "meaning": "đoán",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w12",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "否则",
+          "pinyin": "fǒu zé",
+          "meaning": "nếu không thì",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w13",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "客厅",
+          "pinyin": "kè tīng",
+          "meaning": "phòng khách",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w14",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "无论",
+          "pinyin": "wú lùn",
+          "meaning": "bất luận",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w15",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "杂志",
+          "pinyin": "zá zhì",
+          "meaning": "tạp chí",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w16",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "增加",
+          "pinyin": "zēng jiā",
+          "meaning": "tăng thêm",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w19",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "文章",
+          "pinyin": "wén zhāng",
+          "meaning": "bài văn",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w20",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "之",
+          "pinyin": "zhī",
+          "meaning": "của",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w21",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "然而",
+          "pinyin": "rán ér",
+          "meaning": "vậy mà",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w23",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "相同",
+          "pinyin": "xiāng tóng",
+          "meaning": "giống nhau",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w25",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "顺序",
+          "pinyin": "shùn xù",
+          "meaning": "thứ tự",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w26",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "表示",
+          "pinyin": "biǎo shì",
+          "meaning": "biểu thị, cho thấy",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w27",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "养成",
+          "pinyin": "yǎng chéng",
+          "meaning": "nuôi dưỡng, hình thành",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w28",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "同时",
+          "pinyin": "tóng shí",
+          "meaning": "đồng thời",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w29",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "精彩",
+          "pinyin": "jīng cǎi",
+          "meaning": "hấp dẫn",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "hsk4-l11-w30",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "理解",
+          "pinyin": "lǐjiě",
+          "meaning": "hiểu, lý giải",
+          "partOfSpeech": "động từ",
+          "note": "",
+          "vocabularyId": "hsk4-l11-ext01",
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "记忆",
+          "pinyin": "jìyì",
+          "meaning": "ghi nhớ, ký ức",
+          "partOfSpeech": "danh từ/động từ",
+          "note": "",
+          "vocabularyId": "hsk4-l11-ext02",
+          "clickable": true
+        },
+        {
+          "text": "。\n\n",
+          "clickable": false
+        },
+        {
+          "text": "回",
+          "pinyin": "huí",
+          "meaning": "quay lại, về",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 41,
+          "clickable": true
+        },
+        {
+          "text": "头",
+          "clickable": false
+        },
+        {
+          "text": "看",
+          "pinyin": "kàn",
+          "meaning": "xem",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 50,
+          "clickable": true
+        },
+        {
+          "text": "这",
+          "pinyin": "zhè",
+          "meaning": "Đây, này",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 141,
+          "clickable": true
+        },
+        {
+          "text": "段",
+          "pinyin": "duàn",
+          "meaning": "đoạn, quãng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 360,
+          "clickable": true
+        },
+        {
+          "text": "经历",
+          "pinyin": "jīnglì",
+          "meaning": "kinh nghiệm",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 429,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "真正",
+          "pinyin": "zhēn zhèng",
+          "meaning": "thật",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1150,
+          "clickable": true
+        },
+        {
+          "text": "值得",
+          "pinyin": "zhí dé",
+          "meaning": "đáng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1161,
+          "clickable": true
+        },
+        {
+          "text": "记",
+          "clickable": false
+        },
+        {
+          "text": "住",
+          "pinyin": "zhù",
+          "meaning": "sống, cư trú",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 144,
           "clickable": true
         },
         {
@@ -2792,12 +2308,357 @@
           "clickable": true
         },
         {
-          "text": "理解",
-          "pinyin": "lǐjiě",
-          "meaning": "hiểu, lý giải",
-          "partOfSpeech": "động từ",
-          "note": "",
-          "vocabularyId": "hsk4-l11-ext01",
+          "text": "并",
+          "clickable": false
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "结果",
+          "pinyin": "jié guǒ",
+          "meaning": "kết quả",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 817,
+          "clickable": true
+        },
+        {
+          "text": "本身",
+          "pinyin": "běn shēn",
+          "meaning": "bản thân",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2580,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "而",
+          "pinyin": "ér",
+          "meaning": "còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 698,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "人",
+          "pinyin": "rén",
+          "meaning": "người",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 85,
+          "clickable": true
+        },
+        {
+          "text": "们",
+          "clickable": false
+        },
+        {
+          "text": "如何",
+          "pinyin": "rú hé",
+          "meaning": "như thế nào",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1983,
+          "clickable": true
+        },
+        {
+          "text": "观察",
+          "pinyin": "guān chá",
+          "meaning": "quan sát",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1544,
+          "clickable": true
+        },
+        {
+          "text": "问题",
+          "pinyin": "wèntí",
+          "meaning": "vấn đề",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 258,
+          "clickable": true
+        },
+        {
+          "text": "、",
+          "clickable": false
+        },
+        {
+          "text": "交换",
+          "pinyin": "jiāo huàn",
+          "meaning": "trao đổi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1674,
+          "clickable": true
+        },
+        {
+          "text": "意见",
+          "pinyin": "yì jiàn",
+          "meaning": "ý kiến",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1109,
+          "clickable": true
+        },
+        {
+          "text": "，并",
+          "clickable": false
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "事实",
+          "pinyin": "shì shí",
+          "meaning": "sự thật",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2052,
+          "clickable": true
+        },
+        {
+          "text": "面前",
+          "clickable": false
+        },
+        {
+          "text": "调整",
+          "pinyin": "tiáo zhěng",
+          "meaning": "điều chỉnh",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2127,
+          "clickable": true
+        },
+        {
+          "text": "原来",
+          "pinyin": "yuán lái",
+          "meaning": "hóa ra, vốn, cũ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1134,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "判断",
+          "pinyin": "pàn duàn",
+          "meaning": "phán đoán",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 917,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        },
+        {
+          "text": "成熟",
+          "pinyin": "chéng shú",
+          "meaning": "thành thục",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1304,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "永远",
+          "pinyin": "yǒng yuǎn",
+          "meaning": "mãi mãi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1115,
+          "clickable": true
+        },
+        {
+          "text": "正确",
+          "pinyin": "zhèng què",
+          "meaning": "chính xác",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1154,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "而",
+          "pinyin": "ér",
+          "meaning": "còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 698,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "愿意",
+          "clickable": false
+        },
+        {
+          "text": "为",
+          "pinyin": "wèi",
+          "meaning": "vì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 526,
+          "clickable": true
+        },
+        {
+          "text": "选择",
+          "pinyin": "xuǎnzé",
+          "meaning": "lựa chọn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 549,
+          "clickable": true
+        },
+        {
+          "text": "负责",
+          "pinyin": "fù zé",
+          "meaning": "phụ trách",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 718,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 274,
+          "clickable": true
+        },
+        {
+          "text": "愿意",
+          "clickable": false
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "发现",
+          "pinyin": "fāxiàn",
+          "meaning": "phát hiện",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 367,
+          "clickable": true
+        },
+        {
+          "text": "不足",
+          "pinyin": "bú zú",
+          "meaning": "không đủ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1259,
+          "clickable": true
+        },
+        {
+          "text": "后",
+          "clickable": false
+        },
+        {
+          "text": "继续",
+          "pinyin": "jì xù",
+          "meaning": "tiếp tục",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 790,
+          "clickable": true
+        },
+        {
+          "text": "改进",
+          "pinyin": "gǎi jìn",
+          "meaning": "cải tiến",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1487,
           "clickable": true
         },
         {
@@ -2914,8 +2775,8 @@
     },
     {
       "type": "reading",
-      "question": "Phương pháp đọc mới của nhân vật gồm những bước nào?",
-      "answer": "Xem tiêu đề, đọc đoạn theo thứ tự, đoán nghĩa trong ngữ cảnh rồi mới tra những từ quan trọng."
+      "question": "Bài “读书好，读好书，好读书” muốn nhấn mạnh điều gì?",
+      "answer": "Đọc tốt không chỉ là đọc nhiều mà còn phải lựa chọn, đặt câu hỏi, suy nghĩ và trao đổi quan điểm."
     },
     {
       "type": "writing",
@@ -2927,8 +2788,8 @@
     "mainVocabularyCount": 30,
     "extendedVocabularyCount": 3,
     "missingFromReading": [],
-    "interactiveSegments": 240,
-    "lookupCoveragePercent": 89.8,
+    "interactiveSegments": 221,
+    "lookupCoveragePercent": 92.4,
     "copyrightSafe": true
   },
   "smartCheck": {
@@ -2936,5 +2797,361 @@
     "ignorePunctuation": true,
     "ignoreSpaces": true,
     "allowAlternativeAnswers": true
-  }
+  },
+  "vocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "hsk4-l11-w01",
+          "hanzi": "流利",
+          "pinyin": "liú lì",
+          "meaning": "lưu loát",
+          "example": "他的汉语说得很流利。",
+          "examplePinyin": "Tā de Hànyǔ shuō de hěn liúlì.",
+          "exampleTranslation": "Anh ấy nói tiếng Trung rất lưu loát.",
+          "audio": "vocab/01.mp3"
+        },
+        {
+          "id": "hsk4-l11-w02",
+          "hanzi": "厉害",
+          "pinyin": "lì hài",
+          "meaning": "lợi hại",
+          "example": "他的汉语说得很厉害。",
+          "examplePinyin": "Tā de Hànyǔ shuō de hěn lìhài.",
+          "exampleTranslation": "Anh ấy nói tiếng Trung rất giỏi.",
+          "audio": "vocab/02.mp3"
+        },
+        {
+          "id": "hsk4-l11-w03",
+          "hanzi": "语法",
+          "pinyin": "yǔ fǎ",
+          "meaning": "ngữ pháp",
+          "example": "他的语法很好。",
+          "examplePinyin": "Tā de yǔfǎ hěn hǎo.",
+          "exampleTranslation": "Ngữ pháp của anh ấy rất tốt.",
+          "audio": "vocab/03.mp3"
+        },
+        {
+          "id": "hsk4-l11-w04",
+          "hanzi": "准确",
+          "pinyin": "zhǔn què",
+          "meaning": "chính xác",
+          "example": "他的答案非常准确。",
+          "examplePinyin": "Tā de dá'àn fēicháng zhǔnquè.",
+          "exampleTranslation": "Câu trả lời của anh ấy rất chính xác.",
+          "audio": "vocab/04.mp3"
+        },
+        {
+          "id": "hsk4-l11-w05",
+          "hanzi": "词语",
+          "pinyin": "cí yǔ",
+          "meaning": "từ ngữ",
+          "example": "请学习这些词语。",
+          "examplePinyin": "Qǐng xuéxí zhèxiē cíyǔ.",
+          "exampleTranslation": "Vui lòng học những từ này.",
+          "audio": "vocab/05.mp3"
+        },
+        {
+          "id": "hsk4-l11-w06",
+          "hanzi": "连",
+          "pinyin": "lián",
+          "meaning": "liên kết, nối",
+          "example": "他连书都没带。",
+          "examplePinyin": "Tā lián shū dōu méi dài.",
+          "exampleTranslation": "Anh ấy thậm chí còn không mang sách.",
+          "audio": "vocab/06.mp3"
+        },
+        {
+          "id": "hsk4-l11-w07",
+          "hanzi": "阅读",
+          "pinyin": "yuè dú",
+          "meaning": "đọc hiểu",
+          "example": "我每天阅读书籍。",
+          "examplePinyin": "Wǒ měitiān yuèdú shūjí.",
+          "exampleTranslation": "Tôi đọc sách hàng ngày.",
+          "audio": "vocab/07.mp3"
+        },
+        {
+          "id": "hsk4-l11-w08",
+          "hanzi": "来得及",
+          "pinyin": "lái de jí",
+          "meaning": "kịp",
+          "example": "你来得及去火车站。",
+          "examplePinyin": "Nǐ láidéjí qù huǒchē zhàn.",
+          "exampleTranslation": "Bạn kịp giờ đi đến ga tàu.",
+          "audio": "vocab/08.mp3"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "items": [
+        {
+          "id": "hsk4-l11-w09",
+          "hanzi": "复杂",
+          "pinyin": "fù zá",
+          "meaning": "phức tạp",
+          "example": "这个问题很复杂。",
+          "examplePinyin": "Zhège wèntí hěn fùzá.",
+          "exampleTranslation": "Vấn đề này rất phức tạp.",
+          "audio": "vocab/09.mp3"
+        },
+        {
+          "id": "hsk4-l11-w10",
+          "hanzi": "只好",
+          "pinyin": "zhǐ hǎo",
+          "meaning": "đành",
+          "example": "下雨了，我们只好回家。",
+          "examplePinyin": "Xiàyǔ le, wǒmen zhǐhǎo huí jiā.",
+          "exampleTranslation": "Trời mưa rồi, chúng ta đành phải về nhà.",
+          "audio": "vocab/10.mp3"
+        },
+        {
+          "id": "hsk4-l11-w11",
+          "hanzi": "填空",
+          "pinyin": "tián kòng",
+          "meaning": "điền trống",
+          "example": "请在填空处写上答案。",
+          "examplePinyin": "Qǐng zài tiánkòng chù xiě shàng dá'àn.",
+          "exampleTranslation": "Xin hãy điền câu trả lời vào chỗ trống.",
+          "audio": "vocab/11.mp3"
+        },
+        {
+          "id": "hsk4-l11-w12",
+          "hanzi": "猜",
+          "pinyin": "cāi",
+          "meaning": "đoán",
+          "example": "我猜他不会来。",
+          "examplePinyin": "Wǒ cāi tā bù huì lái.",
+          "exampleTranslation": "Tôi đoán anh ấy sẽ không đến.",
+          "audio": "vocab/12.mp3"
+        },
+        {
+          "id": "hsk4-l11-w13",
+          "hanzi": "否则",
+          "pinyin": "fǒu zé",
+          "meaning": "nếu không thì",
+          "example": "请认真工作，否则会影响结果。",
+          "examplePinyin": "Qǐng rènzhēn gōngzuò, fǒuzé huì yǐngxiǎng jiéguǒ.",
+          "exampleTranslation": "Hãy làm việc nghiêm túc, nếu không sẽ ảnh hưởng kết quả.",
+          "audio": "vocab/13.mp3"
+        },
+        {
+          "id": "hsk4-l11-w14",
+          "hanzi": "客厅",
+          "pinyin": "kè tīng",
+          "meaning": "phòng khách",
+          "example": "客厅里有很多家具。",
+          "examplePinyin": "Kètīng lǐ yǒu hěn duō jiājù.",
+          "exampleTranslation": "Trong phòng khách có rất nhiều đồ nội thất.",
+          "audio": "vocab/14.mp3"
+        },
+        {
+          "id": "hsk4-l11-w15",
+          "hanzi": "无论",
+          "pinyin": "wú lùn",
+          "meaning": "bất luận",
+          "example": "无论天气如何，我们都去。",
+          "examplePinyin": "Wúlùn tiānqì rúhé, wǒmen dōu qù.",
+          "exampleTranslation": "Bất kể thời tiết thế nào, chúng tôi đều đi.",
+          "audio": "vocab/15.mp3"
+        },
+        {
+          "id": "hsk4-l11-w16",
+          "hanzi": "杂志",
+          "pinyin": "zá zhì",
+          "meaning": "tạp chí",
+          "example": "他正在看杂志。",
+          "examplePinyin": "Tā zhèngzài kàn zázhì.",
+          "exampleTranslation": "Anh ấy đang đọc tạp chí.",
+          "audio": "vocab/16.mp3"
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "items": [
+        {
+          "id": "hsk4-l11-w17",
+          "hanzi": "著名",
+          "pinyin": "zhù míng",
+          "meaning": "nổi tiếng",
+          "example": "他是一位著名的作家。",
+          "examplePinyin": "Tā shì yī wèi zhùmíng de zuòjiā.",
+          "exampleTranslation": "Anh ấy là một nhà văn nổi tiếng.",
+          "audio": "vocab/17.mp3"
+        },
+        {
+          "id": "hsk4-l11-w18",
+          "hanzi": "页",
+          "pinyin": "yè",
+          "meaning": "trang mạng",
+          "example": "请翻到下一页。",
+          "examplePinyin": "Qǐng fān dào xià yī yè.",
+          "exampleTranslation": "Vui lòng lật sang trang tiếp theo.",
+          "audio": "vocab/18.mp3"
+        },
+        {
+          "id": "hsk4-l11-w19",
+          "hanzi": "增加",
+          "pinyin": "zēng jiā",
+          "meaning": "tăng thêm",
+          "example": "我们需要增加预算。",
+          "examplePinyin": "Wǒmen xūyào zēngjiā yùsuàn.",
+          "exampleTranslation": "Chúng ta cần tăng ngân sách.",
+          "audio": "vocab/19.mp3"
+        },
+        {
+          "id": "hsk4-l11-w20",
+          "hanzi": "文章",
+          "pinyin": "wén zhāng",
+          "meaning": "bài văn",
+          "example": "这篇文章写得很好。",
+          "examplePinyin": "Zhè piān wénzhāng xiě de hěn hǎo.",
+          "exampleTranslation": "Bài viết này được viết rất hay.",
+          "audio": "vocab/20.mp3"
+        },
+        {
+          "id": "hsk4-l11-w21",
+          "hanzi": "之",
+          "pinyin": "zhī",
+          "meaning": "của",
+          "example": "这本书之内容很丰富。",
+          "examplePinyin": "Zhè běn shū zhī nèiróng hěn fēngfù.",
+          "exampleTranslation": "Nội dung của cuốn sách này rất phong phú.",
+          "audio": "vocab/21.mp3"
+        },
+        {
+          "id": "hsk4-l11-w22",
+          "hanzi": "内容",
+          "pinyin": "nèi róng",
+          "meaning": "nội dung",
+          "example": "这本书的内容很有趣。",
+          "examplePinyin": "Zhè běn shū de nèiróng hěn yǒuqù.",
+          "exampleTranslation": "Nội dung của cuốn sách này rất thú vị.",
+          "audio": "vocab/22.mp3"
+        },
+        {
+          "id": "hsk4-l11-w23",
+          "hanzi": "然而",
+          "pinyin": "rán ér",
+          "meaning": "vậy mà",
+          "example": "然而，他并没有成功。",
+          "examplePinyin": "Rán'ér, tā bìng méiyǒu chénggōng.",
+          "exampleTranslation": "Tuy nhiên, anh ấy không thành công.",
+          "audio": "vocab/23.mp3"
+        },
+        {
+          "id": "hsk4-l11-w24",
+          "hanzi": "看法",
+          "pinyin": "kàn fǎ",
+          "meaning": "quan điểm",
+          "example": "关于这件事，你有什么看法？",
+          "examplePinyin": "Guānyú zhè jiàn shì, nǐ yǒu shénme kànfǎ?",
+          "exampleTranslation": "Về việc này, bạn có quan điểm gì?",
+          "audio": "vocab/24.mp3"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "items": [
+        {
+          "id": "hsk4-l11-w25",
+          "hanzi": "相同",
+          "pinyin": "xiāng tóng",
+          "meaning": "giống nhau",
+          "example": "他们有相同的爱好。",
+          "examplePinyin": "Tāmen yǒu xiāngtóng de àihào.",
+          "exampleTranslation": "Họ có cùng sở thích.",
+          "audio": "vocab/25.mp3"
+        },
+        {
+          "id": "hsk4-l11-w26",
+          "hanzi": "顺序",
+          "pinyin": "shùn xù",
+          "meaning": "thứ tự",
+          "example": "请按顺序排队。",
+          "examplePinyin": "Qǐng àn shùnxù páiduì.",
+          "exampleTranslation": "Vui lòng xếp hàng theo thứ tự.",
+          "audio": "vocab/26.mp3"
+        },
+        {
+          "id": "hsk4-l11-w27",
+          "hanzi": "表示",
+          "pinyin": "biǎo shì",
+          "meaning": "biểu thị, cho thấy",
+          "example": "他的表情表示他不太同意。",
+          "examplePinyin": "Tā de biǎoqíng biǎoshì tā bú tài tóngyì.",
+          "exampleTranslation": "Vẻ mặt của anh ấy cho thấy anh ấy không đồng ý lắm.",
+          "audio": "vocab/27.mp3"
+        },
+        {
+          "id": "hsk4-l11-w28",
+          "hanzi": "养成",
+          "pinyin": "yǎng chéng",
+          "meaning": "nuôi dưỡng, hình thành",
+          "example": "这种习惯需要时间养成。",
+          "examplePinyin": "Zhè zhǒng xíguàn xūyào shíjiān yǎngchéng.",
+          "exampleTranslation": "Thói quen này cần thời gian để hình thành.",
+          "audio": "vocab/28.mp3"
+        },
+        {
+          "id": "hsk4-l11-w29",
+          "hanzi": "同时",
+          "pinyin": "tóng shí",
+          "meaning": "đồng thời",
+          "example": "他同时做两份工作。",
+          "examplePinyin": "Tā tóngshí zuò liǎng fèn gōngzuò.",
+          "exampleTranslation": "Anh ấy làm hai công việc cùng một lúc.",
+          "audio": "vocab/29.mp3"
+        },
+        {
+          "id": "hsk4-l11-w30",
+          "hanzi": "精彩",
+          "pinyin": "jīng cǎi",
+          "meaning": "hấp dẫn",
+          "example": "比赛非常精彩。",
+          "examplePinyin": "Bǐsài fēicháng jīngcǎi.",
+          "exampleTranslation": "Trận đấu rất xuất sắc.",
+          "audio": "vocab/30.mp3"
+        }
+      ]
+    }
+  ],
+  "extendedVocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "hsk4-l11-ext01",
+          "tag": "mở rộng",
+          "hanzi": "理解",
+          "pinyin": "lǐjiě",
+          "meaning": "hiểu, lý giải",
+          "partOfSpeech": "động từ",
+          "example": "后来老师教我先看标题，再按顺序理解段落，猜词语在上下文中的意思，最后才查重要的词。"
+        },
+        {
+          "id": "hsk4-l11-ext02",
+          "tag": "mở rộng",
+          "hanzi": "记忆",
+          "pinyin": "jìyì",
+          "meaning": "ghi nhớ, ký ức",
+          "partOfSpeech": "danh từ/động từ",
+          "example": "我发现读书不仅帮助记忆词语，同时训练理解和思考。"
+        },
+        {
+          "id": "hsk4-l11-ext03",
+          "tag": "mở rộng",
+          "hanzi": "思考",
+          "pinyin": "sīkǎo",
+          "meaning": "suy nghĩ",
+          "partOfSpeech": "động từ",
+          "example": "我发现读书不仅帮助记忆词语，同时训练理解和思考。"
+        }
+      ]
+    }
+  ]
 }

@@ -3,9 +3,11 @@
   "level": 1,
   "title": "Bạn đi đâu?",
   "meta": {
-    "estimatedMinutes": 22,
+    "estimatedMinutes": 30,
     "difficulty": "HSK1",
-    "version": 2
+    "version": 4,
+    "contentRevision": "2026-07-dialogue-refresh",
+    "dialogueLineCount": 10
   },
   "audio": {
     "enabled": false,
@@ -87,46 +89,803 @@
   ],
   "lessonText": [
     {
-      "speaker": "A:",
-      "chinese": "你去哪儿？",
-      "pinyin": "Nǐ qù nǎr?",
-      "vietnamese": "Bạn đi đâu?",
-      "audio": "dialogue/001.mp3"
+      "speaker": "Coca:",
+      "chinese": "Cam，你去哪儿？",
+      "vietnamese": "Cam, bạn đi đâu vậy?",
+      "pinyin": "Cam， nǐ qù nǎ ér？",
+      "audio": "dialogue/001.mp3",
+      "segments": [
+        {
+          "text": "Cam，",
+          "clickable": false
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "哪儿",
+          "pinyin": "nǎr",
+          "meaning": "đâu, nơi nào",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "nar",
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "我去学校。",
-      "pinyin": "Wǒ qù xuéxiào.",
-      "vietnamese": "Tôi đi đến trường.",
-      "audio": "dialogue/002.mp3"
+      "speaker": "Cam:",
+      "chinese": "我去教室，你也去吗？",
+      "vietnamese": "Tôi đi đến phòng học, bạn cũng đi à?",
+      "pinyin": "Wǒ qù jiào shì， nǐ yě qù ma？",
+      "audio": "dialogue/002.mp3",
+      "segments": [
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "教室",
+          "pinyin": "jiàoshì",
+          "meaning": "lớp học",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext01",
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "ye",
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "吗",
+          "pinyin": "ma",
+          "meaning": "không (dùng trong câu hỏi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 61,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "A:",
-      "chinese": "他去哪儿？",
-      "pinyin": "Tā qù nǎr?",
-      "vietnamese": "Anh ấy đi đâu?",
-      "audio": "dialogue/003.mp3"
+      "speaker": "Coca:",
+      "chinese": "我先去食堂买水，再去教室。",
+      "vietnamese": "Tôi đến căng tin mua nước trước, rồi mới đến phòng học.",
+      "pinyin": "Wǒ xiān qù shí táng mǎi shuǐ， zài qù jiào shì。",
+      "audio": "dialogue/003.mp3",
+      "segments": [
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "先",
+          "pinyin": "xiān",
+          "meaning": "trước, trước tiên",
+          "partOfSpeech": "phó từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext03",
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "食堂",
+          "pinyin": "shítáng",
+          "meaning": "nhà ăn, căng tin",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext02",
+          "clickable": true
+        },
+        {
+          "text": "买",
+          "pinyin": "mǎi",
+          "meaning": "mua",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 62,
+          "clickable": true
+        },
+        {
+          "text": "水",
+          "pinyin": "shuǐ",
+          "meaning": "nước",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 99,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "再",
+          "pinyin": "zài",
+          "meaning": "lại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 286,
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "教室",
+          "pinyin": "jiàoshì",
+          "meaning": "lớp học",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext01",
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "他去图书馆。",
-      "pinyin": "Tā qù túshūguǎn.",
-      "vietnamese": "Anh ấy đi thư viện.",
-      "audio": "dialogue/004.mp3"
+      "speaker": "Cam:",
+      "chinese": "食堂在哪儿？",
+      "vietnamese": "Căng tin ở đâu?",
+      "pinyin": "Shí táng zài nǎ ér？",
+      "audio": "dialogue/004.mp3",
+      "segments": [
+        {
+          "text": "食堂",
+          "pinyin": "shítáng",
+          "meaning": "nhà ăn, căng tin",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext02",
+          "clickable": true
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "哪儿",
+          "pinyin": "nǎr",
+          "meaning": "đâu, nơi nào",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "nar",
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "A:",
-      "chinese": "你回家吗？",
-      "pinyin": "Nǐ huí jiā ma?",
-      "vietnamese": "Bạn về nhà không?",
-      "audio": "dialogue/005.mp3"
+      "speaker": "Coca:",
+      "chinese": "在图书馆旁边。",
+      "vietnamese": "Ở bên cạnh thư viện.",
+      "pinyin": "Zài tú shū guǎn páng biān。",
+      "audio": "dialogue/005.mp3",
+      "segments": [
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "图书馆",
+          "pinyin": "túshūguǎn",
+          "meaning": "thư viện",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "tushuguan",
+          "clickable": true
+        },
+        {
+          "text": "旁边",
+          "pinyin": "pángbiān",
+          "meaning": "bên cạnh",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 228,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "我不回家，我也去学校。",
-      "pinyin": "Wǒ bù huí jiā, wǒ yě qù xuéxiào.",
-      "vietnamese": "Tôi không về nhà, tôi cũng đi đến trường.",
-      "audio": "dialogue/006.mp3"
+      "speaker": "Cam:",
+      "chinese": "那我也去，我还没有吃早饭。",
+      "vietnamese": "Vậy tôi cũng đi, tôi vẫn chưa ăn sáng.",
+      "pinyin": "Nà wǒ yě qù， wǒ hái méi yǒu chī zǎo fàn。",
+      "audio": "dialogue/006.mp3",
+      "segments": [
+        {
+          "text": "那",
+          "pinyin": "nà",
+          "meaning": "đó, kia",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 70,
+          "clickable": true
+        },
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "ye",
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "qu",
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "还",
+          "pinyin": "hái",
+          "meaning": "vẫn, còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 187,
+          "clickable": true
+        },
+        {
+          "text": "没",
+          "pinyin": "méi",
+          "meaning": "không có, chưa",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 64,
+          "clickable": true
+        },
+        {
+          "text": "有",
+          "clickable": false
+        },
+        {
+          "text": "吃",
+          "pinyin": "chī",
+          "meaning": "ăn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 11,
+          "clickable": true
+        },
+        {
+          "text": "早饭。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "可是还有五分钟就上课了。",
+      "vietnamese": "Nhưng chỉ còn năm phút nữa là vào học.",
+      "pinyin": "Kě shì hái yǒu wǔ fēn zhōng jiù shàng kè le。",
+      "audio": "dialogue/007.mp3",
+      "segments": [
+        {
+          "text": "可",
+          "clickable": false
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "shi",
+          "clickable": true
+        },
+        {
+          "text": "还",
+          "pinyin": "hái",
+          "meaning": "vẫn, còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 187,
+          "clickable": true
+        },
+        {
+          "text": "有",
+          "clickable": false
+        },
+        {
+          "text": "五",
+          "pinyin": "wǔ",
+          "meaning": "năm",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 114,
+          "clickable": true
+        },
+        {
+          "text": "分钟",
+          "pinyin": "fēnzhōng",
+          "meaning": "phút",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 30,
+          "clickable": true
+        },
+        {
+          "text": "就",
+          "pinyin": "jiù",
+          "meaning": "thì, ngay",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 203,
+          "clickable": true
+        },
+        {
+          "text": "上",
+          "pinyin": "shàng",
+          "meaning": "lên",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 90,
+          "clickable": true
+        },
+        {
+          "text": "课",
+          "pinyin": "kè",
+          "meaning": "bài học",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 210,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "我只买一个面包，很快。",
+      "vietnamese": "Tôi chỉ mua một chiếc bánh mì thôi, sẽ nhanh lắm.",
+      "pinyin": "Wǒ zhǐ mǎi yí gè miàn bāo， hěn kuài。",
+      "audio": "dialogue/008.mp3",
+      "segments": [
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "只",
+          "pinyin": "zhǐ",
+          "meaning": "chỉ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 580,
+          "clickable": true
+        },
+        {
+          "text": "买",
+          "pinyin": "mǎi",
+          "meaning": "mua",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 62,
+          "clickable": true
+        },
+        {
+          "text": "一",
+          "pinyin": "yī",
+          "meaning": "một",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 131,
+          "clickable": true
+        },
+        {
+          "text": "个",
+          "pinyin": "gè",
+          "meaning": "cái (đơn vị lượng từ)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 32,
+          "clickable": true
+        },
+        {
+          "text": "面包",
+          "pinyin": "miànbāo",
+          "meaning": "bánh mì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 459,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "很",
+          "pinyin": "hěn",
+          "meaning": "rất",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 39,
+          "clickable": true
+        },
+        {
+          "text": "快",
+          "pinyin": "kuài",
+          "meaning": "nhanh",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 211,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "旁白:",
+      "chinese": "五分钟以后，Coca 到了教室，Cam 还在食堂选面包。",
+      "vietnamese": "Năm phút sau, Coca đã tới phòng học, Cam vẫn đang chọn bánh mì ở căng tin.",
+      "pinyin": "Wǔ fēn zhōng yǐ hòu，Coca dào le jiào shì，Cam hái zài shí táng xuǎn miàn bāo。",
+      "audio": "dialogue/009.mp3",
+      "segments": [
+        {
+          "text": "五",
+          "pinyin": "wǔ",
+          "meaning": "năm",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 114,
+          "clickable": true
+        },
+        {
+          "text": "分钟",
+          "pinyin": "fēnzhōng",
+          "meaning": "phút",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 30,
+          "clickable": true
+        },
+        {
+          "text": "以后",
+          "pinyin": "yǐhòu",
+          "meaning": "sau này",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 557,
+          "clickable": true
+        },
+        {
+          "text": "，Coca ",
+          "clickable": false
+        },
+        {
+          "text": "到",
+          "pinyin": "dào",
+          "meaning": "đến",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 168,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "教室",
+          "pinyin": "jiàoshì",
+          "meaning": "lớp học",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext01",
+          "clickable": true
+        },
+        {
+          "text": "，Cam ",
+          "clickable": false
+        },
+        {
+          "text": "还",
+          "pinyin": "hái",
+          "meaning": "vẫn, còn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 187,
+          "clickable": true
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "食堂",
+          "pinyin": "shítáng",
+          "meaning": "nhà ăn, căng tin",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext02",
+          "clickable": true
+        },
+        {
+          "text": "选",
+          "clickable": false
+        },
+        {
+          "text": "面包",
+          "pinyin": "miànbāo",
+          "meaning": "bánh mì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 459,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "老师:",
+      "chinese": "Cam，你的面包比你先来上课了。",
+      "vietnamese": "Cam, bánh mì của em còn đến lớp trước em đấy.",
+      "pinyin": "Cam， nǐ de miàn bāo bǐ nǐ xiān lái shàng kè le。",
+      "audio": "dialogue/010.mp3",
+      "segments": [
+        {
+          "text": "Cam，",
+          "clickable": false
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "面包",
+          "pinyin": "miànbāo",
+          "meaning": "bánh mì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 459,
+          "clickable": true
+        },
+        {
+          "text": "比",
+          "pinyin": "bǐ",
+          "meaning": "so sánh",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 155,
+          "clickable": true
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "先",
+          "pinyin": "xiān",
+          "meaning": "trước, trước tiên",
+          "partOfSpeech": "phó từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk1-l04-ext03",
+          "clickable": true
+        },
+        {
+          "text": "来",
+          "pinyin": "lái",
+          "meaning": "đến",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 53,
+          "clickable": true
+        },
+        {
+          "text": "上",
+          "pinyin": "shàng",
+          "meaning": "lên",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 90,
+          "clickable": true
+        },
+        {
+          "text": "课",
+          "pinyin": "kè",
+          "meaning": "bài học",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 210,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     }
   ],
   "grammar": [
@@ -194,5 +953,177 @@
       "question": "Dịch sang tiếng Trung: Tôi cũng đi.",
       "answer": "我也去"
     }
-  ]
+  ],
+  "learningPath": {
+    "mode": "sequential",
+    "sections": [
+      "vocabulary",
+      "extendedVocabulary",
+      "lessonText",
+      "grammar",
+      "exercises"
+    ],
+    "allowSkip": false,
+    "reviewAfterComplete": true
+  },
+  "extendedVocabulary": [
+    {
+      "id": "hsk1-l04-ext01",
+      "hanzi": "教室",
+      "pinyin": "jiàoshì",
+      "meaning": "lớp học",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+      "example": "学生们在教室里学习。",
+      "examplePinyin": "Xuéshēngmen zài jiàoshì lǐ xuéxí.",
+      "exampleTranslation": "Học sinh đang học trong lớp học."
+    },
+    {
+      "id": "hsk1-l04-ext02",
+      "hanzi": "食堂",
+      "pinyin": "shítáng",
+      "meaning": "nhà ăn, căng tin",
+      "partOfSpeech": "danh từ",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+    },
+    {
+      "id": "hsk1-l04-ext03",
+      "hanzi": "先",
+      "pinyin": "xiān",
+      "meaning": "trước, trước tiên",
+      "partOfSpeech": "phó từ",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+    }
+  ],
+  "vocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "qu",
+          "hanzi": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "example": "你去哪儿？",
+          "audio": "vocab/qu.mp3"
+        },
+        {
+          "id": "nar",
+          "hanzi": "哪儿",
+          "pinyin": "nǎr",
+          "meaning": "đâu, nơi nào",
+          "example": "你去哪儿？",
+          "audio": "vocab/nar.mp3"
+        },
+        {
+          "id": "xuexiao",
+          "hanzi": "学校",
+          "pinyin": "xuéxiào",
+          "meaning": "trường học",
+          "example": "我去学校。",
+          "audio": "vocab/xuexiao.mp3"
+        },
+        {
+          "id": "jia",
+          "hanzi": "家",
+          "pinyin": "jiā",
+          "meaning": "nhà",
+          "example": "我回家。",
+          "audio": "vocab/jia.mp3"
+        },
+        {
+          "id": "hui",
+          "hanzi": "回",
+          "pinyin": "huí",
+          "meaning": "về, quay lại",
+          "example": "我回家。",
+          "audio": "vocab/hui.mp3"
+        },
+        {
+          "id": "tushuguan",
+          "hanzi": "图书馆",
+          "pinyin": "túshūguǎn",
+          "meaning": "thư viện",
+          "example": "他去图书馆。",
+          "audio": "vocab/tushuguan.mp3"
+        },
+        {
+          "id": "shi",
+          "hanzi": "是",
+          "pinyin": "shì",
+          "meaning": "là",
+          "example": "我是学生。",
+          "audio": "vocab/shi.mp3"
+        },
+        {
+          "id": "ta",
+          "hanzi": "他",
+          "pinyin": "tā",
+          "meaning": "anh ấy, ông ấy",
+          "example": "他去学校。",
+          "audio": "vocab/ta.mp3"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "items": [
+        {
+          "id": "ye",
+          "hanzi": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "example": "我也去。",
+          "audio": "vocab/ye.mp3"
+        }
+      ]
+    }
+  ],
+  "extendedVocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "hsk1-l04-ext01",
+          "hanzi": "教室",
+          "pinyin": "jiàoshì",
+          "meaning": "lớp học",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "example": "学生们在教室里学习。",
+          "examplePinyin": "Xuéshēngmen zài jiàoshì lǐ xuéxí.",
+          "exampleTranslation": "Học sinh đang học trong lớp học."
+        },
+        {
+          "id": "hsk1-l04-ext02",
+          "hanzi": "食堂",
+          "pinyin": "shítáng",
+          "meaning": "nhà ăn, căng tin",
+          "partOfSpeech": "danh từ",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+        },
+        {
+          "id": "hsk1-l04-ext03",
+          "hanzi": "先",
+          "pinyin": "xiān",
+          "meaning": "trước, trước tiên",
+          "partOfSpeech": "phó từ",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "mainVocabularyCount": 9,
+    "extendedVocabularyCount": 3,
+    "dialogueLineCount": 10,
+    "interactiveSegments": 69,
+    "lookupCoveragePercent": 93.5,
+    "extendedWordsUsed": true,
+    "copyrightSafe": true
+  }
 }

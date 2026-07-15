@@ -3,9 +3,11 @@
   "level": 2,
   "title": "Thời tiết hôm nay thế nào?",
   "meta": {
-    "estimatedMinutes": 30,
+    "estimatedMinutes": 40,
     "difficulty": "HSK2",
-    "version": 2
+    "version": 4,
+    "contentRevision": "2026-07-dialogue-refresh",
+    "dialogueLineCount": 12
   },
   "audio": {
     "enabled": false,
@@ -127,46 +129,911 @@
   ],
   "lessonText": [
     {
-      "speaker": "A:",
+      "speaker": "Coca:",
       "chinese": "今天天气怎么样？",
-      "pinyin": "Jīntiān tiānqì zěnmeyàng?",
       "vietnamese": "Thời tiết hôm nay thế nào?",
-      "audio": "dialogue/001.mp3"
+      "pinyin": "Jīn tiān tiān qì zěn me yàng？",
+      "audio": "dialogue/001.mp3",
+      "segments": [
+        {
+          "text": "今天",
+          "pinyin": "jīntiān",
+          "meaning": "hôm nay",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 47,
+          "clickable": true
+        },
+        {
+          "text": "天气",
+          "pinyin": "tiānqì",
+          "meaning": "thời tiết",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "tianqi",
+          "clickable": true
+        },
+        {
+          "text": "怎么样",
+          "pinyin": "zěnmeyàng",
+          "meaning": "như thế nào",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 140,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "今天很热，也不下雨。",
-      "pinyin": "Jīntiān hěn rè, yě bù xià yǔ.",
-      "vietnamese": "Hôm nay rất nóng, cũng không mưa.",
-      "audio": "dialogue/002.mp3"
+      "speaker": "Cam:",
+      "chinese": "预报说上午晴，下午有雨。",
+      "vietnamese": "Dự báo nói sáng nắng, chiều có mưa.",
+      "pinyin": "Yù bào shuō shàng wǔ qíng， xià wǔ yǒu yǔ。",
+      "audio": "dialogue/002.mp3",
+      "segments": [
+        {
+          "text": "预报",
+          "pinyin": "yù bào",
+          "meaning": "dự báo",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext03",
+          "clickable": true
+        },
+        {
+          "text": "说",
+          "clickable": false
+        },
+        {
+          "text": "上午",
+          "pinyin": "shàngwǔ",
+          "meaning": "buổi sáng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 91,
+          "clickable": true
+        },
+        {
+          "text": "晴",
+          "pinyin": "qíng",
+          "meaning": "nắng, quang đãng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 235,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "下午",
+          "pinyin": "xiàwǔ",
+          "meaning": "buổi chiều",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 117,
+          "clickable": true
+        },
+        {
+          "text": "有雨。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "A:",
-      "chinese": "你喜欢夏天吗？",
-      "pinyin": "Nǐ xǐhuan xiàtiān ma?",
-      "vietnamese": "Bạn thích mùa hè không?",
-      "audio": "dialogue/003.mp3"
+      "speaker": "Coca:",
+      "chinese": "现在温度二十八度，有点儿热。",
+      "vietnamese": "Bây giờ nhiệt độ 28 độ, hơi nóng.",
+      "pinyin": "Xiàn zài wēn dù èr shí bā dù， yǒu diǎn ér rè。",
+      "audio": "dialogue/003.mp3",
+      "segments": [
+        {
+          "text": "现在",
+          "pinyin": "xiànzài",
+          "meaning": "bây giờ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 120,
+          "clickable": true
+        },
+        {
+          "text": "温度",
+          "pinyin": "wēn dù",
+          "meaning": "nhiệt độ",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext01",
+          "clickable": true
+        },
+        {
+          "text": "二",
+          "pinyin": "èr",
+          "meaning": "hai",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 27,
+          "clickable": true
+        },
+        {
+          "text": "十",
+          "pinyin": "shí",
+          "meaning": "mười",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 95,
+          "clickable": true
+        },
+        {
+          "text": "八",
+          "pinyin": "bā",
+          "meaning": "tám",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 2,
+          "clickable": true
+        },
+        {
+          "text": "度，有",
+          "clickable": false
+        },
+        {
+          "text": "点",
+          "pinyin": "diǎn",
+          "meaning": "giờ (trong thời gian)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 16,
+          "clickable": true
+        },
+        {
+          "text": "儿",
+          "clickable": false
+        },
+        {
+          "text": "热",
+          "pinyin": "rè",
+          "meaning": "nóng",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "re",
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "不太喜欢。我喜欢秋天。",
-      "pinyin": "Bù tài xǐhuan. Wǒ xǐhuan qiūtiān.",
-      "vietnamese": "Không thích lắm. Tôi thích mùa thu.",
-      "audio": "dialogue/004.mp3"
+      "speaker": "Cam:",
+      "chinese": "我带了雨伞，但是没带帽子。",
+      "vietnamese": "Tôi mang ô nhưng không mang mũ.",
+      "pinyin": "Wǒ dài le yǔ sǎn， dàn shì méi dài mào zi。",
+      "audio": "dialogue/004.mp3",
+      "segments": [
+        {
+          "text": "我",
+          "pinyin": "wǒ",
+          "meaning": "tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 112,
+          "clickable": true
+        },
+        {
+          "text": "带",
+          "pinyin": "dài",
+          "meaning": "mang theo, dẫn theo",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 344,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "雨伞",
+          "pinyin": "yǔsǎn",
+          "meaning": "ô, dù",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext02",
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "但是",
+          "pinyin": "dànshì",
+          "meaning": "nhưng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 167,
+          "clickable": true
+        },
+        {
+          "text": "没",
+          "pinyin": "méi",
+          "meaning": "không có, chưa",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 64,
+          "clickable": true
+        },
+        {
+          "text": "带",
+          "pinyin": "dài",
+          "meaning": "mang theo, dẫn theo",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 344,
+          "clickable": true
+        },
+        {
+          "text": "帽子",
+          "pinyin": "màozi",
+          "meaning": "mũ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 457,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "A:",
-      "chinese": "为什么？",
-      "pinyin": "Wèishénme?",
-      "vietnamese": "Tại sao?",
-      "audio": "dialogue/005.mp3"
+      "speaker": "Coca:",
+      "chinese": "雨伞也可以挡太阳。",
+      "vietnamese": "Ô cũng có thể che nắng.",
+      "pinyin": "Yǔ sǎn yě kě yǐ dǎng tài yáng。",
+      "audio": "dialogue/005.mp3",
+      "segments": [
+        {
+          "text": "雨伞",
+          "pinyin": "yǔsǎn",
+          "meaning": "ô, dù",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext02",
+          "clickable": true
+        },
+        {
+          "text": "也",
+          "pinyin": "yě",
+          "meaning": "cũng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 274,
+          "clickable": true
+        },
+        {
+          "text": "可以",
+          "pinyin": "kěyǐ",
+          "meaning": "có thể",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 209,
+          "clickable": true
+        },
+        {
+          "text": "挡",
+          "pinyin": "dǎng",
+          "meaning": "chắn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1388,
+          "clickable": true
+        },
+        {
+          "text": "太阳",
+          "pinyin": "tàiyáng",
+          "meaning": "mặt trời",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 507,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
     },
     {
-      "speaker": "B:",
-      "chinese": "秋天不冷不热，很舒服。",
-      "pinyin": "Qiūtiān bù lěng bù rè, hěn shūfu.",
-      "vietnamese": "Mùa thu không lạnh không nóng, rất dễ chịu.",
-      "audio": "dialogue/006.mp3"
+      "speaker": "Cam:",
+      "chinese": "那我们下午去爬山吧。",
+      "vietnamese": "Vậy chiều chúng ta đi leo núi nhé.",
+      "pinyin": "Nà wǒ men xià wǔ qù pá shān ba。",
+      "audio": "dialogue/006.mp3",
+      "segments": [
+        {
+          "text": "那",
+          "pinyin": "nà",
+          "meaning": "đó, kia",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 70,
+          "clickable": true
+        },
+        {
+          "text": "我们",
+          "pinyin": "wǒmen",
+          "meaning": "chúng tôi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 113,
+          "clickable": true
+        },
+        {
+          "text": "下午",
+          "pinyin": "xiàwǔ",
+          "meaning": "buổi chiều",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 117,
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 83,
+          "clickable": true
+        },
+        {
+          "text": "爬山",
+          "pinyin": "páshān",
+          "meaning": "leo núi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 471,
+          "clickable": true
+        },
+        {
+          "text": "吧",
+          "pinyin": "ba",
+          "meaning": "đi, nhé, nhỉ (đứng cuối câu)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 150,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "下雨的时候爬山不安全。",
+      "vietnamese": "Leo núi lúc mưa không an toàn.",
+      "pinyin": "Xià yǔ de shí hòu pá shān bù ān quán。",
+      "audio": "dialogue/007.mp3",
+      "segments": [
+        {
+          "text": "下雨",
+          "pinyin": "xià yǔ",
+          "meaning": "mưa",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "xiayu",
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "时候",
+          "pinyin": "shíhòu",
+          "meaning": "lúc, khi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 96,
+          "clickable": true
+        },
+        {
+          "text": "爬山",
+          "pinyin": "páshān",
+          "meaning": "leo núi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 471,
+          "clickable": true
+        },
+        {
+          "text": "不安",
+          "pinyin": "bú ān",
+          "meaning": "bất an",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1252,
+          "clickable": true
+        },
+        {
+          "text": "全。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "那上午去，现在就出发。",
+      "vietnamese": "Vậy đi buổi sáng, xuất phát ngay bây giờ.",
+      "pinyin": "Nà shàng wǔ qù， xiàn zài jiù chū fā。",
+      "audio": "dialogue/008.mp3",
+      "segments": [
+        {
+          "text": "那",
+          "pinyin": "nà",
+          "meaning": "đó, kia",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 70,
+          "clickable": true
+        },
+        {
+          "text": "上午",
+          "pinyin": "shàngwǔ",
+          "meaning": "buổi sáng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 91,
+          "clickable": true
+        },
+        {
+          "text": "去",
+          "pinyin": "qù",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 83,
+          "clickable": true
+        },
+        {
+          "text": "，",
+          "clickable": false
+        },
+        {
+          "text": "现在",
+          "pinyin": "xiànzài",
+          "meaning": "bây giờ",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 120,
+          "clickable": true
+        },
+        {
+          "text": "就",
+          "pinyin": "jiù",
+          "meaning": "thì, ngay",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 203,
+          "clickable": true
+        },
+        {
+          "text": "出发",
+          "pinyin": "chū fā",
+          "meaning": "xuất phát",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 647,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "旁白:",
+      "chinese": "他们刚走到门口，天就下起大雨。",
+      "vietnamese": "Họ vừa tới cửa thì trời đổ mưa lớn.",
+      "pinyin": "Tā men gāng zǒu dào mén kǒu， tiān jiù xià qǐ dà yǔ。",
+      "audio": "dialogue/009.mp3",
+      "segments": [
+        {
+          "text": "他",
+          "pinyin": "tā",
+          "meaning": "anh ấy, ông ấy",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 105,
+          "clickable": true
+        },
+        {
+          "text": "们",
+          "clickable": false
+        },
+        {
+          "text": "刚",
+          "pinyin": "gāng",
+          "meaning": "vừa mới",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 731,
+          "clickable": true
+        },
+        {
+          "text": "走",
+          "pinyin": "zǒu",
+          "meaning": "đi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 297,
+          "clickable": true
+        },
+        {
+          "text": "到",
+          "pinyin": "dào",
+          "meaning": "đến",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 168,
+          "clickable": true
+        },
+        {
+          "text": "门",
+          "pinyin": "mén",
+          "meaning": "cửa",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 223,
+          "clickable": true
+        },
+        {
+          "text": "口",
+          "pinyin": "kǒu",
+          "meaning": "miệng, khẩu",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 439,
+          "clickable": true
+        },
+        {
+          "text": "，天",
+          "clickable": false
+        },
+        {
+          "text": "就",
+          "pinyin": "jiù",
+          "meaning": "thì, ngay",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 203,
+          "clickable": true
+        },
+        {
+          "text": "下",
+          "pinyin": "xià",
+          "meaning": "xuống",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 116,
+          "clickable": true
+        },
+        {
+          "text": "起",
+          "clickable": false
+        },
+        {
+          "text": "大",
+          "pinyin": "dà",
+          "meaning": "lớn, to",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 14,
+          "clickable": true
+        },
+        {
+          "text": "雨。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "天气预报是不是把上午和下午说反了？",
+      "vietnamese": "Có phải dự báo thời tiết nói ngược sáng và chiều không?",
+      "pinyin": "Tiān qì yù bào shì bú shì bǎ shàng wǔ hé xià wǔ shuō fǎn le？",
+      "audio": "dialogue/010.mp3",
+      "segments": [
+        {
+          "text": "天气",
+          "pinyin": "tiānqì",
+          "meaning": "thời tiết",
+          "partOfSpeech": "",
+          "note": "",
+          "vocabularyId": "tianqi",
+          "clickable": true
+        },
+        {
+          "text": "预报",
+          "pinyin": "yù bào",
+          "meaning": "dự báo",
+          "partOfSpeech": "",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext03",
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "不",
+          "pinyin": "bù",
+          "meaning": "không",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 8,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "把",
+          "pinyin": "bǎ",
+          "meaning": "đem, lấy (giới từ)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 305,
+          "clickable": true
+        },
+        {
+          "text": "上午",
+          "pinyin": "shàngwǔ",
+          "meaning": "buổi sáng",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 91,
+          "clickable": true
+        },
+        {
+          "text": "和",
+          "pinyin": "hé",
+          "meaning": "và",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 38,
+          "clickable": true
+        },
+        {
+          "text": "下午",
+          "pinyin": "xiàwǔ",
+          "meaning": "buổi chiều",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 117,
+          "clickable": true
+        },
+        {
+          "text": "说反",
+          "clickable": false
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "？",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Coca:",
+      "chinese": "至少你的雨伞带对了。",
+      "vietnamese": "Ít nhất bạn đã mang đúng ô.",
+      "pinyin": "Zhì shǎo nǐ de yǔ sǎn dài duì le。",
+      "audio": "dialogue/011.mp3",
+      "segments": [
+        {
+          "text": "至少",
+          "pinyin": "zhì shǎo",
+          "meaning": "chí ít",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1167,
+          "clickable": true
+        },
+        {
+          "text": "你",
+          "pinyin": "nǐ",
+          "meaning": "bạn",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 73,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "雨伞",
+          "pinyin": "yǔsǎn",
+          "meaning": "ô, dù",
+          "partOfSpeech": "danh từ",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "vocabularyId": "hsk2-l07-ext02",
+          "clickable": true
+        },
+        {
+          "text": "带",
+          "pinyin": "dài",
+          "meaning": "mang theo, dẫn theo",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 344,
+          "clickable": true
+        },
+        {
+          "text": "对",
+          "pinyin": "duì",
+          "meaning": "đúng, đối với",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 174,
+          "clickable": true
+        },
+        {
+          "text": "了",
+          "pinyin": "le",
+          "meaning": "đã (dùng để chỉ sự thay đổi)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 55,
+          "clickable": true
+        },
+        {
+          "text": "。",
+          "clickable": false
+        }
+      ]
+    },
+    {
+      "speaker": "Cam:",
+      "chinese": "今天最好的运动是在家看爬山视频。",
+      "vietnamese": "Môn thể thao tốt nhất hôm nay là ở nhà xem video leo núi.",
+      "pinyin": "Jīn tiān zuì hǎo de yùn dòng shì zài jiā kàn pá shān shì pín。",
+      "audio": "dialogue/012.mp3",
+      "segments": [
+        {
+          "text": "今天",
+          "pinyin": "jīntiān",
+          "meaning": "hôm nay",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 47,
+          "clickable": true
+        },
+        {
+          "text": "最好",
+          "pinyin": "zuì hǎo",
+          "meaning": "tốt nhất",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 1187,
+          "clickable": true
+        },
+        {
+          "text": "的",
+          "pinyin": "de",
+          "meaning": "của (thuộc tính)",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 15,
+          "clickable": true
+        },
+        {
+          "text": "运动",
+          "pinyin": "yùndòng",
+          "meaning": "vận",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 285,
+          "clickable": true
+        },
+        {
+          "text": "是",
+          "pinyin": "shì",
+          "meaning": "là, thì",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 97,
+          "clickable": true
+        },
+        {
+          "text": "在",
+          "pinyin": "zài",
+          "meaning": "ở, tại",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 137,
+          "clickable": true
+        },
+        {
+          "text": "家",
+          "pinyin": "jiā",
+          "meaning": "gia đình, nhà",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 45,
+          "clickable": true
+        },
+        {
+          "text": "看",
+          "pinyin": "kàn",
+          "meaning": "xem",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 50,
+          "clickable": true
+        },
+        {
+          "text": "爬山",
+          "pinyin": "páshān",
+          "meaning": "leo núi",
+          "partOfSpeech": "",
+          "note": "Từ/cụm từ tra cứu bổ sung từ dữ liệu chung.",
+          "vocabularyId": 471,
+          "clickable": true
+        },
+        {
+          "text": "视频。",
+          "clickable": false
+        }
+      ]
     }
   ],
   "grammar": [
@@ -249,5 +1116,221 @@
       "question": "Dịch sang tiếng Trung: Tôi không thích mùa hè lắm.",
       "answer": "我不太喜欢夏天"
     }
-  ]
+  ],
+  "learningPath": {
+    "mode": "sequential",
+    "sections": [
+      "vocabulary",
+      "extendedVocabulary",
+      "lessonText",
+      "grammar",
+      "exercises"
+    ],
+    "allowSkip": false,
+    "reviewAfterComplete": true
+  },
+  "extendedVocabulary": [
+    {
+      "id": "hsk2-l07-ext01",
+      "hanzi": "温度",
+      "pinyin": "wēn dù",
+      "meaning": "nhiệt độ",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+      "example": "今天的温度很高。",
+      "examplePinyin": "Jīntiān de wēndù hěn gāo.",
+      "exampleTranslation": "Nhiệt độ hôm nay rất cao."
+    },
+    {
+      "id": "hsk2-l07-ext02",
+      "hanzi": "雨伞",
+      "pinyin": "yǔsǎn",
+      "meaning": "ô, dù",
+      "partOfSpeech": "danh từ",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+    },
+    {
+      "id": "hsk2-l07-ext03",
+      "hanzi": "预报",
+      "pinyin": "yù bào",
+      "meaning": "dự báo",
+      "tag": "mở rộng",
+      "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+      "example": "天气预报说明天有雨。",
+      "examplePinyin": "Tiānqì yùbào shuō míngtiān yǒu yǔ.",
+      "exampleTranslation": "Dự báo thời tiết nói rằng ngày mai sẽ có mưa."
+    }
+  ],
+  "vocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "tianqi",
+          "hanzi": "天气",
+          "pinyin": "tiānqì",
+          "meaning": "thời tiết",
+          "example": "今天天气很好。",
+          "audio": "vocab/tianqi.mp3"
+        },
+        {
+          "id": "re",
+          "hanzi": "热",
+          "pinyin": "rè",
+          "meaning": "nóng",
+          "example": "今天很热。",
+          "audio": "vocab/re.mp3"
+        },
+        {
+          "id": "leng",
+          "hanzi": "冷",
+          "pinyin": "lěng",
+          "meaning": "lạnh",
+          "example": "北京很冷。",
+          "audio": "vocab/leng.mp3"
+        },
+        {
+          "id": "xiayu",
+          "hanzi": "下雨",
+          "pinyin": "xià yǔ",
+          "meaning": "mưa",
+          "example": "明天下雨吗？",
+          "audio": "vocab/xiayu.mp3"
+        },
+        {
+          "id": "xiuxi",
+          "hanzi": "休息",
+          "pinyin": "xiūxi",
+          "meaning": "nghỉ ngơi",
+          "example": "我想休息。",
+          "audio": "vocab/xiuxi.mp3"
+        },
+        {
+          "id": "chuanyi",
+          "hanzi": "穿",
+          "pinyin": "chuān",
+          "meaning": "mặc",
+          "example": "我穿衣服。",
+          "audio": "vocab/chuanyi.mp3"
+        },
+        {
+          "id": "yifu",
+          "hanzi": "衣服",
+          "pinyin": "yīfu",
+          "meaning": "quần áo",
+          "example": "这件衣服很好看。",
+          "audio": "vocab/yifu.mp3"
+        },
+        {
+          "id": "jian",
+          "hanzi": "件",
+          "pinyin": "jiàn",
+          "meaning": "lượng từ cho áo/quần/sự việc",
+          "example": "一件衣服。",
+          "audio": "vocab/jian.mp3"
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "items": [
+        {
+          "id": "chuntian",
+          "hanzi": "春天",
+          "pinyin": "chūntiān",
+          "meaning": "mùa xuân",
+          "example": "春天很暖和。",
+          "audio": "vocab/chuntian.mp3"
+        },
+        {
+          "id": "xiatian",
+          "hanzi": "夏天",
+          "pinyin": "xiàtiān",
+          "meaning": "mùa hè",
+          "example": "夏天很热。",
+          "audio": "vocab/xiatian.mp3"
+        },
+        {
+          "id": "qiutian",
+          "hanzi": "秋天",
+          "pinyin": "qiūtiān",
+          "meaning": "mùa thu",
+          "example": "秋天不冷不热。",
+          "audio": "vocab/qiutian.mp3"
+        },
+        {
+          "id": "dongtian",
+          "hanzi": "冬天",
+          "pinyin": "dōngtiān",
+          "meaning": "mùa đông",
+          "example": "冬天很冷。",
+          "audio": "vocab/dongtian.mp3"
+        },
+        {
+          "id": "nuanhuo",
+          "hanzi": "暖和",
+          "pinyin": "nuǎnhuo",
+          "meaning": "ấm áp",
+          "example": "今天很暖和。",
+          "audio": "vocab/nuanhuo.mp3"
+        },
+        {
+          "id": "yin",
+          "hanzi": "阴",
+          "pinyin": "yīn",
+          "meaning": "âm u, nhiều mây",
+          "example": "今天阴天。",
+          "audio": "vocab/yin.mp3"
+        }
+      ]
+    }
+  ],
+  "extendedVocabularyPages": [
+    {
+      "page": 1,
+      "items": [
+        {
+          "id": "hsk2-l07-ext01",
+          "hanzi": "温度",
+          "pinyin": "wēn dù",
+          "meaning": "nhiệt độ",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "example": "今天的温度很高。",
+          "examplePinyin": "Jīntiān de wēndù hěn gāo.",
+          "exampleTranslation": "Nhiệt độ hôm nay rất cao."
+        },
+        {
+          "id": "hsk2-l07-ext02",
+          "hanzi": "雨伞",
+          "pinyin": "yǔsǎn",
+          "meaning": "ô, dù",
+          "partOfSpeech": "danh từ",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa."
+        },
+        {
+          "id": "hsk2-l07-ext03",
+          "hanzi": "预报",
+          "pinyin": "yù bào",
+          "meaning": "dự báo",
+          "tag": "mở rộng",
+          "note": "Từ mở rộng xuất hiện trực tiếp trong bài khóa.",
+          "example": "天气预报说明天有雨。",
+          "examplePinyin": "Tiānqì yùbào shuō míngtiān yǒu yǔ.",
+          "exampleTranslation": "Dự báo thời tiết nói rằng ngày mai sẽ có mưa."
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "mainVocabularyCount": 14,
+    "extendedVocabularyCount": 3,
+    "dialogueLineCount": 12,
+    "interactiveSegments": 79,
+    "lookupCoveragePercent": 88.4,
+    "extendedWordsUsed": true,
+    "copyrightSafe": true
+  }
 }

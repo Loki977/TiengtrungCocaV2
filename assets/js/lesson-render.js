@@ -425,6 +425,24 @@
     `;
   }
 
+  function renderInteractiveDialogueLine(line) {
+    const chinese = line.chinese || '';
+    return `
+      <article class="gt-dialogue-line gt-interactive-dialogue">
+        <div class="gt-dialogue-heading">
+          <b>${escapeHtml(line.speaker || '')}</b>
+          <button type="button" class="gt-dialogue-listen gt-speak-btn"
+            data-speak="${escapeHtml(chinese)}"
+            data-audio="${escapeHtml(line.audio || '')}"
+            title="Nghe câu thoại">🔊 Nghe câu</button>
+        </div>
+        <div class="gt-dialogue-chinese">${renderReadingSegments(line)}</div>
+        ${line.pinyin ? `<div class="gt-pinyin">${escapeHtml(line.pinyin)}</div>` : ''}
+        ${line.vietnamese ? `<div class="gt-dialogue-translation">${escapeHtml(line.vietnamese)}</div>` : ''}
+      </article>
+    `;
+  }
+
   function renderReadingLookup() {
     return `
       <aside class="gt-reading-lookup" data-reading-lookup hidden role="dialog" aria-label="Tra nghĩa trong bài đọc" aria-live="polite">
@@ -443,15 +461,19 @@
     const pages = getSectionPages(lesson, 'lessonText');
     const lines = pages[page] || [];
     const hasInteractiveReading = lines.some(line => Array.isArray(line.segments) && line.segments.length);
+    const isDialogue = lines.some(line => line.speaker || line.pinyin || line.vietnamese);
+    const contentLabel = isDialogue ? 'Hội thoại' : sectionName('lessonText');
 
     return `
       <section class="gt-section gt-current-section" data-learning-section="lessonText">
-        <h3 class="gt-section-title">💬 ${sectionName('lessonText')}</h3>
-        <div class="gt-page-meta">Bài đọc ${page + 1}/${Math.max(pages.length, 1)}</div>
+        <h3 class="gt-section-title">💬 ${contentLabel}</h3>
+        <div class="gt-page-meta">${contentLabel} ${page + 1}/${Math.max(pages.length, 1)}</div>
         <div class="gt-dialogue">
           ${lines.map(line => {
             const chinese = line.chinese || '';
-            if (Array.isArray(line.segments) && line.segments.length) return renderInteractiveReading(line);
+            if (Array.isArray(line.segments) && line.segments.length) {
+              return isDialogue ? renderInteractiveDialogueLine(line) : renderInteractiveReading(line);
+            }
             return `
               <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-audio="${escapeHtml(line.audio || '')}">
                 <b>${escapeHtml(line.speaker || '')}</b> ${escapeHtml(chinese)}<br>
