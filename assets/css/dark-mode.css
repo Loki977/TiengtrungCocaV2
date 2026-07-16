@@ -1,0 +1,523 @@
+/* Shared night theme. The Profile switch stores cc_darkMode for every page. */
+html.dark-mode,
+html.dark-mode body {
+  color-scheme: dark;
+  --page-bg: #080e1b;
+  --bg: #0b1220;
+  --bg-card: rgba(18, 28, 47, .92);
+  --bg-section: rgba(12, 21, 38, .92);
+  --white: #121c2f;
+  --cream: #1a2438;
+  --navy: #edf4ff;
+  --charcoal: #f2f6ff;
+  --text: #d7e2f2;
+  --text-muted: #a7b4c9;
+  --text-light: #7f8da6;
+  --muted: #a7b4c9;
+  --border: rgba(164, 183, 216, .20);
+  --line: rgba(164, 183, 216, .20);
+  --shadow-sm: 0 8px 22px rgba(0, 0, 0, .22);
+  --shadow-md: 0 16px 36px rgba(0, 0, 0, .30);
+  --shadow-lg: 0 24px 58px rgba(0, 0, 0, .38);
+  --ch-deep: #edf4ff;
+  --ch-card: #121c2f;
+  --ch-mint: #102d2a;
+}
+
+html.dark-mode body {
+  color: var(--text) !important;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(52, 84, 145, .28), transparent 30%),
+    radial-gradient(circle at 82% 16%, rgba(255, 122, 42, .13), transparent 27%),
+    linear-gradient(145deg, #080e1b 0%, #0d1729 52%, #101827 100%) !important;
+}
+
+html.dark-mode :is(h1, h2, h3, h4, h5, h6),
+html.dark-mode :is(.logo__text, .brand, .back-link, .level-title, .lesson-title, .lesson-heading, .grammar-title, .detail-title) {
+  color: var(--charcoal) !important;
+}
+
+html.dark-mode :is(p, .section__subtitle, .level-desc, .lesson-label, .setting-row__desc, .profile-bg-preview small) {
+  color: var(--text-muted);
+}
+
+html.dark-mode .header,
+html.dark-mode .topbar,
+html.dark-mode .sidebar {
+  background: rgba(9, 16, 30, .88) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .22) !important;
+  backdrop-filter: blur(18px) saturate(120%) !important;
+}
+
+html.dark-mode :is(.nav, .profile-tabs, .hsk-tabs-wrap, .deck-selector) {
+  background: rgba(18, 28, 47, .82) !important;
+  border-color: var(--border) !important;
+}
+
+html.dark-mode :is(.nav__link, .nav a, .profile-tab, .hsk-tab, .deck-btn) {
+  color: var(--text-muted) !important;
+}
+
+html.dark-mode :is(.nav__link:hover, .nav__link.active, .nav a:hover, .nav a.active) {
+  color: #ffb15f !important;
+  background: rgba(255, 138, 42, .14) !important;
+}
+
+html.dark-mode :is(
+  .card,
+  .continue-card,
+  .course-card,
+  .panel-header,
+  .fc-card__front,
+  .fc-stats,
+  .profile-card,
+  .ov-stat,
+  .activity-section,
+  .achievement,
+  .settings-nav,
+  .settings-card,
+  .history-item,
+  .level-card,
+  .lesson-card,
+  .study-card,
+  .memory-panel,
+  .grammar-sidebar,
+  .grammar-content,
+  .grammar-detail,
+  .detail-box,
+  .challenge-panel,
+  .login-card,
+  .panel,
+  .stat,
+  .admin-box,
+  .admin-user
+) {
+  color: var(--text) !important;
+  background: rgba(18, 28, 47, .88) !important;
+  border-color: var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+html.dark-mode :is(.lesson-item, .fc-card__front, .lesson-card) {
+  background: linear-gradient(145deg, rgba(24, 37, 61, .96), rgba(13, 24, 43, .94)) !important;
+  border-color: rgba(255, 177, 95, .28) !important;
+}
+
+html.dark-mode :is(.continue-card__lesson, .path-node__card, .setting-row, .detail-section, .example, .grammar-item) {
+  background-color: rgba(23, 35, 57, .88) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+html.dark-mode :is(input, textarea, select, .input, .answer-box) {
+  color: var(--text) !important;
+  background: rgba(7, 14, 27, .88) !important;
+  border-color: rgba(164, 183, 216, .28) !important;
+}
+
+html.dark-mode :is(input, textarea)::placeholder { color: #71809b !important; }
+
+html.dark-mode :is(.secondary-btn, .btn:not(.btn--primary):not(.primary), .cms-tab) {
+  color: var(--text) !important;
+  background: rgba(28, 42, 67, .92) !important;
+  border-color: var(--border) !important;
+}
+
+html.dark-mode :is(.hm-cell, .progress-track, .profile-xp-bar, .spirit-pet-bar, .card__level-bar) {
+  background: rgba(164, 183, 216, .18) !important;
+}
+
+html.dark-mode :is(.footer, .grammar-footer) {
+  background: #060b14 !important;
+  border-color: var(--border) !important;
+}
+
+html.dark-mode .mobile-nav__inner {
+  background: rgba(9, 16, 30, .98) !important;
+  border-color: var(--border) !important;
+}
+
+html.dark-mode .profile-page {
+  --profile-card-border: rgba(164, 183, 216, .30);
+  --profile-card-highlight: rgba(255, 255, 255, .08);
+  --profile-card-shadow: rgba(0, 0, 0, .42);
+}
+
+/* Preserve the selected Profile image and only add a night overlay. */
+html.dark-mode body.profile-bg-enabled .profile-page {
+  background-image:
+    linear-gradient(180deg, rgba(3, 8, 20, .54), rgba(7, 15, 29, .68)),
+    var(--profile-background-image, url("../images/background/p1.png")) !important;
+  background-position: center top !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-hero {
+  background: linear-gradient(135deg, rgba(4, 12, 30, .76), rgba(89, 39, 16, .52)) !important;
+}
+
+html.dark-mode .profile-bg-preview,
+html.dark-mode .profile-bg-status {
+  color: var(--text) !important;
+  background: rgba(16, 26, 45, .88) !important;
+  border-color: var(--border) !important;
+}
+
+html.dark-mode .profile-bg-preview.is-active {
+  border-color: rgba(255, 156, 64, .78) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page {
+  --glass-text-strong: #f8fafc;
+  --glass-text: #dbe7f5;
+  --glass-text-soft: #b9c6d8;
+  --glass-text-muted: #94a3b8;
+  --glass-accent: #fdba74;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(
+  .profile-tabs,
+  .ov-stat,
+  .activity-section,
+  .achievement,
+  .settings-nav,
+  .settings-card,
+  .history-item,
+  .spirit-pet-card
+) {
+  color: var(--glass-text) !important;
+  background: rgba(12, 22, 39, .76) !important;
+  border-color: rgba(174, 192, 222, .30) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .06),
+    0 22px 54px rgba(0, 0, 0, .48) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .settings-card {
+  background: rgba(12, 22, 39, .50) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(
+  .setting-row,
+  .danger-row,
+  .profile-bg-status,
+  .profile-bg-preview
+) {
+  background: rgba(20, 34, 54, .44) !important;
+  border-color: rgba(174, 192, 222, .24) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .22) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .btn--outline {
+  color: #e4edf9 !important;
+  background: rgba(28, 45, 70, .56) !important;
+  border-color: rgba(174, 192, 222, .30) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .btn--outline:hover {
+  color: #fff !important;
+  background: rgba(44, 64, 94, .72) !important;
+  border-color: rgba(210, 222, 241, .44) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-hero__info {
+  color: #fff !important;
+  background: rgba(3, 10, 24, .68) !important;
+  border-color: rgba(255, 255, 255, .30) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(
+  .ov-stat__val,
+  .activity-section h3,
+  .achievement__name,
+  .settings-card__head,
+  .setting-row__label,
+  .history-item__title,
+  .spirit-pet-title h3,
+  .profile-bg-preview strong
+) {
+  color: var(--glass-text-strong) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(
+  .ov-stat__lbl,
+  .achievement__desc,
+  .setting-row__desc,
+  .history-item__meta,
+  .history-item__date,
+  .spirit-pet-desc,
+  .spirit-pet-progress__label,
+  .profile-bg-preview small,
+  .profile-bg-status,
+  #darkModeLabel,
+  #profileBgLabel
+) {
+  color: var(--glass-text-soft) !important;
+  opacity: 1 !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(
+  .achievement__count,
+  .history-item__xp,
+  .goal-value
+) {
+  color: var(--glass-accent) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .profile-tab {
+  color: #c0ccdd !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .profile-tab:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, .08) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .profile-tab.active {
+  color: #08101f !important;
+  background: #fdba74 !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .settings-nav-item {
+  color: #bac7d9 !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .settings-nav-item:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, .07) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .settings-nav-item.active {
+  color: #ffd2a3 !important;
+  background: rgba(249, 115, 22, .18) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .settings-card__head {
+  color: var(--glass-text-strong) !important;
+  background: rgba(24, 38, 62, .72) !important;
+  border-color: rgba(174, 192, 222, .20) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(input, select, textarea) {
+  color: #f8fafc !important;
+  background: rgba(4, 11, 23, .72) !important;
+  border-color: rgba(174, 192, 222, .28) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page :is(input, textarea)::placeholder {
+  color: #8998ae !important;
+  opacity: 1 !important;
+}
+
+html.dark-mode :is(.feedback.correct, .notice.ok) {
+  background: rgba(16, 103, 74, .28) !important;
+  color: #86efc2 !important;
+}
+
+html.dark-mode :is(.feedback.wrong, .danger-zone .settings-card__head) {
+  background: rgba(138, 35, 56, .25) !important;
+  color: #ff9aaa !important;
+}
+
+html.dark-mode body.profile-bg-enabled .profile-page .danger-zone .settings-card__head {
+  color: #ff9aaa !important;
+  background: rgba(91, 22, 36, .72) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .footer {
+  background:
+    linear-gradient(180deg, rgba(3, 8, 20, .52), rgba(4, 10, 22, .64)),
+    var(--profile-background-image, url("../images/background/p1.png")) !important;
+  background-position: center top !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  border-top-color: rgba(174, 192, 222, .25) !important;
+}
+
+html.dark-mode body.profile-bg-enabled .footer__inner,
+html.dark-mode body.profile-bg-enabled .footer__bottom {
+  background: rgba(5, 13, 27, .58) !important;
+  border-color: rgba(174, 192, 222, .22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .07),
+    0 18px 44px rgba(0, 0, 0, .30) !important;
+}
+
+@media (max-width: 768px) {
+  html.dark-mode body.profile-bg-enabled .footer {
+    background-attachment: scroll !important;
+  }
+}
+
+/* Course page: explicit contrast for every lesson and learning-flow card. */
+html.dark-mode .hsk-section {
+  --course-text-strong: #f8fafc;
+  --course-text: #dbe7f5;
+  --course-text-soft: #b8c5d9;
+  --course-text-muted: #94a3b8;
+  --course-blue: #7dd3fc;
+  --course-orange: #fdba74;
+  --course-card: rgba(17, 28, 48, .96);
+  --course-card-raised: rgba(22, 35, 59, .98);
+  color: var(--course-text) !important;
+}
+
+html.dark-mode .hsk-section :is(
+  .panel-header,
+  .lesson-item,
+  .detail-hero,
+  .detail-meta-stat,
+  .vocab-card,
+  .grammar-card,
+  .gt-hero,
+  .gt-progress-box,
+  .gt-section,
+  .gt-current-section,
+  .gt-vocab-card,
+  .gt-dialogue-line,
+  .gt-reading-card,
+  .gt-grammar-card,
+  .gt-exercise-card
+) {
+  color: var(--course-text) !important;
+  background: linear-gradient(145deg, var(--course-card-raised), var(--course-card)) !important;
+  border-color: rgba(148, 163, 184, .24) !important;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .30) !important;
+}
+
+html.dark-mode .hsk-section :is(
+  .panel-header__info h2,
+  .ph-stat strong,
+  .lesson-item__title,
+  .detail-hero__title,
+  .vocab-hanzi,
+  .vocab-meaning,
+  .vocab-ex-zh,
+  .grammar-card__title,
+  .grammar-ex-zh,
+  .gt-hero h2,
+  .gt-progress-top,
+  .gt-section-title,
+  .gt-hanzi,
+  .gt-meaning,
+  .gt-reading-card h4,
+  .gt-reading-chinese,
+  .gt-grammar-head h4,
+  .gt-exercise-group h4,
+  .gt-practice-label
+) {
+  color: var(--course-text-strong) !important;
+  opacity: 1 !important;
+}
+
+html.dark-mode .hsk-section :is(
+  .ph-stat,
+  .panel-header__progress-wrap p,
+  .lesson-chapter,
+  .lesson-item__desc,
+  .lesson-item__bar-pct,
+  .lesson-item__xp,
+  .detail-breadcrumb,
+  .detail-hero__desc,
+  .detail-meta-lbl,
+  .vocab-ex-vi,
+  .grammar-ex-vi,
+  .gt-hero p,
+  .gt-page-meta,
+  .gt-hint,
+  .gt-note,
+  .gt-example,
+  .gt-reading-card p,
+  .gt-practice-feedback
+) {
+  color: var(--course-text-soft) !important;
+  opacity: 1 !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-pinyin, .vocab-pinyin) {
+  color: var(--course-blue) !important;
+  opacity: 1 !important;
+}
+
+html.dark-mode .hsk-section :is(.lesson-item__num, .detail-hero__level, .gt-section-title) {
+  color: var(--course-orange) !important;
+  background: rgba(249, 115, 22, .15) !important;
+  border-color: rgba(251, 146, 60, .28) !important;
+}
+
+html.dark-mode .hsk-section :is(
+  .lesson-item__xp,
+  .lesson-item__bar,
+  .ph-bar,
+  .gt-progress-bar,
+  .gt-section-check,
+  .gt-note,
+  .gt-example,
+  .gt-pattern,
+  .gt-structure,
+  .gt-grammar-example,
+  .gt-practice-feedback
+) {
+  background: rgba(148, 163, 184, .12) !important;
+  border-color: rgba(148, 163, 184, .20) !important;
+}
+
+html.dark-mode .hsk-section .gt-pattern {
+  color: #c4b5fd !important;
+}
+
+html.dark-mode .hsk-section .gt-structure {
+  color: #86efac !important;
+}
+
+html.dark-mode .hsk-section .gt-grammar-example {
+  color: var(--course-text) !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-quiz-option, .gt-practice-btn) {
+  color: var(--course-text) !important;
+  background: rgba(30, 45, 72, .96) !important;
+  border-color: rgba(148, 163, 184, .25) !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-answer-input, .gt-practice-input) {
+  color: var(--course-text-strong) !important;
+  background: rgba(6, 13, 26, .90) !important;
+  border-color: rgba(148, 163, 184, .30) !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-answer-input, .gt-practice-input)::placeholder {
+  color: var(--course-text-muted) !important;
+}
+
+html.dark-mode .hsk-section .lesson-item.locked {
+  opacity: .72 !important;
+}
+
+html.dark-mode .hsk-section :is(.lesson-status--done, .gt-section-check.done, .gt-section-complete, .gt-feedback.correct) {
+  color: #86efac !important;
+  background: rgba(22, 163, 74, .18) !important;
+}
+
+html.dark-mode .hsk-section :is(.lesson-status--active, .gt-section-check.current) {
+  color: #fdba74 !important;
+  background: rgba(249, 115, 22, .18) !important;
+}
+
+html.dark-mode .hsk-section :is(.lesson-status--locked, .gt-section-check.locked) {
+  color: #aab6ca !important;
+  background: rgba(100, 116, 139, .20) !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-quiz-option.correct, .gt-practice-feedback.correct) {
+  color: #86efac !important;
+  background: rgba(22, 163, 74, .20) !important;
+}
+
+html.dark-mode .hsk-section :is(.gt-quiz-option.wrong, .gt-practice-feedback.wrong, .gt-feedback.wrong) {
+  color: #fda4af !important;
+  background: rgba(225, 29, 72, .18) !important;
+}
