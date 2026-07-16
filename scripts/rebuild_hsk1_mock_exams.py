@@ -17,12 +17,32 @@ EXAMS = [
     ("hsk1-h11005", "H11005", "Sở thích và nơi chốn"),
 ]
 
-EXAM_ONE_TEXT_ITEMS = [
+TEXT_ITEMS = [
     ("她在喝水。", "她在喝水。", True),
     ("他在看书。", "他不看书，他看电视。", False),
     ("他去学校。", "他坐车去学校。", True),
     ("桌子上有一个苹果。", "桌子上没有苹果。", False),
     ("妈妈在做饭。", "妈妈在做饭。", True),
+    ("我家有三个人。", "我家有三个人。", True),
+    ("她在写汉字。", "她在看书。", False),
+    ("他是老师。", "他是老师。", True),
+    ("爸爸在打电话。", "爸爸在看电视。", False),
+    ("桌子旁边有三个人。", "桌子旁边有三个人。", True),
+    ("她在买菜。", "她在商店买菜。", True),
+    ("他在喝茶。", "他在吃面条。", False),
+    ("她有两杯茶。", "她有两杯茶。", True),
+    ("这件衣服是蓝色的。", "这件衣服是白色的。", False),
+    ("冰箱里没有水果。", "冰箱里没有水果。", True),
+    ("公共汽车来了。", "公共汽车来了。", True),
+    ("现在八点。", "现在九点。", False),
+    ("今天下雨。", "今天下雨。", True),
+    ("他在飞机场。", "他在火车站。", False),
+    ("她七点起床。", "她七点起床。", True),
+    ("他喜欢打篮球。", "他喜欢打篮球。", True),
+    ("她在看电视。", "她喜欢看书。", False),
+    ("他会游泳。", "他会游泳。", True),
+    ("她在图书馆。", "她在商店。", False),
+    ("他们在公园。", "他们在公园。", True),
 ]
 
 EXAM_ONE_DIALOGUES_1 = [
@@ -236,6 +256,26 @@ def rotate_options(values: list[str], correct_index: int) -> tuple[list[str], st
     return rotated, "ABC"[rotated.index(values[0])]
 
 
+def named_dialogue(transcript: str, choices: list[str]) -> tuple[str, list[str]]:
+    lines = [line.strip() for line in transcript.splitlines() if line.strip()]
+    converted = []
+    for line in lines:
+        if line.startswith("男："):
+            converted.append(f"小李说，{line[2:]}")
+        elif line.startswith("女："):
+            converted.append(f"小月说，{line[2:]}")
+        elif line.startswith("问："):
+            question = line[2:].replace("男的", "小李").replace("女的", "小月")
+            converted.append(question)
+        else:
+            converted.append(line)
+    cleaned_choices = [
+        text.replace("男的的", "小李的").replace("女的的", "小月的").replace("男的", "小李").replace("女的", "小月")
+        for text in choices
+    ]
+    return "\n".join(converted), cleaned_choices
+
+
 def listening_question(number: int, code: str, transcript: str, answer: str, options: list[str] | None = None, **extra) -> dict:
     audio_path = extra.pop("audioPath", f"./assets/data/thi-thu/exams/hsk1-audio/{code.lower()}/q{number:02d}.mp3")
     q = {
@@ -255,26 +295,14 @@ def build_exam(exam_index: int, exam_id: str, code: str, theme: str) -> dict:
     listening = []
     reading = []
 
-    scene_items = SCENES[start:start + 5]
-    if exam_index == 0:
-        scene_items = [("", transcript, truth) for _hanzi, transcript, truth in EXAM_ONE_TEXT_ITEMS]
-
-    for local, (scene, spoken, truth) in enumerate(scene_items, 1):
+    text_items = TEXT_ITEMS[start:start + 5]
+    for local, (hanzi, spoken, truth) in enumerate(text_items, 1):
         number = local
-        extra = {}
-        if exam_index == 0:
-            hanzi = EXAM_ONE_TEXT_ITEMS[local - 1][0]
-            extra = {"hanzi": hanzi, "pinyin": pinyin(hanzi)}
-        else:
-            extra = {
-                "image": f"./assets/images/thi-thu/hsk1/{code.lower()}/q{number:02d}.webp",
-                "imageAlt": f"Minh họa riêng cho câu nghe {number}", "imagePrompt": scene,
-            }
         listening.append(listening_question(
             number, code, spoken, str(truth).lower(), part="Nghe - Phần 1",
-            prompt=f"Câu {number}: Nghe câu và chọn nội dung chữ Đúng hoặc Sai." if exam_index == 0 else f"Câu {number}: Nghe câu miêu tả, quan sát hình và chọn Đúng hoặc Sai.",
-            audioPath=f"./assets/audio/thi-thu/hsk1/de-01/l{number:02d}.wav" if exam_index == 0 else f"./assets/data/thi-thu/exams/hsk1-audio/{code.lower()}/q{number:02d}.mp3",
-            **extra,
+            prompt=f"Câu {number}: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+            audioPath=f"./assets/audio/thi-thu/hsk1/de-{exam_index + 1:02d}/l{number:02d}.wav",
+            hanzi=hanzi, pinyin=pinyin(hanzi),
         ))
 
     facts = LISTEN_FACTS[start:start + 5]
@@ -283,21 +311,27 @@ def build_exam(exam_index: int, exam_id: str, code: str, theme: str) -> dict:
         raw = [facts[source_index], facts[(source_index + 1) % 5], facts[(source_index + 2) % 5]]
         choices, answer = rotate_options(raw, local + exam_index)
         listening.append(listening_question(local, code, spoken, answer, choices, part="Nghe - Phần 2",
-            audioPath=f"./assets/audio/thi-thu/hsk1/de-01/l{local:02d}.wav" if exam_index == 0 else f"./assets/data/thi-thu/exams/hsk1-audio/{code.lower()}/q{local:02d}.mp3",
+            audioPath=f"./assets/audio/thi-thu/hsk1/de-{exam_index + 1:02d}/l{local:02d}.wav",
             prompt=f"Câu {local}: Nghe câu và chọn câu chữ phù hợp."))
 
     dialogue_items_1 = EXAM_ONE_DIALOGUES_1 if exam_index == 0 else DIALOGUES_1[start:start + 5]
     for local, (transcript, correct, choices) in enumerate(dialogue_items_1, 11):
+        if exam_index > 0:
+            transcript, choices = named_dialogue(transcript, choices)
+            correct = correct.replace("男的的", "小李的").replace("女的的", "小月的").replace("男的", "小李").replace("女的", "小月")
         answer = "ABC"[choices.index(correct)]
         listening.append(listening_question(local, code, transcript, answer, choices, part="Nghe - Phần 3",
-            audioPath=f"./assets/audio/thi-thu/hsk1/de-01/l{local:02d}.wav" if exam_index == 0 else f"./assets/data/thi-thu/exams/hsk1-audio/{code.lower()}/q{local:02d}.mp3",
+            audioPath=f"./assets/audio/thi-thu/hsk1/de-{exam_index + 1:02d}/l{local:02d}.wav",
             prompt=f"Câu {local}: Nghe hội thoại và chọn đáp án đúng."))
 
     dialogue_items_2 = EXAM_ONE_DIALOGUES_2 if exam_index == 0 else DIALOGUES_2[start:start + 5]
     for local, (transcript, correct, choices) in enumerate(dialogue_items_2, 16):
+        if exam_index > 0:
+            transcript, choices = named_dialogue(transcript, choices)
+            correct = correct.replace("男的的", "小李的").replace("女的的", "小月的").replace("男的", "小李").replace("女的", "小月")
         answer = "ABC"[choices.index(correct)]
         listening.append(listening_question(local, code, transcript, answer, choices, part="Nghe - Phần 4",
-            audioPath=f"./assets/audio/thi-thu/hsk1/de-01/l{local:02d}.wav" if exam_index == 0 else f"./assets/data/thi-thu/exams/hsk1-audio/{code.lower()}/q{local:02d}.mp3",
+            audioPath=f"./assets/audio/thi-thu/hsk1/de-{exam_index + 1:02d}/l{local:02d}.wav",
             prompt=f"Câu {local}: Nghe hội thoại và chọn đáp án đúng."))
 
     for local, (context, statement, truth) in enumerate(READING_TF[start:start + 5], 21):
@@ -333,10 +367,10 @@ def build_exam(exam_index: int, exam_id: str, code: str, theme: str) -> dict:
         })
 
     return {
-        "id": exam_id, "title": "Đề thi thử HSK 1 — Số 01" if exam_index == 0 else f"Đề thi thử HSK 1 - {code}", "level": "HSK 1",
-        "description": "Đề thi thử HSK 1 chỉ sử dụng âm thanh và văn bản." if exam_index == 0 else f"Đề biên soạn mới theo chủ đề {theme.lower()}: 20 câu nghe, 20 câu đọc.",
+        "id": exam_id, "title": f"Đề thi thử HSK 1 — Số {exam_index + 1:02d}", "level": "HSK 1",
+        "description": f"Đề thi thử HSK 1 chủ đề {theme.lower()}, chỉ sử dụng âm thanh và văn bản.",
         "durationMinutes": 35, "totalPoints": 200, "passPoints": 120,
-        "instructions": "Làm đủ 40 câu trong khoảng 35 phút. Phần nghe có audio riêng từng câu và không hiển thị transcript trước khi nộp bài. Chữ Hán có pinyin ở dòng dưới." if exam_index == 0 else "Làm đủ 40 câu trong khoảng 35 phút. Phần nghe có audio riêng từng câu; chỉ câu 1-5 dùng hình minh họa riêng. Chữ Hán trong đáp án và phần đọc có pinyin ở dòng dưới.",
+        "instructions": "Làm đủ 40 câu trong khoảng 35 phút. Phần nghe có audio riêng từng câu và không hiển thị transcript trước khi nộp bài. Chữ Hán có pinyin ở dòng dưới.",
         "version": 2, "contentSource": "original_rewrite", "audioSource": "tts_generated",
         "sections": [
             {"id": "listening", "title": "Nghe - 100 điểm", "questions": listening},

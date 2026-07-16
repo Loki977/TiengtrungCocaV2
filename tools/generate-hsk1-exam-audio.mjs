@@ -6,9 +6,23 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const EXAM_PATH = path.join(ROOT, 'assets', 'data', 'thi-thu', 'exams', 'hsk1-h10901.json');
 const MAX_ATTEMPTS = 4;
 const USE_SAPI_FALLBACK = process.argv.includes('--sapi-fallback');
+const EXAM_FILES = Object.freeze({
+  '01': 'hsk1-h10901.json',
+  '02': 'hsk1-h10902.json',
+  '03': 'hsk1-h11003.json',
+  '04': 'hsk1-h11004.json',
+  '05': 'hsk1-h11005.json'
+});
+
+function selectedExamNumbers() {
+  if (process.argv.includes('--all')) return Object.keys(EXAM_FILES);
+  const index = process.argv.indexOf('--exam');
+  const value = index >= 0 ? String(process.argv[index + 1] || '').padStart(2, '0') : '01';
+  if (!EXAM_FILES[value]) throw new Error(`Unknown exam number: ${value}. Use 01-05.`);
+  return [value];
+}
 
 async function loadEnvFile(filePath) {
   let source = '';
@@ -150,27 +164,31 @@ async function main() {
   await loadEnvFile(path.join(ROOT, '.env.local'));
   const require = createRequire(import.meta.url);
   const handler = require(path.join(ROOT, 'api', 'tts.js'));
-  const exam = JSON.parse(await fs.readFile(EXAM_PATH, 'utf8'));
-  const questions = exam.sections
-    .find(section => section.id === 'listening')?.questions
-    .filter(question => question.transcript && question.audio) || [];
-
   let created = 0;
   let skipped = 0;
   const failed = [];
-  for (const question of questions) {
-    try {
-      const status = await generateOne(handler, question);
-      if (status === 'created') created += 1;
-      else skipped += 1;
-    } catch (error) {
-      failed.push({ id: question.id, message: error.message });
-      console.error(`[failed] ${question.id}: ${error.message}`);
+
+  for (const examNumber of selectedExamNumbers()) {
+    const examPath = path.join(ROOT, 'assets', 'data', 'thi-thu', 'exams', EXAM_FILES[examNumber]);
+    const exam = JSON.parse(await fs.readFile(examPath, 'utf8'));
+    const questions = exam.sections
+      .find(section => section.id === 'listening')?.questions
+      .filter(question => question.transcript && question.audio) || [];
+    console.log(`[exam ${examNumber}] questions=${questions.length}`);
+    for (const question of questions) {
+      try {
+        const status = await generateOne(handler, question);
+        if (status === 'created') created += 1;
+        else skipped += 1;
+      } catch (error) {
+        failed.push({ exam: examNumber, id: question.id, message: error.message });
+        console.error(`[failed] exam=${examNumber} ${question.id}: ${error.message}`);
+      }
     }
   }
   console.log(`[done] created=${created} skipped=${skipped} failed=${failed.length}`);
   if (failed.length) {
-    for (const item of failed) console.error(`- ${item.id}: ${item.message}`);
+    for (const item of failed) console.error(`- exam=${item.exam} ${item.id}: ${item.message}`);
     process.exitCode = 1;
   }
 }
