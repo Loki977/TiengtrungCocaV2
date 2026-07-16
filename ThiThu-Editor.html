@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi" class="editor-auth-pending">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biên tập đề thi thử</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./assets/css/thi-thu.css">
+</head>
+<body>
+  <div id="editorAuthStatus" class="editor-auth-status" role="status">Đang xác minh quyền quản trị…</div>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="./ThiThu.html">
+        <span class="brand-mark">编</span>
+        <span><strong>Biên tập đề thi</strong><small>Công cụ JSON nhẹ</small></span>
+      </a>
+    </header>
+
+    <main class="main">
+      <section class="panel editor-panel">
+        <span class="eyebrow">Dành cho quản trị viên</span>
+        <h1>Trình biên tập đề thi</h1>
+        <p>Nhập hoặc tải file JSON, kiểm tra cấu trúc, sau đó tải bản hoàn chỉnh về máy.</p>
+
+        <div class="editor-actions">
+          <input id="fileInput" type="file" accept=".json,application/json" hidden>
+          <button id="openBtn" class="btn btn-ghost" type="button">Mở file JSON</button>
+          <button id="sampleBtn" class="btn btn-ghost" type="button">Nạp mẫu</button>
+          <button id="formatBtn" class="btn btn-ghost" type="button">Định dạng</button>
+          <button id="validateBtn" class="btn btn-primary" type="button">Kiểm tra</button>
+          <button id="downloadBtn" class="btn btn-primary" type="button">Tải JSON</button>
+        </div>
+
+        <label class="field">
+          <span>Tên file</span>
+          <input id="filenameInput" value="de-thi-moi.json">
+        </label>
+
+        <label class="field">
+          <span>Nội dung JSON</span>
+          <textarea id="jsonEditor" spellcheck="false"></textarea>
+        </label>
+
+        <pre id="validationOutput" class="validation-output">Chưa kiểm tra.</pre>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="./assets/js/firebase-auth.js"></script>
+  <script type="module" src="./assets/js/thi-thu/editor-auth.js"></script>
+</body>
+</html>

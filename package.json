@@ -6,7 +6,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "check": "node --check api/tts.js && node --check assets/js/speech-service.js",
+    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js",
     "build": "npm run check"
   },
   "dependencies": {

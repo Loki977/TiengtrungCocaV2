@@ -556,6 +556,8 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+  <link rel="stylesheet" href="assets/css/theme-preferences.css?v=20260716-2" />
+  <script src="assets/js/theme-preferences.js"></script>
 </head>
 <body>
   <!-- Dark mode apply before paint -->
@@ -953,7 +955,7 @@
                     <div class="setting-row">
                       <div class="setting-row__info">
                         <div class="setting-row__label">Chế độ tối (Dark Mode)</div>
-                        <div class="setting-row__desc">Giảm mỏi mắt khi học ban đêm</div>
+                        <div class="setting-row__desc">Áp dụng cho toàn bộ website và ghi nhớ trên thiết bị</div>
                       </div>
                       <div class="toggle-wrap">
                         <span id="darkModeLabel" style="font-size:.8rem;color:var(--text-muted)">Tắt</span>
@@ -965,13 +967,26 @@
                     </div>
                     <div class="setting-row">
                       <div class="setting-row__info">
-                        <div class="setting-row__label">Cỡ chữ</div>
-                        <div class="setting-row__desc">Điều chỉnh kích thước văn bản</div>
+                        <div class="setting-row__label">Ảnh nền hồ sơ</div>
+                        <div class="setting-row__desc">Hiển thị bản đồ Việt Nam ở toàn bộ nền trang Profile</div>
                       </div>
-                      <div style="display:flex;gap:8px">
-                        <button class="btn btn--sm btn--outline" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Nhỏ</button>
-                        <button class="btn btn--sm btn--primary" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Vừa</button>
-                        <button class="btn btn--sm btn--outline" onclick="this.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('btn--primary'));this.classList.add('btn--primary')">Lớn</button>
+                      <div class="toggle-wrap">
+                        <span id="profileBgToggleLabel" style="font-size:.8rem;color:var(--text-muted)">Bật</span>
+                        <label class="toggle">
+                          <input type="checkbox" id="profileBgToggle" checked />
+                          <div class="toggle-track"></div>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="setting-row">
+                      <div class="setting-row__info">
+                        <div class="setting-row__label">Cỡ chữ</div>
+                        <div class="setting-row__desc">Áp dụng cho toàn bộ website và giữ nguyên khi chuyển trang</div>
+                      </div>
+                      <div id="fontSizeControls" style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button type="button" class="btn btn--sm btn--outline" data-font-size="small">Nhỏ</button>
+                        <button type="button" class="btn btn--sm btn--primary" data-font-size="medium">Vừa</button>
+                        <button type="button" class="btn btn--sm btn--outline" data-font-size="large">Lớn</button>
                       </div>
                     </div>
                     <div class="setting-row">
@@ -1366,6 +1381,81 @@
       }
       .spirit-pet--lv10 { --video-pet-size: min(235px, 76vw); }
     }
+
+    /* Profile background stays attached to the viewport while page content scrolls. */
+    body.profile-bg-enabled {
+      position: relative;
+      isolation: isolate;
+    }
+    body.profile-bg-enabled::before,
+    body.profile-bg-enabled::after {
+      content: "";
+      display: block;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    body.profile-bg-enabled::before {
+      z-index: -2;
+      inset: -5vmax;
+      background:
+        linear-gradient(145deg, rgba(255,247,233,.48), rgba(255,226,185,.36)),
+        url("assets/images/profile/profile1.png") center / cover no-repeat,
+        linear-gradient(145deg, #fff8ed, #ffe4bd);
+      filter: blur(8px) saturate(.92);
+      opacity: .76;
+      transform: scale(1.035);
+    }
+    body.profile-bg-enabled::after {
+      z-index: -1;
+      background: url("assets/images/profile/profile1.png") center / min(88vw, 900px) auto no-repeat;
+      opacity: .54;
+      filter: saturate(1.02) contrast(1.05);
+    }
+    body.profile-bg-enabled .profile-hero {
+      background: transparent !important;
+      backdrop-filter: none !important;
+    }
+    body.profile-bg-enabled .profile-hero__wave path {
+      fill: transparent;
+    }
+    body.profile-bg-enabled .profile-tabs-section {
+      background: linear-gradient(180deg, rgba(255,250,243,.48), rgba(255,247,236,.38));
+      backdrop-filter: blur(2px);
+    }
+    body.profile-bg-enabled .profile-tabs,
+    body.profile-bg-enabled .ov-stat,
+    body.profile-bg-enabled .activity-section,
+    body.profile-bg-enabled .achievement,
+    body.profile-bg-enabled .settings-nav,
+    body.profile-bg-enabled .settings-card,
+    body.profile-bg-enabled .history-item {
+      background-color: color-mix(in srgb, var(--bg-card), transparent 15%);
+      backdrop-filter: blur(9px) saturate(1.04);
+    }
+    html[data-theme="dark"] body.profile-bg-enabled::before,
+    body.dark-mode.profile-bg-enabled::before {
+      background:
+        linear-gradient(145deg, rgba(8,15,29,.62), rgba(15,28,51,.56)),
+        url("assets/images/profile/profile1.png") center / cover no-repeat,
+        linear-gradient(145deg, #101827, #17243a);
+      filter: blur(8px) saturate(.78) brightness(.72);
+      opacity: .9;
+    }
+    html[data-theme="dark"] body.profile-bg-enabled::after,
+    body.dark-mode.profile-bg-enabled::after {
+      opacity: .4;
+      filter: saturate(.82) contrast(1.04) brightness(.72);
+    }
+    html[data-theme="dark"] body.profile-bg-enabled .profile-tabs-section,
+    body.dark-mode.profile-bg-enabled .profile-tabs-section {
+      background: linear-gradient(180deg, rgba(15,25,48,.56), rgba(13,20,39,.48));
+    }
+    @media (max-width: 520px) {
+      body.profile-bg-enabled::after { background-size: min(94vw, 520px) auto; opacity: .48; }
+      html[data-theme="dark"] body.profile-bg-enabled::after,
+      body.dark-mode.profile-bg-enabled::after { opacity: .36; }
+    }
   </style>
 
   <script src="assets/js/app.js"></script>
@@ -1418,16 +1508,73 @@
       document.getElementById('goalDisplay').textContent = val + ' XP';
     };
 
-    /* ── Dark mode toggle ── */
+    /* ── Shared appearance controls ── */
     const dmToggle = document.getElementById('darkModeToggle');
-    if (dmToggle) {
-      dmToggle.addEventListener('change', function () {
-        document.body.classList.toggle('dark-mode', this.checked);
-        localStorage.setItem('cc_darkMode', this.checked);
-        document.getElementById('darkModeLabel').textContent = this.checked ? 'Bật' : 'Tắt';
-        showToast(this.checked ? '🌙 Chế độ tối đã bật' : '☀️ Chế độ sáng đã bật');
+    const darkModeLabel = document.getElementById('darkModeLabel');
+    const fontSizeButtons = [...document.querySelectorAll('#fontSizeControls button[data-font-size]')];
+    function getAppearanceState() {
+      if (window.CCAppearance?.get) return window.CCAppearance.get();
+      let storedDark = false;
+      let storedFont = 'medium';
+      try {
+        storedDark = localStorage.getItem('cc_darkMode') === 'true';
+        storedFont = localStorage.getItem('cc_fontSize') || 'medium';
+      } catch (_) {}
+      return {
+        dark: storedDark || document.documentElement.dataset.theme === 'dark' || document.body.classList.contains('dark-mode'),
+        fontSize: ['small', 'medium', 'large'].includes(storedFont) ? storedFont : 'medium'
+      };
+    }
+    function setDarkMode(enabled) {
+      if (window.CCAppearance?.setDarkMode) return window.CCAppearance.setDarkMode(enabled);
+      const state = getAppearanceState();
+      state.dark = Boolean(enabled);
+      document.documentElement.dataset.theme = state.dark ? 'dark' : 'light';
+      document.body.classList.toggle('dark-mode', state.dark);
+      try { localStorage.setItem('cc_darkMode', String(state.dark)); } catch (_) {}
+      return state;
+    }
+    function syncAppearanceControls(state = getAppearanceState()) {
+      if (dmToggle) dmToggle.checked = state.dark;
+      if (darkModeLabel) darkModeLabel.textContent = state.dark ? 'Bật' : 'Tắt';
+      fontSizeButtons.forEach(button => {
+        const active = button.dataset.fontSize === state.fontSize;
+        button.classList.toggle('btn--primary', active);
+        button.classList.toggle('btn--outline', !active);
+        button.setAttribute('aria-pressed', String(active));
       });
     }
+    syncAppearanceControls();
+    dmToggle?.addEventListener('change', function () {
+      const state = setDarkMode(this.checked);
+      syncAppearanceControls(state);
+      showToast(this.checked ? '🌙 Chế độ tối đã áp dụng cho toàn website' : '☀️ Chế độ sáng đã áp dụng cho toàn website');
+    });
+    fontSizeButtons.forEach(button => button.addEventListener('click', () => {
+      const state = window.CCAppearance?.setFontSize?.(button.dataset.fontSize) || { dark:false, fontSize:button.dataset.fontSize };
+      syncAppearanceControls(state);
+      const label = { small:'Nhỏ', medium:'Vừa', large:'Lớn' }[state.fontSize];
+      showToast(`🔤 Cỡ chữ ${label} đã áp dụng cho toàn website`);
+    }));
+    window.addEventListener('cc:appearancechange', event => syncAppearanceControls(event.detail));
+
+    /* ── Profile background toggle ── */
+    const PROFILE_BG_KEY = 'cc_profileBackgroundEnabled';
+    const profileBgToggle = document.getElementById('profileBgToggle');
+    const profileBgToggleLabel = document.getElementById('profileBgToggleLabel');
+    function applyProfileBackground(enabled, notify = false) {
+      document.body.classList.toggle('profile-bg-enabled', enabled);
+      if (profileBgToggle) profileBgToggle.checked = enabled;
+      if (profileBgToggleLabel) profileBgToggleLabel.textContent = enabled ? 'Bật' : 'Tắt';
+      if (notify) showToast(enabled ? '🖼️ Đã bật ảnh nền hồ sơ' : '🙈 Đã tắt ảnh nền hồ sơ');
+    }
+    const savedProfileBackground = localStorage.getItem(PROFILE_BG_KEY);
+    applyProfileBackground(savedProfileBackground !== 'false');
+    profileBgToggle?.addEventListener('change', () => {
+      const enabled = profileBgToggle.checked;
+      localStorage.setItem(PROFILE_BG_KEY, String(enabled));
+      applyProfileBackground(enabled, true);
+    });
 
     /* ── Header login btn (scroll to auth) ── */
     document.getElementById('headerLoginBtn')?.addEventListener('click', () => {

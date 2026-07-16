@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f36">
+  <title>Thi thử HSK</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Serif+SC:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/thi-thu.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Về trang chủ">
+        <span class="brand-mark">中</span>
+        <span>
+          <strong>Tiếng Trung Cam &amp; Coca</strong>
+          <small>Học viện HSK</small>
+        </span>
+      </a>
+
+      <nav class="topbar-nav" aria-label="Điều hướng chính">
+        <a href="./hsk.html">Khóa học</a>
+        <a href="./hsk-writing.html">Luyện viết</a>
+        <a href="./flashcard.html">Flashcard</a>
+        <a class="is-current" href="./ThiThu.html" aria-current="page">Thi thử</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <span id="userChip" class="user-chip" hidden></span>
+        <button id="logoutBtn" class="btn btn-ghost" type="button" hidden>Đăng xuất</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section id="authGate" class="panel auth-panel" hidden>
+        <div>
+          <span class="eyebrow">Yêu cầu đăng nhập</span>
+          <h1>Đăng nhập để lưu tiến độ thi</h1>
+          <p>Trang này dùng lại phiên Firebase của website, không tạo thêm hệ thống tài khoản mới.</p>
+        </div>
+        <button id="loginBtn" class="btn btn-primary" type="button">Đăng nhập</button>
+      </section>
+
+      <section id="loadingView" class="panel loading-panel">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Đang tải phòng thi…</p>
+      </section>
+
+      <section id="homeView" hidden>
+        <div class="hero panel">
+          <div class="hero-copy">
+            <span class="hero-kicker"><span>贡院</span> Khoa cử HSK trực tuyến</span>
+            <h1>Thi thử HSK</h1>
+            <p>Chọn một đề, làm bài theo thời gian thật và xem lại đáp án sau khi nộp.</p>
+            <div class="hero-features" aria-label="Tính năng phòng thi">
+              <span>卷 Đề chuẩn JSON</span>
+              <span>时 Bấm giờ thực tế</span>
+              <span>榜 Chấm điểm tức thì</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <small>ĐANG MỞ</small>
+            <strong id="examCount">0</strong>
+            <span>đề khả dụng</span>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div class="section-heading__title">
+            <span class="section-seal" aria-hidden="true">试</span>
+            <div>
+            <h2>Danh sách đề thi</h2>
+            <p>Chọn cấp độ phù hợp và bắt đầu thử sức.</p>
+            </div>
+          </div>
+          <select id="levelFilter" class="select" aria-label="Lọc theo cấp độ">
+            <option value="all">Tất cả cấp độ</option>
+          </select>
+        </div>
+
+        <div id="examGrid" class="exam-grid"></div>
+        <div id="emptyState" class="panel empty-state" hidden>Chưa có đề phù hợp.</div>
+      </section>
+
+      <section id="introView" class="panel" hidden>
+        <button id="backToListBtn" class="text-button" type="button">← Quay lại danh sách</button>
+        <div class="intro-grid">
+          <div>
+            <span id="introLevel" class="badge"></span>
+            <h1 id="introTitle"></h1>
+            <p id="introDescription"></p>
+          </div>
+          <dl class="exam-facts">
+            <div><dt>Thời gian</dt><dd id="introDuration"></dd></div>
+            <div><dt>Số câu</dt><dd id="introQuestions"></dd></div>
+            <div><dt>Điểm đạt</dt><dd id="introPassScore"></dd></div>
+          </dl>
+        </div>
+        <div class="notice">
+          <strong>Lưu ý</strong>
+          <p id="introInstructions"></p>
+        </div>
+        <div class="action-row">
+          <button id="resumeBtn" class="btn btn-ghost" type="button" hidden>Tiếp tục bài đang làm</button>
+          <button id="startBtn" class="btn btn-primary" type="button">Bắt đầu làm bài</button>
+        </div>
+      </section>
+
+      <section id="examView" hidden>
+        <div class="exam-toolbar panel">
+          <div>
+            <span id="examLevel" class="badge"></span>
+            <strong id="examTitle"></strong>
+          </div>
+          <div class="exam-toolbar-right">
+            <span id="progressText">Câu 1/1</span>
+            <time id="timer" class="timer">00:00</time>
+          </div>
+        </div>
+
+        <div class="exam-layout">
+          <article class="panel question-panel">
+            <div class="question-head">
+              <span id="sectionName" class="eyebrow"></span>
+              <span id="questionPoints" class="muted"></span>
+            </div>
+            <div id="examAudioPanel" class="exam-audio" hidden>
+              <div>
+                <strong id="examAudioTitle">Audio câu hiện tại</strong>
+                <small>Mỗi câu nghe có một audio riêng.</small>
+              </div>
+              <button id="audioPlayBtn" class="audio-play-btn" type="button" aria-pressed="false">▶ Phát audio</button>
+              <audio id="examAudio" preload="metadata" hidden></audio>
+            </div>
+            <h2 id="questionPrompt"></h2>
+            <div id="questionContext" class="question-context" hidden>
+              <span id="questionContextHanzi" class="chinese-line"></span>
+              <span id="questionContextPinyin" class="pinyin-line"></span>
+            </div>
+            <div id="questionText" class="question-text" hidden>
+              <span id="questionHanzi" class="chinese-line"></span>
+              <span id="questionPinyin" class="pinyin-line"></span>
+            </div>
+            <img id="questionImage" class="question-image" alt="" hidden>
+            <div id="answerArea" class="answer-area"></div>
+            <div class="question-nav">
+              <button id="prevBtn" class="btn btn-ghost" type="button">Câu trước</button>
+              <button id="nextBtn" class="btn btn-primary" type="button">Câu tiếp</button>
+            </div>
+          </article>
+
+          <aside class="panel navigator-panel">
+            <div class="navigator-head">
+              <h3>Phiếu trả lời</h3>
+              <span id="answeredCount">0/0</span>
+            </div>
+            <div id="questionNavigator" class="question-navigator"></div>
+            <button id="submitBtn" class="btn btn-danger btn-block" type="button">Nộp bài</button>
+          </aside>
+        </div>
+      </section>
+
+      <section id="resultView" hidden>
+        <div class="result-card panel">
+          <span class="eyebrow">Kết quả</span>
+          <h1 id="resultTitle"></h1>
+          <div class="score-ring">
+            <strong id="resultScore">0</strong>
+            <span>/ <span id="resultMaxScore">0</span></span>
+          </div>
+          <p id="resultSummary"></p>
+          <div id="resultSections" class="result-sections"></div>
+          <div class="result-stats">
+            <div><strong id="correctCount">0</strong><span>Đúng</span></div>
+            <div><strong id="wrongCount">0</strong><span>Sai</span></div>
+            <div><strong id="resultTime">00:00</strong><span>Thời gian</span></div>
+          </div>
+          <div class="action-row center">
+            <button id="reviewBtn" class="btn btn-ghost" type="button">Xem đáp án</button>
+            <button id="retryBtn" class="btn btn-primary" type="button">Làm lại</button>
+            <button id="resultHomeBtn" class="btn btn-ghost" type="button">Danh sách đề</button>
+          </div>
+        </div>
+
+        <div id="reviewList" class="review-list" hidden></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+
+  <!-- Tái sử dụng file Firebase của dự án hiện tại. Xóa dòng này nếu trang chính đã nạp sẵn. -->
+  <script type="module" src="./assets/js/firebase-auth.js"></script>
+  <script type="module" src="./assets/js/thi-thu/app.js"></script>
+</body>
+</html>

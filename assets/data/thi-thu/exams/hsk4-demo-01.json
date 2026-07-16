@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "id": "hsk4-demo-01",
+  "title": "Đề thi thử HSK 4 — Mẫu số 01",
+  "level": "HSK 4",
+  "description": "Đây là dữ liệu mẫu. Khi có đề thật, chỉ cần thay file JSON và cập nhật index.json.",
+  "durationMinutes": 20,
+  "passScore": 60,
+  "instructions": "Mỗi câu chỉ chọn hoặc nhập một đáp án. Tiến độ được lưu tạm trên trình duyệt. Hết giờ, hệ thống tự nộp bài.",
+  "sections": [
+    {
+      "id": "reading",
+      "title": "Đọc hiểu",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "single_choice",
+          "points": 1,
+          "prompt": "请选择最合适的答案：他每天早上都去公园跑步，所以身体越来越____。",
+          "options": [
+            {
+              "id": "A",
+              "text": "健康"
+            },
+            {
+              "id": "B",
+              "text": "安静"
+            },
+            {
+              "id": "C",
+              "text": "简单"
+            },
+            {
+              "id": "D",
+              "text": "认真"
+            }
+          ],
+          "answer": "A",
+          "explanation": "“身体越来越健康” là cách kết hợp tự nhiên."
+        },
+        {
+          "id": "q2",
+          "type": "single_choice",
+          "points": 1,
+          "prompt": "请选择正确的句子。",
+          "options": [
+            {
+              "id": "A",
+              "text": "我把作业已经做完了。"
+            },
+            {
+              "id": "B",
+              "text": "我已经把作业做完了。"
+            },
+            {
+              "id": "C",
+              "text": "我作业把已经做完了。"
+            },
+            {
+              "id": "D",
+              "text": "把我已经作业做完了。"
+            }
+          ],
+          "answer": "B",
+          "explanation": "Trạng từ “已经” thường đứng trước kết cấu 把."
+        },
+        {
+          "id": "q3",
+          "type": "true_false",
+          "points": 1,
+          "context": "小王本来想坐地铁去公司，但是今天地铁停运，所以他改坐公交车。",
+          "prompt": "小王今天坐地铁去公司。",
+          "answer": "false",
+          "explanation": "Vì tàu điện ngừng hoạt động nên anh ấy đổi sang xe buýt."
+        }
+      ]
+    },
+    {
+      "id": "vocabulary",
+      "title": "Từ vựng và ngữ pháp",
+      "questions": [
+        {
+          "id": "q4",
+          "type": "fill_blank",
+          "points": 1,
+          "prompt": "Điền từ thích hợp: 虽然今天下雨，____我们还是决定去参观博物馆。",
+          "placeholder": "Nhập chữ Hán",
+          "answer": "但是",
+          "acceptedAnswers": [
+            "但是",
+            "可是"
+          ],
+          "explanation": "Cấu trúc thường dùng: 虽然……但是/可是……"
+        },
+        {
+          "id": "q5",
+          "type": "single_choice",
+          "points": 1,
+          "prompt": "“提高” gần nghĩa nhất với từ nào trong ngữ cảnh “提高汉语水平”?",
+          "options": [
+            {
+              "id": "A",
+              "text": "降低"
+            },
+            {
+              "id": "B",
+              "text": "提升"
+            },
+            {
+              "id": "C",
+              "text": "放弃"
+            },
+            {
+              "id": "D",
+              "text": "忘记"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "id": "q6",
+          "type": "true_false",
+          "points": 1,
+          "prompt": "“不仅……而且……” được dùng để biểu thị quan hệ tăng tiến.",
+          "answer": "true"
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "title": "Viết",
+      "questions": [
+        {
+          "id": "q7",
+          "type": "fill_blank",
+          "points": 2,
+          "prompt": "Sắp xếp ý và nhập câu hoàn chỉnh: 我 / 对 / 中国文化 / 很 / 感兴趣",
+          "answer": "我对中国文化很感兴趣",
+          "acceptedAnswers": [
+            "我对中国文化很感兴趣",
+            "我对中国文化很感兴趣。"
+          ]
+        },
+        {
+          "id": "q8",
+          "type": "single_choice",
+          "points": 2,
+          "prompt": "Chọn câu dùng đúng bổ ngữ kết quả.",
+          "options": [
+            {
+              "id": "A",
+              "text": "我听懂老师的话了。"
+            },
+            {
+              "id": "B",
+              "text": "我听老师懂的话了。"
+            },
+            {
+              "id": "C",
+              "text": "我懂听老师的话了。"
+            },
+            {
+              "id": "D",
+              "text": "我老师的话听懂。"
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    }
+  ]
+}

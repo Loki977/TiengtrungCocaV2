@@ -628,7 +628,7 @@ main { padding-top: var(--header-h); }
 
 .quick-menu__inner{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 22px;
   overflow: visible;
 }
@@ -739,6 +739,10 @@ main { padding-top: var(--header-h); }
 
 .quick-card--green {
   background: linear-gradient(135deg, #00a66a 0%, #25c78c 52%, #a7e957 100%);
+}
+
+.quick-card--mint {
+  background: linear-gradient(135deg, #0f9b82 0%, #35d6b3 55%, #8debd1 100%);
 }
 
 .quick-card--pink {

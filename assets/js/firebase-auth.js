@@ -349,7 +349,7 @@ const GOOGLE_OAUTH_PENDING_TTL_MS = 10 * 60 * 1000;
 
 function getPostLoginUrl() {
   const params = new URLSearchParams(window.location.search);
-  const next = params.get("next") || params.get("redirect");
+  const next = params.get("return") || params.get("next") || params.get("redirect");
   if (next) {
     try {
       const url = new URL(next, window.location.origin);
@@ -1391,6 +1391,8 @@ function bindAuthControls() {
     try { await resetPassword(email); showToast("Đã gửi email đặt lại mật khẩu."); } catch (error) { console.error(error); showToast(getFriendlyAuthError(error), "error"); }
   };
 }
+
+window.sharedFirebase = { app, auth, db };
 
 window.CCFirebase = {
   auth,
