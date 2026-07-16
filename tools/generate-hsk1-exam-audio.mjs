@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MAX_ATTEMPTS = 4;
 const USE_SAPI_FALLBACK = process.argv.includes('--sapi-fallback');
+const FORCE_REBUILD = process.argv.includes('--force');
 const EXAM_FILES = Object.freeze({
   '01': 'hsk1-h10901.json',
   '02': 'hsk1-h10902.json',
@@ -123,7 +124,7 @@ async function generateWithSapi(transcript, outputPath) {
 
 async function generateOne(handler, question) {
   const outputPath = path.resolve(ROOT, question.audio.replace(/^\.\//, ''));
-  if (await isValidWav(outputPath)) {
+  if (!FORCE_REBUILD && await isValidWav(outputPath)) {
     console.log(`[skip] ${question.id} -> ${path.relative(ROOT, outputPath)}`);
     return 'skipped';
   }
