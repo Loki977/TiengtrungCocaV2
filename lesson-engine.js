@@ -64,13 +64,19 @@ export async function generateLessons(level, lessonConfig = getLessonConfig(leve
       );
     }
 
+    const sentences = pickSentences(
+      collectSentences(vocabSlice),
+      config.sentenceCount,
+      `${key}-${config.lessonId}`
+    );
+
     return {
       lessonId: config.lessonId,
       title: config.title,
-      vocabularyCount: vocabSlice.length || requestedCount,
-      sentenceCount: config.sentenceCount,
+      vocabularyCount: vocabSlice.length,
+      sentenceCount: sentences.length,
       vocabularies: vocabSlice,
-      sentences: pickSentences(collectSentences(vocabSlice), config.sentenceCount, `${key}-${config.lessonId}`)
+      sentences
     };
   });
 
@@ -127,7 +133,7 @@ function normalizeVocabulary(item) {
     ? item.examples.map((example) => ({
       chinese: example.hanzi || example.chinese || "",
       pinyin: example.pinyin || "",
-      vietnamese: example.translation || example.meaning_vi || example.meaning || "",
+      vietnamese: capitalizeVietnameseLines(example.translation || example.meaning_vi || example.meaning || ""),
       answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null
     })).filter((example) => example.chinese || example.pinyin || example.vietnamese)
     : [];
@@ -137,11 +143,18 @@ function normalizeVocabulary(item) {
     level: item.hsk ? `hsk${item.hsk}` : "",
     chinese: item.hanzi || item.chinese || item.word || "",
     pinyin: item.pinyin || "",
-    vietnamese: item.meaning_vi || item.meaning || item.vietnamese || item.translation || "",
+    vietnamese: capitalizeVietnameseLines(item.meaning_vi || item.meaning || item.vietnamese || item.translation || ""),
     lesson: item.lesson,
     lessonId: item.lessonId || item.lesson,
     examples
   };
+}
+
+function capitalizeVietnameseLines(value) {
+  return String(value || "").replace(
+    /(^|[\r\n]+)([^\p{L}\r\n]*)(\p{L})/gu,
+    (_, lineBreak, prefix, letter) => `${lineBreak}${prefix}${letter.toLocaleUpperCase("vi-VN")}`
+  );
 }
 
 function buildConcreteLessonConfig(level, config, totalVocabulary) {

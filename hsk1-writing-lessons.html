@@ -298,16 +298,18 @@
 
   <script type="module">
     import { getLessonConfig } from "./lesson-config.js";
+    import { generateLessons } from "./lesson-engine.js";
 
     const params = new URLSearchParams(window.location.search);
     const level = (params.get("level") || "hsk1").toLowerCase();
     const config = getLessonConfig(level) || getLessonConfig("hsk1");
-    const lessons = config.lessons.map((item, index) => ({
+    const lessonContent = await generateLessons(config.level, config);
+    const lessons = lessonContent.map((item, index) => ({
       status: index < 3 ? "Miễn phí" : "Học thử 5 câu",
       lesson: `Bài ${item.lessonId}`,
       title: item.title,
-      words: item.vocabularyCount || 0,
-      sentences: item.sentenceCount || 0
+      words: item.vocabularies.length,
+      sentences: item.sentences.length
     }));
 
     document.title = config.label;
