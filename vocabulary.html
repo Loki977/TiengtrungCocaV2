@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Từ vựng – Tiếng Trung Cam &amp; Coca</title>
+  <title>Tàng Thư Các – Tiếng Trung Cam &amp; Coca</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -316,6 +316,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
+  <link rel="stylesheet" href="assets/css/tang-thu-cac.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -331,7 +332,7 @@
         <a href="hsk.html" class="nav__link">Khóa học</a>
         <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
         <a href="flashcard.html" class="nav__link">Flashcard</a>
-        <a href="vocabulary.html" class="nav__link active">Từ vựng</a>
+        <a href="vocabulary.html" class="nav__link active">Tàng Thư Các</a>
       </nav>
       <div class="header__actions">
         <div class="streak-badge" title="Streak 7 ngày">
@@ -352,13 +353,33 @@
       <a href="hsk.html" class="nav__link">Khóa học</a>
       <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
       <a href="flashcard.html" class="nav__link">Flashcard</a>
-      <a href="vocabulary.html" class="nav__link active">Từ vựng</a>
+      <a href="vocabulary.html" class="nav__link active">Tàng Thư Các</a>
       <div class="mobile-nav__divider"></div>
       <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
     </div>
   </div>
 
   <main>
+    <section class="archive-masthead" aria-labelledby="archiveTitle">
+      <div class="container archive-masthead__inner">
+        <span class="archive-masthead__eyebrow">🏯 Kho tri thức Hán ngữ</span>
+        <h1 id="archiveTitle">Tàng Thư Các</h1>
+        <p class="archive-masthead__desc">Tra từ, hệ thống hóa ngữ pháp và khám phá thành ngữ Trung – Việt trong cùng một không gian học tập.</p>
+        <div class="archive-tabs" role="tablist" aria-label="Chọn nội dung Tàng Thư Các">
+          <button type="button" class="archive-tab is-active" data-archive-tab="dictionary" role="tab" aria-selected="true">
+            <span class="archive-tab__icon">📖</span><span><strong>Từ điển</strong><small>Giữ nguyên công cụ tra từ hiện tại</small></span>
+          </button>
+          <button type="button" class="archive-tab" data-archive-tab="grammar" role="tab" aria-selected="false" tabindex="-1">
+            <span class="archive-tab__icon">🧩</span><span><strong>Ngữ pháp</strong><small>HSK1–HSK6, phân nhóm A–Z</small></span>
+          </button>
+          <button type="button" class="archive-tab" data-archive-tab="idioms" role="tab" aria-selected="false" tabindex="-1">
+            <span class="archive-tab__icon">🀄</span><span><strong>Thành ngữ</strong><small>Đối chiếu đại ý Trung – Việt</small></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="archive-panel is-active" data-archive-panel="dictionary">
     <!-- Search Hero -->
     <section class="vocab-hero">
       <div class="container" style="position:relative;z-index:1">
@@ -507,6 +528,96 @@
         </div>
       </div>
     </section>
+    </div>
+
+    <div class="archive-panel" data-archive-panel="grammar" hidden>
+      <section class="library-section" aria-labelledby="grammarLibraryTitle">
+        <div class="container">
+          <div class="library-intro">
+            <div class="library-intro__copy">
+              <span class="library-kicker">Ngữ pháp HSK1–HSK6</span>
+              <h2 id="grammarLibraryTitle">Tra cứu ngữ pháp theo A–Z</h2>
+              <p>Nội dung được tổng hợp từ phần ngữ pháp trong Bài khóa, gộp mục trùng và chuẩn hóa để tìm theo cấu trúc, ý nghĩa hoặc cấp HSK.</p>
+            </div>
+            <div class="library-stat"><strong id="grammarLibraryCount">0</strong> mục phù hợp</div>
+          </div>
+
+          <div class="library-toolbar">
+            <div class="library-search">
+              <span>🔎</span>
+              <input id="grammarLibrarySearch" type="search" placeholder="Tìm cấu trúc, ý nghĩa, ví dụ..." autocomplete="off" />
+              <button id="grammarSearchClear" type="button" aria-label="Xóa tìm kiếm">✕</button>
+            </div>
+            <div class="library-filter-row" aria-label="Lọc theo cấp độ">
+              <span class="library-filter-label">Cấp độ</span>
+              <button type="button" class="library-filter-btn is-active" data-grammar-level="all">Tất cả</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK1">HSK1</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK2">HSK2</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK3">HSK3</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK4">HSK4</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK5">HSK5</button>
+              <button type="button" class="library-filter-btn" data-grammar-level="HSK6">HSK6</button>
+            </div>
+            <div class="library-letter-scroll" id="grammarAlphabet" aria-label="Lọc ngữ pháp theo chữ cái"></div>
+          </div>
+
+          <div class="library-browser">
+            <aside class="library-list-card">
+              <div class="library-list-head"><strong>Danh sách ngữ pháp</strong><span id="grammarListCount">0 mục</span></div>
+              <div class="library-list" id="grammarLibraryList"><div class="library-loading">Đang tải dữ liệu…</div></div>
+            </aside>
+            <article class="library-detail-card" id="grammarLibraryDetail">
+              <div class="library-detail-empty"><div><div class="library-detail-empty__icon">🧩</div><h3>Chọn một cấu trúc</h3><p>Thông tin chi tiết sẽ hiển thị tại đây.</p></div></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="archive-panel" data-archive-panel="idioms" hidden>
+      <section class="library-section" aria-labelledby="idiomsLibraryTitle">
+        <div class="container">
+          <div class="library-intro">
+            <div class="library-intro__copy">
+              <span class="library-kicker">Thành ngữ Trung – Việt</span>
+              <h2 id="idiomsLibraryTitle">Hiểu nghĩa bóng, dùng đúng ngữ cảnh</h2>
+              <p>Mỗi mục có Pinyin, đại ý, cách nói tiếng Việt tương đương, sắc thái và ví dụ. Danh sách được xếp A–Z theo Pinyin.</p>
+            </div>
+            <div class="library-stat"><strong id="idiomsLibraryCount">0</strong> mục phù hợp</div>
+          </div>
+
+          <div class="library-toolbar">
+            <div class="library-search">
+              <span>🔎</span>
+              <input id="idiomsLibrarySearch" type="search" placeholder="Tìm chữ Hán, Pinyin hoặc nghĩa tiếng Việt..." autocomplete="off" />
+              <button id="idiomsSearchClear" type="button" aria-label="Xóa tìm kiếm">✕</button>
+            </div>
+            <div class="library-filter-row" aria-label="Lọc theo chủ đề">
+              <span class="library-filter-label">Chủ đề</span>
+              <button type="button" class="library-filter-btn is-active" data-idioms-category="all">Tất cả</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Học tập &amp; nỗ lực">Học tập</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Giao tiếp &amp; tư duy">Giao tiếp</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Cảm xúc &amp; trạng thái">Cảm xúc</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Quan hệ &amp; phẩm chất">Quan hệ</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Công việc &amp; xã hội">Công việc</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Tình huống &amp; kết quả">Tình huống</button>
+              <button type="button" class="library-filter-btn" data-idioms-category="Phẩm chất &amp; hành vi">Hành vi</button>
+            </div>
+            <div class="library-letter-scroll" id="idiomsAlphabet" aria-label="Lọc thành ngữ theo chữ cái"></div>
+          </div>
+
+          <div class="library-browser">
+            <aside class="library-list-card">
+              <div class="library-list-head"><strong>Danh sách thành ngữ</strong><span id="idiomsListCount">0 mục</span></div>
+              <div class="library-list" id="idiomsLibraryList"><div class="library-loading">Đang tải dữ liệu…</div></div>
+            </aside>
+            <article class="library-detail-card" id="idiomsLibraryDetail">
+              <div class="library-detail-empty"><div><div class="library-detail-empty__icon">🀄</div><h3>Chọn một thành ngữ</h3><p>Đại ý và cách dùng sẽ hiển thị tại đây.</p></div></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <!-- ========== FOOTER ========== -->
@@ -528,7 +639,7 @@
         <h4>Học tập</h4>
         <a href="hsk.html">Lộ trình HSK</a>
         <a href="flashcard.html">Flashcard</a>
-        <a href="vocabulary.html">Từ vựng</a>
+        <a href="vocabulary.html">Tàng Thư Các</a>
       </div>
       <div class="footer__links">
         <h4>Cộng đồng</h4>
@@ -1016,6 +1127,7 @@ loadDictionary();
   })();
   </script>
   <script src="assets/js/speech-service.js"></script>
+  <script src="assets/js/tang-thu-cac.js"></script>
   <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
