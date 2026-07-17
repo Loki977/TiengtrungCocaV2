@@ -223,6 +223,7 @@
   }
 
   let rafId = 0;
+  let loopCleanup = null;
   let particles = [];
   let burstPower = 0;
 
@@ -391,10 +392,52 @@
     const canvas = document.getElementById("spiritPetCanvas");
     const ctx = canvas?.getContext?.("2d");
     if (!card || !video) return;
+
+    loopCleanup?.();
+    loopCleanup = null;
     const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const start = performance.now();
+    const frameInterval = window.matchMedia?.("(max-width: 768px)").matches ? 50 : 1000 / 30;
+    const supportsObserver = typeof IntersectionObserver === "function";
+    const initialRect = card.getBoundingClientRect();
+    let inViewport = supportsObserver
+      ? card.offsetParent !== null && initialRect.bottom >= -100 && initialRect.top <= window.innerHeight + 100
+      : true;
+    let lastFrame = 0;
+    let stopped = false;
+
+    if (reduced) {
+      card.style.setProperty("--pet-breathe", "1");
+      card.style.setProperty("--pet-scale", "1");
+      card.style.setProperty("--pet-float", "0px");
+      card.style.setProperty("--pet-wobble", "0deg");
+      card.style.setProperty("--pet-glow", "1");
+      if (canvas && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    function canAnimate() {
+      return !stopped && !document.hidden && inViewport;
+    }
+
+    function schedule() {
+      if (!rafId && canAnimate()) rafId = requestAnimationFrame(tick);
+    }
 
     function tick(now) {
+      rafId = 0;
+      if (!canAnimate()) return;
+      if (now - lastFrame < frameInterval) {
+        schedule();
+        return;
+      }
+      lastFrame = now;
+
+      if (document.body.classList.contains("profile-is-scrolling")) {
+        schedule();
+        return;
+      }
+
       const t = (now - start) / 1000;
       const level = clampLevel(card.dataset.level);
       const breathe = 1 + Math.sin(t * Math.PI * (1.05 + level * 0.025)) * (0.018 + level * 0.0025);
@@ -406,11 +449,42 @@
       card.style.setProperty("--pet-float", `${floatY.toFixed(2)}px`);
       card.style.setProperty("--pet-wobble", `${wobble.toFixed(2)}deg`);
       card.style.setProperty("--pet-glow", Math.max(0.9, glow).toFixed(4));
-      if (!reduced && canvas && ctx) drawEffects(canvas, ctx, card, now);
-      rafId = requestAnimationFrame(tick);
+      if (canvas && ctx) drawEffects(canvas, ctx, card, now);
+      schedule();
     }
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(tick);
+
+    const observer = supportsObserver
+      ? new IntersectionObserver(([entry]) => {
+          inViewport = Boolean(entry?.isIntersecting);
+          if (!inViewport && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+          } else {
+            schedule();
+          }
+        }, { rootMargin: "100px 0px" })
+      : null;
+    observer?.observe(card);
+
+    const handleVisibility = () => {
+      if (document.hidden && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      } else {
+        schedule();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    loopCleanup = () => {
+      stopped = true;
+      observer?.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    };
+
+    schedule();
   }
 
   window.addEventListener("cc:pet-burst", (event) => {

@@ -98,10 +98,7 @@
   }
 
   function userIsVip() {
-    if (!currentStats?.isVip) return false;
-    if (!currentStats.vipUntil) return true;
-    const end = new Date(currentStats.vipUntil);
-    return Number.isNaN(end.getTime()) || end >= new Date();
+    return Boolean(window.CCVip?.isActive?.(currentStats));
   }
 
   function canOpenLesson(level, lessonId) {

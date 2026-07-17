@@ -1,0 +1,279 @@
+:root {
+  --cc-vip-gold-deep: #8a5400;
+  --cc-vip-gold: #f2b52f;
+  --cc-vip-gold-bright: #fff1a6;
+  --cc-vip-gold-white: #fffbe2;
+  --cc-vip-shadow: rgba(242, 181, 47, .34);
+}
+
+.cc-user-avatar {
+  --cc-vip-crown-width: 68%;
+  --cc-vip-crown-top: 1px;
+  --cc-vip-crown-lift: -72%;
+  --cc-vip-ring-width: 2px;
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 auto;
+}
+
+.cc-user-avatar--header {
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.cc-user-avatar--sm {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.cc-user-avatar--md {
+  width: 48px;
+  height: 48px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.cc-user-avatar__image,
+.cc-user-avatar > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.cc-user-avatar__fallback,
+.cc-user-avatar #heroAvatar {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+}
+
+.cc-user-avatar__fallback {
+  color: #704000;
+  background: var(--orange-xlight, #fff0df);
+  font-weight: 900;
+}
+
+.cc-user-avatar.is-vip {
+  overflow: visible !important;
+  border: var(--cc-vip-ring-width) solid transparent !important;
+  background:
+    linear-gradient(var(--bg-card, rgba(255, 255, 255, .92)), var(--bg-card, rgba(255, 255, 255, .92))) padding-box,
+    linear-gradient(120deg, var(--cc-vip-gold-deep), var(--cc-vip-gold-bright), var(--cc-vip-gold), var(--cc-vip-gold-white), var(--cc-vip-gold-deep)) border-box !important;
+  background-size: 100% 100%, 260% 100% !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 248, 196, .82),
+    0 7px 18px rgba(114, 67, 0, .22),
+    0 0 22px var(--cc-vip-shadow) !important;
+  animation: ccVipAvatarMetal 7s ease-in-out infinite;
+}
+
+.cc-user-avatar.is-vip::after {
+  content: "";
+  position: absolute;
+  z-index: 8;
+  top: var(--cc-vip-crown-top);
+  left: 50%;
+  width: var(--cc-vip-crown-width);
+  aspect-ratio: 128 / 78;
+  background: url("../images/vip-crown.svg") center / contain no-repeat;
+  filter: drop-shadow(0 2px 3px rgba(74, 41, 0, .42)) drop-shadow(0 0 4px rgba(255, 215, 83, .42));
+  transform: translate(-50%, var(--cc-vip-crown-lift));
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  animation: ccVipCrownFloat 4.8s ease-in-out infinite;
+}
+
+.cc-user-avatar--xl.is-vip::after,
+.profile-avatar.cc-user-avatar.is-vip::after {
+  --cc-vip-crown-width: 62%;
+  --cc-vip-crown-top: 3px;
+  --cc-vip-crown-lift: -73%;
+}
+
+.cc-user-avatar--xl,
+.profile-avatar.cc-user-avatar {
+  --cc-vip-ring-width: 4px;
+}
+
+.cc-user-avatar.is-vip > :is(img, .cc-user-avatar__image, .cc-user-avatar__fallback, #heroAvatar),
+.cc-user-avatar.is-vip #heroAvatar > img {
+  border-radius: 50% !important;
+}
+
+.cc-user-avatar.is-vip .profile-avatar__edit {
+  border-radius: inherit;
+}
+
+.cc-vip-card {
+  position: relative;
+}
+
+.cc-vip-card.is-vip,
+body.profile-bg-enabled .profile-page .cc-vip-card.is-vip {
+  isolation: isolate;
+  overflow: visible;
+  padding-top: 58px !important;
+  border: 3px solid transparent !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 245, 185, .88),
+    0 20px 48px rgba(98, 56, 0, .24),
+    0 0 30px rgba(242, 181, 47, .22),
+    inset 0 1px 0 rgba(255, 252, 224, .62) !important;
+}
+
+.cc-vip-card.is-vip::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: -3px;
+  padding: 3px;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle, #fff 0 8%, #ffe887 18%, rgba(255, 212, 82, .16) 38%, transparent 54%) 0 0 / 22% 38% no-repeat,
+    linear-gradient(110deg, #835000, #f0ad24, #fff4b8, #b87608, #ffe489, #835000) 0 50% / 320% 100%;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: ccVipBorderTravel 8s linear infinite;
+}
+
+.cc-vip-card.is-vip::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -8px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 210, 79, .16), rgba(255, 246, 188, .42), rgba(255, 193, 45, .14));
+  filter: blur(7px);
+  opacity: .72;
+  pointer-events: none;
+  animation: ccVipGlowBreath 4.6s ease-in-out infinite;
+}
+
+.cc-vip-badge {
+  position: absolute;
+  z-index: 6;
+  top: 14px;
+  right: 16px;
+  min-width: 62px;
+  padding: 7px 15px 6px;
+  border: 1px solid rgba(255, 249, 206, .94);
+  border-radius: 999px;
+  color: #6f4100;
+  background: linear-gradient(135deg, #9b6100 0%, #f6bd35 24%, #fff2a2 49%, #d88c09 72%, #ffdc66 100%);
+  background-size: 220% 100%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    inset 0 -2px 0 rgba(125, 72, 0, .35),
+    0 5px 14px rgba(94, 52, 0, .3),
+    0 0 14px rgba(255, 215, 91, .38);
+  font: 900 .86rem/1 "Baloo 2", Poppins, sans-serif;
+  letter-spacing: .13em;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .72), 0 2px 3px rgba(107, 61, 0, .24);
+  animation: ccVipBadgeShine 6s ease-in-out infinite;
+}
+
+.cc-vip-badge::after {
+  content: "✦";
+  position: absolute;
+  top: -7px;
+  right: -5px;
+  color: #fff8c9;
+  font-size: .76rem;
+  filter: drop-shadow(0 0 4px #ffd74f);
+  transform: scale(.75) rotate(10deg);
+  animation: ccVipSparkle 3.4s ease-in-out infinite;
+}
+
+@keyframes ccVipAvatarMetal {
+  0%, 100% { background-position: 0 0, 0 50%; }
+  50% { background-position: 0 0, 100% 50%; }
+}
+
+@keyframes ccVipCrownFloat {
+  0%, 100% {
+    transform: translate(-50%, var(--cc-vip-crown-lift)) translateY(0);
+    opacity: .96;
+    filter: drop-shadow(0 2px 3px rgba(74, 41, 0, .42)) drop-shadow(0 0 4px rgba(255, 215, 83, .42));
+  }
+  50% {
+    transform: translate(-50%, var(--cc-vip-crown-lift)) translateY(-1px);
+    opacity: 1;
+    filter: drop-shadow(0 3px 4px rgba(74, 41, 0, .46)) drop-shadow(0 0 6px rgba(255, 226, 114, .58));
+  }
+}
+
+@keyframes ccVipBorderTravel {
+  0% { background-position: 0 0, 0 50%; }
+  25% { background-position: 100% 0, 80% 50%; }
+  50% { background-position: 100% 100%, 160% 50%; }
+  75% { background-position: 0 100%, 240% 50%; }
+  100% { background-position: 0 0, 320% 50%; }
+}
+
+@keyframes ccVipGlowBreath {
+  0%, 100% { opacity: .52; }
+  50% { opacity: .82; }
+}
+
+@keyframes ccVipBadgeShine {
+  0%, 100% { background-position: 0 50%; filter: brightness(1); }
+  50% { background-position: 100% 50%; filter: brightness(1.08); }
+}
+
+@keyframes ccVipSparkle {
+  0%, 70%, 100% { opacity: .42; transform: scale(.72) rotate(0); }
+  82% { opacity: 1; transform: scale(1.12) rotate(18deg); }
+}
+
+@media (max-width: 768px) {
+  #firebaseUserBox .cc-user-avatar--header {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cc-vip-card.is-vip {
+    padding-top: 56px !important;
+  }
+
+  .cc-vip-badge {
+    top: 13px;
+    right: 14px;
+  }
+}
+
+body.profile-is-scrolling .cc-user-avatar.is-vip,
+body.profile-is-scrolling .cc-user-avatar.is-vip::after,
+body.profile-is-scrolling .cc-vip-card.is-vip::before,
+body.profile-is-scrolling .cc-vip-card.is-vip::after,
+body.profile-is-scrolling .cc-vip-badge,
+body.profile-is-scrolling .cc-vip-badge::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-user-avatar.is-vip,
+  .cc-user-avatar.is-vip::after,
+  .cc-vip-card.is-vip::before,
+  .cc-vip-card.is-vip::after,
+  .cc-vip-badge,
+  .cc-vip-badge::after {
+    animation: none !important;
+  }
+}

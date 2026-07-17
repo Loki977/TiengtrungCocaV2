@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 78" role="img" aria-label="Vương miện VIP">
+  <defs>
+    <linearGradient id="gold" x1="12" y1="8" x2="110" y2="72" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8b5100"/>
+      <stop offset=".18" stop-color="#ffd75b"/>
+      <stop offset=".36" stop-color="#fff5b6"/>
+      <stop offset=".54" stop-color="#d88a08"/>
+      <stop offset=".72" stop-color="#ffdc62"/>
+      <stop offset="1" stop-color="#754100"/>
+    </linearGradient>
+    <linearGradient id="band" x1="18" y1="50" x2="110" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7b4300"/>
+      <stop offset=".16" stop-color="#e89e13"/>
+      <stop offset=".42" stop-color="#fff0a0"/>
+      <stop offset=".62" stop-color="#c37604"/>
+      <stop offset=".82" stop-color="#ffd451"/>
+      <stop offset="1" stop-color="#6d3900"/>
+    </linearGradient>
+    <radialGradient id="gem" cx=".35" cy=".28" r=".76">
+      <stop stop-color="#fffbd9"/>
+      <stop offset=".3" stop-color="#ffd95b"/>
+      <stop offset="1" stop-color="#9b5600"/>
+    </radialGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="170%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3e2200" flood-opacity=".58"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffd75d" flood-opacity=".48"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <path
+      d="M18 53 12 17l25 19L49 8l15 28L79 7l12 29 25-20-7 38c-25-7-65-7-91-1Z"
+      fill="url(#gold)"
+      stroke="#fff0a0"
+      stroke-width="2"
+      stroke-linejoin="round"
+    />
+    <path d="M20 46c25 6 63 6 88 0l-2 10c-24-6-59-6-84 0Z" fill="#895000" opacity=".72"/>
+    <path
+      d="M19 52c27-7 63-7 90 0l-2 16c-27-6-59-6-86 0Z"
+      fill="url(#band)"
+      stroke="#fff0a0"
+      stroke-width="2"
+    />
+    <path
+      d="M24 57c25-5 55-5 80 0"
+      fill="none"
+      stroke="#fff8cb"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity=".82"
+    />
+
+    <g fill="url(#gem)" stroke="#7f4800" stroke-width="1.4">
+      <circle cx="34" cy="58" r="4.2"/>
+      <circle cx="49" cy="56" r="4.2"/>
+      <circle cx="64" cy="55" r="4.5"/>
+      <circle cx="79" cy="56" r="4.2"/>
+      <circle cx="94" cy="58" r="4.2"/>
+    </g>
+
+    <g fill="url(#gem)" stroke="#fff0a0" stroke-width="1.4">
+      <circle cx="12" cy="16" r="4"/>
+      <circle cx="49" cy="8" r="4"/>
+      <circle cx="79" cy="7" r="4"/>
+      <circle cx="116" cy="15" r="4"/>
+    </g>
+
+    <path
+      d="M25 46 18 25m29 16 3-23m29 23V17m24 29 8-22"
+      fill="none"
+      stroke="#fff7c7"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity=".6"
+    />
+  </g>
+</svg>

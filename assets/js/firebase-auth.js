@@ -28,6 +28,13 @@ import {
   runTransaction,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  getVipState,
+  isVipActive,
+  applyVipState,
+  renderVipAvatar,
+  syncVipCard
+} from "./vip-user.js";
 
 const FIREBASE_HOSTING_AUTH_DOMAIN = "tiengtrungcoca.firebaseapp.com";
 const PRODUCTION_AUTH_PROXY_HOSTS = new Set(["tiengtrungcoca.vercel.app"]);
@@ -1143,7 +1150,13 @@ function updateHeaderUser(user, stats) {
       headerActions.insertBefore(userBox, loginBtn || headerActions.firstChild);
     }
     const name = user.displayName || user.email || "Tài khoản";
-    userBox.innerHTML = `${user.photoURL ? `<img src="${user.photoURL}" alt="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">` : `<span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--orange-xlight,#fff0df);">👤</span>`}<span style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${name}</span>`;
+    userBox.replaceChildren();
+    const avatar = document.createElement("span");
+    renderVipAvatar(avatar, user, stats, { size: "header" });
+    const nameLabel = document.createElement("span");
+    nameLabel.style.cssText = "max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+    nameLabel.textContent = name;
+    userBox.append(avatar, nameLabel);
     if (loginBtn) loginBtn.textContent = "Đăng xuất";
     if (loginBtnMobile) loginBtnMobile.textContent = "Đăng xuất";
   } else {
@@ -1181,9 +1194,13 @@ function syncProfile(user, stats) {
   const authPage = document.getElementById("authPage");
   const profilePage = document.getElementById("profilePage");
   if (!authPage || !profilePage) return;
+  const avatarShell = document.querySelector(".profile-avatar");
+  const profileInfoCard = document.querySelector(".profile-hero__info");
   if (!user) {
     authPage.style.display = "flex";
     profilePage.classList.remove("show");
+    applyVipState(avatarShell, {});
+    syncVipCard(profileInfoCard, {});
     return;
   }
   authPage.style.display = "none";
@@ -1198,6 +1215,8 @@ function syncProfile(user, stats) {
   if (heroAvatar) {
     heroAvatar.innerHTML = user.photoURL ? `<img src="${user.photoURL}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : "👤";
   }
+  applyVipState(avatarShell, stats);
+  syncVipCard(profileInfoCard, stats);
   setText("#profileStatStreak", formatNumber(stats.streak));
   setText("#profileStatXp", formatNumber(stats.xp));
   setText("#profileStatLessons", formatNumber(stats.completedLessons));
@@ -1428,6 +1447,13 @@ window.CCFirebase = {
   getCurrentUser,
   getUserData,
   saveUserData,
+  vip: Object.freeze({
+    getState: getVipState,
+    isActive: isVipActive,
+    applyAvatar: applyVipState,
+    renderAvatar: renderVipAvatar,
+    syncCard: syncVipCard
+  }),
   isAuthReady: () => authReady,
   authInitialization: authInitializationPromise,
   authReady: authReadyPromise,

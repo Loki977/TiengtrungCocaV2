@@ -33,6 +33,13 @@ function statsRef(uid){ return doc(db, 'users', uid, 'private', 'stats'); }
 function userRef(uid){ return doc(db, 'users', uid); }
 function backendMessage(text, ok=false){ const el=$('#backendNotice'); if(!el) return; el.className = ok ? 'notice ok' : 'notice'; el.innerHTML = text; }
 function isAdminUser(user){ return Boolean(user?.email && user.email.toLowerCase() === ADMIN_EMAIL); }
+function syncAdminVipAvatar(user, stats = sharedFirebase.getCurrentStats?.() || {}){
+  const avatar = $('#adminAvatar');
+  const shell = $('#adminAvatarShell');
+  if (!avatar || !shell || !user) return;
+  avatar.src = user.photoURL || '';
+  sharedFirebase.vip?.applyAvatar?.(shell, stats);
+}
 function requireAdmin(){
   const user = auth.currentUser;
   if (!isAdminUser(user)) throw new Error('Tài khoản hiện tại không có quyền Admin Super.');
@@ -72,10 +79,13 @@ onAuthStateChanged(auth, user => {
   if(!user){ $('#loginScreen').classList.remove('hidden'); $('#app').classList.add('hidden'); return; }
   if(!isAdminUser(user)){ location.replace('index.html'); return; }
   $('#adminEmail').textContent = user.email;
-  $('#adminAvatar').src = user.photoURL || '';
+  syncAdminVipAvatar(user);
   $('#loginScreen').classList.add('hidden');
   $('#app').classList.remove('hidden');
   bootOnce();
+});
+window.addEventListener('cc:user-stats', event => {
+  if (isAdminUser(event.detail?.user)) syncAdminVipAvatar(event.detail.user, event.detail?.stats || {});
 });
 
 let booted = false;
@@ -119,7 +129,7 @@ function renderFeedbacks(){
   $('#feedbackList').innerHTML = arr.map(f => `
     <div class="card">
       <div class="row">
-        <div class="meta"><div class="avatar">${f.photoURL ? `<img src="${safeText(f.photoURL)}" alt="">` : safeText((f.displayName || f.email || '?').slice(0,1))}</div><div><div class="name">${safeText(f.displayName || 'Ẩn danh')} <span class="pill ${safeText(f.status || 'new')}">${safeText(f.status || 'new')}</span></div><div class="email">${safeText(f.email || '')}</div><div class="time">${fmt(f.createdAt)} · ${safeText(f.type || 'Other')}</div></div></div>
+        <div class="meta"><div class="avatar cc-user-avatar${getUserVip(state.users.find(u => u.id === f.uid) || f) ? ' is-vip' : ''}">${f.photoURL ? `<img src="${safeText(f.photoURL)}" alt="">` : safeText((f.displayName || f.email || '?').slice(0,1))}</div><div><div class="name">${safeText(f.displayName || 'Ẩn danh')} <span class="pill ${safeText(f.status || 'new')}">${safeText(f.status || 'new')}</span></div><div class="email">${safeText(f.email || '')}</div><div class="time">${fmt(f.createdAt)} · ${safeText(f.type || 'Other')}</div></div></div>
         <div class="actions"><button class="btn small warn" data-read="${f.id}">Đã đọc</button><button class="btn small ok" data-done="${f.id}">Đã xử lý</button><button class="btn small danger" data-del="${f.id}">Xóa</button></div>
       </div>
       ${f.title ? `<b>${safeText(f.title)}</b>` : ''}<div class="content-text">${safeText(f.message || '')}</div><div class="page-url">${safeText(f.page || '')}</div>
@@ -142,11 +152,12 @@ async function loadUsers(){
     state.users = users;
     updateDashboardStats();
     renderUsers();
+    renderFeedbacks();
   } catch(e){ $('#usersTable').innerHTML = `<div class="muted">Không đọc được users: ${safeText(e.message)}</div>`; }
 }
 function getUserXp(u){ return Number(u.stats?.xp ?? u.xp ?? 0); }
 function getUserCoins(u){ return Number(u.stats?.coins ?? u.coins ?? 0); }
-function getUserVip(u){ return Boolean(u.stats?.isVip ?? u.isVip); }
+function getUserVip(u){ return Boolean(sharedFirebase.vip?.isActive?.(u)); }
 function getUserLevel(u){ return u.stats?.currentLevel || u.currentLevel || u.level || 'HSK 1'; }
 function getPetLevel(u){ return Number(u.stats?.petLevel ?? u.petLevel ?? Math.min(10, Math.max(1, Math.floor(getUserXp(u) / 1000) + 1))); }
 function getCompletedCount(u){ const ids = u.stats?.completedLessonIds || u.completedLessonIds || {}; if(Array.isArray(ids)) return ids.length; if(ids && typeof ids === 'object') return Object.keys(ids).length; return Number(u.stats?.completedLessons || u.completedLessons || 0); }

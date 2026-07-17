@@ -1028,11 +1028,11 @@
     <!-- Profile Hero -->
     <div class="profile-hero">
       <div class="container profile-hero__inner">
-        <div class="profile-avatar" title="Đổi ảnh đại diện">
+        <div class="profile-avatar cc-user-avatar cc-user-avatar--xl" title="Đổi ảnh đại diện" data-cc-current-avatar>
           <span id="heroAvatar">🧑</span>
           <div class="profile-avatar__edit">📷 Đổi</div>
         </div>
-        <div class="profile-hero__info">
+        <div class="profile-hero__info" data-cc-vip-card>
           <h1 class="profile-hero__name" id="heroName">Học viên</h1>
           <p class="profile-hero__meta" id="heroMeta">Thành viên từ tháng 1, 2024 · Ho Chi Minh City</p>
           <div class="profile-hero__badges">
@@ -1708,6 +1708,38 @@
       }
       .spirit-pet--lv10 { --video-pet-size: min(235px, 76vw); }
     }
+
+    /* Keep scrolling composited: large backdrop blurs and fixed backgrounds
+       otherwise force expensive repaints across the full Profile page. */
+    body.profile-bg-enabled .profile-page,
+    body.profile-bg-enabled .footer {
+      background-attachment: scroll !important;
+    }
+    .profile-page :is(
+      .profile-hero__info,
+      .spirit-pet-card,
+      .profile-tabs,
+      .ov-stat,
+      .activity-section,
+      .achievement,
+      .settings-nav,
+      .settings-card,
+      .history-item
+    ),
+    body.profile-bg-enabled .profile-page :is(
+      .setting-row,
+      .danger-row,
+      .profile-bg-status,
+      .profile-bg-preview,
+      input,
+      select,
+      textarea
+    ),
+    body.profile-bg-enabled .footer__inner,
+    body.profile-bg-enabled .footer__bottom {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
   </style>
 
   <script src="assets/js/app.js"></script>
@@ -1940,9 +1972,24 @@
     });
 
     /* ── Header scroll ── */
+    const profileHeader = document.getElementById('header');
+    let profileScrollFrame = 0;
+    let profileScrollEndTimer = 0;
+
+    function updateProfileHeader() {
+      profileHeader?.classList.toggle('scrolled', window.scrollY > 10);
+      profileScrollFrame = 0;
+    }
+
     window.addEventListener('scroll', () => {
-      document.getElementById('header')?.classList.toggle('scrolled', window.scrollY > 10);
+      document.body.classList.add('profile-is-scrolling');
+      if (!profileScrollFrame) profileScrollFrame = requestAnimationFrame(updateProfileHeader);
+      clearTimeout(profileScrollEndTimer);
+      profileScrollEndTimer = setTimeout(() => {
+        document.body.classList.remove('profile-is-scrolling');
+      }, 140);
     }, { passive: true });
+    updateProfileHeader();
 
     /* ── Ripple ── */
     function addRipple(e) {
