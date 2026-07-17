@@ -112,7 +112,7 @@ for (const level of [5, 6]) {
 
   if (checkOnly) {
     const current = fs.existsSync(outputPath) ? fs.readFileSync(outputPath, "utf8") : "";
-    if (current !== serialized) {
+    if (current.replace(/\r\n/g, "\n") !== serialized) {
       throw new Error(`${path.relative(rootDir, outputPath)} chưa được cập nhật. Chạy npm run build:writing-data.`);
     }
   } else {
