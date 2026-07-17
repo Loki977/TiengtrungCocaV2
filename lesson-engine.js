@@ -10,7 +10,10 @@ export async function loadHSKData(level) {
     return dataCache.get(key);
   }
 
-  const response = await fetch(`assets/data/${key}.json`);
+  const dataPath = key === "hsk5" || key === "hsk6"
+    ? `assets/data/writing/${key}.json`
+    : `assets/data/${key}.json`;
+  const response = await fetch(dataPath);
 
   if (!response.ok) {
     throw new Error(`Không tải được dữ liệu ${key}.json`);
@@ -65,7 +68,9 @@ export async function generateLessons(level, lessonConfig = getLessonConfig(leve
     }
 
     const sentences = pickSentences(
-      collectSentences(vocabSlice),
+      collectSentences(vocabSlice, {
+        primaryExamplesOnly: ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"].includes(key)
+      }),
       config.sentenceCount,
       `${key}-${config.lessonId}`
     );
@@ -124,17 +129,57 @@ export function normalizeAnswer(value) {
     .trim();
 }
 
+export function areAnswersEquivalent(value, expected, language = "vi") {
+  const mode = String(language || "vi").toLowerCase();
+
+  if (mode === "pinyin") {
+    return isCloseSequence(normalizePinyin(value), normalizePinyin(expected));
+  }
+
+  if (mode === "zh" || mode === "chinese") {
+    return isCloseSequence(normalizeAnswer(value), normalizeAnswer(expected));
+  }
+
+  const actualText = normalizeVietnameseForComparison(value);
+  const expectedText = normalizeVietnameseForComparison(expected);
+
+  if (!actualText || !expectedText) {
+    return false;
+  }
+
+  if (actualText === expectedText) {
+    return true;
+  }
+
+  const actualTokens = getMeaningTokens(actualText);
+  const expectedTokens = getMeaningTokens(expectedText);
+
+  if (!actualTokens.length || !expectedTokens.length || hasConflictingNegation(actualTokens, expectedTokens)) {
+    return false;
+  }
+
+  const actualSet = new Set(actualTokens);
+  const expectedSet = new Set(expectedTokens);
+  const overlap = [...expectedSet].filter((token) => actualSet.has(token)).length;
+  const expectedCoverage = overlap / expectedSet.size;
+  const actualCoverage = overlap / actualSet.size;
+  const requiredCoverage = expectedSet.size <= 2 ? 1 : expectedSet.size <= 4 ? 0.75 : 0.65;
+
+  return expectedCoverage >= requiredCoverage && actualCoverage >= 0.6;
+}
+
 function normalizeLevel(level) {
   return String(level || "hsk1").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 function normalizeVocabulary(item) {
   const examples = Array.isArray(item.examples)
-    ? item.examples.map((example) => ({
+    ? item.examples.map((example, sourceIndex) => ({
       chinese: example.hanzi || example.chinese || "",
       pinyin: example.pinyin || "",
       vietnamese: capitalizeVietnameseLines(example.translation || example.meaning_vi || example.meaning || ""),
-      answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null
+      answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null,
+      sourceIndex
     })).filter((example) => example.chinese || example.pinyin || example.vietnamese)
     : [];
 
@@ -172,11 +217,15 @@ function buildConcreteLessonConfig(level, config, totalVocabulary) {
   }));
 }
 
-function collectSentences(vocabularies) {
+function collectSentences(vocabularies, { primaryExamplesOnly = false } = {}) {
   const seen = new Set();
 
   return vocabularies.flatMap((item) => {
-    return item.examples.map((example) => ({
+    const examples = primaryExamplesOnly
+      ? item.examples.filter((example) => example.sourceIndex === 0)
+      : item.examples;
+
+    return examples.map((example) => ({
       vocabulary: item,
       chinese: example.chinese,
       pinyin: example.pinyin,
@@ -247,4 +296,78 @@ function mulberry32(seed) {
     value ^= value + Math.imul(value ^ value >>> 7, value | 61);
     return ((value ^ value >>> 14) >>> 0) / 4294967296;
   };
+}
+
+const VIETNAMESE_FILLER_WORDS = new Set([
+  "anh", "ay", "ban", "cac", "cai", "chi", "chiec", "cho", "chung", "co",
+  "con", "cua", "do", "em", "la", "ma", "minh", "mot", "nay", "nguoi",
+  "nhung", "o", "ta", "thi", "toi"
+]);
+
+const NEGATION_TOKENS = new Set(["chang", "chua", "dung", "khong"]);
+
+function normalizeVietnameseForComparison(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .normalize("NFD")
+    .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getMeaningTokens(value) {
+  const tokens = String(value || "").split(/\s+/).filter(Boolean);
+  const meaningful = tokens.filter((token) => !VIETNAMESE_FILLER_WORDS.has(token));
+  return meaningful.length ? meaningful : tokens;
+}
+
+function hasConflictingNegation(actualTokens, expectedTokens) {
+  const actualNegation = actualTokens.some((token) => NEGATION_TOKENS.has(token));
+  const expectedNegation = expectedTokens.some((token) => NEGATION_TOKENS.has(token));
+  return actualNegation !== expectedNegation;
+}
+
+function isCloseSequence(actual, expected) {
+  if (!actual || !expected) {
+    return false;
+  }
+
+  if (actual === expected) {
+    return true;
+  }
+
+  const longestLength = Math.max(actual.length, expected.length);
+
+  if (longestLength < 4) {
+    return false;
+  }
+
+  const distance = levenshteinDistance(actual, expected);
+  const similarity = 1 - distance / longestLength;
+  const allowedSingleSlip = longestLength >= 6 && distance === 1;
+  return allowedSingleSlip || (longestLength >= 10 && similarity >= 0.88);
+}
+
+function levenshteinDistance(left, right) {
+  const previous = Array.from({ length: right.length + 1 }, (_, index) => index);
+
+  for (let leftIndex = 1; leftIndex <= left.length; leftIndex += 1) {
+    const current = [leftIndex];
+
+    for (let rightIndex = 1; rightIndex <= right.length; rightIndex += 1) {
+      const substitutionCost = left[leftIndex - 1] === right[rightIndex - 1] ? 0 : 1;
+      current[rightIndex] = Math.min(
+        current[rightIndex - 1] + 1,
+        previous[rightIndex] + 1,
+        previous[rightIndex - 1] + substitutionCost
+      );
+    }
+
+    previous.splice(0, previous.length, ...current);
+  }
+
+  return previous[right.length];
 }

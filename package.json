@@ -6,7 +6,9 @@
     "node": "22.x"
   },
   "scripts": {
-    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js",
+    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node scripts/build-writing-content.mjs --check && npm run test:writing",
+    "build:writing-data": "node scripts/build-writing-content.mjs",
+    "test:writing": "node --no-warnings scripts/test-writing-quality.mjs",
     "build": "npm run check"
   },
   "dependencies": {

@@ -1,5 +1,10 @@
 import "./assets/js/speech-service.js";
-import { getLessonContent, normalizeAnswer, normalizePinyin } from "./lesson-engine.js";
+import {
+  areAnswersEquivalent,
+  getLessonContent,
+  normalizeAnswer,
+  normalizePinyin
+} from "./lesson-engine.js";
 import { getLessonConfig } from "./lesson-config.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -556,11 +561,11 @@ function getPrompt(item) {
 
 function isCorrectAnswer(value, item) {
   if (state.mode === "cn-to-vi") {
-    return normalizeAnswer(value) === normalizeAnswer(item.vietnamese);
+    return areAnswersEquivalent(value, item.vietnamese, "vi");
   }
 
-  return normalizeAnswer(value) === normalizeAnswer(item.chinese)
-    || normalizePinyin(value) === normalizePinyin(item.pinyin);
+  return areAnswersEquivalent(value, item.chinese, "zh")
+    || areAnswersEquivalent(value, item.pinyin, "pinyin");
 }
 
 function getExpectedAnswerValue(item) {
