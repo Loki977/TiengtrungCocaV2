@@ -1,84 +1,4 @@
-const HSK5_WRITING_TOPICS = [
-  "Những chi tiết của tình yêu",
-  "Để lại một chùm chìa khóa cho cha mẹ",
-  "Đời người có lựa chọn, mọi thứ đều có thể thay đổi",
-  "Tử Lộ cõng gạo",
-  "Suối ở Tế Nam",
-  "Nguồn gốc đêm giao thừa",
-  "Hai câu chuyện thành ngữ",
-  "Nghĩa xưa và nay của ‘Sáng ba chiều bốn’",
-  "Một Lỗ Tấn khác",
-  "Kỳ tích của cuộc tranh luận",
-  "Tác hại của đồng hồ báo thức",
-  "Người dùng nước ngoài sử dụng WeChat",
-  "Cưa bỏ ‘đáy giỏ’ của cuộc sống",
-  "Tứ hợp viện Bắc Kinh",
-  "Bàn việc quân trên giấy",
-  "Cân nặng và ăn kiêng",
-  "Rời đi vào thời khắc đẹp nhất",
-  "Nghệ thuật trừu tượng đẹp hay không?",
-  "Bánh củ cải quê nhà",
-  "Quầy truyện tranh nhỏ",
-  "Chú Hán tự: Mối duyên chữ Hán của một người Mỹ",
-  "Đọc và suy nghĩ",
-  "Buông tay",
-  "Hoạt động tình nguyện dạy học",
-  "Tự đổ đầy nước cho mình",
-  "Bạn thuộc kiểu ‘bận’ nào?",
-  "Chơi cờ",
-  "Sinh viên tốt nghiệp được yêu thích nhất",
-  "Bồi dưỡng đối thủ",
-  "Cạnh tranh làm thị trường hiệu quả hơn",
-  "Hiệu ứng đặt chân vào cửa",
-  "Bảo vệ môi trường quanh ta",
-  "Lấy tắc trị tắc — mẹo giảm ùn tắc giao thông",
-  "Cách chim chăm sóc da",
-  "Thực vật biết đổ mồ hôi",
-  "Lão Xá và thú trồng hoa"
-];
-
-const HSK6_WRITING_TOPICS = [
-  "Trống đồng kể chuyện Đông Sơn",
-  "Bạch Đằng năm 938: Chiến thắng của hiểu biết",
-  "Hai Bà Trưng và ký ức về tinh thần tự chủ",
-  "Hoàng thành Thăng Long: Lịch sử trong nhiều lớp đất",
-  "Hội An: Thương cảng sống cùng hiện tại",
-  "Huế: Kinh thành bên dòng Hương",
-  "Tràng An: Cảnh quan lưu giữ ba vạn năm thích nghi",
-  "Hạ Long – Cát Bà: Vẻ đẹp cần giới hạn",
-  "Điện Biên Phủ: Hậu cần phía sau chiến thắng",
-  "Cuốn sổ nhỏ của dân công Phú Thọ",
-  "Giáo dục không chỉ là điểm số",
-  "Lựa chọn nghề nghiệp đầu tiên",
-  "Môi trường bắt đầu từ thiết kế hệ thống",
-  "Cái giá của thông tin giả",
-  "Khoảng cách giữa các thế hệ",
-  "Thất bại cũng là tài sản",
-  "Nghệ thuật lắng nghe",
-  "Văn hóa trong một chi tiết",
-  "Tiền bạc và cảm giác an toàn",
-  "Tự do cần có kỷ luật",
-  "Cuộc sống trong thời đại tốc độ",
-  "Lòng tốt cũng cần phương pháp",
-  "Khi truyền thống gặp đổi mới",
-  "Một cuộc tranh luận đáng nhớ",
-  "Người trẻ và sự kiên nhẫn",
-  "Sự im lặng của người trưởng thành",
-  "Làm việc nhóm không chỉ là phân công",
-  "Thói quen tiêu dùng mới",
-  "Sức khỏe tinh thần cần được nhìn thấy",
-  "Một lời xin lỗi đúng lúc",
-  "Cạnh tranh và hợp tác",
-  "Sự thay đổi của gia đình hiện đại",
-  "Nghệ thuật quản lý cảm xúc",
-  "Từ dữ liệu đến quyết định",
-  "Một thành phố đáng sống",
-  "Niềm tin vào điều nhỏ bé",
-  "Học ngoại ngữ là học cách hiểu người",
-  "Câu chuyện của một người bình thường",
-  "Khi ta phải đưa ra quyết định",
-  "Tổng kết: Đi xa hơn bằng tiếng Trung"
-];
+import { WRITING_CONTENT_PLANS } from "./writing-content-plan.mjs";
 
 export const LESSON_CONFIGS = {
   hsk1: {
@@ -108,83 +28,34 @@ export const LESSON_CONFIGS = {
     level: "hsk2",
     label: "HSK2 - Sơ cấp",
     description: "Từ vựng và mẫu câu nền tảng",
-    lessons: [
-      { lessonId: 1, title: "Bắt chuyện và đặt câu hỏi", vocabularyCount: 13, sentenceCount: 10 },
-      { lessonId: 2, title: "Người thân và các bộ phận cơ thể", vocabularyCount: 12, sentenceCount: 10 },
-      { lessonId: 3, title: "Nhịp sinh hoạt theo trình tự", vocabularyCount: 12, sentenceCount: 10 },
-      { lessonId: 4, title: "Tìm địa điểm và xác định phương hướng", vocabularyCount: 13, sentenceCount: 10 },
-      { lessonId: 5, title: "Hành trình và cách thức di chuyển", vocabularyCount: 12, sentenceCount: 10 },
-      { lessonId: 6, title: "Vượt qua bài kiểm tra trên lớp", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 7, title: "Hỗ trợ khách hàng tại nơi làm việc", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 8, title: "Gọi món, hỏi giá và đơn vị đo", vocabularyCount: 9, sentenceCount: 9 },
-      { lessonId: 9, title: "Chọn đồ dùng theo màu sắc", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 10, title: "Mô tả đặc điểm và phép so sánh", vocabularyCount: 12, sentenceCount: 10 },
-      { lessonId: 11, title: "Chăm sóc sức khỏe hằng ngày", vocabularyCount: 6, sentenceCount: 6 },
-      { lessonId: 12, title: "Vận động và vui chơi giải trí", vocabularyCount: 11, sentenceCount: 10 },
-      { lessonId: 13, title: "Giải thích lý do khi trời đổi", vocabularyCount: 9, sentenceCount: 9 },
-      { lessonId: 14, title: "Mong muốn trước những trạng thái thay đổi", vocabularyCount: 8, sentenceCount: 8 },
-      { lessonId: 15, title: "Những con số ở quy mô lớn", vocabularyCount: 3, sentenceCount: 3 }
-    ]
+    lessons: createPlannedLessons("hsk2", 20)
   },
   hsk3: {
     level: "hsk3",
     label: "HSK3 - Sơ cấp",
     description: "Diễn đạt chủ đề quen thuộc",
-    lessons: [
-      { lessonId: 1, title: "Hẹn cuối tuần và sắp xếp lịch trình", vocabularyCount: 20, sentenceCount: 10 },
-      { lessonId: 2, title: "Trở về đúng hẹn và giữ liên lạc", vocabularyCount: 22, sentenceCount: 10 },
-      { lessonId: 3, title: "Đồ vật hiện hữu trong bữa ăn", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 4, title: "Ứng xử chuyên nghiệp với khách hàng", vocabularyCount: 17, sentenceCount: 10 },
-      { lessonId: 5, title: "Xây dựng nếp sống lành mạnh", vocabularyCount: 20, sentenceCount: 10 },
-      { lessonId: 6, title: "Xử lý sự cố thất lạc đồ dùng", vocabularyCount: 17, sentenceCount: 10 },
-      { lessonId: 7, title: "Tình bạn qua thời gian gắn bó", vocabularyCount: 18, sentenceCount: 10 },
-      { lessonId: 8, title: "Tìm hiểu việc vừa mới xảy ra", vocabularyCount: 19, sentenceCount: 10 },
-      { lessonId: 9, title: "Xác định mức độ thành thạo ngoại ngữ", vocabularyCount: 19, sentenceCount: 10 },
-      { lessonId: 10, title: "So sánh kết quả giữa các môn học", vocabularyCount: 19, sentenceCount: 10 },
-      { lessonId: 11, title: "Nhắc việc và sử dụng thiết bị điện", vocabularyCount: 11, sentenceCount: 10 },
-      { lessonId: 12, title: "Gửi giữ những món đồ quan trọng", vocabularyCount: 12, sentenceCount: 10 },
-      { lessonId: 13, title: "Lựa chọn phương tiện cho hành trình", vocabularyCount: 17, sentenceCount: 10 },
-      { lessonId: 14, title: "Thao tác trong gian bếp", vocabularyCount: 14, sentenceCount: 10 },
-      { lessonId: 15, title: "Kiểm tra lỗi và tiếp nhận góp ý", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 16, title: "Cân bằng công việc với nghỉ ngơi", vocabularyCount: 13, sentenceCount: 10 },
-      { lessonId: 17, title: "Thăm khám và điều trị sức khỏe", vocabularyCount: 10, sentenceCount: 10 },
-      { lessonId: 18, title: "Từ niềm tin đến quyết định", vocabularyCount: 9, sentenceCount: 9 },
-      { lessonId: 19, title: "Phát hiện chuyển biến quanh mình", vocabularyCount: 9, sentenceCount: 9 },
-      { lessonId: 20, title: "Cảm xúc trước ảnh hưởng từ xung quanh", vocabularyCount: 9, sentenceCount: 9 }
-    ]
+    lessons: createPlannedLessons("hsk3", 30)
   },
   hsk4: {
     level: "hsk4",
     label: "HSK4 - Trung cấp",
     description: "Giao tiếp linh hoạt hơn",
-    lessons: [
-      { lessonId: 1, title: "Hôn nhân và những lựa chọn trong tình yêu", vocabularyCount: 32, sentenceCount: 10 },
-      { lessonId: 2, title: "Xây dựng tình bạn qua giao tiếp", vocabularyCount: 30, sentenceCount: 10 },
-      { lessonId: 3, title: "Chuẩn bị cho một buổi phỏng vấn việc làm", vocabularyCount: 31, sentenceCount: 10 },
-      { lessonId: 4, title: "Lập ngân sách và gánh vác nghĩa vụ", vocabularyCount: 31, sentenceCount: 10 },
-      { lessonId: 5, title: "Cân nhắc chất lượng khi mua sắm", vocabularyCount: 37, sentenceCount: 10 },
-      { lessonId: 6, title: "Trải nghiệm dịch vụ và giá trị món hàng", vocabularyCount: 30, sentenceCount: 10 },
-      { lessonId: 7, title: "Vận động để bảo vệ sức khỏe", vocabularyCount: 30, sentenceCount: 10 },
-      { lessonId: 8, title: "Tìm nét đẹp bằng góc nhìn tích cực", vocabularyCount: 30, sentenceCount: 10 },
-      { lessonId: 9, title: "Kiên trì trên hành trình giảm cân", vocabularyCount: 30, sentenceCount: 10 },
-      { lessonId: 10, title: "Đi tìm hạnh phúc giữa gia đình và công việc", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 11, title: "Đọc hiệu quả và học từ sách", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 12, title: "Ứng xử linh hoạt trong khuôn khổ quy định", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 13, title: "Khám phá nghệ thuật Kinh kịch", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 14, title: "Giữ gìn môi trường từ không gian lưu trú", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 15, title: "Nuôi dạy trẻ bằng phương pháp phù hợp", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 16, title: "Tự tin chuẩn bị hành trình du học", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 17, title: "Cạnh tranh và cân bằng trong tự nhiên", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 18, title: "Di chuyển thông minh trong kỷ nguyên số", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 19, title: "Sắp xếp đời sống giữa nhà ở và vận động", vocabularyCount: 29, sentenceCount: 10 },
-      { lessonId: 20, title: "Ký ức ẩm thực trong mỗi chuyến đi", vocabularyCount: 29, sentenceCount: 10 }
-    ]
+    lessons: createPlannedLessons("hsk4", 40)
   },
-  hsk5: createEvenConfig("hsk5", "HSK5 - Cao cấp", "Đọc hiểu và thảo luận mở rộng", HSK5_WRITING_TOPICS),
-  hsk6: createEvenConfig("hsk6", "HSK6 - Cao cấp", "Nâng cao phản xạ ngôn ngữ", HSK6_WRITING_TOPICS)
+  hsk5: createEvenConfig("hsk5", "HSK5 - Cao cấp", "Đọc hiểu và thảo luận mở rộng", WRITING_CONTENT_PLANS.hsk5.map((item) => item[1]), 40),
+  hsk6: createEvenConfig("hsk6", "HSK6 - Cao cấp", "Nâng cao phản xạ ngôn ngữ", WRITING_CONTENT_PLANS.hsk6.map((item) => item[1]), 50)
 };
 
-function createEvenConfig(level, label, description, topics) {
+function createPlannedLessons(level, vocabularyCount) {
+  return WRITING_CONTENT_PLANS[level].map(([, title], index) => ({
+    lessonId: index + 1,
+    title,
+    vocabularyCount,
+    sentenceCount: 10
+  }));
+}
+
+function createEvenConfig(level, label, description, topics, vocabularyCount) {
   return {
     level,
     label,
@@ -193,7 +64,7 @@ function createEvenConfig(level, label, description, topics) {
     lessons: topics.map((title, index) => ({
       lessonId: index + 1,
       title,
-      vocabularyCount: null,
+      vocabularyCount,
       sentenceCount: 10
     }))
   };

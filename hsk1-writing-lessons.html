@@ -298,19 +298,53 @@
 
   <script type="module">
     import { getLessonConfig } from "./lesson-config.js";
-    import { generateLessons } from "./lesson-engine.js";
+    import { generateLessons, normalizeWritingLessonContent } from "./lesson-engine.js";
 
+    const FIRESTORE_MODULE = "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
     const params = new URLSearchParams(window.location.search);
     const level = (params.get("level") || "hsk1").toLowerCase();
     const config = getLessonConfig(level) || getLessonConfig("hsk1");
-    const lessonContent = await generateLessons(config.level, config);
-    const lessons = lessonContent.map((item, index) => ({
-      status: index < 3 ? "Miễn phí" : "Học thử 5 câu",
-      lesson: `Bài ${item.lessonId}`,
-      title: item.title,
-      words: item.vocabularies.length,
-      sentences: item.sentences.length
-    }));
+
+    async function loadWritingOverrides() {
+      try {
+        await import("./assets/js/firebase-auth.js");
+        const shared = window.CCFirebase;
+        if (!shared?.db) return new Map();
+        const { collection, getDocs, query, where } = await import(FIRESTORE_MODULE);
+        const overrideQuery = query(collection(shared.db, "writingLessonOverrides"), where("level", "==", config.level));
+        const snapshot = await getDocs(overrideQuery);
+        const overrides = new Map();
+        snapshot.forEach((item) => {
+          const data = item.data() || {};
+          const lessonId = Number(data.lessonId);
+          if (data.level === config.level && Number.isInteger(lessonId) && lessonId > 0) {
+            overrides.set(lessonId, data.content || data);
+          }
+        });
+        return overrides;
+      } catch (error) {
+        console.warn("[writing-list] Không tải được nội dung CMS, dùng dữ liệu chuẩn.", error);
+        return new Map();
+      }
+    }
+
+    const lessonContentPromise = generateLessons(config.level, config);
+    const overridesPromise = Promise.race([
+      loadWritingOverrides(),
+      new Promise((resolve) => window.setTimeout(() => resolve(new Map()), 3000))
+    ]);
+    const [lessonContent, overrides] = await Promise.all([lessonContentPromise, overridesPromise]);
+    const lessons = lessonContent.map((item, index) => {
+      const override = overrides.get(item.lessonId);
+      const resolved = override ? normalizeWritingLessonContent(override, item) : item;
+      return {
+        status: index < 3 ? "Miễn phí" : "Học thử 5 câu",
+        lesson: `Bài ${resolved.lessonId}`,
+        title: resolved.title,
+        words: resolved.vocabularies.length,
+        sentences: resolved.sentences.length
+      };
+    });
 
     document.title = config.label;
     document.getElementById("pageTitle").textContent = config.label;
@@ -318,17 +352,22 @@
     document.getElementById("lessonGrid").setAttribute("aria-label", `Danh sách bài học ${config.level.toUpperCase()}`);
     const lessonGrid = document.getElementById("lessonGrid");
 
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+      }[char]));
+    }
+
     function renderLessons() {
       lessonGrid.innerHTML = lessons.map((item, index) => {
         const isFree = item.status === "Miễn phí";
-
         return `
-          <a class="lesson-card" href="lesson.html?level=${config.level}&lesson=${index + 1}">
+          <a class="lesson-card" href="lesson.html?level=${encodeURIComponent(config.level)}&lesson=${index + 1}">
             <div class="lesson-number">${index + 1}</div>
             <div class="lesson-content">
-              <span class="status${isFree ? "" : " locked"}">${item.status}</span>
-              <p class="lesson-label">${item.lesson}</p>
-              <h2 class="lesson-title">${item.title}</h2>
+              <span class="status${isFree ? "" : " locked"}">${escapeHtml(item.status)}</span>
+              <p class="lesson-label">${escapeHtml(item.lesson)}</p>
+              <h2 class="lesson-title">${escapeHtml(item.title)}</h2>
               <div class="stats" aria-label="Thống kê bài học">
                 <span class="stat"><span class="dot"></span>${item.words} từ vựng</span>
                 <span class="stat"><span class="dot"></span>${item.sentences} câu</span>
@@ -342,7 +381,6 @@
 
     renderLessons();
   </script>
-<script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>
 </html>

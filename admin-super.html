@@ -31,6 +31,7 @@
         <button class="nav-item" data-tab="users" title="Quản lý người dùng">👥 Người dùng</button>
         <button class="nav-item" data-tab="auth" title="Phân quyền và tài khoản Auth">🔐 Phân quyền</button>
         <button class="nav-item" data-tab="learning" title="Quản lý khóa học">🎓 Khóa học</button>
+        <button class="nav-item" data-tab="writing" title="CMS Luyện viết">✍️ Luyện viết</button>
         <button class="nav-item" data-tab="content" title="Quản lý nội dung">📝 Nội dung</button>
         <button class="nav-item" data-tab="logs" title="Thống kê truy cập">📈 Thống kê</button>
         <button class="nav-item" data-tab="database" title="Cài đặt dữ liệu">🧩 Cài đặt</button>
@@ -85,6 +86,49 @@
             <div id="lessonLockGrid" class="lesson-lock-grid"></div>
           </div>
           <div class="lesson-total" id="lessonTotals" style="margin-top:14px"></div>
+        </div>
+      </section>
+
+
+      <section id="tab-writing" class="tab-panel hidden">
+        <div class="panel">
+          <h2>✍️ CMS Luyện viết</h2>
+          <p class="muted">Chỉnh từng bài Luyện viết giống CMS Khóa học. Bản sửa lưu tại <b>writingLessonOverrides</b>; khi xóa override, website tự dùng dữ liệu JSON chuẩn.</p>
+          <div class="toolbar sticky-actions">
+            <select id="writingCmsLevel" class="input"><option value="hsk1">HSK1 · 15 bài</option><option value="hsk2">HSK2 · 15 bài</option><option value="hsk3">HSK3 · 20 bài</option><option value="hsk4">HSK4 · 20 bài</option><option value="hsk5">HSK5 · 36 bài</option><option value="hsk6">HSK6 · 40 bài</option></select>
+            <select id="writingCmsLesson" class="input"></select>
+            <button id="writingCmsLoad" class="btn primary">Tải bài</button>
+            <button id="writingCmsSave" class="btn ok btn-save">💾 Lưu thay đổi</button>
+            <button id="writingCmsReset" class="btn warn">↺ Nạp lại dữ liệu chuẩn</button>
+            <button id="writingCmsDelete" class="btn danger">🗑 Xóa bản sửa</button>
+            <button id="writingCmsDownload" class="btn">⬇ Tải JSON</button>
+            <span id="writingCmsStatus" class="save-status">Sẵn sàng</span>
+          </div>
+          <div class="writing-cms-summary" id="writingCmsSummary"></div>
+          <div class="admin-grid two">
+            <div class="admin-box">
+              <h3>Thông tin bài</h3>
+              <label>Tiêu đề<input id="writingCmsTitle" class="input full"></label>
+              <label>Mô tả<textarea id="writingCmsDesc" class="input full smallarea"></textarea></label>
+              <label>XP<input id="writingCmsXp" class="input full" type="number" min="0" value="10"></label>
+              <p class="muted">Mục tiêu chuẩn: HSK2 20 từ, HSK3 30 từ, HSK4–5 40 từ, HSK6 50 từ; mỗi bài giữ 10 câu luyện viết.</p>
+            </div>
+            <div class="admin-box">
+              <h3>Kiểm tra nhanh</h3>
+              <div id="writingCmsValidation" class="notice ok">Chưa tải bài.</div>
+              <p class="muted">Mỗi từ và câu bắt buộc có chữ Hán, pinyin và nghĩa tiếng Việt. Dòng thiếu dữ liệu sẽ không được lưu.</p>
+            </div>
+          </div>
+          <div class="admin-box" style="margin-top:14px">
+            <div class="cms-tabs writing-cms-tabs">
+              <button class="cms-tab writing-cms-tab active" data-writing-tab="vocab">Từ vựng</button>
+              <button class="cms-tab writing-cms-tab" data-writing-tab="sentences">Câu luyện viết</button>
+              <button class="cms-tab writing-cms-tab" data-writing-tab="json">JSON nâng cao</button>
+            </div>
+            <div class="cms-pane writing-cms-pane" data-writing-pane="vocab"><h3>Từ vựng</h3><p class="muted">Mỗi dòng: chữ Hán | pinyin | nghĩa tiếng Việt | audio</p><textarea id="writingCmsVocab" class="input full textarea"></textarea></div>
+            <div class="cms-pane writing-cms-pane hidden" data-writing-pane="sentences"><h3>Câu luyện viết</h3><p class="muted">Mỗi dòng: câu chữ Hán | pinyin | nghĩa tiếng Việt | audio</p><textarea id="writingCmsSentences" class="input full textarea"></textarea></div>
+            <div class="cms-pane writing-cms-pane hidden" data-writing-pane="json"><h3>JSON đầy đủ</h3><textarea id="writingCmsJson" class="json-editor" spellcheck="false"></textarea></div>
+          </div>
         </div>
       </section>
 

@@ -6,68 +6,133 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isAdmin() {
+    function isSuperAdmin() {
       return isSignedIn()
         && request.auth.token.email == "nqthanhforwork@gmail.com";
     }
 
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function validPublicUserCreate(uid) {
+      return request.resource.data.keys().hasOnly([
+          'uid', 'displayName', 'email', 'photoURL', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.uid == uid
+        && (!request.resource.data.keys().hasAny(['email'])
+          || request.resource.data.email == request.auth.token.email);
+    }
+
+    function validPublicUserUpdate(uid) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'email', 'photoURL', 'updatedAt'
+        ])
+        && (!request.resource.data.keys().hasAny(['uid'])
+          || request.resource.data.uid == uid)
+        && (!request.resource.data.keys().hasAny(['email'])
+          || request.resource.data.email == request.auth.token.email);
+    }
+
+    function allowedProgressKeys() {
+      return [
+        'xp', 'coins', 'totalCoinsEarned',
+        'unlockedLessons', 'writingCompleted', 'challengeStats', 'coinHistory',
+        'checkInStreak', 'lastCheckInDate', 'streak',
+        'completedLessons', 'completedLessonIds',
+        'currentLevel', 'currentLesson', 'courses', 'tasks', 'history',
+        'dailyGoal', 'todayXp', 'weeklyLessons', 'lastXp', 'studyHours',
+        'levelPercent', 'xpToNext',
+        'createdAt', 'updatedAt'
+      ];
+    }
+
+    function validStatsCreate() {
+      // hasOnly() also blocks users from inventing future privilege fields.
+      return request.resource.data.keys().hasOnly(allowedProgressKeys());
+    }
+
+    function validStatsUpdate() {
+      // Only progress fields may change. Existing admin-managed VIP fields can
+      // remain in the document, but an owner cannot add, edit or remove them.
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasOnly(allowedProgressKeys());
+    }
+
     match /feedbacks/{id} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isSuperAdmin();
     }
 
     match /accessLogs/{id} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isSuperAdmin();
     }
 
     match /visits/{id} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isSuperAdmin();
     }
 
     match /users/{uid} {
-      allow create: if isSignedIn() && request.auth.uid == uid;
-      allow read, update, delete: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+      allow create: if isSuperAdmin() || (isOwner(uid) && validPublicUserCreate(uid));
+      allow read: if isSuperAdmin() || isOwner(uid);
+      allow update: if isSuperAdmin() || (isOwner(uid) && validPublicUserUpdate(uid));
+      allow delete: if isSuperAdmin() || isOwner(uid);
+
+      match /private/stats {
+        allow read: if isSuperAdmin() || isOwner(uid);
+        allow create: if isSuperAdmin() || (isOwner(uid) && validStatsCreate());
+        allow update: if isSuperAdmin() || (isOwner(uid) && validStatsUpdate());
+        // Giữ luồng tự xóa tài khoản hiện có; create/update vẫn không thể chạm VIP.
+        allow delete: if isSuperAdmin() || isOwner(uid);
+      }
 
       match /private/{docId} {
-        allow create: if isSignedIn() && request.auth.uid == uid;
-        allow read, update, delete: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
+        // stats is handled by the stricter rule above. Other private documents
+        // contain personal preferences/saved words and never grant privileges.
+        allow create, read, update, delete: if docId != 'stats'
+          && (isSuperAdmin() || isOwner(uid));
       }
     }
 
     match /adminSettings/{docId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isSuperAdmin();
     }
 
     match /lessonOverrides/{docId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /writingLessonOverrides/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
     }
 
     match /courses/{courseId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isSuperAdmin();
 
       match /lessons/{lessonId} {
         allow read: if true;
-        allow write: if isAdmin();
+        allow write: if isSuperAdmin();
       }
     }
 
     match /lessonContents/{lessonId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isSuperAdmin();
     }
 
     match /cmsSettings/{docId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isSuperAdmin();
     }
 
     match /{document=**} {
-      allow read, write: if isAdmin();
+      allow read, write: if isSuperAdmin();
     }
   }
 }

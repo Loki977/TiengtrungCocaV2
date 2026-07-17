@@ -862,6 +862,12 @@
       transition: opacity var(--t-fast), transform var(--t-fast);
     }
     .profile-bg-preview.is-active .profile-bg-preview__check { opacity: 1; transform: scale(1); }
+    .spirit-pet-card[hidden] { display: none !important; }
+    .profile-bg-options.is-vip-locked { position: relative; opacity: .62; }
+    .profile-bg-options.is-vip-locked .profile-bg-preview { cursor: pointer; filter: grayscale(.25); }
+    #profileBgStatus.is-vip-locked { color: #9a3412; font-weight: 800; cursor: pointer; }
+    body[data-vip-verified-active="false"] .profile-bg-toggle-row { cursor: pointer; }
+
     @media (max-width: 768px) {
       body.profile-bg-enabled .profile-page { background-attachment: scroll; }
       body.profile-bg-enabled .footer { background-attachment: scroll !important; }
@@ -887,7 +893,7 @@
     var initialProfileBgExt = initialProfileBgId === 'p14' ? '.jpeg' : '.png';
     var initialProfileBgUrl = new URL('assets/images/background/' + initialProfileBgId + initialProfileBgExt, document.baseURI).href;
     document.body.style.setProperty('--profile-background-image', 'url("' + initialProfileBgUrl + '")');
-    if (localStorage.getItem('cc_profileBackground') === 'true') document.body.classList.add('profile-bg-enabled');
+    // Chỉ bật nền sau khi Firebase xác minh VIP; tránh nháy nội dung đặc quyền.
   </script>
 
   <!-- ========== HEADER ========== -->
@@ -1053,7 +1059,7 @@
           </div>
         </div>
 
-        <section class="spirit-pet-card spirit-pet--lv1" id="spiritPetCard" aria-label="Linh thú đồng hành Hỏa linh">
+        <section class="spirit-pet-card spirit-pet--lv1" id="spiritPetCard" aria-label="Linh thú đồng hành Hỏa linh" hidden>
           <div class="spirit-pet-title">
             <h3><span id="spiritPetIcon" aria-hidden="true">🔥</span> <span id="spiritPetName">Mầm hỏa linh</span></h3>
             <button class="spirit-pet-switch" id="spiritPetSwitch" type="button" title="Đổi linh thú" aria-label="Đổi linh thú">↻</button>
@@ -1817,20 +1823,64 @@
       });
     }
 
-    function selectProfileBackground(id) {
-      if (!/^p[1-9]\d*$/.test(id)) return;
+    function hasVerifiedVip() {
+      return Boolean(window.CCFirebase?.vip?.isVerifiedActive?.());
+    }
+
+    function requestVipFeature(reason) {
+      const openPurchase = window.CCFirebase?.vip?.openPurchase || window.CCVip?.openPurchase;
+      if (openPurchase) {
+        openPurchase({
+          reason,
+          user: window.CCFirebase?.getCurrentUser?.() || null,
+          backUrl: 'profile.html'
+        });
+      } else {
+        showToast('Tính năng này dành cho thành viên VIP.');
+      }
+    }
+
+    function selectProfileBackground(id, options = {}) {
+      if (!/^p[1-9]\d*$/.test(id)) return false;
+      if (!options.force && !hasVerifiedVip()) {
+        requestVipFeature('Đổi ảnh nền hồ sơ là quyền lợi VIP. Chọn gói để mở khóa toàn bộ bộ sưu tập nền.');
+        return false;
+      }
       selectedProfileBgId = id;
       localStorage.setItem('cc_profileBackgroundId', id);
       document.body.style.setProperty('--profile-background-image', 'url("' + getProfileBackgroundUrl(id) + '")');
       syncProfileBackgroundCards();
+      return true;
     }
 
     function setProfileBackground(enabled, notify = false) {
-      document.body.classList.toggle('profile-bg-enabled', enabled);
-      localStorage.setItem('cc_profileBackground', enabled ? 'true' : 'false');
-      if (profileBgToggle) profileBgToggle.checked = enabled;
-      if (profileBgLabel) profileBgLabel.textContent = enabled ? 'Bật' : 'Tắt';
-      if (notify) showToast(enabled ? '🌌 Đã bật ảnh nền hồ sơ' : 'Đã tắt ảnh nền hồ sơ');
+      const allowed = !enabled || hasVerifiedVip();
+      const nextEnabled = Boolean(enabled && allowed);
+      document.body.classList.toggle('profile-bg-enabled', nextEnabled);
+      if (allowed) localStorage.setItem('cc_profileBackground', nextEnabled ? 'true' : 'false');
+      if (profileBgToggle) profileBgToggle.checked = nextEnabled;
+      if (profileBgLabel) profileBgLabel.textContent = hasVerifiedVip() ? (nextEnabled ? 'Bật' : 'Tắt') : 'VIP';
+      if (!allowed) {
+        requestVipFeature('Ảnh nền hồ sơ là quyền lợi VIP. Chọn gói để mở khóa và cá nhân hóa trang cá nhân.');
+        return false;
+      }
+      if (notify) showToast(nextEnabled ? '🌌 Đã bật ảnh nền hồ sơ' : 'Đã tắt ảnh nền hồ sơ');
+      return true;
+    }
+
+    function syncProfileVipFeatures() {
+      const active = hasVerifiedVip();
+      profileBgOptions?.classList.toggle('is-vip-locked', !active);
+      profileBgStatus?.classList.toggle('is-vip-locked', !active);
+      if (profileBgToggle) { profileBgToggle.disabled = false; profileBgToggle.setAttribute('aria-disabled', String(!active)); }
+      if (!active) {
+        document.body.classList.remove('profile-bg-enabled');
+        if (profileBgToggle) profileBgToggle.checked = false;
+        if (profileBgLabel) profileBgLabel.textContent = 'VIP';
+        if (profileBgStatus) profileBgStatus.textContent = '🔒 Nâng cấp VIP để đổi ảnh nền hồ sơ.';
+      } else {
+        setProfileBackground(localStorage.getItem('cc_profileBackground') === 'true');
+      }
     }
 
     async function profileBackgroundExists(url) {
@@ -1868,8 +1918,7 @@
 
       button.append(image, copy, check);
       button.addEventListener('click', function () {
-        selectProfileBackground(id);
-        setProfileBackground(true, true);
+        if (selectProfileBackground(id)) setProfileBackground(true, true);
       });
       return button;
     }
@@ -1896,7 +1945,7 @@
         return;
       }
 
-      if (!found.includes(selectedProfileBgId)) selectProfileBackground(found[0]);
+      if (!found.includes(selectedProfileBgId)) selectProfileBackground(found[0], { force: true });
       syncProfileBackgroundCards();
       if (profileBgStatus) {
         let nextIndex = 1;
@@ -1905,11 +1954,23 @@
       }
     }
 
-    setProfileBackground(document.body.classList.contains('profile-bg-enabled'));
+    // Mặc định khóa cho đến khi sự kiện auth/stats xác nhận quyền từ Firestore.
+    syncProfileVipFeatures();
+    profileBgToggle?.addEventListener('click', function (event) {
+      if (!hasVerifiedVip()) {
+        event.preventDefault();
+        requestVipFeature('Ảnh nền hồ sơ là quyền lợi VIP. Chọn gói để mở khóa và cá nhân hóa trang cá nhân.');
+      }
+    });
     profileBgToggle?.addEventListener('change', function () {
       setProfileBackground(this.checked, true);
     });
-    discoverProfileBackgrounds();
+    profileBgStatus?.addEventListener('click', function () {
+      if (!hasVerifiedVip()) requestVipFeature('Ảnh nền hồ sơ là quyền lợi VIP. Chọn gói để mở khóa và cá nhân hóa trang cá nhân.');
+    });
+    window.addEventListener('cc:user-stats', syncProfileVipFeatures);
+    window.addEventListener('cc:auth-ready', syncProfileVipFeatures);
+    discoverProfileBackgrounds().then(syncProfileVipFeatures);
 
     /* ── Header login btn (scroll to auth) ── */
     document.getElementById('headerLoginBtn')?.addEventListener('click', () => {

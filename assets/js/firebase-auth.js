@@ -23,6 +23,7 @@ import {
   getFirestore,
   doc,
   getDoc,
+  getDocFromServer,
   setDoc,
   deleteDoc,
   runTransaction,
@@ -33,7 +34,9 @@ import {
   isVipActive,
   applyVipState,
   renderVipAvatar,
-  syncVipCard
+  syncVipCard,
+  openVipPurchaseModal,
+  getVipStatusLabel
 } from "./vip-user.js";
 
 const FIREBASE_HOSTING_AUTH_DOMAIN = "tiengtrungcoca.firebaseapp.com";
@@ -71,8 +74,6 @@ const DEFAULT_STATS = {
   writingCompleted: {},
   challengeStats: { attempts: 0, wins: 0, bestScore: 0, correctAnswers: 0, wrongAnswers: 0, rewardedSessions: {} },
   coinHistory: [],
-  isVip: false,
-  vipUntil: null,
   checkInStreak: 0,
   lastCheckInDate: "",
   streak: 0,
@@ -110,6 +111,7 @@ let currentUser = null;
 let currentStats = structuredCloneSafe(DEFAULT_STATS);
 let authReady = false;
 let authStatus = "initializing";
+let latestVipVerification = { uid: null, verified: false, checkedAt: 0, state: getVipState({}) };
 let persistenceInitializationError = null;
 let redirectCheckComplete = false;
 let completedUid = null;
@@ -161,7 +163,14 @@ function normalizeStats(raw = {}) {
   normalized.unlockedLessons = normalized.unlockedLessons && typeof normalized.unlockedLessons === "object" && !Array.isArray(normalized.unlockedLessons) ? normalized.unlockedLessons : {};
   normalized.writingCompleted = normalized.writingCompleted && typeof normalized.writingCompleted === "object" && !Array.isArray(normalized.writingCompleted) ? normalized.writingCompleted : {};
   normalized.coinHistory = Array.isArray(normalized.coinHistory) ? normalized.coinHistory.slice(0, 80) : [];
-  normalized.isVip = Boolean(normalized.isVip);
+  // VIP là trường đặc quyền do Super Admin quản lý. Không tự thêm giá trị mặc định
+  // vào stats của user thường, nếu không mọi lần lưu tiến độ sẽ chạm trường bảo vệ.
+  if (Object.prototype.hasOwnProperty.call(raw || {}, "isVip")) normalized.isVip = raw.isVip === true;
+  else delete normalized.isVip;
+  if (Object.prototype.hasOwnProperty.call(raw || {}, "vipUntil")) normalized.vipUntil = raw.vipUntil;
+  else delete normalized.vipUntil;
+  if (Object.prototype.hasOwnProperty.call(raw || {}, "vipPlan")) normalized.vipPlan = raw.vipPlan ?? null;
+  else delete normalized.vipPlan;
   normalized.checkInStreak = Number(normalized.checkInStreak) || 0;
   normalized.lastCheckInDate = normalized.lastCheckInDate || "";
   normalized.streak = Number(normalized.streak) || 0;
@@ -179,6 +188,71 @@ function normalizeStats(raw = {}) {
   normalized.levelPercent = Math.min(100, Math.max(0, Math.round((normalized.xp % 1000) / 10)));
   normalized.xpToNext = Math.max(0, 1000 - (normalized.xp % 1000 || 0));
   return normalized;
+}
+
+
+const PROGRESS_STATS_FIELDS = new Set([
+  "xp", "coins", "totalCoinsEarned",
+  "unlockedLessons", "writingCompleted", "challengeStats", "coinHistory",
+  "checkInStreak", "lastCheckInDate", "streak",
+  "completedLessons", "completedLessonIds",
+  "currentLevel", "currentLesson", "courses", "tasks", "history",
+  "dailyGoal", "todayXp", "weeklyLessons", "lastXp", "studyHours",
+  "levelPercent", "xpToNext", "createdAt", "updatedAt"
+]);
+
+function progressStatsForWrite(stats = {}) {
+  const clean = {};
+  for (const [key, value] of Object.entries(stats || {})) {
+    if (PROGRESS_STATS_FIELDS.has(key) && value !== undefined) clean[key] = value;
+  }
+  return clean;
+}
+
+function applyCanonicalVipFields(stats = {}, remoteStats = {}) {
+  const next = { ...stats };
+  for (const key of ["isVip", "vipUntil", "vipPlan"]) delete next[key];
+  for (const key of ["isVip", "vipUntil", "vipPlan"]) {
+    if (Object.prototype.hasOwnProperty.call(remoteStats || {}, key)) next[key] = remoteStats[key];
+  }
+  return normalizeStats(next);
+}
+
+function getVerifiedVipPresentationStats(stats = currentStats) {
+  const user = auth.currentUser;
+  const verified = Boolean(user?.uid
+    && latestVipVerification.verified
+    && latestVipVerification.uid === user.uid
+    && latestVipVerification.state?.active);
+  if (verified) return stats;
+  return { ...stats, isVip: false, vipUntil: null, vipPlan: null };
+}
+
+async function refreshVipAccessFromServer({ syncUi = true } = {}) {
+  const user = auth.currentUser;
+  if (!user?.uid) {
+    latestVipVerification = { uid: null, verified: true, checkedAt: Date.now(), state: getVipState({}) };
+    return { user: null, stats: getCurrentStats(), state: latestVipVerification.state, verified: true, reason: "signed-out" };
+  }
+
+  try {
+    const snap = await getDocFromServer(userStatsDocRef(user.uid));
+    const remoteStats = snap.exists() ? snap.data() : {};
+    currentStats = applyCanonicalVipFields(currentStats, remoteStats);
+    const state = getVipState(remoteStats);
+    latestVipVerification = { uid: user.uid, verified: true, checkedAt: Date.now(), state };
+    if (syncUi) syncStatsUI(currentStats);
+    return { user, stats: getCurrentStats(), state, verified: true, reason: state.active ? "active" : state.expired ? "expired" : "inactive" };
+  } catch (error) {
+    latestVipVerification = { uid: user.uid, verified: false, checkedAt: Date.now(), state: getVipState({}), error };
+    if (syncUi) syncStatsUI(currentStats);
+    return { user, stats: getCurrentStats(), state: latestVipVerification.state, verified: false, reason: "unavailable", error };
+  }
+}
+
+async function getFreshVipAccess(options = {}) {
+  await authReadyPromise;
+  return refreshVipAccessFromServer(options);
 }
 
 function publicUserData(user) {
@@ -554,7 +628,7 @@ async function ensureUserData(user) {
 
   if (!statsSnap.exists()) {
     writes.push(setDoc(statsRef, {
-      ...mergedStats,
+      ...progressStatsForWrite(mergedStats),
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     }, { merge: true }));
@@ -610,6 +684,9 @@ async function completeGoogleLogin(user, context = {}) {
       return { user: null, stats: normalizeStats(DEFAULT_STATS), dataError: null, cancelled: true };
     }
     currentStats = loadedStats;
+    // Quyền VIP luôn được xác minh lại trực tiếp từ Firestore server. Nếu mất mạng,
+    // tiến độ vẫn có thể hiển thị từ cache nhưng mọi tính năng VIP sẽ fail-closed.
+    await refreshVipAccessFromServer({ syncUi: false });
     setAuthStatus("authenticated");
     syncStatsUI(currentStats);
     dispatchUserDataReady(user, currentStats, source);
@@ -906,7 +983,7 @@ async function saveUserStats(partial = {}) {
   }
   writeCachedUserStats(auth.currentUser.uid, currentStats);
   await setDoc(userStatsDocRef(auth.currentUser.uid), {
-    ...currentStats,
+    ...progressStatsForWrite(currentStats),
     updatedAt: serverTimestamp()
   }, { merge: true });
   syncStatsUI(currentStats);
@@ -1098,7 +1175,7 @@ async function unlockLessonWithCoins({ level = 'hsk1', lessonId = 1, coinCost = 
       unlockedLessons,
       coinHistory: appendCoinHistory(current, historyItem)
     });
-    transaction.set(ref, { ...updatedStats, updatedAt: serverTimestamp() }, { merge: true });
+    transaction.set(ref, { ...progressStatsForWrite(updatedStats), updatedAt: serverTimestamp() }, { merge: true });
   });
   currentStats = normalizeStats(updatedStats || currentStats);
   writeCachedUserStats(auth.currentUser.uid, currentStats);
@@ -1213,7 +1290,18 @@ function syncProfile(user, stats) {
   setValue("#settingName", displayName);
   setText("#settingEmailDisplay", email);
   if (heroAvatar) {
-    heroAvatar.innerHTML = user.photoURL ? `<img src="${user.photoURL}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : "👤";
+    heroAvatar.replaceChildren();
+    const photoURL = typeof user.photoURL === "string" ? user.photoURL.trim() : "";
+    if (photoURL) {
+      const image = document.createElement("img");
+      image.alt = "";
+      image.style.cssText = "width:100%;height:100%;border-radius:50%;object-fit:cover;";
+      image.addEventListener("error", () => { heroAvatar.textContent = "👤"; }, { once: true });
+      image.src = photoURL;
+      heroAvatar.appendChild(image);
+    } else {
+      heroAvatar.textContent = "👤";
+    }
   }
   applyVipState(avatarShell, stats);
   syncVipCard(profileInfoCard, stats);
@@ -1237,7 +1325,7 @@ function syncProfile(user, stats) {
   if (xpLabel) xpLabel.innerHTML = `<span>${formatNumber(stats.xp)} XP</span><span>Còn ${formatNumber(stats.xpToNext)} XP để lên cấp tiếp theo</span>`;
   const xpFill = document.querySelector(".profile-xp-fill");
   if (xpFill) xpFill.style.width = `${stats.levelPercent}%`;
-  if (window.CCSpiritPet?.render) window.CCSpiritPet.render(stats);
+  if (isVipActive(stats) && window.CCSpiritPet?.render) window.CCSpiritPet.render(stats);
   renderProfileHistory(stats.history || []);
   syncAdminProfileButton(user);
 }
@@ -1288,6 +1376,7 @@ function handleConfirmedSignedOut(source = "observer") {
   completingUid = null;
   completingUserPromise = null;
   currentStats = normalizeStats(DEFAULT_STATS);
+  latestVipVerification = { uid: null, verified: true, checkedAt: Date.now(), state: getVipState({}) };
   setAuthStatus("signed-out");
   clearSignedOutCache();
   hideAuthLoading();
@@ -1295,10 +1384,37 @@ function handleConfirmedSignedOut(source = "observer") {
   dispatchAuthStateChanged(source);
 }
 
+function syncVipProfileFeatures(user, vipStats) {
+  const active = Boolean(user && isVipActive(vipStats));
+  document.body.dataset.vipVerifiedActive = active ? "true" : "false";
+
+  const petCard = document.getElementById("spiritPetCard");
+  if (petCard) {
+    petCard.hidden = !active;
+    petCard.setAttribute("aria-hidden", active ? "false" : "true");
+  }
+
+  const backgroundToggle = document.getElementById("profileBgToggle");
+  const backgroundOptions = document.getElementById("profileBgOptions");
+  const backgroundStatus = document.getElementById("profileBgStatus");
+  const backgroundRow = backgroundToggle?.closest(".setting-row");
+  [backgroundRow, backgroundOptions, backgroundStatus].forEach((element) => element?.classList.toggle("is-vip-locked", !active));
+
+  if (!active) {
+    document.body.classList.remove("profile-bg-enabled");
+    if (backgroundToggle) backgroundToggle.checked = false;
+    const label = document.getElementById("profileBgLabel");
+    if (label) label.textContent = "VIP";
+    if (backgroundStatus) backgroundStatus.textContent = "👑 Ảnh nền hồ sơ là quyền lợi VIP. Bấm vào khu vực này để xem gói nâng cấp.";
+  }
+}
+
 function syncStatsUI(stats) {
-  updateHeaderUser(currentUser, stats);
+  const vipPresentationStats = getVerifiedVipPresentationStats(stats);
+  updateHeaderUser(currentUser, vipPresentationStats);
   syncHomeCounters(stats, Boolean(currentUser));
-  syncProfile(currentUser, stats);
+  syncProfile(currentUser, vipPresentationStats);
+  syncVipProfileFeatures(currentUser, vipPresentationStats);
   dispatchAuthReady();
 }
 
@@ -1445,11 +1561,17 @@ window.CCFirebase = {
   migrateLocalProgressToCurrentUser,
   getCurrentStats,
   getCurrentUser,
+  getFreshVipAccess,
   getUserData,
   saveUserData,
   vip: Object.freeze({
     getState: getVipState,
+    getStatusLabel: getVipStatusLabel,
     isActive: isVipActive,
+    isVerifiedActive: () => Boolean(latestVipVerification.verified && latestVipVerification.state?.active),
+    getVerification: () => ({ ...latestVipVerification }),
+    refresh: getFreshVipAccess,
+    openPurchase: openVipPurchaseModal,
     applyAvatar: applyVipState,
     renderAvatar: renderVipAvatar,
     syncCard: syncVipCard

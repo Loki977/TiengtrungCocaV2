@@ -1,6 +1,8 @@
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
-import { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+import { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
 import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-functions.js';
+import { getLessonContent, normalizeWritingLessonContent } from '../../lesson-engine.js';
+import { getLessonConfig } from '../../lesson-config.js';
 
 const ADMIN_EMAIL = 'nqthanhforwork@gmail.com';
 const sharedFirebase = window.CCFirebase;
@@ -14,7 +16,8 @@ const functions = getFunctions(auth.app);
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false, cmsEditorBaseline: {} };
+const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false, cmsEditorBaseline: {}, writingCmsData: null, writingCmsStatic: null, writingCmsSaving: false };
+const WRITING_VOCAB_TARGETS = { hsk1: 10, hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
 const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 
 const callListAuthUsers = httpsCallable(functions, 'adminListUsers');
@@ -34,11 +37,12 @@ function userRef(uid){ return doc(db, 'users', uid); }
 function backendMessage(text, ok=false){ const el=$('#backendNotice'); if(!el) return; el.className = ok ? 'notice ok' : 'notice'; el.innerHTML = text; }
 function isAdminUser(user){ return Boolean(user?.email && user.email.toLowerCase() === ADMIN_EMAIL); }
 function syncAdminVipAvatar(user, stats = sharedFirebase.getCurrentStats?.() || {}){
-  const avatar = $('#adminAvatar');
   const shell = $('#adminAvatarShell');
-  if (!avatar || !shell || !user) return;
-  avatar.src = user.photoURL || '';
-  sharedFirebase.vip?.applyAvatar?.(shell, stats);
+  if (!shell || !user) return;
+  sharedFirebase.vip?.renderAvatar?.(shell, user, stats, {
+    size: 'sm',
+    fallback: (user.displayName || user.email || 'A').trim().slice(0, 1).toUpperCase() || 'A'
+  });
 }
 function requireAdmin(){
   const user = auth.currentUser;
@@ -89,7 +93,7 @@ window.addEventListener('cc:user-stats', event => {
 });
 
 let booted = false;
-function bootOnce(){ if(booted) return; booted = true; bindUI(); listenFeedbacks(); loadUsers(); loadLogs(); renderLessonTotals(); checkBackend(); loadLearningSettings(); initCms(); }
+function bootOnce(){ if(booted) return; booted = true; bindUI(); listenFeedbacks(); loadUsers(); loadLogs(); renderLessonTotals(); checkBackend(); loadLearningSettings(); initCms(); initWritingCms(); }
 function bindUI(){
   $$('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.dataset.tab));
   $('#refreshAll').onclick = () => { loadUsers(); loadLogs(); toast('Đã làm mới'); };
@@ -100,12 +104,13 @@ function bindUI(){
   $('#loadCollection').onclick = loadCollection; $('#exportCollection').onclick = () => downloadJson(`${$('#collectionSelect').value}.json`, state.collectionRows);
   bindLearningControls();
   bindCmsControls();
+  bindWritingCmsControls();
 }
 function switchTab(tab){
   $$('.nav-item').forEach(x => x.classList.toggle('active', x.dataset.tab === tab));
   $$('.tab-panel').forEach(x => x.classList.add('hidden'));
   $(`#tab-${tab}`)?.classList.remove('hidden');
-  $('#pageTitle').textContent = {dashboard:'Tổng quan',feedback:'Góp ý người dùng',users:'Quản lý người dùng',auth:'Phân quyền',learning:'Quản lý khóa học',content:'Quản lý nội dung',logs:'Thống kê truy cập',database:'Cài đặt dữ liệu'}[tab] || 'Admin';
+  $('#pageTitle').textContent = {dashboard:'Tổng quan',feedback:'Góp ý người dùng',users:'Quản lý người dùng',auth:'Phân quyền',learning:'Quản lý khóa học',writing:'CMS Luyện viết',content:'Quản lý nội dung',logs:'Thống kê truy cập',database:'Cài đặt dữ liệu'}[tab] || 'Admin';
 }
 function renderLessonTotals(){ $('#lessonTotals').innerHTML = Object.entries(COURSE_TOTALS).map(([k,v]) => `<div><b>${k.toUpperCase()}</b><p>${v} bài học</p></div>`).join(''); }
 async function checkBackend(){
@@ -157,7 +162,9 @@ async function loadUsers(){
 }
 function getUserXp(u){ return Number(u.stats?.xp ?? u.xp ?? 0); }
 function getUserCoins(u){ return Number(u.stats?.coins ?? u.coins ?? 0); }
-function getUserVip(u){ return Boolean(sharedFirebase.vip?.isActive?.(u)); }
+function getUserVipState(u){ return sharedFirebase.vip?.getState?.(u) || { active:false, enabled:false, permanent:false, expired:false, daysRemaining:0 }; }
+function getUserVip(u){ return Boolean(getUserVipState(u).active); }
+function getUserVipLabel(u){ return sharedFirebase.vip?.getStatusLabel?.(u) || 'Không VIP'; }
 function getUserLevel(u){ return u.stats?.currentLevel || u.currentLevel || u.level || 'HSK 1'; }
 function getPetLevel(u){ return Number(u.stats?.petLevel ?? u.petLevel ?? Math.min(10, Math.max(1, Math.floor(getUserXp(u) / 1000) + 1))); }
 function getCompletedCount(u){ const ids = u.stats?.completedLessonIds || u.completedLessonIds || {}; if(Array.isArray(ids)) return ids.length; if(ids && typeof ids === 'object') return Object.keys(ids).length; return Number(u.stats?.completedLessons || u.completedLessons || 0); }
@@ -171,23 +178,130 @@ function renderUsers(){
   const sort = $('#userSort').value;
   let arr = state.users.filter(u => !key || [u.email,u.displayName,u.name,u.id].join(' ').toLowerCase().includes(key));
   arr = arr.sort((a,b) => sort === 'email' ? String(a.email||'').localeCompare(String(b.email||'')) : sort === 'newest' ? String(b.updatedAt?.seconds||0).localeCompare(String(a.updatedAt?.seconds||0)) : getUserXp(b)-getUserXp(a));
-  $('#usersTable').innerHTML = `<table><thead><tr><th>Người dùng</th><th>XP / Cấp</th><th>Xu / VIP</th><th>Tiến độ</th><th>Cập nhật</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => `
-    <tr><td><b>${safeText(u.displayName || u.name || 'Học viên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.id)}</div></td><td>XP: <b>${n(getUserXp(u))}</b><br>Cấp: ${safeText(getUserLevel(u))}<br>Pet: ${getPetLevel(u)}/10</td><td>Xu: <b>${n(getUserCoins(u))}</b><br>VIP: ${getUserVip(u) ? '✅ bật' : '— tắt'}<br><span class="muted">Bài đã mở: ${safeText(JSON.stringify(u.stats?.unlockedLessons || {})).slice(0,90)}</span></td><td>Hoàn thành: ${getCompletedCount(u)}<br>Mở tất cả: ${(u.stats?.unlockedAll || u.unlockedAll) ? 'có' : 'không'}</td><td>${fmt(u.updatedAt || u.stats?.updatedAt)}</td><td class="right"><button class="btn small primary" data-max="${u.id}">Max tất cả</button> <button class="btn small ok" data-unlock="${u.id}">Mở khóa</button> <button class="btn small ok" data-vip="${u.id}" data-vip-value="${getUserVip(u) ? 'false' : 'true'}">${getUserVip(u) ? 'Tắt VIP' : 'Bật VIP'}</button> <button class="btn small" data-coins="${u.id}">± Xu</button> <button class="btn small danger" data-reset="${u.id}">Reset</button></td></tr>`).join('')}</tbody></table>`;
+  $('#usersTable').innerHTML = `<table><thead><tr><th>Người dùng</th><th>XP / Cấp</th><th>Xu / VIP</th><th>Tiến độ</th><th>Cập nhật</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => {
+    const vipState = getUserVipState(u);
+    const vipClass = vipState.active ? 'done' : (vipState.expired || vipState.invalidExpiry ? 'new' : '');
+    return `<tr><td><b>${safeText(u.displayName || u.name || 'Học viên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.id)}</div></td><td>XP: <b>${n(getUserXp(u))}</b><br>Cấp: ${safeText(getUserLevel(u))}<br>Pet: ${getPetLevel(u)}/10</td><td>Xu: <b>${n(getUserCoins(u))}</b><br><span class="pill ${vipClass}">${safeText(getUserVipLabel(u))}</span><br><span class="muted">Bài đã mở: ${safeText(JSON.stringify(u.stats?.unlockedLessons || {})).slice(0,90)}</span></td><td>Hoàn thành: ${getCompletedCount(u)}<br>Mở tất cả: ${(u.stats?.unlockedAll || u.unlockedAll) ? 'có' : 'không'}</td><td>${fmt(u.updatedAt || u.stats?.updatedAt)}</td><td class="right"><button class="btn small primary" data-max="${u.id}">Max tất cả</button> <button class="btn small ok" data-unlock="${u.id}">Mở khóa</button> <button class="btn small ok" data-vip-manage="${u.id}">Quản lý VIP</button> <button class="btn small" data-coins="${u.id}">± Xu</button> <button class="btn small danger" data-reset="${u.id}">Reset</button></td></tr>`;
+  }).join('')}</tbody></table>`;
   $$('[data-max]').forEach(b => b.onclick = () => maxUser(b.dataset.max));
   $$('[data-unlock]').forEach(b => b.onclick = () => unlockUser(b.dataset.unlock));
-  $$('[data-vip]').forEach(b => b.onclick = () => setUserVip(b.dataset.vip, b.dataset.vipValue === 'true'));
+  $$('[data-vip-manage]').forEach(b => b.onclick = () => openVipManager(b.dataset.vipManage));
   $$('[data-coins]').forEach(b => b.onclick = () => adjustUserCoins(b.dataset.coins));
   $$('[data-reset]').forEach(b => b.onclick = () => resetUser(b.dataset.reset));
 }
-async function writeUserStats(uid, patch){
-  await Promise.all([
-    setDoc(userRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.public }, { merge:true }),
-    setDoc(statsRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.stats }, { merge:true })
-  ]);
+async function writeUserStats(uid, patch = {}){
+  requireAdmin();
+  const jobs = [];
+  if (patch.public && Object.keys(patch.public).length) jobs.push(setDoc(userRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.public }, { merge:true }));
+  if (patch.stats && Object.keys(patch.stats).length) jobs.push(setDoc(statsRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.stats }, { merge:true }));
+  await Promise.all(jobs);
 }
-async function setUserVip(uid, value){
-  await writeUserStats(uid, { public:{ isVip:value }, stats:{ isVip:value, vipUntil:value ? null : '' } });
-  toast(value ? 'Đã bật VIP' : 'Đã tắt VIP'); loadUsers();
+
+const VIP_ADMIN_PLANS = Object.freeze({
+  lifetime: { label:'VIP vĩnh viễn', days:null },
+  '30d': { label:'30 ngày', days:30 },
+  '90d': { label:'90 ngày', days:90 },
+  '365d': { label:'365 ngày', days:365 },
+  custom: { label:'Ngày tùy chọn', days:'custom' },
+  off: { label:'Tắt VIP', days:0 }
+});
+
+function ensureVipManagerModal(){
+  let modal = $('#adminVipModal');
+  if (modal) return modal;
+  modal = document.createElement('div');
+  modal.id = 'adminVipModal';
+  modal.className = 'admin-vip-modal hidden';
+  modal.innerHTML = `<div class="admin-vip-modal__backdrop" data-vip-close></div><section class="admin-vip-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="adminVipTitle"><button class="admin-vip-modal__close" type="button" data-vip-close aria-label="Đóng">×</button><h2 id="adminVipTitle">Quản lý VIP</h2><p class="muted" id="adminVipUser"></p><div class="admin-vip-current" id="adminVipCurrent"></div><label>Gói VIP<select class="input full" id="adminVipPlan"><option value="lifetime">VIP vĩnh viễn</option><option value="30d">30 ngày</option><option value="90d">90 ngày</option><option value="365d">365 ngày</option><option value="custom">Ngày tùy chọn</option><option value="off">Tắt VIP</option></select></label><label id="adminVipCustomWrap" class="hidden">Ngày hết hạn<input class="input full" id="adminVipCustomDate" type="date"></label><p class="muted">“Gia hạn” cộng thêm số ngày từ hạn hiện tại; nếu đã hết hạn thì tính từ hôm nay.</p><div class="admin-vip-actions"><button class="btn danger" id="adminVipRevoke" type="button">Tắt VIP</button><button class="btn" id="adminVipExtend" type="button">Gia hạn</button><button class="btn primary" id="adminVipApply" type="button">Áp dụng</button></div></section>`;
+  document.body.appendChild(modal);
+  [...modal.querySelectorAll('[data-vip-close]')].forEach(button => button.addEventListener('click', closeVipManager));
+  $('#adminVipPlan').addEventListener('change', syncVipManagerControls);
+  $('#adminVipApply').addEventListener('click', () => saveVipManager(false));
+  $('#adminVipExtend').addEventListener('click', () => saveVipManager(true));
+  $('#adminVipRevoke').addEventListener('click', () => revokeVipManager());
+  return modal;
+}
+function closeVipManager(){ $('#adminVipModal')?.classList.add('hidden'); document.body.classList.remove('admin-modal-open'); }
+function syncVipManagerControls(){
+  const plan = $('#adminVipPlan')?.value;
+  $('#adminVipCustomWrap')?.classList.toggle('hidden', plan !== 'custom');
+  if ($('#adminVipExtend')) $('#adminVipExtend').disabled = !['30d','90d','365d'].includes(plan);
+  if ($('#adminVipApply')) $('#adminVipApply').textContent = plan === 'off' ? 'Tắt VIP' : 'Áp dụng';
+}
+function openVipManager(uid){
+  const user = state.users.find(item => item.id === uid);
+  if (!user) return toast('Không tìm thấy user', 'error');
+  const modal = ensureVipManagerModal();
+  modal.dataset.uid = uid;
+  $('#adminVipUser').textContent = `${user.displayName || 'Học viên'} · ${user.email || uid}`;
+  $('#adminVipCurrent').textContent = `Trạng thái hiện tại: ${getUserVipLabel(user)}`;
+  const currentPlan = String(user.stats?.vipPlan || '30d');
+  $('#adminVipPlan').value = Object.hasOwn(VIP_ADMIN_PLANS, currentPlan) ? currentPlan : (getUserVipState(user).permanent ? 'lifetime' : '30d');
+  const expiry = getUserVipState(user).expiresDate;
+  $('#adminVipCustomDate').value = expiry ? expiry.toISOString().slice(0,10) : new Date(Date.now() + 30 * 86400000).toISOString().slice(0,10);
+  syncVipManagerControls();
+  modal.classList.remove('hidden');
+  document.body.classList.add('admin-modal-open');
+}
+function dateAtLocalEnd(dateText){
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateText || '')) return null;
+  const date = new Date(`${dateText}T23:59:59.999`);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+async function writeCanonicalVip(uid, { isVip, vipUntil, vipPlan }){
+  const admin = requireAdmin();
+  await setDoc(statsRef(uid), {
+    isVip: isVip === true,
+    vipUntil,
+    vipPlan: vipPlan ?? null,
+    vipUpdatedAt: serverTimestamp(),
+    vipUpdatedBy: admin.email,
+    updatedAt: serverTimestamp(),
+    adminUpdatedAt: serverTimestamp()
+  }, { merge:true });
+}
+async function saveVipManager(extend){
+  const modal = $('#adminVipModal');
+  const uid = modal?.dataset.uid;
+  const planId = $('#adminVipPlan')?.value;
+  const plan = VIP_ADMIN_PLANS[planId];
+  const user = state.users.find(item => item.id === uid);
+  if (!uid || !plan || !user) return;
+  try {
+    if (planId === 'off') return await revokeVipManager();
+    let vipUntil = null;
+    if (plan.days === 'custom') {
+      const customDate = dateAtLocalEnd($('#adminVipCustomDate')?.value);
+      if (!customDate || customDate.getTime() <= Date.now()) return toast('Ngày hết hạn phải ở tương lai', 'error');
+      vipUntil = Timestamp.fromDate(customDate);
+    } else if (Number.isFinite(plan.days)) {
+      const current = getUserVipState(user);
+      const base = extend && current.active && !current.permanent && current.expiresDate
+        ? current.expiresDate.getTime()
+        : Date.now();
+      vipUntil = Timestamp.fromDate(new Date(base + plan.days * 86400000));
+    }
+    await writeCanonicalVip(uid, { isVip:true, vipUntil, vipPlan:planId });
+    toast(extend ? `Đã gia hạn ${plan.label}` : `Đã cấp ${plan.label}`);
+    closeVipManager();
+    await loadUsers();
+  } catch (error) {
+    console.error('[admin-vip] Không cập nhật được VIP', error);
+    toast(error?.message || 'Không cập nhật được VIP', 'error');
+  }
+}
+async function revokeVipManager(){
+  const uid = $('#adminVipModal')?.dataset.uid;
+  if (!uid) return;
+  try {
+    await writeCanonicalVip(uid, { isVip:false, vipUntil:null, vipPlan:null });
+    toast('Đã thu hồi VIP');
+    closeVipManager();
+    await loadUsers();
+  } catch (error) {
+    console.error('[admin-vip] Không thu hồi được VIP', error);
+    toast(error?.message || 'Không thu hồi được VIP', 'error');
+  }
 }
 async function adjustUserCoins(uid){
   const user = state.users.find(u => u.id === uid);
@@ -215,7 +329,7 @@ async function unlockUser(uid){
 }
 async function resetUser(uid){
   if(!confirm('Reset tiến độ user này?')) return;
-  await writeUserStats(uid, { public:{ adminBoost:false, unlockedAll:false }, stats:{ xp:0, coins:0, totalCoinsEarned:0, isVip:false, vipUntil:'', unlockedLessons:{}, writingCompleted:{}, coinHistory:[], checkInStreak:0, lastCheckInDate:'', todayXp:0, lastXp:0, level:1, petLevel:1, spiritLevel:1, unlockedAll:false, completedLessonIds:{}, completedLessons:0, courses:{hsk1:0,hsk2:0,hsk3:0,hsk4:0,hsk5:0,hsk6:0}, streak:0, history:[] } });
+  await writeUserStats(uid, { public:{ adminBoost:false, unlockedAll:false }, stats:{ xp:0, coins:0, totalCoinsEarned:0, isVip:false, vipUntil:null, vipPlan:null, unlockedLessons:{}, writingCompleted:{}, coinHistory:[], checkInStreak:0, lastCheckInDate:'', todayXp:0, lastXp:0, level:1, petLevel:1, spiritLevel:1, unlockedAll:false, completedLessonIds:{}, completedLessons:0, courses:{hsk1:0,hsk2:0,hsk3:0,hsk4:0,hsk5:0,hsk6:0}, streak:0, history:[] } });
   toast('Đã reset user'); loadUsers();
 }
 
@@ -278,6 +392,7 @@ async function loadCollection(){
 const DEFAULT_FEATURES = { registration:true, googleDesktop:true, donate:true, feedback:true, flashcard:true, writing:true, vocabulary:true, maintenance:false };
 function learningRef(){ return doc(db, 'adminSettings', 'learning'); }
 function overrideRef(level, lessonId){ return doc(db, 'lessonOverrides', `${level}_${Number(lessonId)}`); }
+function writingOverrideRef(level, lessonId){ return doc(db, 'writingLessonOverrides', `${level}_${Number(lessonId)}`); }
 function defaultLearningSettings(){
   const courses = {};
   Object.entries(COURSE_TOTALS).forEach(([level,total]) => {
@@ -604,4 +719,147 @@ async function deleteCmsOverride(){
   } finally {
     setButtonBusy(btn, false, 'Đang xóa...');
   }
+}
+
+// ===== CMS Luyện viết =====
+function bindWritingCmsControls(){
+  $('#writingCmsLevel') && ($('#writingCmsLevel').onchange = initWritingCms);
+  $('#writingCmsLesson') && ($('#writingCmsLesson').onchange = loadWritingCmsLesson);
+  $('#writingCmsLoad') && ($('#writingCmsLoad').onclick = loadWritingCmsLesson);
+  $('#writingCmsSave') && ($('#writingCmsSave').onclick = saveWritingCmsLesson);
+  $('#writingCmsReset') && ($('#writingCmsReset').onclick = () => loadWritingCmsLesson({ ignoreOverride:true }));
+  $('#writingCmsDelete') && ($('#writingCmsDelete').onclick = deleteWritingCmsOverride);
+  $('#writingCmsDownload') && ($('#writingCmsDownload').onclick = () => state.writingCmsData && downloadJson(`${$('#writingCmsLevel').value}-writing-${$('#writingCmsLesson').value}.json`, state.writingCmsData));
+  $$('.writing-cms-tab').forEach(btn => btn.onclick = () => switchWritingCmsTab(btn.dataset.writingTab));
+}
+function setWritingCmsStatus(text, type=''){
+  const el = $('#writingCmsStatus'); if(!el) return;
+  el.textContent = text; el.className = `save-status ${type}`.trim();
+}
+function switchWritingCmsTab(tab){
+  $$('.writing-cms-tab').forEach(btn => btn.classList.toggle('active', btn.dataset.writingTab === tab));
+  $$('.writing-cms-pane').forEach(pane => pane.classList.toggle('hidden', pane.dataset.writingPane !== tab));
+}
+async function initWritingCms(){
+  const level = $('#writingCmsLevel')?.value || 'hsk1';
+  const total = COURSE_TOTALS[level] || getLessonConfig(level)?.lessons?.length || 1;
+  const select = $('#writingCmsLesson'); if(!select) return;
+  const config = getLessonConfig(level);
+  select.innerHTML = Array.from({length:total}, (_, index) => {
+    const lessonId = index + 1;
+    const title = config?.lessons?.[index]?.title || `Bài ${lessonId}`;
+    return `<option value="${lessonId}">Bài ${lessonId} - ${safeText(title)}</option>`;
+  }).join('');
+  await loadWritingCmsLesson();
+}
+async function loadWritingCmsLesson(options={}){
+  const level = $('#writingCmsLevel')?.value || 'hsk1';
+  const lessonId = Number($('#writingCmsLesson')?.value || 1);
+  setWritingCmsStatus(options.ignoreOverride ? 'Đang nạp dữ liệu chuẩn...' : 'Đang tải bài...');
+  try{
+    const staticLesson = await getLessonContent(level, lessonId);
+    state.writingCmsStatic = structuredCloneSafe(staticLesson);
+    let content = staticLesson;
+    if(!options.ignoreOverride){
+      const snap = await getDoc(writingOverrideRef(level, lessonId));
+      if(snap.exists()) content = normalizeWritingLessonContent(snap.data().content || snap.data(), staticLesson);
+    }
+    state.writingCmsData = structuredCloneSafe(content);
+    fillWritingCmsForm(content);
+    setWritingCmsStatus(options.ignoreOverride ? 'Đã nạp dữ liệu chuẩn (chưa lưu)' : 'Đã tải bài', 'ok');
+  }catch(error){
+    console.error('[admin-writing] Không tải được bài', error);
+    setWritingCmsStatus('Tải thất bại', 'error');
+    toast(error?.message || 'Không tải được bài Luyện viết', 'error');
+  }
+}
+function writingVocabToLines(items=[]){
+  return items.map(item => joinParts([item.chinese || item.hanzi || '', item.pinyin || '', item.vietnamese || item.meaning || '', item.audio || ''])).join('\n');
+}
+function writingSentencesToLines(items=[]){
+  return items.map(item => joinParts([item.chinese || item.hanzi || '', item.pinyin || '', item.vietnamese || item.translation || '', item.audio || ''])).join('\n');
+}
+function linesToWritingVocab(text){
+  return String(text || '').split('\n').map((line,index) => {
+    const [chinese='',pinyin='',vietnamese='',audio=''] = line.split('|').map(part => part.trim());
+    if(!chinese || !pinyin || !vietnamese) return null;
+    return { id:`cms-writing-v${index+1}`, chinese, pinyin, vietnamese, audio, examples:[] };
+  }).filter(Boolean);
+}
+function linesToWritingSentences(text, lessonId){
+  return String(text || '').split('\n').map((line,index) => {
+    const [chinese='',pinyin='',vietnamese='',audio=''] = line.split('|').map(part => part.trim());
+    if(!chinese || !pinyin || !vietnamese) return null;
+    return { chinese, pinyin, vietnamese, audio, answerTokens:null, vocabulary:{ lessonId, chinese:'' }, sourceIndex:index };
+  }).filter(Boolean);
+}
+function fillWritingCmsForm(data){
+  $('#writingCmsTitle').value = data.title || '';
+  $('#writingCmsDesc').value = data.desc || data.description || '';
+  $('#writingCmsXp').value = Number(data.xp || 10);
+  $('#writingCmsVocab').value = writingVocabToLines(data.vocabularies || []);
+  $('#writingCmsSentences').value = writingSentencesToLines(data.sentences || []);
+  $('#writingCmsJson').value = JSON.stringify(data, null, 2);
+  renderWritingCmsValidation(data);
+}
+function readWritingCmsForm(){
+  const level = $('#writingCmsLevel').value;
+  const lessonId = Number($('#writingCmsLesson').value || 1);
+  let base = {};
+  try { base = JSON.parse($('#writingCmsJson').value || '{}'); } catch { base = {}; }
+  const data = {
+    ...base,
+    level,
+    lessonId,
+    title:$('#writingCmsTitle').value.trim(),
+    desc:$('#writingCmsDesc').value.trim(),
+    xp:Math.max(0, Number($('#writingCmsXp').value || 10)),
+    vocabularies:linesToWritingVocab($('#writingCmsVocab').value),
+    sentences:linesToWritingSentences($('#writingCmsSentences').value, lessonId)
+  };
+  data.vocabularyCount = data.vocabularies.length;
+  data.sentenceCount = data.sentences.length;
+  $('#writingCmsJson').value = JSON.stringify(data, null, 2);
+  renderWritingCmsValidation(data);
+  return data;
+}
+function renderWritingCmsValidation(data){
+  const level = $('#writingCmsLevel')?.value || data.level || 'hsk1';
+  const target = WRITING_VOCAB_TARGETS[level] || 10;
+  const vocabCount = data.vocabularies?.length || 0;
+  const sentenceCount = data.sentences?.length || 0;
+  const valid = Boolean(data.title && vocabCount >= target && sentenceCount >= 10);
+  $('#writingCmsSummary').innerHTML = `<div><b>${vocabCount}/${target}</b><span>Từ vựng</span></div><div><b>${sentenceCount}/10</b><span>Câu luyện viết</span></div><div><b>${valid ? 'Đạt' : 'Thiếu'}</b><span>Kiểm tra dữ liệu</span></div>`;
+  const notice = $('#writingCmsValidation');
+  notice.className = valid ? 'notice ok' : 'notice';
+  notice.textContent = valid ? 'Dữ liệu đạt số lượng tối thiểu và sẵn sàng lưu.' : `Cần ít nhất ${target} từ, 10 câu và tiêu đề không rỗng.`;
+}
+async function saveWritingCmsLesson(){
+  if(state.writingCmsSaving) return;
+  const button = $('#writingCmsSave'); state.writingCmsSaving = true; setButtonBusy(button,true,'Đang lưu...');
+  try{
+    const admin = requireAdmin();
+    const data = stripUndefined(readWritingCmsForm());
+    const target = WRITING_VOCAB_TARGETS[data.level] || 10;
+    if(!data.title) throw new Error('Tiêu đề không được để trống.');
+    if(data.vocabularies.length < target) throw new Error(`${data.level.toUpperCase()} cần ít nhất ${target} từ.`);
+    if(data.sentences.length < 10) throw new Error('Mỗi bài cần ít nhất 10 câu luyện viết.');
+    await setDoc(writingOverrideRef(data.level, data.lessonId), {
+      level:data.level, lessonId:data.lessonId, title:data.title,
+      vocabularyCount:data.vocabularies.length, sentenceCount:data.sentences.length,
+      content:data, updatedAt:serverTimestamp(), updatedBy:admin.email
+    }, {merge:true});
+    state.writingCmsData = structuredCloneSafe(data);
+    setWritingCmsStatus('Đã lưu', 'ok'); toast('Đã lưu CMS Luyện viết');
+  }catch(error){
+    console.error('[admin-writing] Lưu thất bại', error);
+    setWritingCmsStatus('Lưu thất bại','error'); toast(error?.message || 'Không lưu được', 'error');
+  }finally{ state.writingCmsSaving = false; setButtonBusy(button,false,'Đang lưu...'); }
+}
+async function deleteWritingCmsOverride(){
+  const level = $('#writingCmsLevel')?.value || 'hsk1';
+  const lessonId = Number($('#writingCmsLesson')?.value || 1);
+  if(!confirm('Xóa bản sửa Luyện viết trên Firestore và quay lại dữ liệu chuẩn?')) return;
+  try{ requireAdmin(); await deleteDoc(writingOverrideRef(level, lessonId)); toast('Đã xóa bản sửa Luyện viết'); await loadWritingCmsLesson({ignoreOverride:true}); }
+  catch(error){ toast(error?.message || 'Không xóa được', 'error'); }
 }

@@ -1,9 +1,11 @@
 import "./assets/js/speech-service.js";
+import { doc, getDocFromServer } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import {
-  areAnswersEquivalent,
+  areAnswersExactlyEquivalent,
   getLessonContent,
   normalizeAnswer,
-  normalizePinyin
+  normalizePinyin,
+  normalizeWritingLessonContent
 } from "./lesson-engine.js";
 import { getLessonConfig } from "./lesson-config.js";
 
@@ -12,8 +14,8 @@ const level = (params.get("level") || "hsk1").toLowerCase();
 const lessonId = Number(params.get("lesson") || 1);
 const app = document.getElementById("app");
 const DISABLE_SEQUENTIAL_LESSON_LOCK = true;
-const TTS_NORMAL_RATE = 0.82;
-const TTS_SLOW_RATE = 0.58;
+const TTS_NORMAL_RATE = 0.58;
+const TTS_SLOW_RATE = 0.35;
 const TTS_PITCH = 0.92;
 const TTS_VOLUME = 1.0;
 const TTS_VOICE_PRIORITIES = [
@@ -39,15 +41,128 @@ const state = {
   completionSaved: false,
   isCompletingAnswer: false,
   isReadingAnswer: false,
-  hasCompletedCurrentQuestion: false
+  hasCompletedCurrentQuestion: false,
+  firebase: null
 };
+
+function getLessonListUrl() {
+  return level === "hsk1" ? "hsk1-writing-lessons.html" : "hsk-writing.html";
+}
+
+function waitForSharedFirebase(timeoutMs = 12000) {
+  if (window.CCFirebase?.db) return Promise.resolve(window.CCFirebase);
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      window.removeEventListener("firebase-ready", onReady);
+      reject(new Error("Firebase chưa sẵn sàng để xác minh quyền truy cập."));
+    }, timeoutMs);
+    function onReady() {
+      if (!window.CCFirebase?.db) return;
+      clearTimeout(timer);
+      resolve(window.CCFirebase);
+    }
+    window.addEventListener("firebase-ready", onReady, { once: true });
+  });
+}
+
+function getConfiguredLessonAccess(settings = {}) {
+  const courseValue = settings?.courses?.[level];
+  const course = courseValue && typeof courseValue === "object"
+    ? courseValue
+    : { enabled: courseValue !== false, lessons: {} };
+  const legacyLessons = settings?.lessons?.[level] || {};
+  const key = `B${lessonId}`;
+  const raw = course.lessons?.[key]
+    || course.lessons?.[String(lessonId)]
+    || legacyLessons?.[key]
+    || legacyLessons?.[String(lessonId)]
+    || {};
+  const enabled = course.enabled !== false && raw.enabled !== false;
+  const unlockType = enabled ? (raw.unlockType || "free") : "locked";
+  return { enabled, unlockType, coinCost: Math.max(0, Number(raw.coinCost || 0)) };
+}
+
+function userHasCoinUnlock(stats = {}) {
+  if (stats.unlockedAll) return true;
+  const opened = stats.unlockedLessons?.[level];
+  return Array.isArray(opened) && opened.map(String).includes(String(lessonId));
+}
+
+function blockLesson(message, { showVip = false, firebase = null } = {}) {
+  app.className = "error";
+  app.innerHTML = `<div><p>${message}</p><p><a href="${getLessonListUrl()}">Quay lại danh sách bài</a></p></div>`;
+  if (showVip) {
+    const openPurchase = firebase?.vip?.openPurchase || window.CCVip?.openPurchase;
+    openPurchase?.({
+      reason: message,
+      user: firebase?.getCurrentUser?.() || null,
+      backUrl: getLessonListUrl()
+    });
+  }
+}
+
+async function verifyLessonAccessBeforeLoad() {
+  app.className = "loading";
+  app.textContent = "Đang xác minh quyền truy cập...";
+  const firebase = await waitForSharedFirebase();
+  state.firebase = firebase;
+  await firebase.authReady;
+
+  let settingsSnap;
+  try {
+    settingsSnap = await getDocFromServer(doc(firebase.db, "adminSettings", "learning"));
+  } catch (error) {
+    console.warn("[lesson-page] Không đọc được cấu hình quyền từ Firestore server.", error);
+    blockLesson("Không thể xác minh quyền bài học vì kết nối Firestore đang gián đoạn. Nội dung đã được chặn để tránh lộ bài VIP.", { showVip: true, firebase });
+    return false;
+  }
+
+  const access = getConfiguredLessonAccess(settingsSnap.exists() ? settingsSnap.data() : {});
+  if (!access.enabled || access.unlockType === "locked") {
+    blockLesson("Bài học này đang được Admin khóa hoặc cập nhật.");
+    return false;
+  }
+
+  if (access.unlockType === "vip") {
+    const result = await firebase.getFreshVipAccess({ syncUi: true });
+    if (!result?.verified || !result?.state?.active) {
+      const message = result?.reason === "unavailable"
+        ? "Không thể xác minh quyền VIP vì kết nối Firestore đang gián đoạn. Nội dung VIP đã được chặn."
+        : result?.reason === "signed-out"
+          ? "Bài học này dành cho thành viên VIP. Hãy đăng nhập hoặc chọn gói nâng cấp."
+          : result?.state?.expired
+            ? "VIP của tài khoản đã hết hạn. Hãy gia hạn để tiếp tục bài học."
+            : "Bài học này dành cho thành viên VIP. Chọn gói phù hợp để mở khóa.";
+      blockLesson(message, { showVip: true, firebase });
+      return false;
+    }
+  }
+
+  if (access.unlockType === "coins") {
+    const stats = firebase.getCurrentStats?.() || {};
+    if (!firebase.getCurrentUser?.() || !userHasCoinUnlock(stats)) {
+      blockLesson(`Bài học này cần được mở bằng ${access.coinCost} xu từ danh sách bài trước.`);
+      return false;
+    }
+  }
+
+  return true;
+}
 
 init();
 
 async function init() {
   try {
+    if (!Number.isInteger(lessonId) || lessonId < 1) {
+      blockLesson("Mã bài học không hợp lệ.");
+      return;
+    }
+    if (!await verifyLessonAccessBeforeLoad()) return;
+
+    // Dữ liệu JSON/static chỉ được fetch sau khi guard quyền hoàn tất.
     state.config = getLessonConfig(level);
-    state.lesson = await getLessonContent(level, lessonId);
+    const staticLesson = await getLessonContent(level, lessonId);
+    state.lesson = await loadWritingLessonOverride(staticLesson);
 
     if (!state.lesson.vocabularies.length) {
       app.className = "error";
@@ -66,8 +181,22 @@ async function init() {
   }
 }
 
+async function loadWritingLessonOverride(fallbackLesson) {
+  const firebase = state.firebase || window.CCFirebase;
+  if (!firebase?.db) return fallbackLesson;
+  try {
+    const snap = await getDocFromServer(doc(firebase.db, "writingLessonOverrides", `${level}_${lessonId}`));
+    if (!snap.exists()) return fallbackLesson;
+    const data = snap.data();
+    return normalizeWritingLessonContent(data.content || data, fallbackLesson);
+  } catch (error) {
+    console.warn("[lesson-page] Không tải được CMS Luyện viết, dùng dữ liệu tĩnh.", error);
+    return fallbackLesson;
+  }
+}
+
 function renderShell() {
-  const closeUrl = level === "hsk1" ? "hsk1-writing-lessons.html" : "hsk-writing.html";
+  const closeUrl = getLessonListUrl();
 
   app.className = "";
   app.innerHTML = `
@@ -196,18 +325,10 @@ function bindEvents() {
     submitCurrentAnswer(input);
   });
   document.getElementById("answerInput").addEventListener("keydown", (event) => {
-    if (event.key !== "Enter") {
-      return;
-    }
-
+    if (event.key !== "Enter") return;
     event.preventDefault();
-
-    if (event.target.disabled && canGoNext()) {
-      goNext();
-      return;
-    }
-
-    submitCurrentAnswer(event.target);
+    document.getElementById("checkAnswerBtn")?.focus();
+    setFeedback("Bấm “Kết quả” để chấm đáp án.");
   });
 
   document.getElementById("prevBtn").addEventListener("click", goPrev);
@@ -252,7 +373,7 @@ function renderCurrentCard() {
   document.getElementById("cardBadge").textContent = isSentence ? "Luyện viết câu" : "Từ vựng";
   document.getElementById("promptWord").textContent = prompt;
   document.getElementById("instruction").textContent = getInstructionText(isSentence);
-  renderAnswerMeter(item, isAnswered ? getExpectedAnswerValue(item) : "");
+  renderAnswerMeter(item, isAnswered ? getExpectedAnswerValue(item) : "", isAnswered || isRevealed);
   document.getElementById("saveBtn").disabled = isSentence;
 
   const input = document.getElementById("answerInput");
@@ -291,11 +412,7 @@ function handleAnswerInput(event) {
 
   input.classList.remove("correct", "wrong");
   setFeedback("");
-  renderAnswerMeter(getCurrentItem(), input.value);
-
-  if (state.currentPhase === "sentence" && isCorrectAnswer(input.value, getCurrentItem())) {
-    submitCurrentAnswer(input);
-  }
+  renderAnswerMeter(getCurrentItem(), input.value, false);
 }
 
 function submitCurrentAnswer(input) {
@@ -324,7 +441,7 @@ function submitCurrentAnswer(input) {
     input.disabled = true;
     document.getElementById("checkAnswerBtn").disabled = true;
     setFeedback("Chính xác.", "good");
-    renderAnswerMeter(item, getExpectedAnswerValue(item));
+    renderAnswerMeter(item, getExpectedAnswerValue(item), true);
     renderMemory(item);
     setNextButtonState(false);
     playSuccessSound();
@@ -337,7 +454,7 @@ function submitCurrentAnswer(input) {
   showWrongAnswerReaction();
   playFeedbackSound("sad");
   setFeedback("Chưa đúng, thử lại nhé.", "bad");
-  renderAnswerMeter(item, input.value);
+  renderAnswerMeter(item, input.value, true);
 }
 
 async function completeCurrentSentence(input, item) {
@@ -350,7 +467,7 @@ async function completeCurrentSentence(input, item) {
   input.classList.remove("wrong");
   input.disabled = true;
   document.getElementById("checkAnswerBtn").disabled = true;
-  renderAnswerMeter(item, getExpectedAnswerValue(item));
+  renderAnswerMeter(item, getExpectedAnswerValue(item), true);
   renderMemory(item);
   setFeedback("Chính xác. Đang đọc đáp án...", "good");
   setNextButtonState(true, "Đang đọc đáp án...");
@@ -438,7 +555,9 @@ function launchWritingCelebration() {
 
 function revealCurrentAnswer() {
   state.revealed.add(getCurrentCardKey());
-  renderMemory(getCurrentItem());
+  const item = getCurrentItem();
+  renderMemory(item);
+  renderAnswerMeter(item, getExpectedAnswerValue(item), true);
   document.getElementById("answerInput").disabled = true;
   document.getElementById("checkAnswerBtn").disabled = true;
   document.getElementById("nextBtn").disabled = false;
@@ -561,11 +680,11 @@ function getPrompt(item) {
 
 function isCorrectAnswer(value, item) {
   if (state.mode === "cn-to-vi") {
-    return areAnswersEquivalent(value, item.vietnamese, "vi");
+    return areAnswersExactlyEquivalent(value, item.vietnamese, "vi");
   }
 
-  return areAnswersEquivalent(value, item.chinese, "zh")
-    || areAnswersEquivalent(value, item.pinyin, "pinyin");
+  return areAnswersExactlyEquivalent(value, item.chinese, "zh")
+    || areAnswersExactlyEquivalent(value, item.pinyin, "pinyin");
 }
 
 function getExpectedAnswerValue(item) {
@@ -610,14 +729,18 @@ function getInputTokens(value) {
     .filter(Boolean);
 }
 
-function getTokenStates(item, inputValue) {
+function getTokenStates(item, inputValue, revealResult = false) {
   const expectedTokens = getAnswerTokens(item);
+  const inputTokens = getInputTokens(inputValue);
+
+  if (!revealResult) {
+    return expectedTokens.map((_, index) => inputTokens[index] ? "typing" : "pending");
+  }
 
   if (isCorrectAnswer(inputValue, item)) {
     return expectedTokens.map(() => "correct");
   }
 
-  const inputTokens = getInputTokens(inputValue);
   return expectedTokens.map((expected, index) => {
     const entered = inputTokens[index];
     if (!entered) return "pending";
@@ -626,9 +749,9 @@ function getTokenStates(item, inputValue) {
   });
 }
 
-function renderAnswerMeter(item, inputValue = "") {
+function renderAnswerMeter(item, inputValue = "", revealResult = false) {
   const meter = document.getElementById("answerMeter");
-  const states = getTokenStates(item, inputValue);
+  const states = getTokenStates(item, inputValue, revealResult);
   const stateLabels = {
     pending: "chưa nhập",
     typing: "đang nhập",
@@ -711,7 +834,7 @@ function speakChineseAndWait(text) {
   return window.CCAudio.speak({
     text: spokenText,
     mode: "answer",
-    rate: 0.72,
+    rate: TTS_NORMAL_RATE,
     pitch: TTS_PITCH,
     volume: Math.min(TTS_VOLUME, 0.9),
     lang: "zh-CN"

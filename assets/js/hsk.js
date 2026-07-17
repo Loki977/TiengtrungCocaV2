@@ -23,6 +23,7 @@
   let currentStats = window.CCFirebase?.getCurrentStats?.() || null;
   let contentDbPromise = null;
   let adminLearningSettings = null;
+  let adminLearningSettingsVerifiedAt = 0;
 
   function waitForSharedFirebase() {
     if (window.CCFirebase?.db) return Promise.resolve(window.CCFirebase);
@@ -45,7 +46,7 @@
     contentDbPromise = (async () => {
       const fsMod = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js');
       const sharedFirebase = await waitForSharedFirebase();
-      return { db: sharedFirebase.db, doc: fsMod.doc, getDoc: fsMod.getDoc };
+      return { db: sharedFirebase.db, doc: fsMod.doc, getDoc: fsMod.getDoc, getDocFromServer: fsMod.getDocFromServer };
     })();
     return contentDbPromise;
   }
@@ -98,7 +99,45 @@
   }
 
   function userIsVip() {
-    return Boolean(window.CCVip?.isActive?.(currentStats));
+    // Chỉ dùng kết quả VIP đã được xác minh từ Firestore server, không dùng cache/localStorage.
+    return Boolean(window.CCFirebase?.vip?.isVerifiedActive?.());
+  }
+
+  function showVipPurchase(reason) {
+    const openPurchase = window.CCFirebase?.vip?.openPurchase || window.CCVip?.openPurchase;
+    if (openPurchase) {
+      openPurchase({
+        reason,
+        user: window.CCFirebase?.getCurrentUser?.() || null,
+        backUrl: 'hsk.html'
+      });
+    } else {
+      toast(reason);
+    }
+  }
+
+  async function requireFreshVipAccess(level, lessonId) {
+    try {
+      const firebase = await waitForSharedFirebase();
+      await firebase.authReady;
+      const result = await firebase.getFreshVipAccess({ syncUi: true });
+      currentStats = result?.stats || firebase.getCurrentStats?.() || currentStats;
+      if (result?.verified && result?.state?.active) return true;
+
+      const reason = result?.reason === 'unavailable'
+        ? 'Không thể xác minh quyền VIP vì kết nối Firestore đang gián đoạn. Nội dung VIP đã được chặn để bảo vệ tài khoản.'
+        : result?.reason === 'signed-out'
+          ? 'Bài học này dành cho thành viên VIP. Hãy đăng nhập đúng tài khoản hoặc chọn gói nâng cấp.'
+          : result?.state?.expired
+            ? 'VIP của tài khoản đã hết hạn. Chọn gói để gia hạn và tiếp tục học.'
+            : 'Bài học này dành cho thành viên VIP. Chọn gói phù hợp để mở khóa.';
+      showVipPurchase(reason);
+      return false;
+    } catch (error) {
+      console.warn('[hsk] Không xác minh được quyền VIP.', { level, lessonId, error });
+      showVipPurchase('Không thể xác minh quyền VIP lúc này. Nội dung đã được chặn; vui lòng kiểm tra mạng rồi thử lại.');
+      return false;
+    }
   }
 
   function canOpenLesson(level, lessonId) {
@@ -119,17 +158,33 @@
     return 'Học ngay';
   }
 
-  async function loadAdminLearningSettings() {
-    if (adminLearningSettings) return adminLearningSettings;
+  async function loadAdminLearningSettings(options = {}) {
+    const forceServer = options.forceServer === true;
+    if (!forceServer && adminLearningSettings) return adminLearningSettings;
     try {
-      const { db, doc, getDoc } = await getContentDb();
-      const snap = await getDoc(doc(db, 'adminSettings', 'learning'));
+      const { db, doc, getDoc, getDocFromServer } = await getContentDb();
+      const ref = doc(db, 'adminSettings', 'learning');
+      const snap = forceServer ? await getDocFromServer(ref) : await getDoc(ref);
       adminLearningSettings = mergeDeep(defaultLearningSettings(), snap.exists() ? snap.data() : {});
+      if (forceServer) adminLearningSettingsVerifiedAt = Date.now();
     } catch (error) {
-      console.warn('[hsk] Không tải được adminSettings/learning, dùng cấu hình mặc định.', error);
+      if (forceServer) throw error;
+      console.warn('[hsk] Không tải được adminSettings/learning, chỉ dùng cấu hình mặc định để hiển thị danh sách.', error);
       adminLearningSettings = defaultLearningSettings();
     }
     return adminLearningSettings;
+  }
+
+  async function requireFreshLearningSettings() {
+    if (adminLearningSettingsVerifiedAt && Date.now() - adminLearningSettingsVerifiedAt < 5000) return true;
+    try {
+      await loadAdminLearningSettings({ forceServer: true });
+      return true;
+    } catch (error) {
+      console.warn('[hsk] Không xác minh được cấu hình khóa bài mới nhất.', error);
+      showVipPurchase('Không thể xác minh trạng thái khóa bài vì Firestore đang gián đoạn. Nội dung đã được chặn; vui lòng kiểm tra mạng rồi thử lại.');
+      return false;
+    }
   }
 
   async function loadLessonOverride(level, lessonId) {
@@ -332,9 +387,13 @@
   }
 
   async function handleLessonClick(lessonId) {
+    if (!await requireFreshLearningSettings()) return;
     const access = getLessonAccessConfig(currentLevel, lessonId);
     if (!access.enabled || access.unlockType === 'locked') return toast('Bài học này đang được cập nhật.');
-    if (access.unlockType === 'vip' && !userIsVip()) return toast('Bài này chỉ dành cho tài khoản VIP.');
+    if (access.unlockType === 'vip') {
+      toast('Đang xác minh quyền VIP...');
+      if (!await requireFreshVipAccess(currentLevel, lessonId)) return;
+    }
     if (access.unlockType === 'coins' && !userHasCoinUnlock(currentLevel, lessonId)) {
       if (Number(currentStats?.coins || 0) < access.coinCost) return toast('Bạn chưa đủ xu.');
       if (!confirm(`Dùng ${access.coinCost} xu để mở vĩnh viễn bài này?`)) return;
@@ -363,14 +422,29 @@
         return;
       }
 
-      detailWrap.innerHTML = '<p style="padding:24px;text-align:center">Đang tải bài học...</p>';
+      detailWrap.innerHTML = '<p style="padding:24px;text-align:center">Đang xác minh quyền truy cập...</p>';
 
+      if (!await requireFreshLearningSettings()) {
+        showCoursePanel();
+        return;
+      }
+      const access = getLessonAccessConfig(currentLevel, lessonId);
+      if (access.unlockType === 'vip' && !await requireFreshVipAccess(currentLevel, lessonId)) {
+        showCoursePanel();
+        return;
+      }
+      if (!access.enabled || access.unlockType === 'locked' || (access.unlockType === 'coins' && !userHasCoinUnlock(currentLevel, lessonId))) {
+        const msg = access.unlockType === 'coins' ? `🪙 Bài học cần ${access.coinCost} xu để mở.` : '🔒 Bài học này đang được Admin khóa.';
+        detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">${msg}</p>`;
+        return;
+      }
+
+      // Chỉ tải JSON/static lesson sau khi quyền VIP đã được xác minh từ Firestore.
+      detailWrap.innerHTML = '<p style="padding:24px;text-align:center">Đang tải bài học...</p>';
       const override = await loadLessonOverride(currentLevel, lessonId);
       const lesson = override?.content || await loadLessonJson(currentLevel, currentItem.file);
-      if (override?.visible === false || lesson.visible === false || override?.isLocked || lesson.isLocked || !canOpenLesson(currentLevel, lessonId)) {
-        const access = getLessonAccessConfig(currentLevel, lessonId);
-        const msg = access.unlockType === 'vip' ? '🔒 Bài học VIP. Hãy dùng tài khoản VIP để học.' : (access.unlockType === 'coins' ? `🪙 Bài học cần ${access.coinCost} xu để mở.` : '🔒 Bài học này đang được Admin khóa.');
-        detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">${msg}</p>`;
+      if (override?.visible === false || lesson.visible === false || override?.isLocked || lesson.isLocked) {
+        detailWrap.innerHTML = '<p style="padding:24px;text-align:center;color:#9a3412">🔒 Bài học này đang được Admin khóa.</p>';
         return;
       }
       lesson.level = lesson.level || currentTab;

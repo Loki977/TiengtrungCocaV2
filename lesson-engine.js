@@ -10,7 +10,7 @@ export async function loadHSKData(level) {
     return dataCache.get(key);
   }
 
-  const dataPath = key === "hsk5" || key === "hsk6"
+  const dataPath = ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"].includes(key)
     ? `assets/data/writing/${key}.json`
     : `assets/data/${key}.json`;
   const response = await fetch(dataPath);
@@ -168,6 +168,52 @@ export function areAnswersEquivalent(value, expected, language = "vi") {
   return expectedCoverage >= requiredCoverage && actualCoverage >= 0.6;
 }
 
+
+export function areAnswersExactlyEquivalent(value, expected, language = "vi") {
+  const mode = String(language || "vi").toLowerCase();
+  if (mode === "pinyin") {
+    const actual = normalizePinyin(value);
+    const target = normalizePinyin(expected);
+    return Boolean(actual && target && actual === target);
+  }
+  if (mode === "zh" || mode === "chinese") {
+    const actual = normalizeAnswer(value);
+    const target = normalizeAnswer(expected);
+    return Boolean(actual && target && actual === target);
+  }
+  const actual = normalizeVietnameseStrict(value);
+  const target = normalizeVietnameseStrict(expected);
+  return Boolean(actual && target && actual === target);
+}
+
+export function normalizeWritingLessonContent(content = {}, fallback = {}) {
+  const source = content && typeof content === "object" ? content : {};
+  const vocabularies = Array.isArray(source.vocabularies)
+    ? source.vocabularies.map(normalizeVocabulary).filter((item) => item.chinese && item.pinyin && item.vietnamese)
+    : fallback.vocabularies || [];
+  const sentences = Array.isArray(source.sentences)
+    ? source.sentences.map((item, index) => ({
+        chinese: String(item?.chinese || item?.hanzi || "").trim(),
+        pinyin: String(item?.pinyin || "").trim(),
+        vietnamese: capitalizeVietnameseLines(item?.vietnamese || item?.translation || item?.meaning || ""),
+        answerTokens: Array.isArray(item?.answerTokens) ? item.answerTokens : null,
+        audio: String(item?.audio || "").trim(),
+        vocabulary: { lessonId: Number(source.lessonId || fallback.lessonId || 1), chinese: String(item?.keyword || "").trim() },
+        sourceIndex: index
+      })).filter((item) => item.chinese && item.pinyin && item.vietnamese)
+    : fallback.sentences || [];
+  return {
+    ...fallback,
+    ...source,
+    lessonId: Number(source.lessonId || fallback.lessonId || 1),
+    title: String(source.title || fallback.title || "Bài luyện viết").trim(),
+    vocabularies,
+    sentences,
+    vocabularyCount: vocabularies.length,
+    sentenceCount: sentences.length
+  };
+}
+
 function normalizeLevel(level) {
   return String(level || "hsk1").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
@@ -314,6 +360,15 @@ function normalizeVietnameseForComparison(value) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/đ/g, "d")
     .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeVietnameseStrict(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase("vi-VN")
+    .replace(/[，。！？；：、,.!?;:()[\]{}"“”‘’]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }

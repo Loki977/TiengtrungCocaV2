@@ -6,10 +6,11 @@
     "node": "22.x"
   },
   "scripts": {
-    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node scripts/build-writing-content.mjs --check && npm run test:writing",
+    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node --check assets/js/vip-user.js && node --check assets/js/admin-super.js && node --check lesson-config.js && node --check lesson-engine.js && node --check lesson-page.js && node scripts/build-writing-content.mjs --check && npm run test:writing && npm run test:vip",
     "build:writing-data": "node scripts/build-writing-content.mjs",
     "test:writing": "node --no-warnings scripts/test-writing-quality.mjs",
-    "build": "npm run check"
+    "build": "npm run check",
+    "test:vip": "node --no-warnings scripts/test-vip-security.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",
