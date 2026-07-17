@@ -722,66 +722,75 @@
   (function () {
     /* ── Dictionary Data ── */
     let DICT = [];
-    async function loadDictionary(file = "assets/data/all.json") {
-
-    try {
-
-        const response = await fetch(file);
-
-        const raw = await response.json();
-
-        DICT = raw.map(item => ({
-
-            id: item.id,
-
-            hanzi: item.hanzi || "",
-
-            pinyin: item.pinyin || "",
-
-            hsk: item.hsk || 1,
-
-            lesson: item.lesson || 1,
-
-            types: item.type
-                ? [item.type]
-                : [],
-
-            defs: [
-                {
-                    vi: item.meaning_vi || "",
-                    en: item.meaning_en || ""
-                }
-            ],
-
-            examples: (item.examples || []).map(e => ({
-
-                zh: e.hanzi || "",
-
-                pinyin: e.pinyin || "",
-
-                vi: e.translation || ""
-
-            })),
-
-            related: item.related || []
-
+    async function loadDictionary(files = [
+      "assets/data/all.json",
+      "assets/data/tang-thu-cac/standard-hanzi-8105-additions.json"
+    ]) {
+      try {
+        const settled = await Promise.allSettled(files.map(async file => {
+          const response = await fetch(file);
+          if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
+          const data = await response.json();
+          if (!Array.isArray(data)) throw new TypeError(`${file}: dữ liệu không phải mảng`);
+          return data;
         }));
 
-        console.log("Đã tải", DICT.length, "từ");
+        settled.forEach((result, index) => {
+          if (result.status === "rejected") {
+            console.warn("Không thể tải nguồn từ điển:", files[index], result.reason);
+          }
+        });
 
+        const raw = settled
+          .filter(result => result.status === "fulfilled")
+          .flatMap(result => result.value);
+
+        if (!raw.length) throw new Error("Không tải được dữ liệu từ điển");
+
+        // Tệp bổ sung đã được loại trùng chính xác từ lúc sinh dữ liệu; giữ nguyên
+        // toàn bộ thứ tự và các mục hiện có trong từ điển gốc.
+        DICT = raw.map(item => ({
+            id: item.id,
+            hanzi: item.hanzi || "",
+            traditional: item.traditional || "",
+            pinyin: item.pinyin || "",
+            hsk: item.hsk === null || item.hsk === undefined || item.hsk === ""
+              ? null
+              : Number(item.hsk),
+            lesson: item.lesson ?? null,
+            types: item.type ? [item.type] : [],
+            defs: [{
+              vi: item.meaning_vi || item.meaning || "",
+              en: item.meaning_en || ""
+            }],
+            examples: (item.examples || []).map(e => ({
+              zh: e.hanzi || "",
+              pinyin: e.pinyin || "",
+              vi: e.translation || ""
+            })),
+            related: item.related || [],
+            audio: item.audio || "",
+            standardLevel: Number(item.standard_level) || null,
+            standardIndex: Number(item.standard_index) || null,
+            unicode: item.unicode || "",
+            source: item.source || ""
+          }));
+
+        console.log("Đã tải", DICT.length, "mục từ điển");
         renderRecent();
-
         updateWordOfDay();
-
-    }
-
-    catch(err){
-
+      } catch (err) {
         console.error(err);
-
+      }
     }
 
-}
+    function updateWordOfDay() {
+      const word = DICT.find(item => item.hanzi === "幸福");
+      if (!word) return;
+      document.getElementById("wodHanzi").textContent = word.hanzi;
+      document.getElementById("wodPinyin").textContent = word.pinyin;
+      document.getElementById("wodMeaning").textContent = word.defs?.[0]?.vi || "";
+    }
 
 loadDictionary();
 
@@ -838,6 +847,35 @@ loadDictionary();
 
 }
 
+    function levelLabel(word) {
+      if (word.standardLevel) {
+        return `Chuẩn cấp ${word.standardLevel}${word.standardIndex ? ` · #${word.standardIndex}` : ""}`;
+      }
+      return word.hsk ? `HSK ${word.hsk}` : "";
+    }
+
+    window.doSearch = function (query) {
+      const term = String(query || "").trim();
+      if (!term) return;
+
+      const results = search(term);
+      const exact = results.find(word => word.hanzi === term);
+      const selected = exact || results[0];
+      inp.value = term;
+      clrBtn.classList.add("visible");
+      drop.classList.remove("show");
+
+      if (!selected) {
+        document.getElementById("vocabPlaceholder").style.display = "none";
+        document.getElementById("dictEntry").classList.remove("show");
+        document.getElementById("dictNoResult").classList.add("show");
+        return;
+      }
+
+      showEntry(selected);
+      addToRecent(selected.hanzi);
+    };
+
     /* ── Show Entry ── */
    function showEntry(word) {
 
@@ -872,13 +910,15 @@ loadDictionary();
 
     }
 
-    typesEl.innerHTML +=
-
+    const badgeText = levelLabel(word);
+    if (badgeText) {
+      typesEl.innerHTML +=
         `<span class="dict-type-badge"
             style="background:rgba(255,122,0,.2);
                    border-color:rgba(255,122,0,.3)">
-            HSK ${word.hsk}
+            ${badgeText}
         </span>`;
+    }
 
 
 
@@ -1086,7 +1126,7 @@ loadDictionary();
             <div class="dropdown-item__pinyin">${w.pinyin}</div>
             <div class="dropdown-item__meaning">${w.defs[0].vi}</div>
           </div>
-          <span class="dropdown-item__hsk">HSK ${w.hsk}</span>
+          ${levelLabel(w) ? `<span class="dropdown-item__hsk">${levelLabel(w)}</span>` : ""}
         </div>`).join('');
       drop.classList.add('show');
     });

@@ -1,0 +1,36 @@
+{
+  "title": "《通用规范汉字表》 dictionary integration",
+  "official_character_count": 8105,
+  "official_level_counts": {
+    "1": 3500,
+    "2": 3000,
+    "3": 1605
+  },
+  "exact_characters_already_present": 677,
+  "exact_characters_added": 7428,
+  "official_character_coverage_after_merge": 8105,
+  "deduplication_rule": "Exact Unicode string match against item.hanzi in assets/data/all.json",
+  "output": "assets/data/tang-thu-cac/standard-hanzi-8105-additions.json",
+  "sources": {
+    "official_table": {
+      "name": "《通用规范汉字表》",
+      "publisher": "中华人民共和国教育部、国家语言文字工作委员会",
+      "url": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/201306/t20130601_186002.html",
+      "input_sha256": "9f45bff2376ded8098e1d1e79cff975406619ec66c5e6308b2716222ca6af7e1"
+    },
+    "unihan": {
+      "name": "Unicode Unihan Readings",
+      "license": "Unicode Data Files and Software License",
+      "url": "https://www.unicode.org/reports/tr38/",
+      "input_sha256": "d8578746d3758df70fd16e8788e5f836250ca66d331280daec9b583ea66bbbe7"
+    },
+    "cvdict": {
+      "name": "CVDICT Chinese–Vietnamese dictionary",
+      "author": "Phong Phan",
+      "license": "CC BY-SA 4.0",
+      "url": "https://github.com/ph0ngp/CVDICT",
+      "input_sha256": "4dde4b204193efa9c192d7f7daeab1bb579c8ccd7c41ed90d1b6caee22ba0948"
+    }
+  },
+  "output_sha256": "4f0384dffc8461b0daeaf0580184a724d48233b5fad7f0705bb253ea2de312bd"
+}
