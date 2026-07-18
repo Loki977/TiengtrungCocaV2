@@ -1,0 +1,112 @@
+.home-trailer {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10vh 10vw;
+  background: rgba(31, 28, 24, 0.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 700ms ease, visibility 700ms ease;
+}
+
+.home-trailer.is-visible { display: flex; }
+.home-trailer.is-closing { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.home-trailer__window {
+  position: relative;
+  width: fit-content;
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow: hidden;
+  border: 1px solid rgba(88, 75, 58, 0.24);
+  border-radius: 22px;
+  background: #f8f4e8;
+  box-shadow: 0 18px 54px rgba(35, 29, 22, 0.2);
+  line-height: 0;
+}
+
+.home-trailer__video {
+  width: 80vw;
+  height: auto;
+  max-height: 80vh;
+  display: block;
+  object-fit: contain;
+}
+
+.home-trailer__actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  gap: 8px;
+  line-height: 1;
+}
+
+.home-trailer__skip,
+.home-trailer__sound {
+  padding: 8px 14px;
+  border: 1px solid rgba(65, 55, 42, 0.2);
+  border-radius: 999px;
+  background: rgba(248, 244, 232, 0.82);
+  color: #51483d;
+  font: 500 0.82rem/1 'Poppins', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(65, 55, 42, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-trailer__skip:hover,
+.home-trailer__skip:focus-visible,
+.home-trailer__sound:hover,
+.home-trailer__sound:focus-visible {
+  background: #fffaf0;
+  border-color: rgba(65, 55, 42, 0.38);
+  outline: none;
+}
+
+.footer__trailer-button {
+  margin: 0 0 20px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font: inherit;
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.footer__trailer-button:hover,
+.footer__trailer-button:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 2px;
+}
+
+body.trailer-open { overflow: hidden; }
+
+@media (max-width: 600px) {
+  .home-trailer { padding: 10vh 3vw; }
+
+  .home-trailer__window { max-width: 94vw; max-height: 80vh; border-radius: 20px; }
+
+  .home-trailer__video {
+    width: 94vw;
+    height: auto;
+    max-height: 80vh;
+  }
+
+  .home-trailer__actions { top: 10px; right: 10px; gap: 6px; }
+  .home-trailer__skip,
+  .home-trailer__sound { padding: 7px 10px; font-size: .75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-trailer { display: none !important; transition: none; }
+}

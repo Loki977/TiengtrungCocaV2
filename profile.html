@@ -24,9 +24,29 @@
     .auth-page {
       min-height: 100vh;
       background: linear-gradient(145deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
-      display: flex; align-items: center; justify-content: center;
+      display: none; align-items: center; justify-content: center;
       padding: calc(var(--header-h) + 32px) 16px 48px;
     }
+    .auth-initializing {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--header-h) + 32px) 16px 48px; background: var(--bg);
+    }
+    .auth-initializing[hidden] { display: none; }
+    .auth-initializing__card {
+      width: min(440px, 100%); padding: 28px; border: 1px solid var(--border);
+      border-radius: var(--r-xl); background: var(--bg-card); box-shadow: var(--shadow-sm);
+    }
+    .auth-initializing__line {
+      height: 14px; margin-top: 14px; border-radius: var(--r-full);
+      background: linear-gradient(90deg, var(--bg-section), var(--border), var(--bg-section));
+      background-size: 200% 100%; animation: authSkeleton 1.2s ease-in-out infinite;
+    }
+    .auth-initializing__line:first-child { width: 58%; height: 22px; margin-top: 0; }
+    .auth-initializing__line:nth-child(2) { width: 86%; }
+    .auth-initializing__line:nth-child(3) { width: 72%; }
+    .auth-initializing__status { margin: 20px 0 0; color: var(--text-muted); font-size: .84rem; }
+    @keyframes authSkeleton { 50% { background-position: 100% 0; } }
+    @media (prefers-reduced-motion: reduce) { .auth-initializing__line { animation: none; } }
     .auth-container {
       width: 100%; max-width: 460px;
     }
@@ -935,6 +955,15 @@
   </div>
 
   <!-- ========== AUTH PAGE (logged-out) ========== -->
+  <div class="auth-initializing" id="authInitializing" role="status" aria-live="polite">
+    <div class="auth-initializing__card">
+      <div class="auth-initializing__line"></div>
+      <div class="auth-initializing__line"></div>
+      <div class="auth-initializing__line"></div>
+      <p class="auth-initializing__status" id="authInitializingStatus">Đang kiểm tra phiên đăng nhập...</p>
+    </div>
+  </div>
+
   <div class="auth-page" id="authPage">
     <div class="auth-container">
       <div class="auth-logo">
@@ -2070,7 +2099,7 @@
   </script>
 
   <script src="assets/js/spirit-pet.js?v=pet2"></script>
-  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js?v=auth-state-20260718"></script>
   <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

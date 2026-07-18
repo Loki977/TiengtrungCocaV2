@@ -110,7 +110,9 @@ function userStatsCacheKey(uid) { return `cc_stats_${uid}`; }
 let currentUser = null;
 let currentStats = structuredCloneSafe(DEFAULT_STATS);
 let authReady = false;
-let authStatus = "initializing";
+let authStatus = "loading";
+let authStep = "initializing";
+let cachedDisplayUser = null;
 let latestVipVerification = { uid: null, verified: false, checkedAt: 0, state: getVipState({}) };
 let persistenceInitializationError = null;
 let redirectCheckComplete = false;
@@ -124,6 +126,11 @@ const authReadyPromise = new Promise((resolve) => {
 const authInitializationPromise = initializeAuthentication();
 
 window.authReady = authReadyPromise;
+window.CCAuthState = Object.freeze({
+  ready: authReadyPromise,
+  get status() { return authStatus; },
+  get user() { return currentUser; }
+});
 
 async function initializeAuthentication() {
   try {
@@ -352,7 +359,13 @@ function dispatchAuthError(error, context = {}) {
 }
 
 function setAuthStatus(nextStatus) {
-  authStatus = nextStatus;
+  authStep = nextStatus;
+  authStatus = nextStatus === "authenticated"
+    ? "authenticated"
+    : ["unauthenticated", "signed-out"].includes(nextStatus)
+      ? "unauthenticated"
+      : "loading";
+  document.documentElement.dataset.authState = authStatus;
   renderAuthDebugPanel();
 }
 
@@ -372,7 +385,7 @@ function renderAuthDebugPanel(extra = {}) {
     redirectPending: Boolean(pending),
     redirectResult: extra.redirectResult || "unknown",
     currentUid: currentUser?.uid || null,
-    step: extra.step || authStatus
+    step: extra.step || authStep
   }, null, 2);
   document.body.appendChild(panel);
 }
@@ -409,6 +422,12 @@ function closeModal() {
 
 
 function showAuthLoading(message = "Đang xác thực tài khoản...") {
+  const inlineStatus = document.getElementById("authInitializingStatus");
+  if (inlineStatus) {
+    inlineStatus.textContent = message;
+    if (!cachedDisplayUser && !currentUser) document.getElementById("authInitializing")?.removeAttribute("hidden");
+    return;
+  }
   let el = document.getElementById("ccAuthLoading");
   if (!el) {
     el = document.createElement("div");
@@ -656,7 +675,7 @@ async function completeGoogleLogin(user, context = {}) {
 
   currentUser = user;
   const source = context.source || "unknown";
-  const loginWasAlreadyInProgress = authStatus === "signing-in";
+  const loginWasAlreadyInProgress = authStep === "signing-in";
   const cachedUser = readValidCachedUser(user.uid);
   const cachedStats = readValidCachedUserStats(user.uid);
   const hasValidUidCache = Boolean(cachedUser && cachedStats);
@@ -696,7 +715,7 @@ async function completeGoogleLogin(user, context = {}) {
       return { user: null, stats: normalizeStats(DEFAULT_STATS), dataError: error, cancelled: true };
     }
     // Firestore lỗi không được làm mất phiên Firebase Auth.
-    setAuthStatus("error");
+    setAuthStatus("authenticated");
     currentStats = normalizeStats(readValidCachedUserStats(user.uid) || currentStats || DEFAULT_STATS);
     syncStatsUI(currentStats);
     logAuthError(error, { flow: source, step: "load-user-data" });
@@ -794,7 +813,7 @@ function createGoogleAuthError(code, message) {
 }
 
 function handleGoogleLoginError(error, context = {}) {
-  setAuthStatus("error");
+  setAuthStatus(currentUser ? "authenticated" : authReady ? "unauthenticated" : "loading");
   hideAuthLoading();
   logAuthError(error, context);
   dispatchAuthError(error, context);
@@ -1270,16 +1289,25 @@ function syncAdminProfileButton(user) {
 function syncProfile(user, stats) {
   const authPage = document.getElementById("authPage");
   const profilePage = document.getElementById("profilePage");
+  const initializingPage = document.getElementById("authInitializing");
   if (!authPage || !profilePage) return;
   const avatarShell = document.querySelector(".profile-avatar");
   const profileInfoCard = document.querySelector(".profile-hero__info");
+  if (authStatus === "loading" && !user) {
+    authPage.style.display = "none";
+    profilePage.classList.remove("show");
+    if (initializingPage) initializingPage.hidden = false;
+    return;
+  }
   if (!user) {
+    if (initializingPage) initializingPage.hidden = true;
     authPage.style.display = "flex";
     profilePage.classList.remove("show");
     applyVipState(avatarShell, {});
     syncVipCard(profileInfoCard, {});
     return;
   }
+  if (initializingPage) initializingPage.hidden = true;
   authPage.style.display = "none";
   profilePage.classList.add("show");
   const displayName = user.displayName || user.email || "Học viên";
@@ -1377,8 +1405,9 @@ function handleConfirmedSignedOut(source = "observer") {
   completingUserPromise = null;
   currentStats = normalizeStats(DEFAULT_STATS);
   latestVipVerification = { uid: null, verified: true, checkedAt: Date.now(), state: getVipState({}) };
-  setAuthStatus("signed-out");
+  setAuthStatus("unauthenticated");
   clearSignedOutCache();
+  cachedDisplayUser = null;
   hideAuthLoading();
   syncStatsUI(currentStats);
   dispatchAuthStateChanged(source);
@@ -1411,9 +1440,10 @@ function syncVipProfileFeatures(user, vipStats) {
 
 function syncStatsUI(stats) {
   const vipPresentationStats = getVerifiedVipPresentationStats(stats);
-  updateHeaderUser(currentUser, vipPresentationStats);
-  syncHomeCounters(stats, Boolean(currentUser));
-  syncProfile(currentUser, vipPresentationStats);
+  const presentationUser = currentUser || (authStatus === "loading" ? cachedDisplayUser : null);
+  updateHeaderUser(presentationUser, vipPresentationStats);
+  syncHomeCounters(stats, Boolean(presentationUser));
+  syncProfile(presentationUser, vipPresentationStats);
   syncVipProfileFeatures(currentUser, vipPresentationStats);
   dispatchAuthReady();
 }
@@ -1585,7 +1615,10 @@ window.CCFirebase = {
 
 bindAuthControls();
 currentUser = null;
-currentStats = normalizeStats(DEFAULT_STATS);
+const cachedUserCandidate = readCachedUser();
+const cachedStatsCandidate = readValidCachedUserStats(cachedUserCandidate?.uid);
+cachedDisplayUser = cachedStatsCandidate ? readValidCachedUser(cachedUserCandidate?.uid) : null;
+currentStats = normalizeStats(cachedDisplayUser ? cachedStatsCandidate : DEFAULT_STATS);
 syncStatsUI(currentStats);
 window.dispatchEvent(new Event("firebase-ready"));
 

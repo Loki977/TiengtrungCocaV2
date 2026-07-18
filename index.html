@@ -12,11 +12,21 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/home.css" />
     <link rel="stylesheet" href="assets/css/home-fabs.css" />
+    <link rel="stylesheet" href="assets/css/home-trailer.css?v=2" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
     <link rel="stylesheet" href="assets/css/dark-mode.css" />
     <script src="assets/js/dark-mode.js"></script>
   </head>
   <body>
+    <div class="home-trailer" id="homeTrailer" role="dialog" aria-modal="true" aria-label="Trailer giới thiệu" aria-hidden="true">
+      <div class="home-trailer__window">
+        <video class="home-trailer__video" id="homeTrailerVideo" muted playsinline preload="metadata" aria-label="Trailer Tiếng Trung Cam &amp; Coca" data-src="assets/videos/trailer.mp4"></video>
+        <div class="home-trailer__actions">
+          <button class="home-trailer__sound" id="homeTrailerSound" type="button" aria-label="Bật âm thanh trailer">🔊 Bật âm thanh</button>
+          <button class="home-trailer__skip" id="homeTrailerSkip" type="button" aria-label="Bỏ qua trailer">Bỏ qua</button>
+        </div>
+      </div>
+    </div>
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
       <div class="container header__inner">
@@ -459,6 +469,7 @@ Bắt đầu miễn phí
             <span class="logo__text">Cam &amp; Coca</span>
           </a>
           <p class="footer__brand-desc">Học tiếng Trung hiệu quả với phương pháp gamified độc đáo. Cùng nhau chinh phục ngôn ngữ!</p>
+          <button class="footer__trailer-button" id="replayTrailer" type="button">Xem trailer</button>
           <div class="footer__social">
             <a href="#" class="social-btn" aria-label="Facebook">f</a>
             <a href="#" class="social-btn" aria-label="YouTube">▶</a>
@@ -559,6 +570,7 @@ Bắt đầu miễn phí
     </div>
 
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/home-trailer.js?v=2"></script>
     <script src="assets/js/speech-service.js"></script>
     <script type="module" src="assets/js/firebase-auth.js"></script>
     <script type="module" src="assets/js/facebook-login.js"></script>
