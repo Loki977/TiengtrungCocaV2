@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "generated_by": "scripts/apply-hsk-levels.py",
+  "source": {
+    "name": "HSK 3.0 Examination Syllabus 2026",
+    "source_url": "https://hsk.cn-bj.ufileos.com/3.0/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B21219.pdf",
+    "published": "2025-11",
+    "effective": "2026-07",
+    "word_count": 11000,
+    "character_count": 3088
+  },
+  "display_groups": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    "7-9"
+  ],
+  "total_entries": 12430,
+  "unclassified": 0,
+  "counts": {
+    "1": 294,
+    "2": 174,
+    "3": 431,
+    "4": 919,
+    "5": 1357,
+    "6": 1421,
+    "7-9": 7834
+  },
+  "base_counts": {
+    "1": 213,
+    "2": 120,
+    "3": 299,
+    "4": 649,
+    "5": 1050,
+    "6": 1046,
+    "7-9": 1625
+  },
+  "standard_character_counts": {
+    "1": 81,
+    "2": 54,
+    "3": 132,
+    "4": 270,
+    "5": 307,
+    "6": 375,
+    "7-9": 6209
+  },
+  "classification_sources": {
+    "advanced-fallback": 5011,
+    "legacy-hsk-fallback": 180,
+    "official-character-2026": 1570,
+    "official-vocabulary-2026": 5669
+  },
+  "fallback_policy": {
+    "legacy-hsk-fallback": "Keep the existing HSK 1-6 level when an old project word is not an exact 2026 syllabus entry.",
+    "advanced-fallback": "Assign remaining non-syllabus entries to the combined advanced HSK 7-9 group so no item is unclassified."
+  }
+}
