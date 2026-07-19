@@ -54,7 +54,7 @@
     overlay.classList.add('is-visible');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('trailer-open');
-    video.muted = !replay;
+    video.muted = false;
     syncSoundButton();
     video.src = video.dataset.src;
     video.currentTime = 0;
