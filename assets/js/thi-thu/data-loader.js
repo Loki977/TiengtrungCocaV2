@@ -4,7 +4,7 @@ async function fetchJson(url, cacheKey) {
   if (memoryCache.has(url)) return structuredClone(memoryCache.get(url));
 
   try {
-    const response = await fetch(url, { cache: 'no-cache' });
+    const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${url}`);
     const data = await response.json();
     memoryCache.set(url, data);

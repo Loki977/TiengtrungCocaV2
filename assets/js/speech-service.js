@@ -2,8 +2,6 @@
 (function () {
   'use strict';
 
-  const AUDIO_CACHE_LIMIT = 80;
-  const LOCAL_FETCH_TIMEOUT_MS = 8_000;
   const DEFAULT_VOICE = 'zh-CN-XiaoxiaoNeural';
   const RUNTIME_INDEX_SCHEMA = 4;
 
@@ -219,41 +217,12 @@
       });
     }
 
-    async set(cacheKey, blob) {
-      if (!cacheKey || !(blob instanceof Blob)) return;
-      const db = await this.open();
-      if (!db) return;
-      const now = Date.now();
-      await new Promise((resolve) => {
-        const tx = db.transaction('audio', 'readwrite');
-        tx.objectStore('audio').put({ cacheKey, blob, savedAt: now });
-        tx.oncomplete = resolve;
-        tx.onerror = resolve;
-        tx.onabort = resolve;
-      });
-      this.prune(db);
-    }
-
-    async prune(db) {
-      const records = await new Promise((resolve) => {
-        const request = db.transaction('audio', 'readonly').objectStore('audio').getAll();
-        request.onsuccess = () => resolve(request.result || []);
-        request.onerror = () => resolve([]);
-      });
-      if (records.length <= AUDIO_CACHE_LIMIT) return;
-      const stale = records.sort((a, b) => a.savedAt - b.savedAt).slice(0, records.length - AUDIO_CACHE_LIMIT);
-      await new Promise((resolve) => {
-        const tx = db.transaction('audio', 'readwrite');
-        stale.forEach((item) => tx.objectStore('audio').delete(item.cacheKey));
-        tx.oncomplete = resolve;
-        tx.onerror = resolve;
-        tx.onabort = resolve;
-      });
-    }
   }
 
   class AudioPlayer {
     constructor() {
+      this.audio = new Audio();
+      this.audio.preload = 'none';
       this.current = null;
       this.currentFinish = null;
       this.objectUrl = '';
@@ -283,8 +252,8 @@
       this.stop();
       const src = source instanceof Blob ? (this.objectUrl = URL.createObjectURL(source)) : String(source || '');
       if (!src) throw new Error('Missing audio source');
-      const audio = new Audio();
-      audio.preload = 'auto';
+      const audio = this.audio;
+      audio.preload = 'none';
       audio.src = src;
       audio.playbackRate = Math.min(1.5, Math.max(0.6, Number(settings.rate ?? 1) || 1));
       audio.volume = Math.min(1, Math.max(0, Number(settings.volume ?? 1)));
@@ -293,12 +262,26 @@
       return new Promise(async (resolve, reject) => {
         let settled = false;
         let timer;
+        const pauseWatchdog = () => clearTimeout(timer);
+        const startWatchdog = () => {
+          clearTimeout(timer);
+          const duration = Number.isFinite(audio.duration) && audio.duration > 0
+            ? (audio.duration * 1000) / audio.playbackRate
+            : 360_000;
+          timer = window.setTimeout(
+            () => finish(new Error('Audio playback timed out')),
+            Math.min(420_000, Math.max(12_000, duration + 10_000))
+          );
+        };
         const finish = (error) => {
           if (settled) return;
           settled = true;
           clearTimeout(timer);
           audio.removeEventListener('ended', onEnded);
           audio.removeEventListener('error', onError);
+          audio.removeEventListener('playing', startWatchdog);
+          audio.removeEventListener('waiting', pauseWatchdog);
+          audio.removeEventListener('stalled', pauseWatchdog);
           if (this.current === audio) {
             this.release(audio);
             this.current = null;
@@ -313,16 +296,11 @@
         this.currentFinish = () => finish();
         audio.addEventListener('ended', onEnded, { once: true });
         audio.addEventListener('error', onError, { once: true });
+        audio.addEventListener('playing', startWatchdog);
+        audio.addEventListener('waiting', pauseWatchdog);
+        audio.addEventListener('stalled', pauseWatchdog);
         try {
           await audio.play();
-          if (settled) return;
-          const duration = Number.isFinite(audio.duration) && audio.duration > 0
-            ? (audio.duration * 1000) / audio.playbackRate
-            : 360_000;
-          timer = window.setTimeout(
-            () => finish(new Error('Audio playback timed out')),
-            Math.min(420_000, Math.max(12_000, duration + 10_000))
-          );
         } catch (error) {
           finish(error);
         }
@@ -413,7 +391,6 @@
       this.staticAudio = new StaticAudioIndex();
       this.cache = new IndexedAudioCache();
       this.requestId = 0;
-      this.preloadAudio = null;
       this.lastPlayback = { source: 'idle', detail: '' };
     }
 
@@ -432,25 +409,6 @@
       document.documentElement.dataset.ccAudioSource = source;
       if (detail) document.documentElement.dataset.ccAudioDetail = String(detail);
       else delete document.documentElement.dataset.ccAudioDetail;
-    }
-
-    async fetchLocalBlob(url) {
-      const controller = 'AbortController' in window ? new AbortController() : null;
-      const timeout = window.setTimeout(() => controller?.abort(), LOCAL_FETCH_TIMEOUT_MS);
-      try {
-        const response = await fetch(url, {
-          cache: 'force-cache',
-          signal: controller?.signal
-        });
-        if (!response.ok) throw new Error(`Local MP3 HTTP ${response.status}`);
-        const contentType = String(response.headers.get('content-type') || '').toLowerCase();
-        if (contentType.includes('text/html')) throw new Error('Local MP3 path returned HTML');
-        const blob = await response.blob();
-        if (blob.size < 128) throw new Error('Local MP3 is empty');
-        return blob;
-      } finally {
-        clearTimeout(timeout);
-      }
     }
 
     async speak({
@@ -485,17 +443,20 @@
       }
 
       const profile = audioProfile || MODE_AUDIO_PROFILES[mode] || '';
-      this.markPlayback('resolving-local', profile);
-      const resolved = await this.staticAudio.resolve({
-        text: cleanLookupText,
-        profile,
-        audioId,
-        staticRate: typeof staticRate === 'string' ? staticRate : ''
-      });
-      if (requestId !== this.requestId) return;
-
       const directSource = allowDirectSource ? String(audioSrc || audioUrl || '') : '';
-      const localUrl = resolved.url || directSource;
+      let resolved = { cacheKey: '', url: '' };
+      if (!directSource) {
+        this.markPlayback('resolving-local', profile);
+        resolved = await this.staticAudio.resolve({
+          text: cleanLookupText,
+          profile,
+          audioId,
+          staticRate: typeof staticRate === 'string' ? staticRate : ''
+        });
+        if (requestId !== this.requestId) return;
+      }
+
+      const localUrl = directSource || resolved.url;
       const playbackRate = Math.min(1.35, Math.max(0.7, browserRate / (MODE_SETTINGS[mode]?.rate || browserRate)));
       if (localUrl) {
         try {
@@ -503,9 +464,6 @@
           this.markPlayback('local-mp3', new URL(absoluteUrl).pathname);
           await this.player.play(absoluteUrl, { rate: playbackRate, volume });
           if (requestId !== this.requestId) return;
-          this.fetchLocalBlob(absoluteUrl)
-            .then((blob) => this.cache.set(resolved.cacheKey, blob))
-            .catch(() => {});
           return;
         } catch (error) {
           if (requestId !== this.requestId) return;
@@ -544,34 +502,6 @@
         window.CCFirebase?.showToast?.('Không thể phát âm trên trình duyệt này.', 'warning');
         throw error;
       }
-    }
-
-    async preload(request = {}) {
-      const options = typeof request === 'string' ? { directUrl: request } : request;
-      let url = options.directUrl || '';
-      if (!url && !options.browserOnly) {
-        const profile = options.audioProfile || MODE_AUDIO_PROFILES[options.mode || 'sentence'] || '';
-        const resolved = await this.staticAudio.resolve({
-          text: options.lookupText || options.text || '',
-          profile,
-          audioId: options.audioId || '',
-          staticRate: options.staticRate || ''
-        });
-        url = resolved.url;
-      }
-      if (this.preloadAudio) {
-        try {
-          this.preloadAudio.pause();
-          this.preloadAudio.removeAttribute('src');
-          this.preloadAudio.load();
-        } catch (_) {}
-        this.preloadAudio = null;
-      }
-      if (!url) return;
-      const audio = new Audio();
-      audio.preload = 'metadata';
-      audio.src = url;
-      this.preloadAudio = audio;
     }
 
     setSettings() {}

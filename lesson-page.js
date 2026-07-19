@@ -1,4 +1,4 @@
-import "./assets/js/speech-service.js";
+import "./assets/js/speech-service.js?v=5";
 import { doc, getDocFromServer } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import {
   areAnswersExactlyEquivalent,

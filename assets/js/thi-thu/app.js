@@ -280,15 +280,10 @@ function renderQuestion() {
       els.examAudio.pause();
       setAudioButtonState(false);
       els.examAudio.dataset.questionId = question.id;
+      els.examAudio.dataset.audioSrc = audioSrc;
       state.lastAudioSaveSecond = -1;
-      els.examAudio.src = audioSrc;
+      els.examAudio.removeAttribute('src');
       els.examAudio.load();
-      const savedTime = Number(state.audioTimes[question.id] || 0);
-      if (savedTime > 0) {
-        els.examAudio.addEventListener('loadedmetadata', () => {
-          els.examAudio.currentTime = Math.min(savedTime, Math.max(0, els.examAudio.duration - 0.1));
-        }, { once: true });
-      }
     }
   } else if (!els.examAudio.paused) {
     els.examAudio.pause();
@@ -521,19 +516,29 @@ function bindEvents() {
   els.retryBtn.addEventListener('click', () => startExam(false));
   els.resultHomeBtn.addEventListener('click', () => showOnly(els.homeView));
   els.audioPlayBtn.addEventListener('click', async () => {
-    if (!els.examAudio.src) return;
     if (!els.examAudio.paused) {
       els.examAudio.pause();
       return;
     }
+    const audioSrc = els.examAudio.dataset.audioSrc;
+    if (!audioSrc) return;
     try {
+      if (!els.examAudio.getAttribute('src')) {
+        const savedTime = Number(state.audioTimes[els.examAudio.dataset.questionId] || 0);
+        if (savedTime > 0) {
+          els.examAudio.addEventListener('loadedmetadata', () => {
+            els.examAudio.currentTime = Math.min(savedTime, Math.max(0, els.examAudio.duration - 0.1));
+          }, { once: true });
+        }
+        els.examAudio.src = audioSrc;
+      }
       await els.examAudio.play();
     } catch (error) {
       console.error(error);
       toast('Không thể phát audio câu này.');
     }
   });
-  els.examAudio.addEventListener('play', () => setAudioButtonState(true));
+  els.examAudio.addEventListener('playing', () => setAudioButtonState(true));
   els.examAudio.addEventListener('pause', () => setAudioButtonState(false));
   els.examAudio.addEventListener('ended', () => setAudioButtonState(false));
   els.loginBtn.addEventListener('click', () => state.auth.goToLogin());

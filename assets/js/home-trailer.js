@@ -2,7 +2,6 @@
   'use strict';
 
   const SESSION_KEY = 'camCocaTrailerPlayed';
-  const LOAD_TIMEOUT_MS = 3000;
   const FADE_MS = 700;
   const overlay = document.getElementById('homeTrailer');
   const video = document.getElementById('homeTrailerVideo');
@@ -10,7 +9,7 @@
   const soundButton = document.getElementById('homeTrailerSound');
   const replayButton = document.getElementById('replayTrailer');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let loadTimer;
+  let playbackTimer;
   let closeTimer;
 
   if (!overlay || !video || !skipButton) return;
@@ -32,7 +31,7 @@
   };
 
   const closeTrailer = (immediate = false) => {
-    clearTimeout(loadTimer);
+    clearTimeout(playbackTimer);
     clearTimeout(closeTimer);
     video.pause();
     overlay.classList.add('is-closing');
@@ -61,10 +60,8 @@
     video.currentTime = 0;
     video.load();
 
-    loadTimer = window.setTimeout(() => closeTrailer(), LOAD_TIMEOUT_MS);
     const playWhenReady = () => {
       if (!overlay.classList.contains('is-visible') || overlay.classList.contains('is-closing')) return;
-      clearTimeout(loadTimer);
       video.play().catch(() => {
         if (!video.muted) {
           video.muted = true;
@@ -79,6 +76,17 @@
     else video.addEventListener('canplay', playWhenReady, { once: true });
   };
 
+  video.addEventListener('playing', () => {
+    clearTimeout(playbackTimer);
+    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+    playbackTimer = window.setTimeout(
+      () => closeTrailer(),
+      Math.ceil((video.duration - video.currentTime) * 1000) + 2000
+    );
+  });
+  video.addEventListener('waiting', () => clearTimeout(playbackTimer));
+  video.addEventListener('stalled', () => clearTimeout(playbackTimer));
+  video.addEventListener('pause', () => clearTimeout(playbackTimer));
   video.addEventListener('ended', () => closeTrailer());
   video.addEventListener('error', () => closeTrailer());
   skipButton.addEventListener('click', () => closeTrailer());

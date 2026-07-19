@@ -86,14 +86,12 @@
   }
 
   async function loadAudioManifest() {
-    const response = await fetch("assets/audio/pinyin/manifest.json", { cache: "no-cache" });
+    const response = await fetch("assets/audio/pinyin/manifest.json");
     if (!response.ok) throw new Error(`Không tải được manifest audio (${response.status}).`);
     const manifest = await response.json();
     (manifest.items || []).forEach((entry) => audioManifest.set(entry.id, entry));
     renderSoundGrid("initialGrid", "initials");
     renderSoundGrid("finalGrid", "finals");
-    const preloadIds = ["tone-ma-1", "tone-ma-2", "tone-ma-3", "tone-ma-4", "tone-ma-neutral", "initial-b", "initial-p", "initial-m", "initial-f"];
-    getAudioService()?.preload?.(preloadIds.map((id) => getAudioSource(audioManifest.get(id))).filter(Boolean));
   }
 
   function bindAudio() {

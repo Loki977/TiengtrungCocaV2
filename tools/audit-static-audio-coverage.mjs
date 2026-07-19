@@ -84,7 +84,7 @@ async function main() {
     shardedLookup: speechSource.includes('sharded-global-hash') && speechSource.includes('loadShard('),
     runtimeRootCacheVersioned: speechSource.includes("rootUrl.searchParams.set('schema'") && speechSource.includes("cache: 'no-cache'"),
     oneActiveAudioPlayer: speechSource.includes('this.player.stop()') && speechSource.includes("audio.removeAttribute('src')"),
-    oneNextPreloadMaximum: speechSource.includes('this.preloadAudio') && !speechSource.includes('preloadPool'),
+    onDemandAudioOnly: !speechSource.includes('this.preloadAudio') && !speechSource.includes("audio.preload = 'auto'"),
     browserFallbackDefault: speechSource.includes('allowBrowserFallback = true'),
     dictionaryBrowserSpeechOnly: /browserOnly:\s*true/.test(dictionaryPage),
     grammarBrowserSpeechOnly: /browserOnly:\s*type\s*===\s*["']grammar["']/.test(librarySource),
