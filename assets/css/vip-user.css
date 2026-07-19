@@ -335,11 +335,11 @@ body.cc-vip-modal-open { overflow: hidden; }
 .cc-vip-plan-grid { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); gap: 10px; }
 .cc-vip-plan {
   position: relative;
-  min-height: 106px;
+  min-height: 116px;
   display: grid;
   align-content: center;
   gap: 6px;
-  padding: 14px 10px;
+  padding: 32px 10px 14px;
   border: 2px solid rgba(146, 91, 0, .16);
   border-radius: 18px;
   background: rgba(255, 255, 255, .78);
@@ -355,7 +355,7 @@ body.cc-vip-modal-open { overflow: hidden; }
 .cc-vip-plan span { color: #a26200; font-size: 1.06rem; font-weight: 950; }
 .cc-vip-plan em {
   position: absolute;
-  top: -9px;
+  top: 7px;
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
@@ -415,12 +415,12 @@ body.cc-vip-modal-open { overflow: hidden; }
   .cc-vip-payment__details p { align-items: flex-start; }
 }
 
-/* Premium payment motion */
+/* Premium payment polish */
 .cc-vip-modal__dialog{isolation:isolate;overflow:auto;animation:ccVipDialogEnter .48s cubic-bezier(.2,.8,.2,1) both}
-.cc-vip-modal__dialog::before{content:"";position:absolute;inset:-2px;z-index:-2;border-radius:inherit;background:conic-gradient(from 0deg,#ffcf40,#fff6bd,#c88600,#ffe783,#fff,#ffcf40);filter:blur(1px);animation:ccVipHaloSpin 10s linear infinite}
+.cc-vip-modal__dialog::before{content:"";position:absolute;inset:-2px;z-index:-2;border-radius:inherit;background:conic-gradient(from 0deg,#ffcf40,#fff6bd,#c88600,#ffe783,#fff,#ffcf40);filter:blur(1px)}
 .cc-vip-modal__dialog::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:26px;background:linear-gradient(145deg,rgba(255,253,245,.98),rgba(255,246,214,.97) 58%,rgba(255,250,240,.98))}
-.cc-vip-modal__aurora{position:absolute;inset:-35% -20% auto;height:60%;z-index:-1;background:radial-gradient(ellipse,rgba(255,218,84,.42),transparent 64%);filter:blur(20px);animation:ccVipAurora 5.5s ease-in-out infinite alternate;pointer-events:none}
-.cc-vip-modal__stars{position:absolute;right:72px;top:22px;color:#c98700;letter-spacing:.7em;font-size:.72rem;opacity:.72;animation:ccVipStars 3.2s ease-in-out infinite;pointer-events:none}
+.cc-vip-modal__aurora{position:absolute;inset:-35% -20% auto;height:60%;z-index:-1;background:radial-gradient(ellipse,rgba(255,218,84,.42),transparent 64%);filter:blur(20px);pointer-events:none}
+.cc-vip-modal__stars{position:absolute;right:72px;top:22px;color:#c98700;letter-spacing:.7em;font-size:.72rem;opacity:.72;pointer-events:none}
 .cc-vip-plan-grid{grid-template-columns:repeat(4,minmax(130px,1fr))}
 .cc-vip-plan{overflow:hidden;transform-style:preserve-3d;background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,248,218,.76));box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
 .cc-vip-plan::before{content:"";position:absolute;inset:-120% -35%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.9) 50%,transparent 58%);transform:translateX(-55%) rotate(8deg);transition:transform .7s ease;pointer-events:none}
@@ -430,20 +430,16 @@ body.cc-vip-modal-open { overflow: hidden; }
 .cc-vip-plan.is-best{border-color:rgba(156,94,0,.58);background:linear-gradient(145deg,#fff5bf,#ffd96c)}
 .cc-vip-plan.is-selected{transform:translateY(-5px) scale(1.025);box-shadow:0 18px 38px rgba(129,78,0,.23),0 0 28px rgba(255,196,35,.24);animation:ccVipSelectedPulse 2.4s ease-in-out infinite}
 .cc-vip-payment{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(255,247,210,.9));box-shadow:0 18px 42px rgba(109,66,0,.13),inset 0 1px 0 #fff}
-.cc-vip-payment::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(255,205,60,.15),transparent 28%);animation:ccVipPaymentSweep 7s linear infinite;pointer-events:none}
+.cc-vip-payment::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(255,205,60,.15),transparent 28%);pointer-events:none}
 .cc-vip-payment>*{position:relative;z-index:1}
 .cc-vip-payment.is-revealing{animation:ccVipPaymentReveal .52s cubic-bezier(.16,1,.3,1) both}
 .cc-vip-payment img{border:2px solid rgba(216,151,12,.25);box-shadow:0 12px 30px rgba(83,49,0,.17),0 0 26px rgba(255,205,60,.24);animation:ccVipQrGlow 3.3s ease-in-out infinite}
 .cc-vip-payment__details strong{color:#744400}
 .cc-vip-payment__actions button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}.cc-vip-payment__actions button:hover{transform:translateY(-2px);background:#fff8d8;box-shadow:0 9px 20px rgba(112,68,0,.14)}
 @keyframes ccVipDialogEnter{from{opacity:0;transform:translateY(22px) scale(.965)}to{opacity:1;transform:none}}
-@keyframes ccVipHaloSpin{to{transform:rotate(360deg)}}
-@keyframes ccVipAurora{from{transform:translate3d(-8%,0,0) scale(.92);opacity:.58}to{transform:translate3d(8%,8%,0) scale(1.08);opacity:.9}}
-@keyframes ccVipStars{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
 @keyframes ccVipPlanIcon{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
 @keyframes ccVipSelectedPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.07)}}
 @keyframes ccVipPaymentReveal{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-@keyframes ccVipPaymentSweep{to{transform:rotate(360deg)}}
 @keyframes ccVipQrGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
 @media(max-width:760px){.cc-vip-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-vip-plan:last-child{grid-column:auto}.cc-vip-modal__stars{display:none}}
 @media(prefers-reduced-motion:reduce){.cc-vip-modal__dialog,.cc-vip-modal__dialog::before,.cc-vip-modal__aurora,.cc-vip-modal__stars,.cc-vip-plan i,.cc-vip-plan.is-selected,.cc-vip-payment::before,.cc-vip-payment.is-revealing,.cc-vip-payment img{animation:none!important}}
