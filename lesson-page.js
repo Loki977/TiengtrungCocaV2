@@ -14,7 +14,7 @@ const level = (params.get("level") || "hsk1").toLowerCase();
 const lessonId = Number(params.get("lesson") || 1);
 const app = document.getElementById("app");
 const DISABLE_SEQUENTIAL_LESSON_LOCK = true;
-const TTS_NORMAL_RATE = 0.58;
+const TTS_NORMAL_RATE = 0.754; // 0.58 × 1.30; tốc độ nghe thường.
 const TTS_SLOW_RATE = 0.35;
 const TTS_PITCH = 0.92;
 const TTS_VOLUME = 1.0;
@@ -814,6 +814,8 @@ async function speakCurrent(rate = TTS_NORMAL_RATE, options = {}) {
   try {
     await window.CCAudio.speak({
       text: formatChineseSpeechText(item.chinese),
+      lookupText: item.chinese,
+      pinyin: item.pinyin || '',
       mode: state.currentPhase === "sentence" ? "sentence" : "vocabulary",
       audioUrl: item.audio || item.audioPath || '',
       rate,
@@ -822,7 +824,7 @@ async function speakCurrent(rate = TTS_NORMAL_RATE, options = {}) {
       lang: 'zh-CN'
     });
   } catch (error) {
-    if (!options.silentOnUnsupported) setFeedback("Trình duyệt chưa hỗ trợ đọc âm thanh.", "bad");
+    if (!options.silentOnUnsupported) setFeedback("Không thể phát âm trên trình duyệt này.", "bad");
   }
 }
 
@@ -833,6 +835,7 @@ function speakChineseAndWait(text) {
   }
   return window.CCAudio.speak({
     text: spokenText,
+    lookupText: text,
     mode: "answer",
     rate: TTS_NORMAL_RATE,
     pitch: TTS_PITCH,

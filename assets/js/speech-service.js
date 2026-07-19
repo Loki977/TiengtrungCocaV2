@@ -1,6 +1,11 @@
-/* Shared Chinese audio service using the browser SpeechSynthesis API only. */
+/* Shared Chinese audio service: local shared MP3 -> browser cache -> speechSynthesis. */
 (function () {
   'use strict';
+
+  const AUDIO_CACHE_LIMIT = 80;
+  const LOCAL_FETCH_TIMEOUT_MS = 8_000;
+  const DEFAULT_VOICE = 'zh-CN-XiaoxiaoNeural';
+  const RUNTIME_INDEX_SCHEMA = 4;
 
   const MODE_SETTINGS = Object.freeze({
     vocabulary: { rate: 0.78 },
@@ -10,12 +15,176 @@
     passage: { rate: 0.88 }
   });
 
+  const MODE_AUDIO_PROFILES = Object.freeze({
+    vocabulary: 'vocabulary',
+    example: 'writing-sentence',
+    sentence: 'writing-sentence',
+    answer: 'writing-sentence',
+    passage: 'lesson-passage'
+  });
+
+  const FALLBACK_RATES = Object.freeze({
+    vocabulary: '-18%',
+    'writing-sentence': '-12%',
+    'lesson-passage': '-8%'
+  });
+
+  const PUNCTUATION_RULES = Object.freeze([
+    [/[，､﹐]/g, ','],
+    [/[。｡]/g, '.'],
+    [/[！﹗]/g, '!'],
+    [/[？﹖]/g, '?'],
+    [/[：﹕]/g, ':'],
+    [/[；﹔]/g, ';'],
+    [/[“”„‟«»「」『』]/g, '"'],
+    [/[‘’‚‛]/g, "'"],
+    [/[（]/g, '('],
+    [/[）]/g, ')'],
+    [/[【〔［]/g, '['],
+    [/[】〕］]/g, ']'],
+    [/[｛]/g, '{'],
+    [/[｝]/g, '}'],
+    [/[—–−﹣]/g, '-'],
+    [/…+/g, '...']
+  ]);
+
   function normalizeText(value) {
     return String(value || '')
       .replace(/<[^>]*>/g, ' ')
       .replace(/[\u0000-\u001F\u007F]/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
+  }
+
+  function normalizeAudioText(value) {
+    let text = String(value || '')
+      .normalize('NFC')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/[\u0000-\u001F\u007F\u00A0\u3000]/g, ' ');
+    for (const [pattern, replacement] of PUNCTUATION_RULES) {
+      text = text.replace(pattern, replacement);
+    }
+    return text
+      .replace(/\s+/g, ' ')
+      .replace(/\s*([,.;:!?()[\]{}"'])\s*/g, '$1')
+      .trim();
+  }
+
+  async function sha256Hex(value) {
+    if (!globalThis.crypto?.subtle || !globalThis.TextEncoder) return '';
+    const bytes = new TextEncoder().encode(String(value || ''));
+    const digest = await globalThis.crypto.subtle.digest('SHA-256', bytes);
+    return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function createAudioKey(text, voice, rate) {
+    const material = [
+      normalizeAudioText(text),
+      String(voice || DEFAULT_VOICE).trim(),
+      String(rate || '').trim()
+    ].join('\u001f');
+    return sha256Hex(material);
+  }
+
+  class StaticAudioIndex {
+    constructor(url = 'assets/audio/learning/web-index.json') {
+      const rootUrl = new URL(url, document.baseURI);
+      // The pre-shard runtime used the same filename. A schema query plus
+      // revalidation prevents an old, force-cached v2 index from silently
+      // disabling every local MP3 in an already-used browser profile.
+      rootUrl.searchParams.set('schema', String(RUNTIME_INDEX_SCHEMA));
+      this.url = rootUrl.href;
+      this.config = null;
+      this.loadPromise = null;
+      this.shardPromises = new Map();
+      this.resolveCache = new Map();
+    }
+
+    async load() {
+      if (this.config) return this.config;
+      if (this.loadPromise) return this.loadPromise;
+      this.loadPromise = fetch(this.url, { cache: 'no-cache' })
+        .then((response) => response.ok ? response.json() : null)
+        .then((payload) => {
+          const valid = payload?.version >= RUNTIME_INDEX_SCHEMA && payload.strategy === 'sharded-global-hash';
+          this.config = valid ? payload : {
+            version: 0,
+            assetVersion: '',
+            voice: DEFAULT_VOICE,
+            ratesByProfile: FALLBACK_RATES,
+            hashShardBase: '',
+            idShardBase: ''
+          };
+          return this.config;
+        })
+        .catch(() => {
+          this.config = {
+            version: 0,
+            assetVersion: '',
+            voice: DEFAULT_VOICE,
+            ratesByProfile: FALLBACK_RATES,
+            hashShardBase: '',
+            idShardBase: ''
+          };
+          return this.config;
+        })
+        .finally(() => { this.loadPromise = null; });
+      return this.loadPromise;
+    }
+
+    async loadShard(kind, hash, config) {
+      const base = kind === 'id' ? config.idShardBase : config.hashShardBase;
+      if (!base || !hash) return {};
+      const prefix = hash.slice(0, 2);
+      const cacheKey = `${kind}:${prefix}`;
+      if (this.shardPromises.has(cacheKey)) return this.shardPromises.get(cacheKey);
+      const url = new URL(`${String(base).replace(/\/+$/, '')}/${prefix}.json`, document.baseURI);
+      if (config.assetVersion) url.searchParams.set('v', config.assetVersion);
+      const promise = fetch(url.href, { cache: 'force-cache' })
+        .then((response) => response.ok ? response.json() : null)
+        .then((payload) => payload?.items && typeof payload.items === 'object' ? payload.items : {})
+        .catch(() => ({}));
+      this.shardPromises.set(cacheKey, promise);
+      return promise;
+    }
+
+    async resolve({ text = '', profile = '', audioId = '', staticRate = '' } = {}) {
+      const config = await this.load();
+      const rate = String(staticRate || config.ratesByProfile?.[profile] || FALLBACK_RATES[profile] || '').trim();
+      const voice = String(config.voice || DEFAULT_VOICE).trim() || DEFAULT_VOICE;
+      const normalized = normalizeAudioText(text);
+      let audioKey = normalized && rate ? await createAudioKey(normalized, voice, rate) : '';
+      const requestKey = `${audioKey}\u001f${audioId}`;
+      if (this.resolveCache.has(requestKey)) return this.resolveCache.get(requestKey);
+
+      let relative = '';
+      if (audioKey) {
+        const shard = await this.loadShard('hash', audioKey, config);
+        relative = shard[audioKey] || '';
+      }
+      if (!relative && audioId) {
+        const idHash = await sha256Hex(String(audioId).trim());
+        const idShard = await this.loadShard('id', idHash, config);
+        const mappedKey = idShard[String(audioId)] || '';
+        if (mappedKey) {
+          audioKey = mappedKey;
+          const hashShard = await this.loadShard('hash', audioKey, config);
+          relative = hashShard[audioKey] || '';
+        }
+      }
+
+      const audioUrl = relative ? new URL(relative, document.baseURI) : null;
+      if (audioUrl && config.assetVersion) audioUrl.searchParams.set('v', config.assetVersion);
+      const result = {
+        cacheKey: audioKey,
+        profile,
+        rate,
+        voice,
+        url: audioUrl?.href || ''
+      };
+      this.resolveCache.set(requestKey, result);
+      return result;
+    }
   }
 
   class IndexedAudioCache {
@@ -27,7 +196,7 @@
       if (!('indexedDB' in window)) return Promise.resolve(null);
       if (this.databasePromise) return this.databasePromise;
       this.databasePromise = new Promise((resolve) => {
-        const request = indexedDB.open('cc-audio-cache', 1);
+        const request = indexedDB.open('cc-audio-cache', 2);
         request.onupgradeneeded = () => {
           const db = request.result;
           if (!db.objectStoreNames.contains('audio')) db.createObjectStore('audio', { keyPath: 'cacheKey' });
@@ -39,31 +208,25 @@
       return this.databasePromise;
     }
 
-    async get(lookupKey) {
+    async get(cacheKey) {
+      if (!cacheKey) return null;
       const db = await this.open();
       if (!db) return null;
       return new Promise((resolve) => {
-        const tx = db.transaction(['lookup', 'audio'], 'readonly');
-        const lookupRequest = tx.objectStore('lookup').get(lookupKey);
-        lookupRequest.onerror = () => resolve(null);
-        lookupRequest.onsuccess = () => {
-          const lookup = lookupRequest.result;
-          if (!lookup?.cacheKey) return resolve(null);
-          const audioRequest = tx.objectStore('audio').get(lookup.cacheKey);
-          audioRequest.onerror = () => resolve(null);
-          audioRequest.onsuccess = () => resolve(audioRequest.result?.blob || null);
-        };
+        const request = db.transaction('audio', 'readonly').objectStore('audio').get(cacheKey);
+        request.onerror = () => resolve(null);
+        request.onsuccess = () => resolve(request.result?.blob || null);
       });
     }
 
-    async set(lookupKey, cacheKey, blob) {
+    async set(cacheKey, blob) {
+      if (!cacheKey || !(blob instanceof Blob)) return;
       const db = await this.open();
-      if (!db || !cacheKey || !(blob instanceof Blob)) return;
+      if (!db) return;
       const now = Date.now();
       await new Promise((resolve) => {
-        const tx = db.transaction(['lookup', 'audio'], 'readwrite');
+        const tx = db.transaction('audio', 'readwrite');
         tx.objectStore('audio').put({ cacheKey, blob, savedAt: now });
-        tx.objectStore('lookup').put({ lookupKey, cacheKey, savedAt: now });
         tx.oncomplete = resolve;
         tx.onerror = resolve;
         tx.onabort = resolve;
@@ -72,7 +235,6 @@
     }
 
     async prune(db) {
-      if (!db) return;
       const records = await new Promise((resolve) => {
         const request = db.transaction('audio', 'readonly').objectStore('audio').getAll();
         request.onsuccess = () => resolve(request.result || []);
@@ -97,13 +259,21 @@
       this.objectUrl = '';
     }
 
+    release(audio) {
+      if (!audio) return;
+      try {
+        audio.pause();
+        audio.removeAttribute('src');
+        audio.load();
+      } catch (_) {}
+    }
+
     stop() {
-      if (this.current) {
-        this.current.pause();
-        this.current.currentTime = 0;
+      if (this.currentFinish) {
+        this.currentFinish();
+        return;
       }
-      this.currentFinish?.();
-      this.currentFinish = null;
+      this.release(this.current);
       this.current = null;
       if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
       this.objectUrl = '';
@@ -111,11 +281,12 @@
 
     async play(source, settings = {}) {
       this.stop();
-      const src = source instanceof Blob ? (this.objectUrl = URL.createObjectURL(source)) : source;
+      const src = source instanceof Blob ? (this.objectUrl = URL.createObjectURL(source)) : String(source || '');
       if (!src) throw new Error('Missing audio source');
-      const audio = new Audio(src);
+      const audio = new Audio();
       audio.preload = 'auto';
-      audio.playbackRate = Number(settings.rate ?? 1) || 1;
+      audio.src = src;
+      audio.playbackRate = Math.min(1.5, Math.max(0.6, Number(settings.rate ?? 1) || 1));
       audio.volume = Math.min(1, Math.max(0, Number(settings.volume ?? 1)));
       this.current = audio;
 
@@ -129,6 +300,7 @@
           audio.removeEventListener('ended', onEnded);
           audio.removeEventListener('error', onError);
           if (this.current === audio) {
+            this.release(audio);
             this.current = null;
             this.currentFinish = null;
             if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
@@ -143,8 +315,14 @@
         audio.addEventListener('error', onError, { once: true });
         try {
           await audio.play();
-          const duration = Number.isFinite(audio.duration) ? audio.duration * 1000 : 0;
-          timer = window.setTimeout(() => finish(new Error('Audio playback timed out')), Math.min(180_000, Math.max(8_000, duration + 8_000)));
+          if (settled) return;
+          const duration = Number.isFinite(audio.duration) && audio.duration > 0
+            ? (audio.duration * 1000) / audio.playbackRate
+            : 360_000;
+          timer = window.setTimeout(
+            () => finish(new Error('Audio playback timed out')),
+            Math.min(420_000, Math.max(12_000, duration + 10_000))
+          );
         } catch (error) {
           finish(error);
         }
@@ -155,6 +333,7 @@
   class BrowserSpeechEngine {
     constructor() {
       this.currentFinish = null;
+      this.requestId = 0;
     }
 
     supported() {
@@ -166,12 +345,16 @@
       const voices = window.speechSynthesis.getVoices();
       if (voices.length) return this.selectVoice(voices, lang);
       return new Promise((resolve) => {
+        let settled = false;
         const finish = () => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
           window.speechSynthesis.removeEventListener('voiceschanged', finish);
           resolve(this.selectVoice(window.speechSynthesis.getVoices(), lang));
         };
+        const timer = window.setTimeout(finish, 900);
         window.speechSynthesis.addEventListener('voiceschanged', finish);
-        window.setTimeout(finish, 900);
       });
     }
 
@@ -185,17 +368,22 @@
     async speak(text, settings = {}) {
       if (!this.supported()) throw new Error('Browser Speech API unsupported');
       this.stop();
+      const requestId = this.requestId;
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = settings.lang || 'zh-CN';
       utterance.rate = Number(settings.rate ?? 0.84) || 0.84;
       utterance.pitch = Number(settings.pitch ?? 0.94) || 0.94;
       utterance.volume = Math.min(1, Math.max(0, Number(settings.volume ?? 1)));
       const voice = await this.getVoice(utterance.lang);
+      if (requestId !== this.requestId) return;
       if (voice) utterance.voice = voice;
 
       return new Promise((resolve, reject) => {
         let settled = false;
-        const timeout = window.setTimeout(() => finish(new Error('Speech playback timed out')), Math.min(60_000, Math.max(8_000, text.length * 900)));
+        const timeout = window.setTimeout(
+          () => finish(new Error('Speech playback timed out')),
+          Math.min(360_000, Math.max(8_000, text.length * 550))
+        );
         const finish = (error) => {
           if (settled) return;
           settled = true;
@@ -211,6 +399,7 @@
     }
 
     stop() {
+      this.requestId += 1;
       if (this.supported()) window.speechSynthesis.cancel();
       this.currentFinish?.();
       this.currentFinish = null;
@@ -219,41 +408,185 @@
 
   class SpeechService {
     constructor() {
+      this.player = new AudioPlayer();
       this.browser = new BrowserSpeechEngine();
+      this.staticAudio = new StaticAudioIndex();
+      this.cache = new IndexedAudioCache();
       this.requestId = 0;
+      this.preloadAudio = null;
+      this.lastPlayback = { source: 'idle', detail: '' };
     }
 
     get isSpeaking() {
-      return Boolean(this.browser.currentFinish);
+      return Boolean(this.player.current || this.browser.currentFinish);
     }
 
     stop() {
       this.requestId += 1;
+      this.player.stop();
       this.browser.stop();
     }
 
-    async speak({ text = '', mode = 'sentence', audioUrl = '', audioSrc = '', rate, pitch = 0.94, volume = 1, lang = 'zh-CN' } = {}) {
+    markPlayback(source, detail = '') {
+      this.lastPlayback = { source, detail: String(detail || '') };
+      document.documentElement.dataset.ccAudioSource = source;
+      if (detail) document.documentElement.dataset.ccAudioDetail = String(detail);
+      else delete document.documentElement.dataset.ccAudioDetail;
+    }
+
+    async fetchLocalBlob(url) {
+      const controller = 'AbortController' in window ? new AbortController() : null;
+      const timeout = window.setTimeout(() => controller?.abort(), LOCAL_FETCH_TIMEOUT_MS);
+      try {
+        const response = await fetch(url, {
+          cache: 'force-cache',
+          signal: controller?.signal
+        });
+        if (!response.ok) throw new Error(`Local MP3 HTTP ${response.status}`);
+        const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+        if (contentType.includes('text/html')) throw new Error('Local MP3 path returned HTML');
+        const blob = await response.blob();
+        if (blob.size < 128) throw new Error('Local MP3 is empty');
+        return blob;
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    async speak({
+      text = '',
+      lookupText = '',
+      pinyin = '',
+      audioId = '',
+      mode = 'sentence',
+      audioProfile = '',
+      audioUrl = '',
+      audioSrc = '',
+      staticRate = '',
+      rate,
+      pitch = 0.94,
+      volume = 1,
+      lang = 'zh-CN',
+      browserOnly = false,
+      allowBrowserFallback = true,
+      allowDirectSource = false
+    } = {}) {
       const cleanText = normalizeText(text);
-      if (!cleanText) return;
+      const cleanLookupText = normalizeText(lookupText || cleanText);
+      if (!cleanText && !(allowDirectSource && (audioSrc || audioUrl))) return;
       this.stop();
-      const settings = { ...MODE_SETTINGS[mode], rate: rate ?? MODE_SETTINGS[mode]?.rate ?? 0.84, pitch, volume, lang };
-      return this.speakWithBrowser(cleanText, settings);
+      const requestId = this.requestId;
+      const browserRate = Number(rate ?? MODE_SETTINGS[mode]?.rate ?? 0.84) || 0.84;
+      const browserSettings = { rate: browserRate, pitch, volume, lang };
+
+      if (browserOnly) {
+        this.markPlayback('speechSynthesis', 'browser-only');
+        return this.speakWithBrowser(cleanText, browserSettings);
+      }
+
+      const profile = audioProfile || MODE_AUDIO_PROFILES[mode] || '';
+      this.markPlayback('resolving-local', profile);
+      const resolved = await this.staticAudio.resolve({
+        text: cleanLookupText,
+        profile,
+        audioId,
+        staticRate: typeof staticRate === 'string' ? staticRate : ''
+      });
+      if (requestId !== this.requestId) return;
+
+      const directSource = allowDirectSource ? String(audioSrc || audioUrl || '') : '';
+      const localUrl = resolved.url || directSource;
+      const playbackRate = Math.min(1.35, Math.max(0.7, browserRate / (MODE_SETTINGS[mode]?.rate || browserRate)));
+      if (localUrl) {
+        try {
+          const absoluteUrl = new URL(localUrl, document.baseURI).href;
+          this.markPlayback('local-mp3', new URL(absoluteUrl).pathname);
+          await this.player.play(absoluteUrl, { rate: playbackRate, volume });
+          if (requestId !== this.requestId) return;
+          this.fetchLocalBlob(absoluteUrl)
+            .then((blob) => this.cache.set(resolved.cacheKey, blob))
+            .catch(() => {});
+          return;
+        } catch (error) {
+          if (requestId !== this.requestId) return;
+          this.markPlayback('local-failed', error?.name || error?.message || 'playback-error');
+          console.warn('[CCAudio] Local MP3 failed; checking browser cache', {
+            profile,
+            text: cleanLookupText,
+            source: localUrl,
+            error
+          });
+        }
+      }
+
+      const cachedBlob = await this.cache.get(resolved.cacheKey);
+      if (requestId !== this.requestId) return;
+      if (cachedBlob) {
+        try {
+          this.markPlayback('browser-cache', resolved.cacheKey);
+          await this.player.play(cachedBlob, { rate: playbackRate, volume });
+          return;
+        } catch (error) {
+          if (requestId !== this.requestId) return;
+          console.warn('[CCAudio] Cached MP3 playback failed; using browser speech', { profile, text: cleanLookupText, error });
+        }
+      }
+
+      if (!allowBrowserFallback) throw new Error('Local and cached audio are unavailable');
+      this.markPlayback('speechSynthesis', localUrl ? 'local-playback-failed' : 'local-not-mapped');
+      return this.speakWithBrowser(cleanText, browserSettings);
     }
 
     async speakWithBrowser(text, settings) {
       try {
-        await this.browser.speak(text, settings);
-      } catch (_) {
-        window.CCFirebase?.showToast?.('Kh\u00f4ng th\u1ec3 ph\u00e1t \u00e2m.', 'warning');
+        return await this.browser.speak(text, settings);
+      } catch (error) {
+        window.CCFirebase?.showToast?.('Không thể phát âm trên trình duyệt này.', 'warning');
+        throw error;
       }
     }
 
-    preload() { return Promise.resolve(); }
+    async preload(request = {}) {
+      const options = typeof request === 'string' ? { directUrl: request } : request;
+      let url = options.directUrl || '';
+      if (!url && !options.browserOnly) {
+        const profile = options.audioProfile || MODE_AUDIO_PROFILES[options.mode || 'sentence'] || '';
+        const resolved = await this.staticAudio.resolve({
+          text: options.lookupText || options.text || '',
+          profile,
+          audioId: options.audioId || '',
+          staticRate: options.staticRate || ''
+        });
+        url = resolved.url;
+      }
+      if (this.preloadAudio) {
+        try {
+          this.preloadAudio.pause();
+          this.preloadAudio.removeAttribute('src');
+          this.preloadAudio.load();
+        } catch (_) {}
+        this.preloadAudio = null;
+      }
+      if (!url) return;
+      const audio = new Audio();
+      audio.preload = 'metadata';
+      audio.src = url;
+      this.preloadAudio = audio;
+    }
+
     setSettings() {}
   }
 
   const service = window.CCAudio || new SpeechService();
   window.CCAudio = service;
   window.CCSpeech = service;
-  window.CCSpeechClasses = { SpeechService, AudioPlayer, BrowserSpeechEngine, IndexedAudioCache };
+  window.CCSpeechClasses = {
+    SpeechService,
+    AudioPlayer,
+    BrowserSpeechEngine,
+    IndexedAudioCache,
+    StaticAudioIndex,
+    normalizeAudioText,
+    createAudioKey
+  };
 })();

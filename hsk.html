@@ -94,6 +94,10 @@
     .lesson-item.locked:hover { transform: none; border-color: rgba(255,194,26,.28); box-shadow: 0 14px 34px rgba(39,62,92,.08); }
     .lesson-item.completed { border-color: rgba(56,176,0,.45); background: linear-gradient(138deg, #fff 0%, #f7fff1 55%, rgba(218,255,199,.65) 100%); }
     .lesson-item.active-lesson { border-color: rgba(255,122,0,.58); }
+    .lesson-item.foundation-lesson { border-color: rgba(39,181,154,.46); background: linear-gradient(138deg, #fff 0%, #f2fffb 56%, rgba(200,247,232,.72) 100%); }
+    .lesson-item.foundation-lesson .lesson-item__icon { background: linear-gradient(135deg, #20b99a, #62d5bd); box-shadow: inset 0 0 0 7px rgba(229,255,248,.58), 0 10px 20px rgba(32,185,154,.22); font-family: 'Baloo 2', cursive; font-size: 1.7rem; }
+    .lesson-item.foundation-lesson .lesson-item__num { color: #087f69; background: rgba(32,185,154,.13); letter-spacing: .06em; }
+    .lesson-item.foundation-lesson .lesson-item__chevron { color: #159c83; }
     .lesson-item__icon { position: relative; z-index: 1; display: grid; width: 58px; height: 58px; place-items: center; border-radius: 999px; color: #fff; background: linear-gradient(135deg, var(--yellow), #ff9f1a); box-shadow: inset 0 0 0 7px rgba(255,249,229,.48), 0 10px 20px rgba(247,180,0,.22); font-size: 1.35rem; font-weight: 900; }
     .lesson-item.completed .lesson-item__icon { background: linear-gradient(135deg, var(--green), #6bd85c); }
     .lesson-item__info { position: relative; z-index: 1; min-width: 0; }
@@ -468,10 +472,10 @@
 
   <!-- Scripts: data first, then page logic, then shared app -->
   <script src="assets/js/data.js"></script>
-<script src="assets/js/speech-service.js"></script>
+<script src="assets/js/speech-service.js?v=4"></script>
 <script src="assets/js/lesson-render.js"></script>
 <script src="assets/js/vocabulary-practice.js"></script>
-<script src="assets/js/hsk.js"></script>
+<script src="assets/js/hsk.js?v=2"></script>
 <script src="assets/js/app.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>

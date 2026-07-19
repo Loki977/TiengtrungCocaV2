@@ -16,13 +16,17 @@
   ];
 
   const dataCache = new Map();
+  const STORAGE_PREFIX = 'cc:flashcard:v2';
 
   let currentLevel = 'hsk1';
   let currentDeckName = 'HSK1';
+  let sourceCards = [];
   let cards = [];
   let currentIndex = 0;
   let mastered = new Set();
   let learning = new Set();
+  let masteredCount = 0;
+  let deckMode = 'random';
   let isFlipped = false;
 
   const selectorEl = document.getElementById('deckSelector');
@@ -55,6 +59,73 @@
   const deckProgressLabel = document.getElementById('deckProgressLabel');
   const deckProgressPct = document.getElementById('deckProgressPct');
   const fcAudioBtn = document.getElementById('fcAudioBtn');
+  const btnRandomMode = document.getElementById('btnRandomMode');
+  const btnSavedMode = document.getElementById('btnSavedMode');
+  const btnCloseSaved = document.getElementById('btnCloseSaved');
+  const fcSavedPanel = document.getElementById('fcSavedPanel');
+  const fcSavedList = document.getElementById('fcSavedList');
+  const savedModeCount = document.getElementById('savedModeCount');
+  const masteredCounter = document.getElementById('masteredCounter');
+
+  function normalizeKeyPart(value) {
+    return String(value || '').normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  function createCardKey(card, level = currentLevel) {
+    return `${level}:${normalizeKeyPart(card.chinese)}\u001f${normalizeKeyPart(card.pinyin)}`;
+  }
+
+  function dedupeCards(rows, level) {
+    const unique = new Map();
+    rows.forEach(card => {
+      const key = createCardKey(card, level);
+      if (!unique.has(key)) unique.set(key, { ...card, key });
+    });
+    return [...unique.values()];
+  }
+
+  function shuffledCopy(rows) {
+    const result = [...rows];
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
+    }
+    return result;
+  }
+
+  function storageKey(kind, level = currentLevel) {
+    return `${STORAGE_PREFIX}:${kind}:${level}`;
+  }
+
+  function readSavedLearning(level) {
+    try {
+      const rows = JSON.parse(localStorage.getItem(storageKey('learning', level)) || '[]');
+      return new Set(Array.isArray(rows) ? rows.filter(value => typeof value === 'string') : []);
+    } catch (_) {
+      return new Set();
+    }
+  }
+
+  function saveLearning() {
+    try {
+      localStorage.setItem(storageKey('learning'), JSON.stringify([...learning]));
+    } catch (_) {}
+  }
+
+  function readMasteredCount(level) {
+    try {
+      const value = Number.parseInt(localStorage.getItem(storageKey('mastered-count', level)) || '0', 10);
+      return Number.isFinite(value) && value > 0 ? value : 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  function saveMasteredCount() {
+    try {
+      localStorage.setItem(storageKey('mastered-count'), String(masteredCount));
+    } catch (_) {}
+  }
 
   function buildSelector() {
     selectorEl.innerHTML = '';
@@ -96,7 +167,7 @@
         return card.chinese || card.pinyin || card.vietnamese;
       });
 
-      return normalized;
+      return dedupeCards(normalized, level);
     })().catch(error => {
       console.error(`[flashcard] Không tải được ${level}.json`, error);
       return [];
@@ -121,6 +192,7 @@
       chinese,
       pinyin,
       vietnamese,
+      audio: String(item.audio || item.audioPath || '').trim(),
       example,
       level: normalizedLevel,
       hanzi: chinese,
@@ -164,17 +236,12 @@
     setLoadingState(true);
     updateSelector();
 
-    cards = [...await loadHSKData(level)];
-    currentIndex = 0;
-    mastered = new Set();
-    learning = new Set();
-    isFlipped = false;
-
-    fcComplete.classList.remove('show');
-    fcActive.style.display = '';
+    sourceCards = [...await loadHSKData(level)];
+    learning = readSavedLearning(level);
+    masteredCount = readMasteredCount(level);
+    getSavedCards();
     setLoadingState(false);
-    updateCard();
-    updateProgress();
+    startRandomMode();
   }
 
   function setLoadingState(isLoading) {
@@ -192,6 +259,112 @@
     document.querySelectorAll('.deck-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.level === currentLevel);
     });
+  }
+
+  function updateModeControls() {
+    const panelOpen = !fcSavedPanel.hidden;
+    btnRandomMode.classList.toggle('is-active', deckMode === 'random' && !panelOpen);
+    btnRandomMode.setAttribute('aria-pressed', String(deckMode === 'random' && !panelOpen));
+    btnSavedMode.classList.toggle('is-active', deckMode === 'saved' || panelOpen);
+    btnSavedMode.setAttribute('aria-expanded', String(panelOpen));
+    savedModeCount.textContent = learning.size;
+    masteredCounter.textContent = masteredCount;
+  }
+
+  function resetDeckView() {
+    currentIndex = 0;
+    mastered = new Set();
+    isFlipped = false;
+    fcComplete.classList.remove('show');
+    fcActive.style.display = '';
+    updateCard();
+    updateProgress();
+    updateModeControls();
+  }
+
+  function startRandomMode() {
+    deckMode = 'random';
+    cards = shuffledCopy(sourceCards);
+    closeSavedPanel(false);
+    resetDeckView();
+  }
+
+  function getSavedCards() {
+    const availableKeys = new Set(sourceCards.map(card => card.key));
+    const staleKeys = [...learning].filter(key => !availableKeys.has(key));
+    if (staleKeys.length) {
+      staleKeys.forEach(key => learning.delete(key));
+      saveLearning();
+    }
+    return sourceCards.filter(card => learning.has(card.key));
+  }
+
+  function startSavedMode(selectedKey = '') {
+    const savedCards = getSavedCards();
+    if (!savedCards.length) {
+      openSavedPanel();
+      return;
+    }
+    deckMode = 'saved';
+    cards = savedCards;
+    closeSavedPanel(false);
+    resetDeckView();
+    const selectedIndex = selectedKey ? cards.findIndex(card => card.key === selectedKey) : 0;
+    if (selectedIndex > 0) {
+      currentIndex = selectedIndex;
+      updateCard();
+    }
+    fcScene.focus({ preventScroll: true });
+  }
+
+  function renderSavedPanel() {
+    const savedCards = getSavedCards();
+    fcSavedList.replaceChildren();
+    if (!savedCards.length) {
+      const empty = document.createElement('p');
+      empty.className = 'fc-saved-empty';
+      empty.textContent = 'Chưa có từ nào được lưu. Hãy chọn “Chưa nhớ” sau khi lật thẻ.';
+      fcSavedList.appendChild(empty);
+      updateModeControls();
+      return;
+    }
+
+    savedCards.forEach(card => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'fc-saved-item';
+      button.setAttribute('aria-label', `Ôn lại ${card.chinese}, ${card.pinyin}, ${card.vietnamese}`);
+
+      const hanzi = document.createElement('span');
+      hanzi.className = 'fc-saved-item__hanzi';
+      hanzi.textContent = card.chinese;
+
+      const detail = document.createElement('span');
+      detail.className = 'fc-saved-item__detail';
+      const pinyin = document.createElement('span');
+      pinyin.className = 'fc-saved-item__pinyin';
+      pinyin.textContent = card.pinyin || '—';
+      const meaning = document.createElement('span');
+      meaning.className = 'fc-saved-item__meaning';
+      meaning.textContent = card.vietnamese || 'Chưa có nghĩa';
+      detail.append(pinyin, meaning);
+      button.append(hanzi, detail);
+      button.addEventListener('click', () => startSavedMode(card.key));
+      fcSavedList.appendChild(button);
+    });
+    updateModeControls();
+  }
+
+  function openSavedPanel() {
+    fcSavedPanel.hidden = false;
+    renderSavedPanel();
+    btnCloseSaved.focus({ preventScroll: true });
+  }
+
+  function closeSavedPanel(returnFocus = true) {
+    fcSavedPanel.hidden = true;
+    updateModeControls();
+    if (returnFocus) btnSavedMode.focus({ preventScroll: true });
   }
 
   function updateCard() {
@@ -220,7 +393,7 @@
     navDeckName.textContent = currentDeckName;
 
     statTotal.textContent = cards.length;
-    statMastered.textContent = mastered.size;
+    statMastered.textContent = masteredCount;
     statLearning.textContent = learning.size;
 
     btnPrev.disabled = currentIndex === 0;
@@ -240,8 +413,9 @@
     }
 
     fcCard.classList.remove('card--mastered', 'card--learning');
-    if (mastered.has(currentIndex)) fcCard.classList.add('card--mastered');
-    if (learning.has(currentIndex)) fcCard.classList.add('card--learning');
+    if (mastered.has(c.key)) fcCard.classList.add('card--mastered');
+    if (learning.has(c.key)) fcCard.classList.add('card--learning');
+    updateModeControls();
   }
 
   function renderEmptyState() {
@@ -257,8 +431,8 @@
     navTotal.textContent = 0;
     navDeckName.textContent = currentDeckName;
     statTotal.textContent = 0;
-    statMastered.textContent = 0;
-    statLearning.textContent = 0;
+    statMastered.textContent = masteredCount;
+    statLearning.textContent = learning.size;
     btnPrev.disabled = true;
     btnNext.disabled = true;
     btnLearning.disabled = true;
@@ -278,7 +452,7 @@
     const c = cards[currentIndex];
     if (!c) return;
     fcAudioBtn.classList.add('playing');
-    window.CCAudio?.speak({ text: c.chinese, mode: 'vocabulary', audioUrl: c.audio || '', rate: 0.85, lang: 'zh-CN' })
+    window.CCAudio?.speak({ text: c.chinese, pinyin: c.pinyin, mode: 'vocabulary', audioUrl: c.audio || '', lang: 'zh-CN' })
       .catch(() => {})
       .finally(() => fcAudioBtn.classList.remove('playing'));
   }
@@ -288,8 +462,11 @@
     const total = cards.length;
     const pct = total ? Math.round((mastered.size / total) * 100) : 0;
     deckProgressFill.style.width = pct + '%';
-    deckProgressLabel.textContent = currentDeckName;
-    deckProgressPct.textContent = `${mastered.size} / ${total} đã thành thạo`;
+    deckProgressLabel.textContent = deckMode === 'saved' ? `${currentDeckName} · Ôn từ chưa thuộc` : `${currentDeckName} · Ngẫu nhiên`;
+    deckProgressPct.textContent = `${mastered.size} / ${total} đã thuộc lượt này`;
+    statMastered.textContent = masteredCount;
+    statLearning.textContent = learning.size;
+    updateModeControls();
   }
 
   function showComplete() {
@@ -297,7 +474,7 @@
     fcComplete.classList.add('show');
     const total = cards.length;
     fcCompleteMsg.textContent =
-      `Bạn đã học xong ${total} thẻ! 🎊 Đã thuộc: ${mastered.size} | Chưa thuộc: ${learning.size}`;
+      `Bạn đã học xong ${total} thẻ! 🎊 Đã thuộc lượt này: ${mastered.size} | Chưa thuộc đã lưu: ${learning.size}`;
   }
 
   function playFeedbackSound(kind) {
@@ -347,8 +524,11 @@
   function handleLearning() {
     if (!cards.length) return;
     if (!isFlipped) { flipCard(true); return; }
-    learning.add(currentIndex);
-    mastered.delete(currentIndex);
+    const key = cards[currentIndex].key;
+    learning.add(key);
+    mastered.delete(key);
+    saveLearning();
+    renderSavedPanel();
     fcCard.classList.add('card--learning');
     setTimeout(() => {
       fcCard.classList.remove('card--learning');
@@ -361,8 +541,15 @@
   function handleMastered() {
     if (!cards.length) return;
     if (!isFlipped) { flipCard(true); return; }
-    mastered.add(currentIndex);
-    learning.delete(currentIndex);
+    const key = cards[currentIndex].key;
+    if (!mastered.has(key)) {
+      masteredCount += 1;
+      saveMasteredCount();
+    }
+    mastered.add(key);
+    learning.delete(key);
+    saveLearning();
+    renderSavedPanel();
     fcCard.classList.add('card--mastered');
     launchSideFireworks();
     playFeedbackSound('success');
@@ -375,7 +562,13 @@
   }
 
   fcScene.addEventListener('click', () => flipCard());
-  fcScene.addEventListener('keydown', e => { if (e.key === ' ') { e.preventDefault(); flipCard(); } });
+  fcScene.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      flipCard();
+    }
+  });
 
   btnPrev.addEventListener('click', () => {
     if (currentIndex > 0) { currentIndex--; updateCard(); }
@@ -386,6 +579,12 @@
 
   btnLearning.addEventListener('click', handleLearning);
   btnMastered.addEventListener('click', handleMastered);
+  btnRandomMode.addEventListener('click', startRandomMode);
+  btnSavedMode.addEventListener('click', () => {
+    if (fcSavedPanel.hidden) openSavedPanel();
+    else closeSavedPanel();
+  });
+  btnCloseSaved.addEventListener('click', () => closeSavedPanel());
 
   fcAudioBtn.addEventListener('click', e => {
     e.stopPropagation();
@@ -393,29 +592,24 @@
   });
 
   btnRestart.addEventListener('click', () => loadLevel(currentLevel));
-  btnReview.addEventListener('click', () => {
-    const reviewIndices = [...learning];
-    if (reviewIndices.length === 0) { loadLevel(currentLevel); return; }
-    const allCards = cards;
-    cards = reviewIndices.map(i => allCards[i]).filter(Boolean);
-    currentIndex = 0;
-    mastered = new Set();
-    learning = new Set();
-    isFlipped = false;
-    fcComplete.classList.remove('show');
-    fcActive.style.display = '';
-    updateCard();
-    updateProgress();
-  });
+  btnReview.addEventListener('click', () => startSavedMode());
 
   document.addEventListener('keydown', e => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Escape' && !fcSavedPanel.hidden) {
+      e.preventDefault();
+      closeSavedPanel();
+      return;
+    }
+    if (!fcSavedPanel.hidden) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
     switch (e.key) {
       case ' ': e.preventDefault(); flipCard(); break;
       case 'ArrowLeft': if (currentIndex > 0) { currentIndex--; updateCard(); } break;
       case 'ArrowRight': if (currentIndex < cards.length - 1) { currentIndex++; updateCard(); } break;
       case '1': handleLearning(); break;
       case '2': handleMastered(); break;
+      case 'r':
+      case 'R': startRandomMode(); break;
       case 's':
       case 'S': speakCurrent(); break;
     }

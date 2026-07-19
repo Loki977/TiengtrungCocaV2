@@ -7,7 +7,7 @@
   };
 
   const state = {
-    activeTab: "dictionary",
+    activeTab: "",
     grammar: createCollectionState(),
     idioms: createCollectionState(),
   };
@@ -54,12 +54,25 @@
     bindIdiomControls();
 
     const requested = location.hash.replace("#", "").toLowerCase();
-    activateTab(["dictionary", "grammar", "idioms"].includes(requested) ? requested : "dictionary", false);
+    if (["dictionary", "grammar", "idioms"].includes(requested)) activateTab(requested, false);
   }
 
   function bindTabs() {
-    $$("[data-archive-tab]").forEach((button) => {
+    const tabs = $$("[data-archive-tab]");
+    tabs.forEach((button) => {
       button.addEventListener("click", () => activateTab(button.dataset.archiveTab));
+      button.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const currentIndex = tabs.indexOf(button);
+        const nextIndex = event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? tabs.length - 1
+            : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        activateTab(tabs[nextIndex].dataset.archiveTab);
+      });
     });
     window.addEventListener("hashchange", () => {
       const requested = location.hash.replace("#", "").toLowerCase();
@@ -298,10 +311,6 @@
     const examples = (item.examples || []).length
       ? `<div class="library-examples">${item.examples.map(exampleTemplate).join("")}</div>`
       : "Chưa có ví dụ riêng cho cấu trúc này.";
-    const sources = (item.sourceRefs || []).length
-      ? `<div class="library-source-list">${item.sourceRefs.map((ref) => `<span class="library-source-chip">${escapeHtml(ref.level)} · ${escapeHtml(ref.lessonTitle || `Bài ${ref.lessonId}`)}</span>`).join("")}</div>`
-      : escapeHtml(item.sourceNote || "Ngữ pháp tham khảo bổ sung.");
-
     return `
       <div class="library-detail-header">
         <div class="library-detail-header__top">
@@ -321,7 +330,6 @@
           ${infoBox("Giải thích", item.explanation || "Nội dung đang được hoàn thiện.", true)}
           ${item.usage ? infoBox("Lưu ý sử dụng", item.usage, true) : ""}
           ${infoBox("Ví dụ", examples, true, true)}
-          ${infoBox("Nguồn trong bài khóa", sources, true, true)}
         </div>
       </div>`;
   }
@@ -350,7 +358,6 @@
           ${infoBox("Tiếng Việt tương đương", `<span class="idiom-equivalent">${escapeHtml(item.equivalentVi)}</span>`, false, true)}
           ${infoBox("Cách dùng", item.usage, true)}
           ${infoBox("Ví dụ", `<div class="library-examples">${exampleTemplate(item.example || {})}</div>`, true, true)}
-          ${infoBox("Ghi chú nguồn", item.source, true)}
         </div>
       </div>`;
   }
@@ -381,13 +388,14 @@
       const text = event.currentTarget.dataset.librarySpeak;
       if (!text) return;
       if (window.CCAudio?.speak) {
-        window.CCAudio.speak({ text, mode: type === "idioms" ? "vocabulary" : "sentence", rate: .86, lang: "zh-CN" });
-      } else if ("speechSynthesis" in window) {
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = "zh-CN";
-        utterance.rate = .86;
-        speechSynthesis.speak(utterance);
+        window.CCAudio.speak({
+          text,
+          mode: type === "idioms" ? "vocabulary" : "sentence",
+          lang: "zh-CN",
+          browserOnly: type === "grammar"
+        }).catch(() => {});
+      } else {
+        console.warn("[CCAudio] Static audio service is unavailable", { type, text });
       }
     });
   }

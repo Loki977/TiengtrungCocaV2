@@ -64,6 +64,27 @@
     .deck-progress__info { display: flex; justify-content: space-between; font-size: .78rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
     .deck-progress__bar  { height: 6px; background: rgba(255,255,255,.85); border-radius: var(--r-full); overflow: hidden; }
     .deck-progress__fill { height: 100%; background: linear-gradient(90deg, #f7b400, #ff8a2a); border-radius: var(--r-full); transition: width .6s ease; }
+    .fc-mode-bar {
+      max-width: 600px; margin: 16px auto 0; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px;
+    }
+    .fc-mode-btn, .fc-mastered-counter {
+      min-height: 42px; border-radius: var(--r-full); border: 1.5px solid var(--border);
+      background: rgba(255,255,255,.86); color: var(--charcoal);
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 9px 15px; font: 700 .82rem 'Poppins', sans-serif;
+    }
+    .fc-mode-btn { cursor: pointer; transition: transform var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
+    .fc-mode-btn:hover { transform: translateY(-1px); border-color: var(--orange); }
+    .fc-mode-btn.is-active { color: #fff; border-color: var(--orange); background: linear-gradient(135deg, #ff8a2a, #ff6a00); }
+    .fc-mode-count {
+      min-width: 22px; height: 22px; padding: 0 6px; border-radius: var(--r-full);
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,122,0,.13); color: var(--orange-dark); font-size: .75rem;
+    }
+    .fc-mode-btn.is-active .fc-mode-count { background: rgba(255,255,255,.22); color: #fff; }
+    .fc-mastered-counter { color: var(--green-dark); white-space: nowrap; }
+    .fc-mastered-counter strong { font-size: 1rem; }
 
     /* ── Main flashcard area ── */
     .fc-main    { padding: 56px 0; }
@@ -196,6 +217,38 @@
     .fc-stat--green .fc-stat__val  { color: var(--green); }
     .fc-stat--orange .fc-stat__val { color: var(--orange); }
 
+    /* ── Saved "Chưa thuộc" review panel ── */
+    .fc-saved-panel {
+      margin: 0 auto 24px; padding: 20px; max-width: 600px;
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+    }
+    .fc-saved-panel[hidden] { display: none; }
+    .fc-saved-panel__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    .fc-saved-panel__head h3 { margin: 0 0 3px; font-size: 1.05rem; color: var(--charcoal); }
+    .fc-saved-panel__head p { margin: 0; font-size: .78rem; color: var(--text-muted); }
+    .fc-saved-panel__close {
+      width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--bg-section);
+      color: var(--charcoal); cursor: pointer; font-size: 1rem;
+    }
+    .fc-saved-list { display: grid; gap: 8px; max-height: 310px; overflow-y: auto; padding-right: 3px; }
+    .fc-saved-item {
+      width: 100%; border: 1px solid var(--border); border-radius: var(--r-md);
+      background: var(--bg-section); padding: 11px 13px; cursor: pointer;
+      display: grid; grid-template-columns: minmax(54px, auto) 1fr; gap: 12px;
+      text-align: left; transition: border-color var(--t-fast), transform var(--t-fast);
+    }
+    .fc-saved-item:hover { border-color: var(--orange); transform: translateY(-1px); }
+    .fc-saved-item__hanzi { color: var(--charcoal); font: 800 1.25rem 'Baloo 2', cursive; }
+    .fc-saved-item__detail { min-width: 0; }
+    .fc-saved-item__pinyin { display: block; color: var(--orange-dark); font-size: .8rem; font-weight: 700; }
+    .fc-saved-item__meaning { display: block; color: var(--text-muted); font-size: .76rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fc-saved-empty { padding: 24px 12px; text-align: center; color: var(--text-muted); font-size: .86rem; }
+    .fc-mode-btn:focus-visible, .fc-saved-item:focus-visible, .fc-saved-panel__close:focus-visible {
+      outline: 3px solid rgba(255,122,0,.28); outline-offset: 2px;
+    }
+
     /* ── Keyboard hints ── */
     .fc-keyboard-hints { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
     .kbd-hint { display: flex; align-items: center; gap: 6px; font-size: .75rem; color: var(--text-muted); }
@@ -223,6 +276,9 @@
     @media (max-width: 480px) {
       .fc-front__hanzi { font-size: 3rem; }
       .fc-actions { grid-template-columns: 1fr; }
+      .fc-mode-bar { grid-template-columns: 1fr 1fr; }
+      .fc-mastered-counter { grid-column: 1 / -1; }
+      .fc-saved-panel { padding: 16px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .fc-firework, .fc-card.card--pressed, .fc-flip-badge span { animation-duration: .01ms; }
@@ -288,12 +344,30 @@
             <div class="deck-progress__fill" id="deckProgressFill" style="width:0%"></div>
           </div>
         </div>
+        <div class="fc-mode-bar" aria-label="Chế độ học Flashcard">
+          <button class="fc-mode-btn is-active" id="btnRandomMode" type="button" aria-pressed="true">🔀 Ngẫu nhiên</button>
+          <button class="fc-mode-btn" id="btnSavedMode" type="button" aria-expanded="false" aria-controls="fcSavedPanel">
+            📌 Chưa thuộc <span class="fc-mode-count" id="savedModeCount">0</span>
+          </button>
+          <div class="fc-mastered-counter" aria-live="polite">✅ Đã thuộc: <strong id="masteredCounter">0</strong></div>
+        </div>
       </div>
     </div>
 
     <!-- Main Area -->
     <main class="fc-main">
       <div class="fc-container">
+
+        <section class="fc-saved-panel" id="fcSavedPanel" aria-labelledby="fcSavedTitle" hidden>
+          <div class="fc-saved-panel__head">
+            <div>
+              <h3 id="fcSavedTitle">Từ chưa thuộc đã lưu</h3>
+              <p>Bấm vào một từ để mở bộ ôn tập từ vị trí đó.</p>
+            </div>
+            <button class="fc-saved-panel__close" id="btnCloseSaved" type="button" aria-label="Đóng danh sách từ chưa thuộc">✕</button>
+          </div>
+          <div class="fc-saved-list" id="fcSavedList" aria-live="polite"></div>
+        </section>
 
         <!-- Active card view -->
         <div id="fcActive">
@@ -331,7 +405,7 @@
 
           <!-- Action Buttons -->
           <div class="fc-actions">
-            <button class="fc-btn-learning" id="btnLearning">😅 Chưa nhớ</button>
+            <button class="fc-btn-learning" id="btnLearning">📌 Lưu chưa thuộc</button>
             <button class="fc-btn-mastered" id="btnMastered">✅ Đã thuộc!</button>
           </div>
 
@@ -357,7 +431,7 @@
             </div>
             <div class="fc-stat fc-stat--orange">
               <div class="fc-stat__val" id="statLearning">0</div>
-              <div class="fc-stat__lbl">Đang học</div>
+              <div class="fc-stat__lbl">Chưa thuộc đã lưu</div>
             </div>
           </div>
 
@@ -367,7 +441,7 @@
             <span class="kbd-hint"><kbd class="kbd">←</kbd> Thẻ trước</span>
             <span class="kbd-hint"><kbd class="kbd">→</kbd> Thẻ tiếp</span>
             <span class="kbd-hint"><kbd class="kbd">S</kbd> Phát âm</span>
-            <span class="kbd-hint"><kbd class="kbd">1</kbd> Chưa nhớ</span>
+            <span class="kbd-hint"><kbd class="kbd">1</kbd> Lưu chưa thuộc</span>
             <span class="kbd-hint"><kbd class="kbd">2</kbd> Đã thuộc</span>
           </div>
         </div>
@@ -451,9 +525,9 @@
   </div>
 
   <!-- Scripts: page logic, then shared app -->
-  <script src="assets/js/flashcard.js"></script>
+  <script src="assets/js/flashcard.js?v=3"></script>
   <script src="assets/js/app.js"></script>
-  <script src="assets/js/speech-service.js"></script>
+  <script src="assets/js/speech-service.js?v=4"></script>
   <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

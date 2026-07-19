@@ -224,6 +224,7 @@ function normalizeVocabulary(item) {
       chinese: example.hanzi || example.chinese || "",
       pinyin: example.pinyin || "",
       vietnamese: capitalizeVietnameseLines(example.translation || example.meaning_vi || example.meaning || ""),
+      audio: String(example.audio || example.audioPath || "").trim(),
       answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null,
       sourceIndex
     })).filter((example) => example.chinese || example.pinyin || example.vietnamese)
@@ -235,6 +236,7 @@ function normalizeVocabulary(item) {
     chinese: item.hanzi || item.chinese || item.word || "",
     pinyin: item.pinyin || "",
     vietnamese: capitalizeVietnameseLines(item.meaning_vi || item.meaning || item.vietnamese || item.translation || ""),
+    audio: String(item.audio || item.audioPath || "").trim(),
     lesson: item.lesson,
     lessonId: item.lessonId || item.lesson,
     examples
@@ -276,6 +278,7 @@ function collectSentences(vocabularies, { primaryExamplesOnly = false } = {}) {
       chinese: example.chinese,
       pinyin: example.pinyin,
       vietnamese: example.vietnamese,
+      audio: example.audio,
       answerTokens: example.answerTokens
     }));
   }).filter((item) => {

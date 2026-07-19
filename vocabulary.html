@@ -316,7 +316,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
-  <link rel="stylesheet" href="assets/css/tang-thu-cac.css" />
+  <link rel="stylesheet" href="assets/css/tang-thu-cac.css?v=4" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -362,24 +362,39 @@
   <main>
     <section class="archive-masthead" aria-labelledby="archiveTitle">
       <div class="container archive-masthead__inner">
-        <span class="archive-masthead__eyebrow">🏯 Kho tri thức Hán ngữ</span>
+        <span class="archive-masthead__eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20v-9m12 9v-9M4 11h16L12 4 4 11Zm5 9v-5h6v5" /></svg>
+          Kho tri thức Hán ngữ
+        </span>
         <h1 id="archiveTitle">Tàng Thư Các</h1>
-        <p class="archive-masthead__desc">Tra từ, hệ thống hóa ngữ pháp và khám phá thành ngữ Trung – Việt trong cùng một không gian học tập.</p>
+        <p class="archive-masthead__desc">Tra cứu từ điển, khám phá ngữ pháp và tìm hiểu thành ngữ tiếng Trung.</p>
         <div class="archive-tabs" role="tablist" aria-label="Chọn nội dung Tàng Thư Các">
-          <button type="button" class="archive-tab is-active" data-archive-tab="dictionary" role="tab" aria-selected="true">
-            <span class="archive-tab__icon">📖</span><span><strong>Từ điển</strong><small>Giữ nguyên công cụ tra từ hiện tại</small></span>
+          <button type="button" class="archive-tab" data-archive-tab="dictionary" role="tab" aria-selected="false">
+            <span class="archive-tab__orb" aria-hidden="true"></span>
+            <span class="archive-tab__label">Tra cứu</span>
+            <span class="archive-tab__copy"><strong>Từ điển</strong><small>Tra cứu chữ Hán, Pinyin, nghĩa và ví dụ</small></span>
+            <span class="archive-tab__art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Zm16 0A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z" /></svg></span>
+            <span class="archive-tab__footer"><span>Bắt đầu tra cứu</span><span class="archive-tab__arrow" aria-hidden="true">→</span></span>
           </button>
           <button type="button" class="archive-tab" data-archive-tab="grammar" role="tab" aria-selected="false" tabindex="-1">
-            <span class="archive-tab__icon">🧩</span><span><strong>Ngữ pháp</strong><small>HSK1–HSK6, phân nhóm A–Z</small></span>
+            <span class="archive-tab__orb" aria-hidden="true"></span>
+            <span class="archive-tab__label">Kiến thức</span>
+            <span class="archive-tab__copy"><strong>Ngữ pháp</strong><small>Hệ thống cấu trúc và ví dụ dễ hiểu</small></span>
+            <span class="archive-tab__art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 1 1-4 0V3H3v7h7V3H8Zm6 0h7v7h-7V3Zm0 11h3v-1a2 2 0 1 1 4 0v8h-7v-7ZM3 14h7v7H3v-7Z" /></svg></span>
+            <span class="archive-tab__footer"><span>Khám phá ngữ pháp</span><span class="archive-tab__arrow" aria-hidden="true">→</span></span>
           </button>
           <button type="button" class="archive-tab" data-archive-tab="idioms" role="tab" aria-selected="false" tabindex="-1">
-            <span class="archive-tab__icon">🀄</span><span><strong>Thành ngữ</strong><small>Đối chiếu đại ý Trung – Việt</small></span>
+            <span class="archive-tab__orb" aria-hidden="true"></span>
+            <span class="archive-tab__label">Văn hóa</span>
+            <span class="archive-tab__copy"><strong>Thành ngữ</strong><small>Tìm hiểu thành ngữ và cách sử dụng</small></span>
+            <span class="archive-tab__art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5V4Zm4 4h6m-6 4h6m-6 4h4" /></svg></span>
+            <span class="archive-tab__footer"><span>Khám phá thành ngữ</span><span class="archive-tab__arrow" aria-hidden="true">→</span></span>
           </button>
         </div>
       </div>
     </section>
 
-    <div class="archive-panel is-active" data-archive-panel="dictionary">
+    <div class="archive-panel" data-archive-panel="dictionary" hidden>
     <!-- Search Hero -->
     <section class="vocab-hero">
       <div class="container" style="position:relative;z-index:1">
@@ -1039,7 +1054,7 @@ loadDictionary();
       if (!currentWord) return;
       const btn = document.getElementById(slow ? 'dictAudioSlowBtn' : 'dictAudioBtn');
       btn?.classList.add('playing');
-      window.CCAudio?.speak({ text: currentWord.hanzi, mode: 'vocabulary', audioUrl: currentWord.audio || '', rate: slow ? 0.75 : 1, lang: 'zh-CN' })
+      window.CCAudio?.speak({ text: currentWord.hanzi, mode: 'vocabulary', rate: slow ? 0.75 : 1, lang: 'zh-CN', browserOnly: true })
         .catch(() => {})
         .finally(() => btn?.classList.remove('playing'));
     };
@@ -1166,8 +1181,8 @@ loadDictionary();
     }
   })();
   </script>
-  <script src="assets/js/speech-service.js"></script>
-  <script src="assets/js/tang-thu-cac.js"></script>
+  <script src="assets/js/speech-service.js?v=4"></script>
+  <script src="assets/js/tang-thu-cac.js?v=3"></script>
   <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>

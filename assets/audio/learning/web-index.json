@@ -1,0 +1,25 @@
+{
+  "version": 4,
+  "assetVersion": "3fc980dbe282",
+  "generatedAt": "2026-07-19T05:48:24.234Z",
+  "locale": "zh-CN",
+  "strategy": "sharded-global-hash",
+  "keyVersion": "nfc-space-punctuation-voice-rate-v1",
+  "keyFields": [
+    "normalizedText",
+    "voice",
+    "rate"
+  ],
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "ratesByProfile": {
+    "vocabulary": "-18%",
+    "writing-sentence": "-12%",
+    "lesson-passage": "-8%"
+  },
+  "hashShardBase": "assets/audio/learning/index/hash",
+  "idShardBase": "assets/audio/learning/index/id",
+  "hashShardCount": 256,
+  "idShardCount": 256,
+  "audioKeys": 7427,
+  "logicalReferences": 17190
+}

@@ -13,6 +13,7 @@
 
   const COURSE = window.HSK_COURSE_DATA || {};
   const DISABLE_LESSON_LOCKS = false;
+  const FOUNDATION_LESSON_ID = 'hsk1-pinyin-intro';
 
   const panelsWrap = document.getElementById('tabPanels');
   const detailWrap = document.getElementById('lessonDetail');
@@ -238,13 +239,50 @@
   function getCoursePercent(level, totalLessons) {
     const value = Number(currentStats?.courses?.[level]);
     if (Number.isFinite(value) && value > 0) return Math.min(100, Math.round(value));
-    const prefix = `${level}-`;
-    const count = Object.keys(getCompletedMap()).filter((key) => key.startsWith(prefix)).length;
+    const numericLessonKey = new RegExp(`^${level}-\\d+$`);
+    const count = Object.keys(getCompletedMap()).filter((key) => numericLessonKey.test(key)).length;
     return totalLessons ? Math.min(100, Math.round((count / totalLessons) * 100)) : 0;
   }
 
   function isLessonCompleted(level, lessonId) {
     return Boolean(getCompletedMap()[`${level}-${Number(lessonId)}`]);
+  }
+
+  function getLocalCompletedMap() {
+    try {
+      const value = JSON.parse(localStorage.getItem('cc_local_progress') || '{}');
+      return value?.completedLessonIds && typeof value.completedLessonIds === 'object' ? value.completedLessonIds : {};
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  function isFoundationLessonCompleted() {
+    return Boolean(getCompletedMap()[FOUNDATION_LESSON_ID] || getLocalCompletedMap()[FOUNDATION_LESSON_ID]);
+  }
+
+  function renderFoundationLessonCard() {
+    if (currentLevel !== 'hsk1') return '';
+    const completed = isFoundationLessonCompleted();
+    return `
+      <div class="lesson-item foundation-lesson ${completed ? 'completed' : ''} clickable-lesson active-lesson"
+           data-foundation-id="${FOUNDATION_LESSON_ID}"
+           role="button"
+           tabindex="0"
+           aria-label="${completed ? 'Mở lại' : 'Bắt đầu'} bài vỡ lòng Pinyin và thanh điệu">
+        <span class="lesson-status ${completed ? 'lesson-status--done' : 'lesson-status--active'}">${completed ? 'Đã hoàn thành' : 'Khuyên học trước'}</span>
+        <div class="lesson-item__icon" aria-hidden="true">ā</div>
+        <div class="lesson-item__info">
+          <div class="lesson-item__num">BÀI VỠ LÒNG</div>
+          <div class="lesson-item__title">Pinyin và thanh điệu</div>
+          <div class="lesson-item__desc">Làm quen với cách phát âm tiếng Trung</div>
+          <div class="lesson-item__bar-row">
+            <span class="lesson-item__xp">🔊 ā · á · ǎ · à</span>
+            <span class="lesson-item__bar-pct">${completed ? 'Đã hoàn thành' : 'Bắt đầu'}</span>
+          </div>
+        </div>
+        <div class="lesson-item__action"><div class="lesson-item__chevron" aria-hidden="true">›</div></div>
+      </div>`;
   }
 
   async function loadLessonIndex(level) {
@@ -363,6 +401,7 @@
 
       <div class="lesson-list">
         <div class="lesson-chapter">Giáo trình ${currentLevel.toUpperCase()}</div>
+        ${renderFoundationLessonCard()}
         ${lessonRows}
       </div>
     `;
@@ -372,6 +411,10 @@
     panelsWrap.querySelectorAll('.clickable-lesson').forEach(row => {
       row.addEventListener('click', function (e) {
         if (e.target.closest('button')) return;
+        if (this.dataset.foundationId === FOUNDATION_LESSON_ID) {
+          location.href = 'hsk1-pinyin-intro.html';
+          return;
+        }
         const id = parseInt(this.dataset.detail, 10);
         if (id) handleLessonClick(id);
       });
@@ -379,6 +422,10 @@
       row.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          if (this.dataset.foundationId === FOUNDATION_LESSON_ID) {
+            location.href = 'hsk1-pinyin-intro.html';
+            return;
+          }
           const id = parseInt(this.dataset.detail, 10);
           if (id) handleLessonClick(id);
         }

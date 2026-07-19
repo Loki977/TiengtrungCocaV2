@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bài vỡ lòng HSK1: làm quen với Pinyin, thanh mẫu, vận mẫu và thanh điệu tiếng Trung." />
+  <title>Pinyin và thanh điệu | HSK1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/pinyin-intro.css?v=4" />
+  <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <script src="assets/js/dark-mode.js"></script>
+</head>
+<body class="pinyin-intro-page">
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo"><span class="logo__icon">HSK</span><span class="logo__text">Tiếng Trung Cam &amp; Coca</span></a>
+      <nav class="nav" id="mainNav">
+        <a href="hsk.html" class="nav__link active">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge"><span class="streak-badge__icon">🔥</span><span class="streak-badge__count" data-progress="streak">0</span></div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Mở menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="hsk.html" class="nav__link active">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
+      <a href="flashcard.html" class="nav__link">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+    </div>
+  </div>
+
+  <main class="pinyin-intro-lesson">
+    <div class="pinyin-progress" aria-label="Tiến độ bài vỡ lòng">
+      <div class="pinyin-progress__inner">
+        <a href="hsk.html" class="pinyin-back" aria-label="Quay lại danh sách HSK1">← HSK1</a>
+        <div class="pinyin-progress__track"><span id="lessonProgressBar"></span></div>
+        <span class="pinyin-progress__label" id="lessonProgressLabel">Phần 1/7</span>
+      </div>
+    </div>
+
+    <section class="pinyin-hero lesson-step" data-step="1" aria-labelledby="pinyinTitle">
+      <div class="pinyin-shell pinyin-hero__grid">
+        <div>
+          <span class="pinyin-eyebrow">Bài vỡ lòng · Khuyên học trước</span>
+          <h1 id="pinyinTitle">Sơ lược về phiên âm<br /><span>Pinyin và thanh điệu</span></h1>
+          <p>Pinyin giúp bạn nhìn chữ cái và biết cách phát âm tiếng Trung. Hãy nghe chậm, bắt chước từng âm và đừng lo nếu chưa đọc đúng ngay lần đầu.</p>
+          <a class="pinyin-primary-btn" href="#pinyin-la-gi">Bắt đầu làm quen <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="pinyin-hero__visual" aria-label="Minh họa bốn dấu thanh Pinyin">
+          <span>ā</span><span>á</span><span>ǎ</span><span>à</span>
+          <svg viewBox="0 0 320 180" role="img" aria-label="Các đường cao độ của bốn thanh điệu"><path d="M28 42h58M102 82l58-48M176 44c12 66 40 66 58 0M250 34l48 74" /></svg>
+        </div>
+      </div>
+    </section>
+
+    <div class="pinyin-shell pinyin-content">
+      <section class="pinyin-section lesson-step" data-step="2" id="pinyin-la-gi" aria-labelledby="whatTitle">
+        <div class="section-heading"><span>01</span><div><p>Nền tảng đầu tiên</p><h2 id="whatTitle">Pinyin là gì?</h2></div></div>
+        <div class="pinyin-card pinyin-card--mint">
+          <p class="lead">Pinyin là hệ thống dùng chữ cái Latinh để ghi lại cách phát âm tiếng Trung. Pinyin giúp người học biết cách đọc chữ Hán, nhưng Pinyin không phải là tiếng Anh và không phải lúc nào cũng đọc giống tiếng Việt.</p>
+          <div class="pinyin-syllable-builder" aria-label="Công thức tạo một âm tiết">
+            <div><strong>m</strong><span>Thanh mẫu</span></div><b>+</b><div><strong>a</strong><span>Vận mẫu</span></div><b>+</b><div><strong>ˉ</strong><span>Thanh điệu</span></div><b>=</b><div class="is-result"><strong>mā</strong><span>Âm tiết</span></div>
+          </div>
+          <button class="audio-btn" type="button" data-audio-id="tone-ma-1" aria-label="Nghe âm mā"><span aria-hidden="true">🔊</span> Nghe mā</button>
+        </div>
+      </section>
+
+      <section class="pinyin-section lesson-step" data-step="3" aria-labelledby="initialFinalTitle">
+        <div class="section-heading"><span>02</span><div><p>Ghép âm thật đơn giản</p><h2 id="initialFinalTitle">Thanh mẫu và vận mẫu</h2></div></div>
+        <article class="pinyin-card pinyin-sound-section">
+          <div class="sound-section-head"><div><span class="sound-section-badge">声母 · shēngmǔ</span><h3>Thanh mẫu</h3><p>Thanh mẫu là âm mở đầu. Hãy nghe thanh mẫu trong một <b>âm tiết thật</b>, thay vì đọc tên chữ cái Latinh. Ví dụ: <b>b</b> được nghe qua <b>bō 波</b>, không đọc thành “bi”.</p></div><button class="audio-btn" data-audio-id="comparison-bpmf" aria-label="Nghe mẫu nhóm b p m f">🔊 Nghe nhóm mẫu</button></div>
+          <div class="pronunciation-notes"><span><b>Không bật hơi mạnh</b> b · d · g · j · zh · z</span><span><b>Bật hơi rõ</b> p · t · k · q · ch · c</span><span><b>Nghe vị trí lưỡi</b> j/q/x · zh/ch/sh/r · z/c/s</span></div>
+          <div class="pinyin-unit-grid" id="initialGrid" aria-label="21 thanh mẫu với âm tiết mẫu"><div class="audio-manifest-loading" role="status" aria-live="polite">Đang chuẩn bị audio thanh mẫu…</div></div>
+        </article>
+
+        <article class="pinyin-card pinyin-sound-section">
+          <div class="sound-section-head"><div><span class="sound-section-badge">韵母 · yùnmǔ</span><h3>Vận mẫu</h3><p>Vận mẫu là phần âm đứng sau thanh mẫu và là nơi mang thanh điệu. Một số vận mẫu khi đứng đầu âm tiết được viết thêm <b>y</b> hoặc <b>w</b>; thẻ bên dưới dùng từ Hán thật để bạn nghe đúng âm Mandarin.</p></div><button class="audio-btn" data-audio-id="comparison-finals-basic" aria-label="Nghe sáu vận mẫu cơ bản">🔊 Nghe nhóm cơ bản</button></div>
+          <div class="final-family"><span>Đơn: a · o · e · i · u · ü</span><span>Kép: ai · ei · ao · ou</span><span>Mũi: an · en · ang · eng · ong</span></div>
+          <div class="pinyin-unit-grid pinyin-unit-grid--finals" id="finalGrid" aria-label="Các vận mẫu cơ bản với âm tiết mẫu"><div class="audio-manifest-loading" role="status" aria-live="polite">Đang chuẩn bị audio vận mẫu…</div></div>
+        </article>
+
+        <div class="blend-examples" aria-label="Ví dụ ghép âm"><button data-audio-id="tone-ma-neutral">m + a = <b>ma</b><span>🔊</span></button><button data-audio-id="syllable-ni">n + i = <b>ni</b><span>🔊</span></button><button data-audio-id="syllable-hao">h + ao = <b>hao</b><span>🔊</span></button><button data-audio-id="syllable-zhong">zh + ong = <b>zhong</b><span>🔊</span></button></div>
+        <details class="pinyin-full-table"><summary>Nghe nhanh theo nhóm <span aria-hidden="true">＋</span></summary><div class="pinyin-table-scroll"><table><thead><tr><th>Nhóm</th><th>Âm thường gặp</th><th>File so sánh</th></tr></thead><tbody><tr><td>Môi</td><td>b p m f</td><td><button class="mini-audio" data-audio-id="comparison-bpmf" aria-label="Nghe nhóm b p m f">🔊</button></td></tr><tr><td>Đầu lưỡi</td><td>d t n l · z c s</td><td><button class="mini-audio" data-audio-id="comparison-dtnlzcs" aria-label="Nghe nhóm đầu lưỡi">🔊</button></td></tr><tr><td>Cuốn lưỡi</td><td>zh ch sh r</td><td><button class="mini-audio" data-audio-id="comparison-zhchshr" aria-label="Nghe nhóm cuốn lưỡi">🔊</button></td></tr><tr><td>Vận mẫu kép</td><td>ai ei ao ou</td><td><button class="mini-audio" data-audio-id="comparison-finals-compound" aria-label="Nghe vận mẫu kép">🔊</button></td></tr><tr><td>Vận mẫu mũi</td><td>an en ang eng ong</td><td><button class="mini-audio" data-audio-id="comparison-finals-nasal" aria-label="Nghe vận mẫu mũi">🔊</button></td></tr></tbody></table></div></details>
+      </section>
+
+      <section class="pinyin-section lesson-step" data-step="4" aria-labelledby="tonesTitle">
+        <div class="section-heading"><span>03</span><div><p>Phần quan trọng nhất</p><h2 id="tonesTitle">Bốn thanh điệu và thanh nhẹ</h2></div></div>
+        <div class="tone-compare" aria-label="So sánh năm cách đọc âm ma"><span>mā</span><span>má</span><span>mǎ</span><span>mà</span><span>ma</span><button class="audio-btn audio-btn--all" data-audio-id="comparison-tones-ma" type="button" aria-label="Nghe lần lượt cả năm âm ma">🔊 Nghe cả 5 âm</button></div>
+        <div class="tone-grid">
+          <article class="tone-card tone-card--1"><div class="tone-card__top"><span>Thanh 1</span><strong>ā</strong></div><svg class="tone-curve" viewBox="0 0 120 60" role="img" aria-label="Đường thanh 1 cao và ngang"><path d="M15 18h90" /></svg><p><b>Cao và đều</b></p><button data-audio-id="tone-ma-1" aria-label="Nghe mā, mẹ">🔊 mā · 妈 · mẹ</button></article>
+          <article class="tone-card tone-card--2"><div class="tone-card__top"><span>Thanh 2</span><strong>á</strong></div><svg class="tone-curve" viewBox="0 0 120 60" role="img" aria-label="Đường thanh 2 đi lên"><path d="M15 48L105 14" /></svg><p><b>Thấp lên cao</b>, giống khi hỏi lại.</p><button data-audio-id="tone-ma-2" aria-label="Nghe má, cây gai">🔊 má · 麻 · cây gai</button></article>
+          <article class="tone-card tone-card--3"><div class="tone-card__top"><span>Thanh 3</span><strong>ǎ</strong></div><svg class="tone-curve" viewBox="0 0 120 60" role="img" aria-label="Đường thanh 3 hạ xuống rồi đi lên"><path d="M15 20Q58 70 105 18" /></svg><p><b>Hạ rồi lên.</b> Khi nói tự nhiên thường thấp và ngắn hơn.</p><button data-audio-id="tone-ma-3" aria-label="Nghe mǎ, ngựa">🔊 mǎ · 马 · ngựa</button></article>
+          <article class="tone-card tone-card--4"><div class="tone-card__top"><span>Thanh 4</span><strong>à</strong></div><svg class="tone-curve" viewBox="0 0 120 60" role="img" aria-label="Đường thanh 4 đi xuống"><path d="M15 14L105 50" /></svg><p><b>Cao xuống thấp</b>, dứt khoát.</p><button data-audio-id="tone-ma-4" aria-label="Nghe mà, mắng">🔊 mà · 骂 · mắng</button></article>
+          <article class="tone-card tone-card--neutral"><div class="tone-card__top"><span>Thanh nhẹ</span><strong>a</strong></div><svg class="tone-curve" viewBox="0 0 120 60" role="img" aria-label="Thanh nhẹ ngắn"><circle cx="60" cy="30" r="6" /></svg><p><b>Ngắn và nhẹ</b>, không ghi dấu.</p><button data-audio-id="tone-ma-neutral" aria-label="Nghe ma, trợ từ nghi vấn">🔊 ma · 吗 · trợ từ hỏi</button></article>
+        </div>
+      </section>
+
+      <section class="pinyin-section lesson-step" data-step="5" aria-labelledby="meaningTitle">
+        <div class="section-heading"><span>04</span><div><p>Nghe khác, nghĩa khác</p><h2 id="meaningTitle">Thanh điệu thay đổi ý nghĩa</h2></div></div>
+        <div class="meaning-memory">
+          <div class="meaning-memory__message"><span aria-hidden="true">💡</span><div><h3>Mẹo ghi nhớ</h3><p>Đọc đúng phụ âm và nguyên âm nhưng sai thanh điệu vẫn có thể làm thay đổi nghĩa. Cứ nghe rồi bắt chước từng chút một — tai bạn sẽ quen rất nhanh!</p></div></div>
+          <div class="meaning-icons"><button data-audio-id="tone-ma-1"><span aria-hidden="true">👩</span><b>mā 妈</b><small>mẹ</small></button><button data-audio-id="tone-ma-3"><span aria-hidden="true">🐴</span><b>mǎ 马</b><small>ngựa</small></button><button data-audio-id="tone-ma-4"><span aria-hidden="true">💬</span><b>mà 骂</b><small>mắng</small></button></div>
+        </div>
+      </section>
+
+      <section class="pinyin-section lesson-step" data-step="6" aria-labelledby="markTitle">
+        <div class="section-heading"><span>05</span><div><p>Mẹo đặt dấu</p><h2 id="markTitle">Dấu thanh nằm ở đâu?</h2></div></div>
+        <div class="pinyin-two-col">
+          <article class="pinyin-card pronunciation-tip"><h3>Nhớ ba điều này</h3><ol><li>Có <b>a</b> → đặt dấu trên <b>a</b>.</li><li>Không có a, tìm <b>o</b> hoặc <b>e</b>.</li><li>Với <b>iu</b> và <b>ui</b>, đặt trên nguyên âm phía sau.</li></ol><div class="mark-examples"><button data-audio-id="syllable-hao">hǎo 🔊</button><button data-audio-id="example-kou">kǒu 🔊</button><button data-audio-id="final-ie">xiè 🔊</button><button data-audio-id="example-liu">liú 🔊</button><button data-audio-id="example-gui">guì 🔊</button></div></article>
+          <article class="pinyin-card mouth-card"><div class="mouth-icon" aria-hidden="true"><span>u</span><span>ü</span></div><h3>Âm ü</h3><p>Giữ khẩu hình tròn của “u” nhưng đặt lưỡi gần vị trí phát âm “i”.</p><div><button class="audio-btn" data-audio-id="example-nv" aria-label="Nghe nǚ">🔊 nǚ</button><button class="audio-btn" data-audio-id="example-lv" aria-label="Nghe lǜ">🔊 lǜ</button></div></article>
+        </div>
+      </section>
+
+      <section class="pinyin-section lesson-step" data-step="7" aria-labelledby="confusingTitle">
+        <div class="section-heading"><span>06</span><div><p>Nghe và so sánh</p><h2 id="confusingTitle">Một số âm dễ nhầm</h2></div></div>
+        <div class="confusing-grid">
+          <article><strong>j · q · x</strong><p>Đầu lưỡi gần răng dưới. Âm <b>q</b> có luồng hơi mạnh hơn <b>j</b>.</p><button data-audio-id="comparison-jqx" aria-label="Nghe j q x">🔊 Nghe so sánh</button></article>
+          <article><strong>zh · ch · sh · r</strong><p>Đầu lưỡi hơi cong lên. <b>ch</b> bật hơi mạnh hơn <b>zh</b>.</p><button data-audio-id="comparison-zhchshr" aria-label="Nghe zh ch sh r">🔊 Nghe so sánh</button></article>
+          <article><strong>z · c · s</strong><p>Đầu lưỡi gần răng trên. Âm <b>c</b> có luồng hơi mạnh.</p><button data-audio-id="comparison-zcs" aria-label="Nghe z c s">🔊 Nghe so sánh</button></article>
+          <article><strong>u · ü</strong><p>Cả hai đều tròn môi; với <b>ü</b>, lưỡi gần vị trí âm “i”.</p><button data-audio-id="comparison-u-umlaut" aria-label="Nghe so sánh u và ü">🔊 Nghe so sánh</button></article>
+        </div>
+      </section>
+
+      <section class="pinyin-section pinyin-practice" id="pinyinPractice" aria-labelledby="practiceTitle">
+        <div class="section-heading"><span>07</span><div><p>Thử sức nhẹ nhàng</p><h2 id="practiceTitle">Luyện tập cuối bài</h2></div></div>
+        <p class="practice-intro">Chọn đáp án phù hợp. Bạn có thể nghe lại bao nhiêu lần tùy thích.</p>
+        <div class="practice-score" aria-live="polite"><span id="practiceScore">0/6 câu đúng</span><button type="button" id="resetPractice">↻ Làm lại</button></div>
+        <div class="practice-list">
+          <article class="practice-question" data-question="tone-audio" data-answer="3" data-audio-answer="tone-ma-3"><h3><span>1</span> Bạn nghe thấy thanh mấy?</h3><button class="audio-btn" data-audio-id="tone-ma-3" aria-label="Nghe câu hỏi số 1">🔊 Nghe âm</button><div class="practice-options"><button data-choice="1">Thanh 1</button><button data-choice="2">Thanh 2</button><button data-choice="3">Thanh 3</button><button data-choice="4">Thanh 4</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+          <article class="practice-question" data-question="blend" data-answer="mā" data-audio-answer="tone-ma-1"><h3><span>2</span> m + ā tạo thành âm tiết nào?</h3><div class="practice-options"><button data-choice="má">má</button><button data-choice="mā">mā</button><button data-choice="mǎ">mǎ</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+          <article class="practice-question" data-question="meaning" data-answer="ngựa" data-audio-answer="tone-ma-3"><h3><span>3</span> “mǎ 马” có nghĩa là gì?</h3><div class="practice-options"><button data-choice="mẹ">Mẹ</button><button data-choice="ngựa">Ngựa</button><button data-choice="mắng">Mắng</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+          <article class="practice-question" data-question="curve" data-answer="2" data-audio-answer="tone-ma-2"><h3><span>4</span> Đường đi lên biểu diễn thanh nào?</h3><svg class="practice-curve" viewBox="0 0 150 70" role="img" aria-label="Đường cao độ đi từ thấp lên cao"><path d="M18 56L132 14" /></svg><div class="practice-options"><button data-choice="1">Thanh 1</button><button data-choice="2">Thanh 2</button><button data-choice="4">Thanh 4</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+          <article class="practice-question" data-question="mark" data-answer="hǎo" data-audio-answer="syllable-hao"><h3><span>5</span> Cách đặt dấu nào đúng?</h3><div class="practice-options"><button data-choice="haǒ">haǒ</button><button data-choice="hǎo">hǎo</button><button data-choice="háo">háo</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+          <article class="practice-question" data-question="umlaut" data-answer="ü" data-audio-answer="example-lv"><h3><span>6</span> Âm nào tròn môi nhưng lưỡi gần vị trí “i”?</h3><div class="practice-options"><button data-choice="u">u</button><button data-choice="ü">ü</button></div><p class="practice-feedback" aria-live="polite"></p></article>
+        </div>
+        <div class="practice-complete">
+          <button class="pinyin-primary-btn" type="button" id="completeFoundation" disabled>Hoàn thành bài vỡ lòng</button>
+          <div class="completion-message" id="completionMessage" hidden aria-live="polite"><span aria-hidden="true">🎉</span><h3>Bạn đã sẵn sàng bắt đầu HSK1!</h3><p>Hãy tiếp tục nghe và bắt chước trong mỗi bài học.</p><a href="lesson.html?level=hsk1&amp;lesson=1">Bắt đầu Bài 1 →</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/speech-service.js?v=4"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/pinyin-intro.js?v=4"></script>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>

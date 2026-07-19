@@ -37,6 +37,7 @@
     'reading',
     'writing'
   ];
+  const boundRoots = new WeakSet();
 
   function chunkArray(items = [], size = 8) {
     const result = [];
@@ -150,21 +151,21 @@
     return relativePath.startsWith('assets/') ? relativePath : `${base}${relativePath}`;
   }
 
-  function playAudioOrSpeak(lesson, text, audioPath) {
-    const url = lesson.audio?.enabled && audioPath ? getAudioUrl(lesson, audioPath) : '';
+  function playAudioOrSpeak(lesson, text, audioPath, pinyin = '', audioProfile = '', lookupText = '') {
     if (window.CCAudio?.speak) {
-      window.CCAudio.speak({ text, mode: 'example', audioUrl: url, rate: 1, volume: 1, lang: 'zh-CN' }).catch(() => speakChinese(text));
+      const mode = audioProfile === 'vocabulary' ? 'vocabulary' : audioProfile === 'lesson-passage' ? 'passage' : 'example';
+      window.CCAudio.speak({
+        text,
+        lookupText: lookupText || text,
+        pinyin,
+        mode,
+        audioProfile,
+        volume: 1,
+        lang: 'zh-CN'
+      }).catch(() => {});
       return;
     }
-    speakChinese(text);
-  }
-
-  function speakChinese(text) {
-    if (window.CCAudio?.speak) {
-      window.CCAudio.speak({ text, mode: 'example', lang: 'zh-CN', rate: 1, volume: 1 }).catch(() => alert('Trình duyệt này chưa hỗ trợ phát âm.'));
-      return;
-    }
-    alert('Trình duyệt này chưa hỗ trợ phát âm.');
+    window.CCFirebase?.showToast?.('Dịch vụ audio tĩnh chưa sẵn sàng.', 'warning');
   }
 
 
@@ -337,6 +338,7 @@
     const items = pages[page] || [];
     const title = sectionName(section);
     const enhancedVocabulary = Number(lesson.level || 0) >= 4 && Number(lesson.meta?.version || 0) >= 2;
+    const allowExampleAudio = getLessonLevelKey(lesson) !== 'hsk6';
 
     return `
       <section class="gt-section gt-current-section" data-learning-section="${section}">
@@ -357,7 +359,7 @@
                   <div class="gt-hanzi">${escapeHtml(hanzi)}</div>
                   <div class="gt-vocab-actions">
                     <button class="gt-bookmark-btn ${marked ? 'active' : ''}" data-bookmark="${escapeHtml(key)}" title="Đánh dấu từ khó">★</button>
-                    <button class="gt-speak-btn" data-speak="${escapeHtml(hanzi)}" data-audio="${escapeHtml(item.audio || '')}" title="Nghe phát âm">🔊</button>
+                    <button class="gt-speak-btn" data-speak="${escapeHtml(hanzi)}" data-pinyin="${escapeHtml(item.pinyin || '')}" data-audio-profile="vocabulary" data-audio="${escapeHtml(item.audio || '')}" title="Nghe phát âm">🔊</button>
                   </div>
                 </div>
                 <div class="gt-pinyin">${escapeHtml(item.pinyin || '')}</div>
@@ -368,7 +370,7 @@
                   <div class="gt-vocab-example">
                     <div class="gt-vocab-example-head">
                       <span>${escapeHtml(example)}</span>
-                      <button class="gt-speak-btn" data-speak="${escapeHtml(example)}" title="Nghe câu ví dụ">🔊</button>
+                      ${allowExampleAudio ? `<button class="gt-speak-btn" data-speak="${escapeHtml(example)}" data-pinyin="${escapeHtml(examplePinyin)}" data-audio-profile="writing-sentence" title="Nghe câu ví dụ">🔊</button>` : ''}
                     </div>
                     ${examplePinyin ? `<div class="gt-pinyin">${escapeHtml(examplePinyin)}</div>` : ''}
                     ${exampleTranslation ? `<div class="gt-example-translation">${escapeHtml(exampleTranslation)}</div>` : ''}
@@ -507,7 +509,7 @@
       <article class="gt-reading-card gt-interactive-reading">
         <div class="gt-reading-heading">
           ${line.title ? `<h4>${escapeHtml(line.title)}</h4>` : '<span></span>'}
-          <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(reading.bodyText)}" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
+          <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(reading.bodyText)}" data-audio-lookup="${escapeHtml(line.chinese || reading.bodyText)}" data-audio-profile="lesson-passage" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
         </div>
         <div class="gt-reading-chinese">${renderReadingSegments(reading.bodyLine)}</div>
         ${reading.notes.length ? `
@@ -527,6 +529,8 @@
           <b>${escapeHtml(line.speaker || '')}</b>
           <button type="button" class="gt-dialogue-listen gt-speak-btn"
             data-speak="${escapeHtml(chinese)}"
+            data-pinyin="${escapeHtml(line.pinyin || '')}"
+            data-audio-profile="lesson-passage"
             data-audio="${escapeHtml(line.audio || '')}"
             title="Nghe câu thoại">🔊 Nghe câu</button>
         </div>
@@ -546,7 +550,7 @@
         <span class="gt-reading-lookup-type" data-reading-lookup-type hidden></span>
         <p class="gt-reading-lookup-meaning" data-reading-lookup-meaning></p>
         <p class="gt-reading-lookup-note" data-reading-lookup-note hidden></p>
-        <button type="button" class="gt-reading-lookup-speak gt-speak-btn" data-speak="" title="Nghe phát âm">🔊 Nghe phát âm</button>
+        <button type="button" class="gt-reading-lookup-speak gt-speak-btn" data-speak="" data-pinyin="" data-audio-profile="vocabulary" title="Nghe phát âm">🔊 Nghe phát âm</button>
       </aside>
     `;
   }
@@ -569,7 +573,7 @@
               return isDialogue ? renderInteractiveDialogueLine(line) : renderInteractiveReading(line);
             }
             return `
-              <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-audio="${escapeHtml(line.audio || '')}">
+              <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-pinyin="${escapeHtml(line.pinyin || '')}" data-audio-profile="lesson-passage" data-audio="${escapeHtml(line.audio || '')}">
                 <b>${escapeHtml(line.speaker || '')}</b> ${escapeHtml(chinese)}<br>
                 <span class="gt-pinyin">${escapeHtml(line.pinyin || '')}</span><br>
                 <span>${escapeHtml(line.vietnamese || '')}</span>
@@ -886,6 +890,7 @@
 
     const speakButton = lookup.querySelector('[data-speak]');
     speakButton.dataset.speak = text;
+    speakButton.dataset.pinyin = pinyin;
     lookup.hidden = false;
     lookup.classList.add('open');
 
@@ -906,6 +911,8 @@
   }
 
   function bindLessonRenderEvents(root = document) {
+    if (boundRoots.has(root)) return;
+    boundRoots.add(root);
     root.addEventListener('click', function (e) {
       const lesson = window.__currentLessonData;
 
@@ -917,7 +924,14 @@
 
       const speakBtn = e.target.closest('[data-speak]');
       if (lesson && speakBtn && (speakBtn.classList.contains('gt-speak-btn') || speakBtn.classList.contains('gt-dialogue-line'))) {
-        playAudioOrSpeak(lesson, speakBtn.dataset.speak, speakBtn.dataset.audio);
+        playAudioOrSpeak(
+          lesson,
+          speakBtn.dataset.speak,
+          speakBtn.dataset.audio,
+          speakBtn.dataset.pinyin,
+          speakBtn.dataset.audioProfile,
+          speakBtn.dataset.audioLookup
+        );
       }
 
       const bookmarkBtn = e.target.closest('.gt-bookmark-btn');

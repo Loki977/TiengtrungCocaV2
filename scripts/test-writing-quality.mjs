@@ -175,7 +175,7 @@ const inputHandlerSource = lessonPageSource.slice(inputHandlerStart, inputHandle
 assert.ok(inputHandlerStart >= 0 && inputHandlerEnd > inputHandlerStart, "Phải tìm thấy handler nhập đáp án");
 assert.equal(inputHandlerSource.includes("submitCurrentAnswer("), false, "Gõ đúng không được tự chấm");
 assert.match(lessonPageSource, /Bấm “Kết quả” để chấm đáp án/, "Enter phải yêu cầu bấm Kết quả");
-assert.match(lessonPageSource, /const TTS_NORMAL_RATE = 0\.58/, "Tốc độ thường phải bằng tốc độ chậm cũ");
+assert.match(lessonPageSource, /const TTS_NORMAL_RATE = 0\.754/, "Tốc độ nghe thường phải tăng 30%");
 assert.match(lessonPageSource, /const TTS_SLOW_RATE = 0\.35/, "Tốc độ chậm phải giảm thêm khoảng 40%");
 
 const adminHtml = await fs.readFile("admin-super.html", "utf8");

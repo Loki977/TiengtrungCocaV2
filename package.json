@@ -6,7 +6,14 @@
     "node": "22.x"
   },
   "scripts": {
-    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node --check assets/js/vip-user.js && node --check assets/js/admin-super.js && node --check lesson-config.js && node --check lesson-engine.js && node --check lesson-page.js && node scripts/build-writing-content.mjs --check && npm run test:writing && npm run test:vip",
+    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node --check assets/js/vip-user.js && node --check assets/js/admin-super.js && node --check lesson-config.js && node --check lesson-engine.js && node --check lesson-page.js && npm run check:pinyin && node scripts/build-writing-content.mjs --check && npm run test:writing && npm run test:vip",
+    "check:pinyin": "node --check assets/js/pinyin-intro.js && node --check tools/build-pinyin-audio.mjs && node tools/build-pinyin-audio.mjs --verify-only",
+    "build:audio-inventory": "node tools/build-learning-audio-inventory.mjs --output assets/data/audio/learning-audio-inventory.json",
+    "check:audio-inventory": "node tools/build-learning-audio-inventory.mjs --check --output assets/data/audio/learning-audio-inventory.json",
+    "build:audio-runtime": "node tools/build-learning-audio-runtime.mjs --write",
+    "check:audio-static": "node tools/verify-learning-static-audio.mjs --require-no-unreferenced",
+    "audit:audio-coverage": "node tools/audit-static-audio-coverage.mjs",
+    "test:audio": "npm run check:audio-inventory && npm run check:audio-static && npm run audit:audio-coverage",
     "build:writing-data": "node scripts/build-writing-content.mjs",
     "test:writing": "node --no-warnings scripts/test-writing-quality.mjs",
     "build": "npm run check",
