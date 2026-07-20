@@ -300,9 +300,13 @@ body.cc-vip-modal-open { overflow: hidden; }
   position: relative;
   z-index: 1;
   width: min(880px, 100%);
-  max-height: min(92vh, 920px);
-  overflow: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 36px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
   padding: 28px;
+  box-sizing: border-box;
   border: 1px solid rgba(255, 225, 133, .9);
   border-radius: 28px;
   background:
@@ -416,7 +420,7 @@ body.cc-vip-modal-open { overflow: hidden; }
 }
 
 /* Premium payment polish */
-.cc-vip-modal__dialog{isolation:isolate;overflow:auto;animation:ccVipDialogEnter .48s cubic-bezier(.2,.8,.2,1) both}
+.cc-vip-modal__dialog{isolation:isolate;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;animation:ccVipDialogEnter .48s cubic-bezier(.2,.8,.2,1) both}
 .cc-vip-modal__dialog::before{content:"";position:absolute;inset:-2px;z-index:-2;border-radius:inherit;background:conic-gradient(from 0deg,#ffcf40,#fff6bd,#c88600,#ffe783,#fff,#ffcf40);filter:blur(1px)}
 .cc-vip-modal__dialog::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:26px;background:linear-gradient(145deg,rgba(255,253,245,.98),rgba(255,246,214,.97) 58%,rgba(255,250,240,.98))}
 .cc-vip-modal__aurora{position:absolute;inset:-35% -20% auto;height:60%;z-index:-1;background:radial-gradient(ellipse,rgba(255,218,84,.42),transparent 64%);filter:blur(20px);pointer-events:none}
@@ -443,3 +447,27 @@ body.cc-vip-modal-open { overflow: hidden; }
 @keyframes ccVipQrGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
 @media(max-width:760px){.cc-vip-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cc-vip-plan:last-child{grid-column:auto}.cc-vip-modal__stars{display:none}}
 @media(prefers-reduced-motion:reduce){.cc-vip-modal__dialog,.cc-vip-modal__dialog::before,.cc-vip-modal__aurora,.cc-vip-modal__stars,.cc-vip-plan i,.cc-vip-plan.is-selected,.cc-vip-payment::before,.cc-vip-payment.is-revealing,.cc-vip-payment img{animation:none!important}}
+
+
+/* Hide VIP modal scrollbars while keeping wheel/touch scrolling available. */
+.cc-vip-modal {
+  overflow: hidden;
+}
+
+.cc-vip-modal__dialog::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.cc-vip-modal__dialog,
+.cc-vip-modal__dialog *,
+.cc-vip-modal__dialog *::before,
+.cc-vip-modal__dialog *::after {
+  box-sizing: border-box;
+}
+
+.cc-vip-plan-grid,
+.cc-vip-plan {
+  min-width: 0;
+}
