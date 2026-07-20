@@ -3,30 +3,163 @@
    Hero · Dashboard · Continue+Goal · Learning Path · Courses · Challenge
    ================================================ */
 
-/* ── HOME BANNER ── */
+/* ── HOME BANNER — khung thư pháp đồng bộ Tàng Thư Các ── */
 .home-banner {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 16px;
+  padding: 18px 16px 26px;
   box-sizing: border-box;
 }
-.home-banner video {
-  width: 100%;
-  max-width: 1280px;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  border-radius: 24px;
-  box-shadow: 0 12px 30px rgba(51, 37, 25, .12);
+
+.home-video-frame {
+  position: relative;
+  width: min(1040px, 84vw);
+  padding: 13px;
+  border: 1px solid rgba(104, 63, 20, .42);
+  border-radius: 30px 12px 30px 12px;
+  background:
+    linear-gradient(90deg, transparent 0 4%, rgba(112, 65, 18, .09) 4.2% 4.6%, transparent 4.8% 95%, rgba(112, 65, 18, .09) 95.2% 95.6%, transparent 95.8%),
+    linear-gradient(145deg, rgba(255, 252, 236, .97), rgba(242, 225, 184, .9));
+  box-shadow:
+    0 22px 48px rgba(65, 42, 15, .18),
+    inset 0 0 0 4px rgba(255, 253, 239, .88),
+    inset 0 0 0 6px rgba(126, 78, 24, .18);
+  isolation: isolate;
 }
+
+.home-video-frame::before,
+.home-video-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 78px;
+  height: 78px;
+  pointer-events: none;
+  opacity: .78;
+  background: linear-gradient(135deg, #7c4d1c 0 8%, transparent 8% 17%, #b78137 17% 23%, transparent 23%) top left / 100% 100% no-repeat;
+}
+
+.home-video-frame::before {
+  top: -5px;
+  left: -5px;
+  border-top: 3px solid rgba(111, 65, 19, .74);
+  border-left: 3px solid rgba(111, 65, 19, .74);
+  border-radius: 27px 0 0 0;
+}
+
+.home-video-frame::after {
+  right: -5px;
+  bottom: -5px;
+  transform: rotate(180deg);
+  border-top: 3px solid rgba(111, 65, 19, .74);
+  border-left: 3px solid rgba(111, 65, 19, .74);
+  border-radius: 27px 0 0 0;
+}
+
+.home-video-frame__inner {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1408 / 768;
+  border: 2px solid rgba(99, 58, 18, .52);
+  border-radius: 22px 8px 22px 8px;
+  background: #1f1a13;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 239, 193, .38),
+    inset 0 0 24px rgba(20, 13, 5, .22);
+}
+
+.home-video-frame__inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(52, 29, 8, .12), transparent 11% 89%, rgba(52, 29, 8, .12)),
+    linear-gradient(0deg, rgba(52, 29, 8, .12), transparent 12% 88%, rgba(52, 29, 8, .12));
+  box-shadow: inset 0 0 35px rgba(35, 20, 6, .18);
+}
+
+.home-video-frame__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.055);
+  transform-origin: center;
+}
+
+.home-video-frame__seal {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 245, 218, .8);
+  border-radius: 6px;
+  background: #a83227;
+  color: #fff4da;
+  font-family: serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(80, 24, 17, .25);
+  pointer-events: none;
+}
+
+/* Dấu trái đồng thời che vùng logo AI ở góc video. */
+.home-video-frame__seal--left {
+  top: 25px;
+  left: -18px;
+  transform: rotate(-5deg);
+}
+
+.home-video-frame__seal--right {
+  right: -18px;
+  bottom: 28px;
+  transform: rotate(6deg);
+}
+
 @media (max-width: 768px) {
-  .home-banner { padding: 10px; }
-  .home-banner video {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
+  .home-banner { padding: 10px 8px 18px; }
+
+  .home-video-frame {
+    width: 94%;
+    margin: auto;
+    padding: 8px;
+    border-radius: 22px 8px 22px 8px;
   }
+
+  .home-video-frame__inner {
+    border-radius: 17px 6px 17px 6px;
+  }
+
+  .home-video-frame__video {
+    transform: scale(1.07);
+  }
+
+  .home-video-frame__seal {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+
+  .home-video-frame__seal--left {
+    top: 17px;
+    left: -8px;
+  }
+
+  .home-video-frame__seal--right {
+    right: -8px;
+    bottom: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-video-frame__video { transform: scale(1.055); }
 }
 
 /* ── DASHBOARD ── */
