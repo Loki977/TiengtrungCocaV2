@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/style.css?v=mobile-header-2" />
     <link rel="stylesheet" href="assets/css/home.css?v=3" />
     <link rel="stylesheet" href="assets/css/home-fabs.css" />
     <link rel="stylesheet" href="assets/css/home-trailer.css?v=2" />
@@ -54,29 +54,44 @@
           <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
         
         </div>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
+        <button class="hamburger" id="hamburger" type="button" aria-label="Mở menu" aria-controls="mobileNav" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </header>
 
     <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <div class="mobile-nav__inner">
-        <a href="#path-section" class="nav__link">Lộ trình</a>
-        <a href="hsk.html" class="nav__link">Khóa học</a>
-        <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
-        <a href="flashcard.html" class="nav__link">Flashcard</a>
-        <a href="./ThiThu.html" class="nav__link">Thi thử HSK</a>
-        <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
-        <a href="#challenge-section" class="nav__link">Thử thách</a>
+        <div class="mobile-nav__summary" aria-label="Thông tin tài khoản">
+          <div class="mobile-nav__stat" title="Streak hiện tại">
+            <span class="mobile-nav__stat-icon">🔥</span>
+            <span><strong data-progress="streak">0</strong> ngày</span>
+          </div>
+          <div class="mobile-nav__stat" title="Xu hiện có">
+            <span class="mobile-nav__stat-icon">🪙</span>
+            <span><strong class="js-user-coins" data-progress="coins">0</strong> xu</span>
+          </div>
+        </div>
+
+        <nav class="mobile-nav__links" aria-label="Menu trên điện thoại">
+          <a href="#path-section" class="nav__link">Lộ trình</a>
+          <a href="hsk.html" class="nav__link">Khóa học</a>
+          <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
+          <a href="flashcard.html" class="nav__link">Flashcard</a>
+          <a href="./ThiThu.html" class="nav__link">Thi thử HSK</a>
+          <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
+          <a href="#challenge-section" class="nav__link">Thử thách</a>
+        </nav>
+
         <div class="mobile-nav__divider"></div>
-        <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
-       <a
-href="lesson.html?level=hsk1&lesson=1"
-class="btn btn--primary btn--lg ripple">
-Bắt đầu miễn phí
-</a>
+
+        <div class="mobile-nav__actions">
+          <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+          <a href="lesson.html?level=hsk1&lesson=1" class="btn btn--primary btn--full ripple">
+            Bắt đầu miễn phí
+          </a>
+        </div>
       </div>
     </div>
 

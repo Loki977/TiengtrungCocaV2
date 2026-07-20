@@ -857,3 +857,198 @@ box-shadow:0 4px 16px rgba(0,0,0,.08);
 /* Admin button visible only for admin profile */
 .admin-open-btn{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:9px 14px;border-radius:999px;background:linear-gradient(135deg,#35d6b3,#12b99b);color:#fff!important;font-weight:900;text-decoration:none;box-shadow:0 10px 24px rgba(18,185,155,.28);border:1px solid rgba(255,255,255,.35);transition:transform .18s ease,box-shadow .18s ease}
 .admin-open-btn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(18,185,155,.34)}
+
+
+/* =========================================================
+   MOBILE HEADER RESPONSIVE FIX
+   Chỉ tác động header/menu; không thay đổi video và khung trang chủ.
+   ========================================================= */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@media (max-width: 1100px) {
+  .header__inner {
+    gap: 16px;
+  }
+
+  .header .nav {
+    display: none;
+  }
+
+  .header .hamburger {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .header__actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  .header {
+    height: var(--header-h);
+  }
+
+  .header__inner {
+    width: 100%;
+    min-width: 0;
+    gap: 10px;
+    padding-inline: 12px;
+  }
+
+  .header .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 54px);
+    overflow: hidden;
+  }
+
+  .header .logo__icon {
+    flex: 0 0 auto;
+    font-size: 1.42rem;
+  }
+
+  .header .logo__text {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(.94rem, 4.1vw, 1.12rem);
+  }
+
+  /* Tắt chuyển động logo trên mobile để tránh tạo chiều rộng ảo. */
+  .header .logo--reveal .logo__icon,
+  .header .logo--reveal .logo__text {
+    animation: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .header__actions {
+    display: none !important;
+  }
+
+  .hamburger {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+    padding: 8px;
+    border: 1px solid rgba(255, 122, 0, .2);
+    border-radius: 13px;
+    background: var(--orange-xlight);
+  }
+
+  .hamburger span {
+    width: 22px;
+    background: var(--orange-dark);
+  }
+
+  .mobile-nav {
+    top: var(--header-h);
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-height: calc(100dvh - var(--header-h) - 12px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--border);
+    border-radius: 0 0 20px 20px;
+    background: rgba(255, 253, 249, .98);
+    box-shadow: 0 18px 45px rgba(45, 45, 45, .18);
+    backdrop-filter: blur(16px);
+  }
+
+  .mobile-nav__inner {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .mobile-nav__summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mobile-nav__stat {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 8px;
+    border: 1px solid rgba(255, 122, 0, .18);
+    border-radius: 14px;
+    background: var(--orange-xlight);
+    color: var(--orange-dark);
+    font-size: .84rem;
+    white-space: nowrap;
+  }
+
+  .mobile-nav__stat strong {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+  }
+
+  .mobile-nav__stat-icon {
+    font-size: 1.05rem;
+  }
+
+  .mobile-nav__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobile-nav .nav__link {
+    min-width: 0;
+    padding: 11px 10px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--bg-card);
+    font-size: .9rem;
+    line-height: 1.25;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .mobile-nav__actions {
+    display: grid;
+    gap: 9px;
+  }
+
+  main {
+    padding-top: var(--header-h);
+  }
+}
+
+@media (max-width: 390px) {
+  .header .logo__text {
+    font-size: .91rem;
+  }
+
+  .mobile-nav__links {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-nav__summary {
+    gap: 7px;
+  }
+
+  .mobile-nav__stat {
+    font-size: .78rem;
+    padding-inline: 6px;
+  }
+}
