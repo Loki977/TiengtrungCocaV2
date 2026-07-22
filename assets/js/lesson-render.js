@@ -66,6 +66,73 @@
     return String(text).trim().toLowerCase().replace(/[。！？?!.,，\s]/g, '');
   }
 
+  function isBasicHskLesson(lesson) {
+    return [1, 2, 3].includes(Number(String(lesson?.level || '').replace(/\D/g, '')));
+  }
+
+  function getPinyinEntries(lesson) {
+    if (lesson.__exercisePinyinEntries) return lesson.__exercisePinyinEntries;
+    const entries = new Map();
+    const visit = value => {
+      if (!value || typeof value !== 'object') return;
+      if (Array.isArray(value)) return value.forEach(visit);
+      const hanzi = String(value.hanzi || value.chinese || value.zh || value.text || '').match(/[\u3400-\u9fff]+/g)?.join('') || '';
+      const pinyin = String(value.pinyin || '').trim();
+      if (hanzi && pinyin) {
+        if (!entries.has(hanzi)) entries.set(hanzi, pinyin);
+        const characters = [...hanzi];
+        const syllables = pinyin.replace(/[，。！？?!、“”]/g, ' ').trim().split(/\s+/).filter(Boolean);
+        if (characters.length === syllables.length) {
+          characters.forEach((character, index) => {
+            if (!entries.has(character)) entries.set(character, syllables[index]);
+          });
+        }
+      }
+      Object.values(value).forEach(visit);
+    };
+    visit(lesson.vocabulary);
+    visit(lesson.extendedVocabulary);
+    visit(lesson.vocabularyPages);
+    visit(lesson.extendedVocabularyPages);
+    visit(lesson.lessonText);
+    lesson.__exercisePinyinEntries = [...entries].sort((a, b) => b[0].length - a[0].length);
+    return lesson.__exercisePinyinEntries;
+  }
+
+  function getExercisePinyin(text, lesson) {
+    if (!isBasicHskLesson(lesson)) return '';
+    const entries = getPinyinEntries(lesson);
+    return (String(text).match(/[\u3400-\u9fff]+/g) || []).map(run => {
+      const result = [];
+      let cursor = 0;
+      while (cursor < run.length) {
+        const match = entries.find(([hanzi]) => run.startsWith(hanzi, cursor));
+        if (!match) { cursor += 1; continue; }
+        result.push(match[1]);
+        cursor += match[0].length;
+      }
+      return result.join(' ');
+    }).filter(Boolean).join(' · ');
+  }
+
+  function getFillBlankOptions(ex, lesson) {
+    const answer = String(ex.answer || '').trim();
+    const lessonAnswers = (lesson.exercises || [])
+      .filter(item => item.type === 'fill-blank')
+      .map(item => String(item.answer || '').trim());
+    const commonDistractors = ['的', '了', '吗', '呢', '吧', '在', '是', '有', '也', '都', '很', '比', '最', '还是', '或者', '但是', '所以', '就', '才', '又', '再'];
+    const pool = [...new Set([...(ex.options || []), ...lessonAnswers, ...commonDistractors])]
+      .filter(item => item && normalizeAnswer(item) !== normalizeAnswer(answer));
+    const seed = [...String(ex.question || answer)].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    const choices = [answer];
+    for (let offset = 0; choices.length < 4 && offset < pool.length; offset += 1) {
+      choices.push(pool[(seed + offset) % pool.length]);
+    }
+    const answerIndex = seed % choices.length;
+    choices.splice(answerIndex, 0, choices.shift());
+    return choices;
+  }
+
   function getLessonKey(lesson) {
     return `lesson-progress-hsk${lesson.level || 1}-${lesson.lessonId}`;
   }
@@ -646,13 +713,39 @@
     }[type] || type;
   }
 
-  function renderExercise(ex, i) {
+  function renderExercise(ex, i, lesson) {
+    const questionPinyin = ex.type === 'fill-blank' ? '' : getExercisePinyin(ex.question, lesson);
+    const question = `
+      <p><b>Câu ${i}.</b> ${escapeHtml(ex.question || '')}</p>
+      ${questionPinyin ? `<p class="gt-exercise-pinyin">${escapeHtml(questionPinyin)}</p>` : ''}
+    `;
+
     if (ex.type === 'multiple-choice') {
       return `
         <div class="gt-exercise-card">
-          <p><b>Câu ${i}.</b> ${escapeHtml(ex.question || '')}</p>
-          ${(ex.options || []).map(opt => `
-            <button class="gt-quiz-option" data-answer="${escapeHtml(ex.answer || '')}" data-value="${escapeHtml(opt)}">${escapeHtml(opt)}</button>
+          ${question}
+          ${(ex.options || []).map(opt => {
+            const optionPinyin = getExercisePinyin(opt, lesson);
+            return `
+            <button class="gt-quiz-option" data-answer="${escapeHtml(ex.answer || '')}" data-value="${escapeHtml(opt)}">
+              <span>${escapeHtml(opt)}</span>
+              ${optionPinyin ? `<span class="gt-exercise-pinyin">${escapeHtml(optionPinyin)}</span>` : ''}
+            </button>
+          `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    if (ex.type === 'fill-blank' && isBasicHskLesson(lesson)) {
+      return `
+        <div class="gt-exercise-card">
+          ${question}
+          ${getFillBlankOptions(ex, lesson).map((opt, index) => `
+            <button class="gt-quiz-option gt-quiz-option--labeled" data-answer="${escapeHtml(ex.answer || '')}" data-value="${escapeHtml(opt)}">
+              <span class="gt-option-label">${String.fromCharCode(65 + index)}</span>
+              <span>${escapeHtml(opt)}</span>
+            </button>
           `).join('')}
         </div>
       `;
@@ -660,7 +753,7 @@
 
     return `
       <div class="gt-exercise-card">
-        <p><b>Câu ${i}.</b> ${escapeHtml(ex.question || '')}</p>
+        ${question}
         <div class="gt-answer-row">
           <input class="gt-answer-input" type="text" placeholder="Nhập đáp án của bạn..." data-answer="${escapeHtml(ex.answer || '')}">
           <button class="gt-submit-btn">Nộp</button>
@@ -680,7 +773,7 @@
         <div class="gt-page-meta">${exerciseTypeName(group.type)} ${page + 1}/${Math.max(pages.length, 1)}</div>
         <div class="gt-exercise-group">
           <h4>${exerciseTypeName(group.type)}</h4>
-          ${(group.exercises || []).map((ex, index) => renderExercise(ex, index + 1)).join('')}
+          ${(group.exercises || []).map((ex, index) => renderExercise(ex, index + 1, lesson)).join('')}
         </div>
         ${renderNav(lesson, 'exercises', page, pages.length)}
       </section>

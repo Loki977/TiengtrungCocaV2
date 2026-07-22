@@ -9,6 +9,7 @@
   const soundButton = document.getElementById('homeTrailerSound');
   const replayButton = document.getElementById('replayTrailer');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionEnabled = () => !window.CCMotion || window.CCMotion.isEnabled();
   let playbackTimer;
   let closeTimer;
 
@@ -46,7 +47,7 @@
   };
 
   const openTrailer = ({ replay = false } = {}) => {
-    if (!replay && (hasPlayedThisSession() || reducedMotion.matches)) return;
+    if (!motionEnabled() || (!replay && (hasPlayedThisSession() || reducedMotion.matches))) return;
 
     clearTimeout(closeTimer);
     markPlayed();
@@ -61,7 +62,7 @@
     video.load();
 
     const playWhenReady = () => {
-      if (!overlay.classList.contains('is-visible') || overlay.classList.contains('is-closing')) return;
+      if (!motionEnabled() || !overlay.classList.contains('is-visible') || overlay.classList.contains('is-closing')) return;
       video.play().catch(() => {
         if (!video.muted) {
           video.muted = true;
@@ -93,11 +94,14 @@
   soundButton?.addEventListener('click', () => {
     video.muted = !video.muted;
     syncSoundButton();
-    if (video.paused) video.play().catch(() => closeTrailer());
+    if (video.paused && motionEnabled()) video.play().catch(() => closeTrailer());
   });
   replayButton?.addEventListener('click', () => openTrailer({ replay: true }));
   reducedMotion.addEventListener?.('change', event => {
     if (event.matches && overlay.classList.contains('is-visible')) closeTrailer(true);
+  });
+  window.addEventListener('cc:motionchange', event => {
+    if (!event.detail.enabled && overlay.classList.contains('is-visible')) closeTrailer(true);
   });
 
   openTrailer();

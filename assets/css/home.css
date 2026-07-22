@@ -719,142 +719,133 @@
 .course-card--completed { border-color: var(--green); }
 
 /* ── DAILY CHALLENGE ── */
-.challenge-section { background: linear-gradient(135deg, #1A1A2E 0%, #2D2D4A 50%, #1A1A2E 100%); }
+.challenge-section {
+  position: relative;
+  z-index: 1;
+  margin-top: -8px;
+  padding: 0 0 34px;
+  background: transparent;
+}
 
 .challenge-card {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  align-items: center;
-  gap: 48px;
-  background: rgba(255,255,255,.05);
-  border-radius: var(--r-xl);
-  padding: 56px;
-  border: 1px solid rgba(255,255,255,.1);
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(250px, .75fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
   overflow: hidden;
+  padding: clamp(24px, 3vw, 34px) clamp(24px, 3.5vw, 42px);
+  border: 1px solid rgba(224, 101, 0, .2);
+  border-radius: var(--r-lg);
+  background: linear-gradient(110deg, rgba(255,255,255,.9), rgba(255,240,224,.9)), var(--bg-section);
+  box-shadow: 0 14px 34px rgba(116, 72, 28, .11), inset 0 1px 0 rgba(255,255,255,.9);
 }
+
 .challenge-card::before {
-  content: '';
+  content: '挑戰';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 80% at 80% 50%, rgba(255,122,0,.12) 0%, transparent 70%);
+  right: 31%;
+  top: 50%;
+  color: rgba(224, 101, 0, .055);
+  font-family: serif;
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+  transform: translateY(-50%) rotate(-5deg);
   pointer-events: none;
 }
 
-.challenge-card__info { color: #fff; }
-.challenge-card__title {
-  font-family: 'Baloo 2', cursive;
-  font-size: 2rem;
-  color: #fff;
-  margin-block: 12px;
-}
-.challenge-card__desc {
-  font-size: .95rem;
-  color: rgba(255,255,255,.75);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-.challenge-card__desc strong { color: var(--yellow); }
+.challenge-card__info,
+.challenge-card__visual { position: relative; z-index: 1; }
 
-.challenge-card__timer {
+.challenge-card__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
+  padding: 6px 12px;
+  border: 1px solid rgba(255,122,0,.22);
   border-radius: var(--r-full);
-  padding: 8px 18px;
-  font-size: .88rem;
-  color: rgba(255,255,255,.85);
-  margin-bottom: 28px;
-}
-.timer-icon { font-size: 1rem; }
-.timer-display {
-  font-family: 'Baloo 2', cursive;
-  font-weight: 700;
-  color: var(--yellow);
-  font-size: 1rem;
-  letter-spacing: .05em;
-}
-
-.challenge-card__cta {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.challenge-card__participants { font-size: .82rem; color: rgba(255,255,255,.55); }
-
-/* Challenge badge & orbits */
-.challenge-card__visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.challenge-badge-wrap {
-  position: relative;
-  width: 180px; height: 180px;
-}
-.challenge-badge {
-  position: absolute;
-  inset: 25%;
-  background: linear-gradient(135deg, var(--yellow), var(--orange));
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 40px rgba(255,193,7,.35);
-  z-index: 2;
-}
-.challenge-badge__icon { font-size: 2rem; line-height: 1; }
-.challenge-badge__xp {
-  font-family: 'Baloo 2', cursive;
+  background: var(--orange-xlight);
+  color: var(--orange-dark);
+  font-size: .78rem;
   font-weight: 800;
-  font-size: 1rem;
-  color: #fff;
+  letter-spacing: .02em;
+}
+
+.challenge-card__title {
+  margin: 8px 0 4px;
+  color: var(--charcoal);
+  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+}
+
+.challenge-card__desc {
+  max-width: 700px;
   margin: 0;
+  color: var(--text-muted);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.challenge-card__desc strong { color: var(--orange-dark); }
+
+.challenge-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 14px;
 }
 
-.challenge-orbits { position: absolute; inset: 0; }
-.orbit {
-  position: absolute;
-  font-size: 1.4rem;
-  animation: orbitSpin 6s linear infinite;
+.challenge-card__timer,
+.challenge-card__participants {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  font-size: .8rem;
 }
-.orbit--1 {
-  top: 5%; left: 50%;
-  transform-origin: 0 85px;
-  animation-delay: 0s;
+.challenge-card__timer { gap: 6px; }
+.timer-icon { font-size: .95rem; }
+.timer-display {
+  color: var(--orange-dark);
+  font-family: 'Baloo 2', cursive;
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: .04em;
 }
-.orbit--2 {
-  top: 5%; left: 50%;
-  transform-origin: 0 85px;
-  animation-delay: -2s;
-}
-.orbit--3 {
-  top: 5%; left: 50%;
-  transform-origin: 0 85px;
-  animation-delay: -4s;
-}
-@keyframes orbitSpin {
-  from { transform: rotate(0deg)   translateX(0px) translateY(0px); }
-  to   { transform: rotate(360deg) translateX(0px) translateY(0px); }
-}
-/* Simpler orbit approach */
-.orbit--1 { top: 2px;  left: 50%; animation: orbit1 4s linear infinite; }
-.orbit--2 { top: 50%;  right: 2px; animation: orbit2 4s linear infinite .5s; }
-.orbit--3 { bottom: 2px; left: 50%; animation: orbit3 4s linear infinite 1s; }
 
-@keyframes orbit1 {
-  0%   { transform: translate(-50%, 0) rotate(0deg)   translateX(75px) rotate(0deg);   }
-  100% { transform: translate(-50%, 0) rotate(360deg) translateX(75px) rotate(-360deg); }
+.challenge-card__visual {
+  display: grid;
+  gap: 12px;
 }
-@keyframes orbit2 {
-  0%   { transform: translate(0, -50%) rotate(120deg) translateX(75px) rotate(-120deg);  }
-  100% { transform: translate(0, -50%) rotate(480deg) translateX(75px) rotate(-480deg);  }
+
+.challenge-card__reward {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,122,0,.2);
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.72);
 }
-@keyframes orbit3 {
-  0%   { transform: translate(-50%, 0) rotate(240deg) translateX(75px) rotate(-240deg);  }
-  100% { transform: translate(-50%, 0) rotate(600deg) translateX(75px) rotate(-600deg);  }
+.challenge-card__reward-icon { font-size: 1.75rem; line-height: 1; }
+.challenge-card__reward small {
+  display: block;
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 600;
+}
+.challenge-card__reward strong {
+  display: block;
+  color: var(--orange-dark);
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.challenge-card__visual .btn {
+  width: 100%;
+  min-height: 46px;
+  box-shadow: var(--shadow-orange);
 }

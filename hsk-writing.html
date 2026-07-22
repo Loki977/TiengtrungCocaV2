@@ -484,6 +484,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/writing-hero-scene.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -501,10 +502,43 @@
       </nav>
     </header>
 
+    <section class="writing-hero-scene" id="writingHeroScene" aria-hidden="true">
+      <span class="writing-hero-cloud writing-hero-cloud--one"></span>
+      <span class="writing-hero-cloud writing-hero-cloud--two"></span>
+
+      <div class="writing-hero-mouse">
+        <img src="assets/images/writing-hero/mouse-desk.png" alt="" width="542" height="600" decoding="async" />
+        <span class="writing-hero-bubble" lang="zh-CN">今天一定学会！</span>
+      </div>
+
+      <div class="writing-hero-glyphs" lang="zh-CN">
+        <span class="writing-hero-glyph writing-hero-glyph--ba">把</span>
+        <span class="writing-hero-glyph writing-hero-glyph--bei">被</span>
+        <span class="writing-hero-glyph writing-hero-glyph--le">了</span>
+        <span class="writing-hero-glyph writing-hero-glyph--de">的</span>
+      </div>
+
+      <div class="writing-hero-slogan" lang="zh-CN">
+        <span class="writing-hero-slogan__wash"></span>
+        <span class="writing-hero-slogan__line writing-hero-slogan__line--one">中文<span>虐</span>我千百遍，</span>
+        <span class="writing-hero-slogan__line writing-hero-slogan__line--two">我待中文如<span>初恋</span>。</span>
+      </div>
+
+      <div class="writing-hero-cat">
+        <span class="writing-hero-board" lang="zh-CN">没救了。</span>
+        <img src="assets/images/writing-hero/cat-teacher.png" alt="" width="554" height="600" decoding="async" />
+        <span class="writing-hero-tap" lang="zh-CN">啪！</span>
+      </div>
+
+      <span class="writing-hero-heart writing-hero-heart--one">♥</span>
+      <span class="writing-hero-heart writing-hero-heart--two">♥</span>
+      <span class="writing-hero-ink-line"></span>
+    </section>
+
     <section class="hero" aria-labelledby="pageTitle">
       <div>
         <span class="eyebrow">Luyện viết theo cấp độ HSK</span>
-        <h1 id="pageTitle">Chọn cấp độ luyện viết</h1>
+        <h1 id="pageTitle">Luyện viết cao thủ</h1>
         <p>Rèn nét, ghi nhớ từ vựng và luyện phản xạ viết tiếng Trung theo từng cấp độ từ HSK1 đến HSK6.</p>
       </div>
       <div class="summary" aria-label="Tổng số cấp độ">
@@ -694,6 +728,7 @@
 
     renderLevels();
   </script>
+<script src="assets/js/writing-hero-scene.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

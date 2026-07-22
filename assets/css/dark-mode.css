@@ -1,4 +1,17 @@
 /* Shared night theme. The Profile switch stores cc_darkMode for every page. */
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion="off"] video {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 html.dark-mode,
 html.dark-mode body {
   color-scheme: dark;

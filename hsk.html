@@ -310,6 +310,7 @@
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/hsk-hero-scene.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -355,9 +356,28 @@
     <!-- Page Hero -->
     <section class="page-hero">
       <div class="container">
-        <span class="badge badge--white" style="margin-bottom:16px">📚 Chương trình học</span>
-        <h1>Khóa học HSK</h1>
-        <p>Hệ thống bài học có cấu trúc rõ ràng theo tiêu chuẩn quốc tế HSK mới nhất</p>
+        <div class="hsk-hero-scene" id="hskHeroScene" aria-hidden="true">
+          <span class="hsk-hero-cloud hsk-hero-cloud--one"></span>
+          <span class="hsk-hero-cloud hsk-hero-cloud--two"></span>
+          <div class="hsk-hero-mouse">
+            <img src="assets/images/hsk-hero/mouse-student.png" alt="" width="403" height="480" decoding="async" />
+          </div>
+          <div class="hsk-hero-writing">
+            <span class="hsk-hero-writing__wrong">Trúng tiếng yêu</span>
+            <span class="hsk-hero-writing__correct">Yếu tiếng trung</span>
+            <span class="hsk-hero-pen" aria-hidden="true"></span>
+            <span class="hsk-hero-eraser" aria-hidden="true"></span>
+          </div>
+          <div class="hsk-hero-cat">
+            <img src="assets/images/hsk-hero/cat-teacher.png" alt="" width="423" height="480" decoding="async" />
+          </div>
+          <span class="hsk-hero-ink-line"></span>
+        </div>
+        <div class="hsk-hero-copy">
+          <span class="badge badge--white">📚 Chương trình học</span>
+          <h1>Khóa học HSK</h1>
+          <p>Hệ thống bài học có cấu trúc rõ ràng theo tiêu chuẩn quốc tế HSK mới nhất</p>
+        </div>
       </div>
       <div class="page-hero__wave">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -477,6 +497,7 @@
 <script src="assets/js/vocabulary-practice.js"></script>
 <script src="assets/js/hsk.js?v=2"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/hsk-hero-scene.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

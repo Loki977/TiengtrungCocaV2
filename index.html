@@ -35,14 +35,6 @@
           <span class="logo__icon">🍊</span>
           <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
         </a>
-   <nav class="nav" id="mainNav">
-    <a href="hsk.html" class="nav__link">Khóa học</a>
-    <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
-    <a href="flashcard.html" class="nav__link"> Flashcard</a>
-    <a href="./ThiThu.html" class="nav__link">Thi thử HSK</a>
-    <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
-    <a href="#challenge-section" class="nav__link">Thử thách</a>
-</nav>
         <div class="header__actions">
           <div class="streak-badge" title="Streak 0 ngày">
             <span class="streak-badge__icon">🔥</span>
@@ -77,12 +69,6 @@
 
         <nav class="mobile-nav__links" aria-label="Menu trên điện thoại">
           <a href="#path-section" class="nav__link">Lộ trình</a>
-          <a href="hsk.html" class="nav__link">Khóa học</a>
-          <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
-          <a href="flashcard.html" class="nav__link">Flashcard</a>
-          <a href="./ThiThu.html" class="nav__link">Thi thử HSK</a>
-          <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
-          <a href="#challenge-section" class="nav__link">Thử thách</a>
         </nav>
 
         <div class="mobile-nav__divider"></div>
@@ -104,7 +90,7 @@
           <div class="home-video-frame__inner">
             <video
               class="home-video-frame__video"
-              autoplay
+              data-motion-autoplay
               muted
               loop
               playsinline
@@ -138,12 +124,40 @@
       <span class="quick-card__text">Flashcard</span>
     </a>
 
-    <a href="./ThiThu.html" class="quick-card quick-card--mint" data-bg="📝">
-      <span class="quick-card__icon">📝</span>
-      <span class="quick-card__text">Thi thử HSK</span>
+    <a href="vocabulary.html" class="quick-card quick-card--mint" data-bg="🏯">
+      <span class="quick-card__icon">🏯</span>
+      <span class="quick-card__text">Tàng Thư Các</span>
     </a>
   </div>
 </section>
+
+      <!-- ========== DAILY CHALLENGE ========== -->
+      <section class="challenge-section" id="challenge-section">
+        <div class="container">
+          <article class="challenge-card">
+            <div class="challenge-card__info">
+              <span class="challenge-card__eyebrow">⚡ Thử thách hôm nay</span>
+              <h2 class="challenge-card__title">Dịch 10 câu trong 5 phút!</h2>
+              <p class="challenge-card__desc">Bạn có 3 mạng. Vượt qua đủ 10 câu để nhận <strong>30 XP</strong> và <strong>30 xu</strong>!</p>
+              <div class="challenge-card__meta">
+                <div class="challenge-card__timer">
+                  <span class="timer-icon">⏰</span>
+                  <span>Thời gian:</span>
+                  <span class="timer-display">05:00</span>
+                </div>
+                <span class="challenge-card__participants">❤️❤️❤️ · 10 câu · HSK 1–6</span>
+              </div>
+            </div>
+            <div class="challenge-card__visual">
+              <div class="challenge-card__reward" aria-label="Phần thưởng 30 XP và 30 xu">
+                <span class="challenge-card__reward-icon" aria-hidden="true">🏅</span>
+                <span><small>Phần thưởng</small><strong>+30 XP · +30 xu</strong></span>
+              </div>
+              <a class="btn btn--primary btn--lg ripple" id="startChallengeBtn" href="challenge.html">Chấp nhận thử thách</a>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <!-- ========== DASHBOARD ========== -->
       <section class="dashboard section" id="dashboard">
@@ -442,40 +456,6 @@
         </div>
       </section>
 
-      <!-- ========== DAILY CHALLENGE ========== -->
-      <section class="challenge-section section" id="challenge-section">
-        <div class="container">
-          <div class="challenge-card">
-            <div class="challenge-card__info">
-              <span class="badge badge--white">⚡ Thử thách hôm nay</span>
-              <h2 class="challenge-card__title">Dịch 10 câu trong 5 phút!</h2>
-              <p class="challenge-card__desc">Bạn có 3 mạng. Vượt qua đủ 10 câu để nhận <strong>30 XP</strong> và <strong>30 xu</strong>!</p>
-              <div class="challenge-card__timer">
-                <span class="timer-icon">⏰</span>
-                <span>Thời gian:</span>
-                <span class="timer-display">05:00</span>
-              </div>
-              <div class="challenge-card__cta">
-                <a class="btn btn--white btn--lg ripple" id="startChallengeBtn" href="challenge.html">Chấp nhận thử thách</a>
-                <span class="challenge-card__participants">❤️❤️❤️ · 10 câu · HSK 1–6</span>
-              </div>
-            </div>
-            <div class="challenge-card__visual">
-              <div class="challenge-badge-wrap">
-                <div class="challenge-badge">
-                  <span class="challenge-badge__icon">🏅</span>
-                  <p class="challenge-badge__xp">+30 XP</p>
-                </div>
-                <div class="challenge-orbits">
-                  <span class="orbit orbit--1">🔥</span>
-                  <span class="orbit orbit--2">⭐</span>
-                  <span class="orbit orbit--3">💎</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
     <!-- ========== FOOTER ========== -->
