@@ -613,7 +613,7 @@
     body.profile-bg-enabled .profile-page {
       background-image:
         linear-gradient(180deg, rgba(8, 20, 48, .34), rgba(237, 245, 247, .58)),
-        var(--profile-background-image, url("assets/images/background/p1.png"));
+        var(--profile-background-image, url("assets/images/background/p1.webp"));
       background-position: center top;
       background-size: cover;
       background-attachment: fixed;
@@ -688,6 +688,9 @@
       background: rgba(5, 17, 39, .58) !important;
       border-color: rgba(255, 255, 255, .42) !important;
       text-shadow: 0 2px 14px rgba(0, 0, 0, .34);
+    }
+    body.profile-bg-enabled .profile-hero__name {
+      text-shadow: 0 2px 5px rgba(0, 0, 0, .72), 0 0 20px rgba(0, 0, 0, .34) !important;
     }
     body.profile-bg-enabled .profile-page :is(
       .profile-hero__name,
@@ -792,7 +795,7 @@
     body.profile-bg-enabled .footer {
       background:
         linear-gradient(180deg, rgba(7, 17, 38, .42), rgba(8, 19, 40, .54)),
-        var(--profile-background-image, url("assets/images/background/p1.png")) !important;
+        var(--profile-background-image, url("assets/images/background/p1.webp")) !important;
       background-position: center top !important;
       background-size: cover !important;
       background-attachment: fixed !important;
@@ -910,10 +913,31 @@
     if (localStorage.getItem('cc_darkMode') === 'true') document.body.classList.add('dark-mode');
     var initialProfileBgId = localStorage.getItem('cc_profileBackgroundId') || 'p1';
     if (!/^p[1-9]\d*$/.test(initialProfileBgId)) initialProfileBgId = 'p1';
-    var initialProfileBgExt = initialProfileBgId === 'p14' ? '.jpeg' : '.png';
+    var initialProfileBgExt = initialProfileBgId === 'p1' ? '.webp' : initialProfileBgId === 'p14' ? '.jpeg' : '.png';
     var initialProfileBgUrl = new URL('assets/images/background/' + initialProfileBgId + initialProfileBgExt, document.baseURI).href;
     document.body.style.setProperty('--profile-background-image', 'url("' + initialProfileBgUrl + '")');
-    // Chỉ bật nền sau khi Firebase xác minh VIP; tránh nháy nội dung đặc quyền.
+    try {
+      var initialProfileUser = JSON.parse(localStorage.getItem('cc_user') || 'null');
+      var initialProfileStats = initialProfileUser?.uid
+        ? JSON.parse(localStorage.getItem('cc_stats_' + initialProfileUser.uid) || 'null')
+        : null;
+      var initialVipUntil = initialProfileStats?.vipUntil;
+      var initialVipExpiry = initialVipUntil && typeof initialVipUntil === 'object'
+        ? Number(initialVipUntil.seconds ?? initialVipUntil._seconds) * 1000
+        : Date.parse(initialVipUntil);
+      var initialVipActive = initialProfileStats?.isVip === true && (
+        initialVipUntil === null || (Number.isFinite(initialVipExpiry) && initialVipExpiry > Date.now())
+      );
+      if (localStorage.getItem('cc_profileBackground') === 'true' && initialVipActive) {
+        document.body.classList.add('profile-bg-enabled');
+        window.__ccInitialProfileBackground = true;
+        var initialProfilePreload = document.createElement('link');
+        initialProfilePreload.rel = 'preload';
+        initialProfilePreload.as = 'image';
+        initialProfilePreload.href = initialProfileBgUrl;
+        document.head.appendChild(initialProfilePreload);
+      }
+    } catch (_) {}
   </script>
 
   <!-- ========== HEADER ========== -->
@@ -1840,7 +1864,7 @@
       : 'p1';
 
     function getProfileBackgroundUrl(id) {
-      const extension = id === 'p14' ? '.jpeg' : '.png';
+      const extension = id === 'p1' ? '.webp' : id === 'p14' ? '.jpeg' : '.png';
       return new URL(PROFILE_BG_DIRECTORY + id + extension, document.baseURI).href;
     }
 
@@ -1983,8 +2007,7 @@
       }
     }
 
-    // Mặc định khóa cho đến khi sự kiện auth/stats xác nhận quyền từ Firestore.
-    syncProfileVipFeatures();
+    // Firebase sẽ xác nhận lại quyền và đồng bộ giao diện qua các sự kiện bên dưới.
     profileBgToggle?.addEventListener('click', function (event) {
       if (!hasVerifiedVip()) {
         event.preventDefault();

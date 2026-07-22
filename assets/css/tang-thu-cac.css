@@ -197,6 +197,35 @@
 .archive-panel.is-active { display: block; animation: archiveFade .22s ease; }
 @keyframes archiveFade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 .archive-panel[data-archive-panel="dictionary"] .vocab-hero { padding-top: 52px; }
+.archive-masthead.is-browsing {
+  padding-bottom: 24px;
+}
+.archive-masthead.is-browsing .archive-video-frame,
+.archive-masthead.is-browsing .archive-masthead__desc { display: none; }
+.archive-tabs.is-compact {
+  display: flex;
+  max-width: 720px;
+  gap: 10px;
+  margin-top: 22px;
+}
+.archive-tabs.is-compact .archive-tab {
+  display: flex;
+  min-width: 0;
+  min-height: 48px;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-align: center;
+}
+.archive-tabs.is-compact .archive-tab__label,
+.archive-tabs.is-compact .archive-tab__orb,
+.archive-tabs.is-compact .archive-tab__art,
+.archive-tabs.is-compact .archive-tab__footer,
+.archive-tabs.is-compact .archive-tab__copy small { display: none; }
+.archive-tabs.is-compact .archive-tab__copy { padding: 0; }
+.archive-tabs.is-compact .archive-tab__copy strong { font-size: 1rem; line-height: 1.2; }
 .archive-panel .container { width: min(1320px, calc(100% - 40px)); max-width: none; }
 .archive-panel .search-input { font-size: 1rem; }
 .archive-panel .chip,
@@ -476,6 +505,24 @@
   .archive-tab__arrow { width: 58px; height: 58px; border-width: 7px; }
   .archive-tab__art { width: 96px; height: 96px; left: 14px; }
   .archive-tab__orb { width: 150px; height: 150px; }
+  .archive-tabs.is-compact {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: none;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 2px 0 7px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+  .archive-tabs.is-compact .archive-tab {
+    min-width: max-content;
+    min-height: 44px;
+    flex: 1 0 auto;
+    padding-inline: 17px;
+    scroll-snap-align: start;
+  }
   .library-section { padding-top: 30px; }
   .library-intro { align-items: flex-start; flex-direction: column; }
   .library-toolbar { padding: 13px; border-radius: 16px; }
@@ -646,4 +693,3 @@
     animation: none;
   }
 }
-

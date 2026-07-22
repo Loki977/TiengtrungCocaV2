@@ -782,7 +782,7 @@
           <div>
             <span class="badge badge--orange">Bài ${lesson.lessonId}</span>
             <h2>${escapeHtml(lesson.title || '')}</h2>
-            <p>${lesson.meta?.estimatedMinutes ? `Thời lượng khoảng ${lesson.meta.estimatedMinutes} phút. ` : ''}Học tuần tự từng phần: phần đã xong sẽ ẩn đi, phần tiếp theo mới mở.</p>
+            <p>${lesson.meta?.estimatedMinutes ? `Khoảng ${lesson.meta.estimatedMinutes} phút` : 'Bài học'}${lesson.desc ? ` · ${escapeHtml(lesson.desc)}` : ''}</p>
           </div>
         </div>
 

@@ -720,6 +720,15 @@ mark {
     padding: 22px;
   }
 
+  .gt-hero p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    line-height: 1.55;
+  }
+
   .gt-vocab-grid {
     grid-template-columns: 1fr;
   }

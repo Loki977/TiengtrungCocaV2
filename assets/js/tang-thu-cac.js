@@ -82,6 +82,10 @@
 
   async function activateTab(tab, updateHash = true) {
     state.activeTab = tab;
+    const masthead = $(".archive-masthead");
+    const tabList = $(".archive-tabs");
+    masthead?.classList.add("is-browsing");
+    tabList?.classList.add("is-compact");
     $$("[data-archive-tab]").forEach((button) => {
       const active = button.dataset.archiveTab === tab;
       button.classList.toggle("is-active", active);

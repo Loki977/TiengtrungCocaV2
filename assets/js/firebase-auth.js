@@ -1234,9 +1234,23 @@ function setValue(selector, value) {
 
 function updateHeaderUser(user, stats) {
   const headerActions = document.querySelector(".header__actions");
+  const mobileNavInner = document.querySelector(".mobile-nav__inner");
   const loginBtn = document.getElementById("loginBtn") || document.getElementById("headerLoginBtn");
   const loginBtnMobile = document.getElementById("loginBtnMobile") || document.getElementById("mobileLoginBtn");
   let userBox = document.getElementById("firebaseUserBox");
+  let mobileProfileLink = document.getElementById("firebaseMobileProfileLink");
+  if (mobileNavInner && !mobileProfileLink) {
+    mobileProfileLink = document.createElement("a");
+    mobileProfileLink.id = "firebaseMobileProfileLink";
+    mobileProfileLink.className = "mobile-profile-link";
+    mobileProfileLink.href = "profile.html";
+    const divider = mobileNavInner.querySelector(".mobile-nav__divider");
+    mobileNavInner.insertBefore(mobileProfileLink, divider || loginBtnMobile || null);
+  }
+  if (mobileProfileLink) {
+    mobileProfileLink.innerHTML = user ? "<span aria-hidden=\"true\">👤</span><span>Trang cá nhân</span>" : "<span aria-hidden=\"true\">👤</span><span>Đăng nhập / Profile</span>";
+    mobileProfileLink.setAttribute("aria-label", user ? "Mở trang cá nhân" : "Mở trang đăng nhập và Profile");
+  }
   if (user && headerActions) {
     if (!userBox) {
       userBox = document.createElement("a");
