@@ -9,7 +9,13 @@ globalThis.fetch = async (url) => {
   }
 };
 
-const { areAnswersEquivalent, areAnswersExactlyEquivalent, generateLessons } = await import("../lesson-engine.js");
+const {
+  annotateWritingLesson,
+  areAnswersEquivalent,
+  areAnswersExactlyEquivalent,
+  generateLessons,
+  loadWritingAnnotations
+} = await import("../lesson-engine.js");
 const { getLessonConfig } = await import("../lesson-config.js");
 const { getWritingPlan } = await import("../writing-content-plan.mjs");
 
@@ -27,9 +33,77 @@ const forbiddenPatterns = [
 const expectedLessonCounts = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 const expectedSentenceCounts = { hsk1: 149, hsk2: 150, hsk3: 200, hsk4: 200, hsk5: 360, hsk6: 400 };
 const expectedVocabularyPerLesson = { hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
+const correctedClassifierExamples = [
+  "这篇文章的标题很吸引人。",
+  "这条项链很漂亮。",
+  "这块手表的价值很高。",
+  "这台机器消耗很多电。",
+  "这片平原很广阔。"
+];
 const allTitles = new Set();
+const writingAnnotations = await loadWritingAnnotations();
+const allowedWordTypes = new Set([
+  "Danh từ", "Danh từ riêng", "Động từ", "Tính từ", "Phó từ", "Đại từ", "Số từ",
+  "Lượng từ", "Phương vị từ", "Giới từ", "Liên từ", "Trợ từ", "Thán từ", "Từ tượng thanh", "Cụm từ"
+]);
+const allowedComponentKeys = new Set([
+  "subject", "predicate", "object", "adverbial", "attribute", "complement", "conjunction",
+  "time", "location", "purpose", "reason", "condition", "head", "subject-head", "object-head",
+  "ba", "bei", "pp"
+]);
+
+assert.equal(
+  writingAnnotations.meta.wordCount,
+  Object.keys(writingAnnotations.wordTypes).length,
+  "Chú giải Luyện viết sai tổng số từ"
+);
+assert.equal(
+  writingAnnotations.meta.sentenceCount,
+  Object.keys(writingAnnotations.sentences).length,
+  "Chú giải Luyện viết sai tổng số câu"
+);
+
+function componentKeys(sentence) {
+  return writingAnnotations.sentences[sentence]?.map((item) => item.key) || [];
+}
+
+assert.deepEqual(
+  componentKeys("请把桌子擦干净。"),
+  ["predicate", "ba", "object", "predicate", "complement"],
+  "Câu 把 phải tách dấu hiệu, đối tượng, động từ và bổ ngữ kết quả"
+);
+assert.deepEqual(
+  componentKeys("他被老师表扬了。"),
+  ["subject", "bei", "adverbial", "predicate"],
+  "Câu 被 phải tách chủ thể chịu tác động, tác nhân và vị ngữ"
+);
+assert.deepEqual(
+  componentKeys("他的汉语说得很流利。"),
+  ["attribute", "subject-head", "predicate", "complement"],
+  "Cấu trúc 得 phải gom đúng cụm bổ ngữ trạng thái"
+);
+
+function verifyAnnotations(level, lessons) {
+  for (const lesson of lessons.map((item) => annotateWritingLesson(item, writingAnnotations))) {
+    for (const word of lesson.vocabularies) {
+      assert.ok(word.wordTypes.length, `${level} thiếu loại từ: ${word.chinese}`);
+      assert.ok(word.wordTypes.every((type) => allowedWordTypes.has(type)), `${level} có loại từ lạ: ${word.chinese}`);
+    }
+    for (const sentence of lesson.sentences) {
+      assert.ok(sentence.components.length >= 1, `${level} thiếu thành phần câu: ${sentence.chinese}`);
+      assert.ok(sentence.components.some((item) => item.key === "predicate"), `${level} thiếu vị ngữ: ${sentence.chinese}`);
+      assert.ok(sentence.components.every((item) => allowedComponentKeys.has(item.key) && item.label && item.text), `${level} có nhãn câu lỗi: ${sentence.chinese}`);
+      assert.equal(
+        sentence.components.map((item) => item.text).join("").replace(/\s+/gu, ""),
+        sentence.chinese.replace(/\s+/gu, ""),
+        `${level} phân tích làm thay đổi câu: ${sentence.chinese}`
+      );
+    }
+  }
+}
 
 const hsk1Lessons = await generateLessons("hsk1", getLessonConfig("hsk1"));
+verifyAnnotations("hsk1", hsk1Lessons);
 assert.equal(hsk1Lessons.length, expectedLessonCounts.hsk1, "HSK1 thiếu bài luyện viết");
 assert.equal(hsk1Lessons.flatMap((lesson) => lesson.sentences).length, expectedSentenceCounts.hsk1, "HSK1 thiếu câu luyện viết");
 for (const lesson of hsk1Lessons) {
@@ -44,6 +118,7 @@ for (const lesson of hsk1Lessons) {
 
 for (const level of ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"]) {
   const lessons = await generateLessons(level, getLessonConfig(level));
+  verifyAnnotations(level, lessons);
   const allSentences = lessons.flatMap((lesson) => lesson.sentences);
   const rawItems = JSON.parse(await fs.readFile(`assets/data/writing/${level}.json`, "utf8"));
   const ids = rawItems.map((item) => item.id);
@@ -132,6 +207,12 @@ for (const level of ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"]) {
   }
 }
 
+const hsk6WritingRows = JSON.parse(await fs.readFile("assets/data/writing/hsk6.json", "utf8"));
+const hsk6WritingExamples = hsk6WritingRows.flatMap((item) => item.examples || []).map((example) => example.hanzi);
+for (const sentence of correctedClassifierExamples) {
+  assert.ok(hsk6WritingExamples.includes(sentence), `HSK6 phải dùng lượng từ đúng: ${sentence}`);
+}
+
 assert.equal(
   areAnswersEquivalent(
     "Cuối tuần tôi đi chơi ở công viên",
@@ -177,6 +258,24 @@ assert.equal(inputHandlerSource.includes("submitCurrentAnswer("), false, "Gõ đ
 assert.match(lessonPageSource, /Bấm “Kết quả” để chấm đáp án/, "Enter phải yêu cầu bấm Kết quả");
 assert.match(lessonPageSource, /const TTS_NORMAL_RATE = 0\.754/, "Tốc độ nghe thường phải tăng 30%");
 assert.match(lessonPageSource, /const TTS_SLOW_RATE = 0\.35/, "Tốc độ chậm phải giảm thêm khoảng 40%");
+assert.match(lessonPageSource, /new SentenceStructure\(\{ level \}\)/, "Cấu trúc câu phải dùng component chung");
+assert.equal(lessonPageSource.includes("function renderSentenceComponents"), false, "Không được lặp renderer cấu trúc câu trong trang");
+assert.match(lessonPageSource, /mode: "cn-to-vi"/, "Luyện viết phải mặc định ở chế độ Trung → Việt");
+assert.match(lessonPageSource, /sentence-answer-translation/, "Trung → Việt phải hiện đáp án tiếng Việt nội tuyến");
+assert.match(lessonPageSource, /return String\(item\.vietnamese \|\| ""\)/, "Thanh tiến độ Trung → Việt phải dùng đáp án tiếng Việt nguyên dạng");
+assert.match(lessonPageSource, /isAnswered \|\| isRevealed \? getExpectedAnswerValue\(item\)/, "Câu đã bấm Đáp án phải giữ vạch tiến độ đúng khi quay lại");
+assert.match(lessonPageSource, /showSymbols: state\.showSentenceStructureLabels/, "CMS phải có thể ẩn riêng ký hiệu cấu trúc câu");
+
+const sentenceStructureSource = await fs.readFile("assets/js/sentence-structure.js", "utf8");
+for (const symbol of ["S", "V", "O", "A", "C", "Att", "H"]) {
+  assert.ok(sentenceStructureSource.includes(`symbol: "${symbol}"`), `Thiếu ký hiệu cấu trúc ${symbol}`);
+}
+assert.match(sentenceStructureSource, /if \(showSymbols\)/, "Ẩn ký hiệu không được ẩn màu hoặc gạch chân của cụm câu");
+
+const adminWritingSource = await fs.readFile("assets/js/admin-super.js", "utf8");
+const adminWritingHtml = await fs.readFile("admin-super.html", "utf8");
+assert.match(adminWritingHtml, /id="writingCmsGlobalSentenceLabels"/, "CMS phải có công tắc ký hiệu cấu trúc câu hàng loạt");
+assert.match(adminWritingSource, /saveWritingSentenceLabelSetting/, "CMS phải lưu công tắc ký hiệu cấu trúc câu hàng loạt");
 
 const adminHtml = await fs.readFile("admin-super.html", "utf8");
 const adminSource = await fs.readFile("assets/js/admin-super.js", "utf8");

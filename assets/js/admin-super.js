@@ -399,7 +399,7 @@ function defaultLearningSettings(){
     courses[level] = { enabled:true, lessons:{} };
     for(let i=1;i<=total;i++) courses[level].lessons[`B${i}`] = { enabled:true, unlockType:'free', coinCost:0 };
   });
-  return { courses, features:{...DEFAULT_FEATURES} };
+  return { courses, features:{...DEFAULT_FEATURES}, writing:{ showSentenceStructureLabels:true } };
 }
 function normalizeCourseConfig(cfg, level){
   const rawCourse = cfg?.courses?.[level];
@@ -448,7 +448,29 @@ function renderLearningSettings(){
   if(courseBox) courseBox.innerHTML = Object.keys(COURSE_TOTALS).map(level => { const c=normalizeCourseConfig(cfg, level); return `<label class="toggle-row"><b>${level}</b><span>${c.enabled ? 'Đang mở' : 'Đang khóa'}</span><input type="checkbox" data-course-toggle="${level}" ${c.enabled ? 'checked' : ''}></label>`; }).join('');
   const featureBox = $('#featureToggles');
   if(featureBox) featureBox.innerHTML = Object.keys(DEFAULT_FEATURES).map(key => `<label class="toggle-row"><b>${safeText(key)}</b><span>${cfg.features?.[key] ? 'Bật' : 'Tắt'}</span><input type="checkbox" data-feature-toggle="${key}" ${cfg.features?.[key] ? 'checked' : ''}></label>`).join('');
+  const writingLabelsToggle = $('#writingCmsGlobalSentenceLabels');
+  if(writingLabelsToggle) writingLabelsToggle.checked = cfg.writing?.showSentenceStructureLabels !== false;
   renderLessonLockGrid();
+}
+
+async function saveWritingSentenceLabelSetting(){
+  const input = $('#writingCmsGlobalSentenceLabels');
+  if(!input) return;
+  try{
+    const admin = requireAdmin();
+    const cfg = state.learningSettings || defaultLearningSettings();
+    cfg.writing = { ...(cfg.writing || {}), showSentenceStructureLabels:input.checked };
+    state.learningSettings = cfg;
+    await setDoc(learningRef(), {
+      writing:cfg.writing,
+      updatedAt:serverTimestamp(),
+      updatedBy:admin.email
+    }, { merge:true });
+    toast(input.checked ? 'Đã hiện ký hiệu cấu trúc cho toàn bộ Luyện viết' : 'Đã ẩn ký hiệu và chú giải cho toàn bộ Luyện viết');
+  }catch(error){
+    input.checked = state.learningSettings?.writing?.showSentenceStructureLabels !== false;
+    toast(error?.message || 'Không lưu được thiết lập hiển thị', 'error');
+  }
 }
 function renderLessonLockGrid(){
   const level = $('#lessonLevelSelect')?.value || 'hsk1';
@@ -729,6 +751,7 @@ function bindWritingCmsControls(){
   $('#writingCmsSave') && ($('#writingCmsSave').onclick = saveWritingCmsLesson);
   $('#writingCmsReset') && ($('#writingCmsReset').onclick = () => loadWritingCmsLesson({ ignoreOverride:true }));
   $('#writingCmsDelete') && ($('#writingCmsDelete').onclick = deleteWritingCmsOverride);
+  $('#writingCmsGlobalSentenceLabels') && ($('#writingCmsGlobalSentenceLabels').onchange = saveWritingSentenceLabelSetting);
   $('#writingCmsDownload') && ($('#writingCmsDownload').onclick = () => state.writingCmsData && downloadJson(`${$('#writingCmsLevel').value}-writing-${$('#writingCmsLesson').value}.json`, state.writingCmsData));
   $$('.writing-cms-tab').forEach(btn => btn.onclick = () => switchWritingCmsTab(btn.dataset.writingTab));
 }

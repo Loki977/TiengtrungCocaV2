@@ -495,6 +495,10 @@
         return;
       }
       lesson.level = lesson.level || currentTab;
+      lesson.chineseTitle = lesson.chineseTitle || currentItem.chineseTitle || '';
+      if ([1, 2, 3].includes(Number(currentTab))) {
+        await window.CoursePinyin?.prepare?.(lesson, Number(currentTab));
+      }
 
       const currentIndex = currentLessonsIndex.findIndex(l => Number(l.lessonId) === Number(lessonId));
       const prevId = currentIndex > 0 ? currentLessonsIndex[currentIndex - 1].lessonId : null;

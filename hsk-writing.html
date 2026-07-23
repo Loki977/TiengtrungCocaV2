@@ -485,6 +485,7 @@
   </style>
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
   <link rel="stylesheet" href="assets/css/writing-hero-scene.css" />
+  <link rel="stylesheet" href="assets/css/hero-slogan.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -518,10 +519,11 @@
         <span class="writing-hero-glyph writing-hero-glyph--de">的</span>
       </div>
 
-      <div class="writing-hero-slogan" lang="zh-CN">
-        <span class="writing-hero-slogan__wash"></span>
-        <span class="writing-hero-slogan__line writing-hero-slogan__line--one">中文<span>虐</span>我千百遍，</span>
-        <span class="writing-hero-slogan__line writing-hero-slogan__line--two">我待中文如<span>初恋</span>。</span>
+      <div class="writing-hero-slogan cc-hero-slogan" data-hero-slogan data-mouse=".writing-hero-mouse" data-cat=".writing-hero-cat">
+        <span class="cc-hero-slogan__line" data-slogan-line="mouse" lang="zh-CN">中文虐我千百遍，</span>
+        <span class="cc-hero-slogan__line" data-slogan-line="cat" lang="zh-CN">我待中文如初恋。</span>
+        <span class="cc-hero-slogan__bubble cc-hero-slogan__bubble--one" aria-hidden="true"></span>
+        <span class="cc-hero-slogan__bubble cc-hero-slogan__bubble--two" aria-hidden="true"></span>
       </div>
 
       <div class="writing-hero-cat">
@@ -532,7 +534,6 @@
 
       <span class="writing-hero-heart writing-hero-heart--one">♥</span>
       <span class="writing-hero-heart writing-hero-heart--two">♥</span>
-      <span class="writing-hero-ink-line"></span>
     </section>
 
     <section class="hero" aria-labelledby="pageTitle">
@@ -728,7 +729,7 @@
 
     renderLevels();
   </script>
-<script src="assets/js/writing-hero-scene.js"></script>
+<script src="assets/js/hero-slogan.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

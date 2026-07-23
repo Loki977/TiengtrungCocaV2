@@ -156,45 +156,6 @@
   pointer-events: none;
 }
 
-.writing-hero-slogan__wash {
-  position: absolute;
-  z-index: -1;
-  inset: 7px 4%;
-  border-radius: 48% 52% 46% 54%;
-  background:
-    radial-gradient(ellipse at 50% 55%, rgba(255, 244, 214, .78), rgba(255, 248, 230, .38) 58%, transparent 76%);
-  opacity: 0;
-  transform: scaleX(.08);
-  animation: writingInkWash 12s cubic-bezier(.22, .8, .28, 1) infinite;
-}
-
-.writing-hero-slogan__line {
-  display: block;
-  color: var(--writing-ink);
-  font-family: "STKaiti", "KaiTi", "Noto Serif SC", "Songti SC", "Microsoft YaHei", serif;
-  font-size: clamp(25px, 2.15vw, 32px);
-  font-weight: 700;
-  line-height: 1.32;
-  letter-spacing: .055em;
-  white-space: nowrap;
-  text-shadow: 0 1px rgba(255, 255, 255, .72);
-  opacity: 0;
-  -webkit-clip-path: inset(0 100% 0 0);
-  clip-path: inset(0 100% 0 0);
-  will-change: clip-path, opacity;
-}
-
-.writing-hero-slogan__line--one { animation: writingSloganOne 12s linear infinite; }
-.writing-hero-slogan__line--two { animation: writingSloganTwo 12s linear infinite; }
-
-.writing-hero-slogan__line span {
-  color: var(--writing-accent);
-  text-shadow: 0 2px 12px rgba(244, 72, 77, .15);
-}
-
-.writing-hero-slogan__line--one span { display: inline-block; animation: writingNueReaction 12s ease-in-out infinite; }
-.writing-hero-slogan__line--two span { display: inline-block; animation: writingFirstLoveGlow 12s ease-in-out infinite; }
-
 .writing-hero-board {
   position: absolute;
   z-index: 6;
@@ -365,39 +326,6 @@
   47%, 100% { opacity: 0; transform: translate3d(-3px, -5px, 0) rotate(-3deg) scale(.82); }
 }
 
-@keyframes writingInkWash {
-  0%, 42% { opacity: 0; transform: scaleX(.08); }
-  47% { opacity: 1; transform: scaleX(1); }
-  96% { opacity: 1; transform: scaleX(1); }
-  100% { opacity: 0; transform: scaleX(.94); }
-}
-
-@keyframes writingSloganOne {
-  0%, 44% { opacity: 0; -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); }
-  45% { opacity: 1; }
-  61%, 96% { opacity: 1; -webkit-clip-path: inset(0 0 0 0); clip-path: inset(0 0 0 0); }
-  100% { opacity: 0; -webkit-clip-path: inset(0 0 0 0); clip-path: inset(0 0 0 0); }
-}
-
-@keyframes writingSloganTwo {
-  0%, 59% { opacity: 0; -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); }
-  60% { opacity: 1; }
-  76%, 96% { opacity: 1; -webkit-clip-path: inset(0 0 0 0); clip-path: inset(0 0 0 0); }
-  100% { opacity: 0; -webkit-clip-path: inset(0 0 0 0); clip-path: inset(0 0 0 0); }
-}
-
-@keyframes writingNueReaction {
-  0%, 56%, 63%, 100% { transform: translate3d(0, 0, 0) rotate(0); }
-  58% { transform: translate3d(-1px, 0, 0) rotate(-3deg); }
-  60% { transform: translate3d(1px, 0, 0) rotate(3deg); }
-}
-
-@keyframes writingFirstLoveGlow {
-  0%, 70% { transform: scale(1); filter: none; }
-  76% { transform: scale(1.06); filter: drop-shadow(0 3px 7px rgba(244, 91, 100, .24)); }
-  84%, 100% { transform: scale(1); filter: none; }
-}
-
 @keyframes writingTeacherBoard {
   0%, 77% { opacity: 0; transform: translate3d(5px, 9px, 0) rotate(5deg) scale(.88); }
   81%, 95% { opacity: 1; transform: translate3d(0, 0, 0) rotate(-2deg) scale(1); }
@@ -423,9 +351,6 @@ html.dark-mode .writing-hero-scene {
   --writing-accent: #ff878a;
 }
 
-html.dark-mode .writing-hero-slogan__line { text-shadow: 0 1px 12px rgba(0, 0, 0, .34); }
-html.dark-mode .writing-hero-slogan__wash { opacity: .22; }
-
 html[data-motion="off"] .writing-hero-scene *,
 html[data-motion="off"] .writing-hero-scene *::before,
 html[data-motion="off"] .writing-hero-scene *::after {
@@ -439,14 +364,6 @@ html[data-motion="off"] .writing-hero-cat { opacity: 1; transform: none; }
 html[data-motion="off"] .writing-hero-bubble,
 html[data-motion="off"] .writing-hero-glyph,
 html[data-motion="off"] .writing-hero-tap { opacity: 0; }
-
-html[data-motion="off"] .writing-hero-slogan__wash { opacity: 1; transform: scaleX(1); }
-
-html[data-motion="off"] .writing-hero-slogan__line {
-  opacity: 1;
-  -webkit-clip-path: inset(0 0 0 0);
-  clip-path: inset(0 0 0 0);
-}
 
 html[data-motion="off"] .writing-hero-board {
   opacity: 1;
@@ -473,7 +390,6 @@ html[data-motion="off"] .writing-hero-heart--two { opacity: 0; }
   .writing-hero-mouse,
   .writing-hero-cat { width: 113px; }
   .writing-hero-slogan { width: 50%; height: 92px; }
-  .writing-hero-slogan__line { font-size: clamp(23px, 2.65vw, 28px); }
   .writing-hero-glyphs { left: clamp(102px, 13vw, 150px); transform: scale(.9); transform-origin: 0 50%; }
 }
 
@@ -506,12 +422,6 @@ html[data-motion="off"] .writing-hero-heart--two { opacity: 0; }
     height: 78px;
   }
 
-  .writing-hero-slogan__line {
-    font-size: clamp(17px, 5vw, 20px);
-    line-height: 1.38;
-    letter-spacing: .015em;
-  }
-
   .writing-hero-board {
     right: 0;
     top: -1px;
@@ -542,7 +452,6 @@ html[data-motion="off"] .writing-hero-heart--two { opacity: 0; }
   .writing-hero-mouse { width: 74px; }
   .writing-hero-cat { width: 70px; }
   .writing-hero-slogan { width: 56%; bottom: 16px; }
-  .writing-hero-slogan__line { font-size: clamp(15px, 4.75vw, 17px); }
   .writing-hero-glyphs { left: 45px; transform: scale(.68); }
   .writing-hero-board { width: 52px; font-size: 10px; }
   .writing-hero-tap { left: -8px; }
@@ -563,14 +472,6 @@ html[data-motion="off"] .writing-hero-heart--two { opacity: 0; }
   .writing-hero-bubble,
   .writing-hero-glyph,
   .writing-hero-tap { opacity: 0; }
-
-  .writing-hero-slogan__wash { opacity: 1; transform: scaleX(1); }
-
-  .writing-hero-slogan__line {
-    opacity: 1;
-    -webkit-clip-path: inset(0 0 0 0);
-    clip-path: inset(0 0 0 0);
-  }
 
   .writing-hero-board {
     opacity: 1;

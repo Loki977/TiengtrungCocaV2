@@ -149,6 +149,11 @@ body{
   letter-spacing:0!important;
   margin:0!important;
 }
+.deck-banner__title{
+  font-size:clamp(26px,3vw,40px)!important;
+  line-height:1.12!important;
+  transform:translateY(-30px);
+}
 .page-hero p,
 .profile-hero__meta{
   max-width:620px;
@@ -242,4 +247,5 @@ body{
 @media (max-width:640px){
   .page-hero .container,.profile-hero__inner{width:calc(100% - 32px);}
   .hsk-tabs-wrap,.deck-selector,.profile-tabs{justify-content:flex-start;width:100%;}
+  .deck-banner__title{transform:translateY(-12px);}
 }

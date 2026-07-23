@@ -28,6 +28,16 @@ const forbiddenPatterns = [
   /này rất quan trọng/iu
 ];
 
+// Chỉ áp dụng cho dữ liệu Luyện viết: chuẩn hóa lượng từ trong câu mẫu mà
+// không thay đổi dữ liệu nguồn dùng bởi Từ điển, Khóa học hoặc audio.
+const WRITING_EXAMPLE_CORRECTIONS = new Map([
+  ["这个文章的标题很吸引人。", { hanzi: "这篇文章的标题很吸引人。", pinyin: "Zhè piān wénzhāng de biāotí hěn xīyǐn rén.", translation: "Tiêu đề của bài viết này rất thu hút." }],
+  ["这个项链很漂亮。", { hanzi: "这条项链很漂亮。", pinyin: "Zhè tiáo xiàngliàn hěn piàoliang.", translation: "Chiếc vòng cổ này rất đẹp." }],
+  ["这个手表的价值很高。", { hanzi: "这块手表的价值很高。", pinyin: "Zhè kuài shǒubiǎo de jiàzhí hěn gāo.", translation: "Giá trị của chiếc đồng hồ này rất cao." }],
+  ["这个机器消耗很多电。", { hanzi: "这台机器消耗很多电。", pinyin: "Zhè tái jīqì xiāohào hěn duō diàn.", translation: "Cái máy này tiêu thụ rất nhiều điện." }],
+  ["这个平原很广阔。", { hanzi: "这片平原很广阔。", pinyin: "Zhè piàn píngyuán hěn guǎngkuò.", translation: "Đồng bằng này rất rộng lớn." }]
+]);
+
 const masterByHanzi = new Map();
 for (const entry of masterEntries) {
   const hanzi = clean(entry.hanzi);
@@ -235,6 +245,7 @@ function addCandidate(selected, candidate, chosenExample, source, selectedHanzi,
 }
 
 function serializeCandidate(candidate, levelNumber, lessonId, index) {
+  const correctedExample = correctWritingExample(candidate.chosenExample);
   return {
     id: `writing-hsk${levelNumber}-l${String(lessonId).padStart(2, "0")}-${String(index + 1).padStart(2, "0")}`,
     hsk: levelNumber,
@@ -243,12 +254,18 @@ function serializeCandidate(candidate, levelNumber, lessonId, index) {
     pinyin: candidate.pinyin,
     meaning: candidate.meaning,
     meaning_vi: candidate.meaning,
-    examples: candidate.chosenExample ? [candidate.chosenExample] : [],
+    examples: correctedExample ? [correctedExample] : [],
     lesson: lessonId,
     type: candidate.type || "",
     audio: candidate.audio || "",
     source: candidate.source || "dictionary-topic"
   };
+}
+
+function correctWritingExample(example) {
+  if (!example) return null;
+  const correction = WRITING_EXAMPLE_CORRECTIONS.get(example.hanzi);
+  return correction ? { ...example, ...correction } : example;
 }
 
 function pickUniqueExample(candidate, usedSentences) {

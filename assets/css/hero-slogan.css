@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali:wght@600;700&family=ZCOOL+KuaiLe&display=swap');
+
+.cc-hero-slogan {
+  --cc-slogan-brown: #7a482e;
+  --cc-slogan-vietnamese: #e95373;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 8px;
+  display: flex;
+  width: min(56%, 680px);
+  height: 100px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  column-gap: .22em;
+  overflow: visible;
+  transform: translateX(-50%);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.cc-hero-slogan__line {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cc-slogan-brown);
+  font-family: 'ZCOOL KuaiLe', 'YouYuan', 'STHupo', 'FZYaoti', 'Microsoft YaHei', sans-serif;
+  font-size: clamp(25px, 2.5vw, 34px);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1;
+  letter-spacing: .035em;
+  white-space: nowrap;
+  -webkit-text-stroke: 0;
+  text-rendering: optimizeLegibility;
+}
+
+.cc-hero-slogan__line.is-long {
+  flex-wrap: wrap;
+  gap: .12em .24em;
+  white-space: normal;
+  font-size: clamp(18px, 2.05vw, 28px);
+  line-height: 1.08;
+  text-align: center;
+}
+
+.cc-hero-slogan__line.is-very-long {
+  font-size: clamp(16px, 1.75vw, 23px);
+}
+
+.cc-hero-slogan__line[lang='vi'] {
+  --cc-slogan-line-color: var(--cc-slogan-vietnamese);
+  column-gap: .34em;
+  font-family: 'Mali', 'Comic Sans MS', 'Segoe UI', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.cc-hero-slogan__word {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.cc-hero-slogan__source { cursor: pointer; }
+
+.cc-hero-slogan__char {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  transform-origin: 50% 65%;
+  filter: none;
+  will-change: transform, opacity;
+}
+
+.cc-hero-slogan__layer {
+  grid-area: 1 / 1;
+  font: inherit;
+  line-height: 1;
+  letter-spacing: inherit;
+  -webkit-font-smoothing: antialiased;
+  paint-order: stroke fill;
+}
+
+.cc-hero-slogan__layer--outer {
+  display: none;
+}
+
+.cc-hero-slogan__layer--cream {
+  display: none;
+}
+
+.cc-hero-slogan__layer--navy {
+  display: none;
+}
+
+.cc-hero-slogan__layer--fill {
+  color: var(--cc-slogan-line-color, var(--cc-slogan-brown));
+  -webkit-text-stroke: 0;
+}
+
+.cc-hero-slogan.is-preparing .cc-hero-slogan__char { opacity: 0; }
+
+.cc-hero-slogan__bubble {
+  position: absolute;
+  z-index: 1;
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(39, 197, 184, .82);
+  border-radius: 50%;
+  background: rgba(255, 249, 217, .86);
+  box-shadow: 0 0 0 3px rgba(112, 220, 255, .18);
+}
+
+.cc-hero-slogan__bubble--one { left: 3%; top: 24%; }
+.cc-hero-slogan__bubble--two { right: 4%; bottom: 19%; width: 5px; height: 5px; }
+
+html.dark-mode .cc-hero-slogan {
+  --cc-slogan-brown: #d6a06e;
+  --cc-slogan-vietnamese: #ff9bb0;
+}
+
+html[data-motion='off'] .cc-hero-slogan__line[data-slogan-line='mouse'] .cc-hero-slogan__char,
+.cc-hero-slogan.is-reduced .cc-hero-slogan__line[data-slogan-line='mouse'] .cc-hero-slogan__char {
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+html[data-motion='off'] .cc-hero-slogan__line[data-slogan-line='cat'] .cc-hero-slogan__char,
+.cc-hero-slogan.is-reduced .cc-hero-slogan__line[data-slogan-line='cat'] .cc-hero-slogan__char {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (max-width: 760px) {
+  .cc-hero-slogan {
+    bottom: 8px;
+    width: calc(100% - 148px);
+    height: 72px;
+  }
+
+  .cc-hero-slogan__line {
+    column-gap: .25em;
+    font-size: clamp(15px, 4.15vw, 19px);
+    letter-spacing: 0;
+  }
+
+  .cc-hero-slogan__line.is-long {
+    gap: .1em .22em;
+    font-size: clamp(13px, 3.55vw, 16px);
+    line-height: 1.08;
+  }
+
+  .cc-hero-slogan__line[lang='vi'] {
+    column-gap: .28em;
+  }
+
+  .cc-hero-slogan__line.is-very-long {
+    font-size: clamp(12px, 3.15vw, 14px);
+  }
+
+  .cc-hero-slogan__bubble--one { left: -2px; top: 17%; }
+  .cc-hero-slogan__bubble--two { right: -1px; bottom: 13%; }
+}
+
+@media (max-width: 380px) {
+  .cc-hero-slogan {
+    bottom: 8px;
+    width: calc(100% - 128px);
+  }
+
+  .cc-hero-slogan__line { font-size: clamp(13px, 4vw, 15px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-hero-slogan__line[data-slogan-line='mouse'] .cc-hero-slogan__char {
+    opacity: 0 !important;
+    transform: none !important;
+  }
+
+  .cc-hero-slogan__line[data-slogan-line='cat'] .cc-hero-slogan__char {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

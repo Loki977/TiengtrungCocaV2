@@ -1,15 +1,60 @@
-import { addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+import { getApps } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
+import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
 
 const HOME_PATHS = ['/', '/index.html'];
+const LEARNING_SETTINGS_REST_URL = 'https://firestore.googleapis.com/v1/projects/tiengtrungcoca/databases/(default)/documents/adminSettings/learning';
 const isHome = HOME_PATHS.includes(location.pathname) || location.pathname.endsWith('/index.html');
-if (isHome) initHomeFabs();
+if (isHome) void initHomeFabs();
 
-function initHomeFabs() {
+async function waitForFirebaseDb() {
+  const resolveDb = () => window.CCFirebase?.db
+    || window.sharedFirebase?.db
+    || (getApps().length ? getFirestore(getApps()[0]) : null);
+  const currentDb = resolveDb();
+  if (currentDb) return currentDb;
+
+  return new Promise(resolve => {
+    let timeoutId = 0;
+    const finish = () => {
+      window.removeEventListener('firebase-ready', finish);
+      if (timeoutId) clearTimeout(timeoutId);
+      resolve(resolveDb());
+    };
+    window.addEventListener('firebase-ready', finish, { once: true });
+    timeoutId = window.setTimeout(finish, 1500);
+  });
+}
+
+async function readDonateSettingFromRest() {
+  const response = await fetch(LEARNING_SETTINGS_REST_URL, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const payload = await response.json();
+  return payload.fields?.features?.mapValue?.fields?.donate?.booleanValue !== false;
+}
+
+async function isDonateEnabled() {
+  try {
+    const db = await waitForFirebaseDb();
+    if (db) {
+      const snapshot = await getDoc(doc(db, 'adminSettings', 'learning'));
+      return snapshot.data()?.features?.donate !== false;
+    }
+    return await readDonateSettingFromRest();
+  } catch (error) {
+    try {
+      return await readDonateSettingFromRest();
+    } catch (fallbackError) {
+      console.warn('[home-fabs] Không tải được cấu hình ủng hộ, dùng trạng thái mặc định.', error, fallbackError);
+      return true;
+    }
+  }
+}
+
+async function initHomeFabs() {
   if (document.querySelector('.cc-home-fabs')) return;
   document.body.insertAdjacentHTML('beforeend', `
     <div class="cc-home-fabs" aria-label="Công cụ trang chủ">
       <button class="cc-fab" id="ccFeedbackFab" type="button"><span>💬</span>Góp ý</button>
-      <button class="cc-fab" id="ccDonateFab" type="button"><span>❤️</span>Ủng hộ</button>
     </div>
     <div class="cc-popup-backdrop" id="ccFeedbackModal">
       <div class="cc-popup" role="dialog" aria-modal="true" aria-labelledby="ccFeedbackTitle">
@@ -22,7 +67,17 @@ function initHomeFabs() {
           <div class="cc-popup__actions"><button class="cc-btn cc-btn--soft" type="button" data-close="ccFeedbackModal">Đóng</button><button class="cc-btn cc-btn--primary" type="submit">Send</button></div>
         </form>
       </div>
-    </div>
+    </div>`);
+
+  document.getElementById('ccFeedbackFab').addEventListener('click', () => openModal('ccFeedbackModal'));
+  document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.close)));
+  document.querySelectorAll('.cc-popup-backdrop').forEach(el => el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); }));
+  document.getElementById('ccFeedbackForm').addEventListener('submit', submitFeedback);
+
+  if (!await isDonateEnabled() || !document.querySelector('.cc-home-fabs')) return;
+  document.querySelector('.cc-home-fabs').insertAdjacentHTML('beforeend',
+    '<button class="cc-fab" id="ccDonateFab" type="button"><span>❤️</span>Ủng hộ</button>');
+  document.body.insertAdjacentHTML('beforeend', `
     <div class="cc-popup-backdrop" id="ccDonateModal">
       <div class="cc-popup cc-donate-card" role="dialog" aria-modal="true" aria-labelledby="ccDonateTitle">
         <div class="cc-popup__head"><div><h3 id="ccDonateTitle">Ủng hộ mình</h3><p>Cảm ơn bạn đã đồng hành ❤️</p></div><button class="cc-popup__close" data-close="ccDonateModal">✕</button></div>
@@ -32,16 +87,13 @@ onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div clas
         <div class="cc-popup__actions"><button class="cc-btn cc-btn--soft" id="ccCopyAccount" type="button">Copy Account Number</button><button class="cc-btn cc-btn--primary" type="button" data-close="ccDonateModal">Close</button></div>
       </div>
     </div>`);
-
-  document.getElementById('ccFeedbackFab').addEventListener('click', () => openModal('ccFeedbackModal'));
   document.getElementById('ccDonateFab').addEventListener('click', () => openModal('ccDonateModal'));
-  document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.close)));
-  document.querySelectorAll('.cc-popup-backdrop').forEach(el => el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); }));
+  document.querySelectorAll('#ccDonateModal [data-close]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.close)));
+  document.getElementById('ccDonateModal').addEventListener('click', event => { if (event.target.id === 'ccDonateModal') closeModal('ccDonateModal'); });
   document.getElementById('ccCopyAccount').addEventListener('click', async () => {
     await navigator.clipboard?.writeText('06287599896666');
     toast('Đã copy số tài khoản.');
   });
-  document.getElementById('ccFeedbackForm').addEventListener('submit', submitFeedback);
 }
 function openModal(id){document.getElementById(id)?.classList.add('open');}
 function closeModal(id){document.getElementById(id)?.classList.remove('open');}

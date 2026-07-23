@@ -1,18 +1,22 @@
 import "./assets/js/speech-service.js?v=5";
 import { doc, getDocFromServer } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import {
+  annotateWritingLesson,
   areAnswersExactlyEquivalent,
   getLessonContent,
+  loadWritingAnnotations,
   normalizeAnswer,
   normalizePinyin,
   normalizeWritingLessonContent
 } from "./lesson-engine.js";
 import { getLessonConfig } from "./lesson-config.js";
+import { SentenceStructure } from "./assets/js/sentence-structure.js";
 
 const params = new URLSearchParams(window.location.search);
 const level = (params.get("level") || "hsk1").toLowerCase();
 const lessonId = Number(params.get("lesson") || 1);
 const app = document.getElementById("app");
+const sentenceStructure = new SentenceStructure({ level });
 const DISABLE_SEQUENTIAL_LESSON_LOCK = true;
 const TTS_NORMAL_RATE = 0.754; // 0.58 × 1.30; tốc độ nghe thường.
 const TTS_SLOW_RATE = 0.35;
@@ -33,7 +37,7 @@ const state = {
   currentPhase: "vocabulary",
   answered: new Set(),
   revealed: new Set(),
-  mode: "vi-to-cn",
+  mode: "cn-to-vi",
   ttsVoice: null,
   ttsVoicesReady: false,
   currentUtterance: null,
@@ -42,7 +46,8 @@ const state = {
   isCompletingAnswer: false,
   isReadingAnswer: false,
   hasCompletedCurrentQuestion: false,
-  firebase: null
+  firebase: null,
+  showSentenceStructureLabels: true
 };
 
 function getLessonListUrl() {
@@ -117,7 +122,9 @@ async function verifyLessonAccessBeforeLoad() {
     return false;
   }
 
-  const access = getConfiguredLessonAccess(settingsSnap.exists() ? settingsSnap.data() : {});
+  const settings = settingsSnap.exists() ? settingsSnap.data() : {};
+  state.showSentenceStructureLabels = settings?.writing?.showSentenceStructureLabels !== false;
+  const access = getConfiguredLessonAccess(settings);
   if (!access.enabled || access.unlockType === "locked") {
     blockLesson("Bài học này đang được Admin khóa hoặc cập nhật.");
     return false;
@@ -162,7 +169,8 @@ async function init() {
     // Dữ liệu JSON/static chỉ được fetch sau khi guard quyền hoàn tất.
     state.config = getLessonConfig(level);
     const staticLesson = await getLessonContent(level, lessonId);
-    state.lesson = await loadWritingLessonOverride(staticLesson);
+    const annotations = await loadWritingAnnotations();
+    state.lesson = annotateWritingLesson(await loadWritingLessonOverride(staticLesson), annotations);
 
     if (!state.lesson.vocabularies.length) {
       app.className = "error";
@@ -221,7 +229,7 @@ function renderShell() {
 
         <div class="mode-switches">
           <label class="mode-switch">
-            <input id="modeViToCn" type="checkbox" checked />
+            <input id="modeViToCn" type="checkbox" />
             <span class="mode-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H20v17H7.5A3.5 3.5 0 0 0 4 22z"></path>
@@ -257,6 +265,7 @@ function renderShell() {
             <span class="badge" id="cardBadge">Từ vựng</span>
             <p class="instruction" id="instruction">Nhìn tiếng Việt, gõ pinyin hoặc chữ Hán.</p>
             <h2 class="prompt-word" id="promptWord"></h2>
+            <div class="sentence-reveal" id="sentenceReveal" hidden></div>
             <input class="answer-input" id="answerInput" autocomplete="off" spellcheck="false" />
             <div class="writing-token-progress" id="answerMeter" aria-label="Tiến độ theo từng từ"></div>
             <button class="check-answer-btn" id="checkAnswerBtn" type="button">Kết quả</button>
@@ -264,10 +273,16 @@ function renderShell() {
           </div>
         </article>
 
-        <aside class="memory-panel">
+        <aside class="memory-panel" id="memoryPanel">
           <h2>NỘI DUNG CẦN NHỚ</h2>
           <div id="memoryBox"></div>
         </aside>
+      </section>
+
+      <section class="sentence-legend" id="sentenceLegend" hidden aria-labelledby="sentenceLegendTitle">
+        <h2 id="sentenceLegendTitle">Ký hiệu cấu trúc câu</h2>
+        <div class="sentence-legend__grid" id="sentenceLegendGrid"></div>
+        <p>Các nhãn không có ký hiệu chuẩn sẽ hiển thị bằng ${Number(level.replace(/\D/g, "")) >= 4 ? "chữ Hán" : "tiếng Việt"}.</p>
       </section>
     </main>
 
@@ -371,9 +386,24 @@ function renderCurrentCard() {
   document.getElementById("progressBar").style.width = `${((globalIndex + 1) / total) * 100}%`;
   document.getElementById("pageTitle").textContent = `${state.lesson.title} – ${isSentence ? "Luyện viết câu" : "Từ vựng"}`;
   document.getElementById("cardBadge").textContent = isSentence ? "Luyện viết câu" : "Từ vựng";
-  document.getElementById("promptWord").textContent = prompt;
+  const workspace = document.querySelector(".workspace");
+  document.querySelector(".lesson-shell")?.classList.toggle("is-sentence", isSentence);
+  const memoryPanel = document.getElementById("memoryPanel");
+  const legend = document.getElementById("sentenceLegend");
+  workspace?.classList.toggle("is-sentence", isSentence);
+  memoryPanel.hidden = isSentence;
+  legend.hidden = !isSentence || !state.showSentenceStructureLabels;
+  if (isSentence) sentenceStructure.renderLegend(document.getElementById("sentenceLegendGrid"));
+  const promptWord = document.getElementById("promptWord");
+  if (isSentence && prompt === item.chinese && item.components?.length) {
+    promptWord.classList.add("has-components");
+    sentenceStructure.render(promptWord, item.components, { showSymbols: state.showSentenceStructureLabels });
+  } else {
+    promptWord.classList.remove("has-components");
+    promptWord.textContent = prompt;
+  }
   document.getElementById("instruction").textContent = getInstructionText(isSentence);
-  renderAnswerMeter(item, isAnswered ? getExpectedAnswerValue(item) : "", isAnswered || isRevealed);
+  renderAnswerMeter(item, isAnswered || isRevealed ? getExpectedAnswerValue(item) : "", isAnswered || isRevealed);
   document.getElementById("saveBtn").disabled = isSentence;
 
   const input = document.getElementById("answerInput");
@@ -689,7 +719,7 @@ function isCorrectAnswer(value, item) {
 
 function getExpectedAnswerValue(item) {
   if (state.mode === "cn-to-vi") {
-    return normalizeAnswer(item.vietnamese);
+    return String(item.vietnamese || "");
   }
 
   return normalizePinyin(item.pinyin) || normalizeAnswer(item.chinese);
@@ -769,22 +799,57 @@ function renderAnswerMeter(item, inputValue = "", revealResult = false) {
 
 function renderMemory(item) {
   const isSentence = state.currentPhase === "sentence";
+  if (isSentence) {
+    const reveal = document.getElementById("sentenceReveal");
+    if (state.mode === "vi-to-cn") {
+      reveal.hidden = false;
+      sentenceStructure.render(reveal, item.components, {
+        animate: true,
+        showSymbols: state.showSentenceStructureLabels
+      });
+    } else {
+      reveal.hidden = false;
+      reveal.replaceChildren();
+      const translation = document.createElement("p");
+      translation.className = "sentence-answer-translation";
+      translation.textContent = item.vietnamese || "";
+      reveal.append(translation);
+    }
+    return;
+  }
+  const wordTypes = Array.isArray(item.wordTypes) ? item.wordTypes : [];
+  const chineseContent = escapeHtml(item.chinese || "...");
 
   document.getElementById("memoryBox").innerHTML = `
-    <div class="memory-content">
-      <p class="memory-word">${item.chinese || "..."}</p>
-      <p class="memory-pinyin">${item.pinyin || ""}</p>
-      <p class="memory-meaning">${item.vietnamese || ""}</p>
-      ${isSentence ? "" : `<p class="memory-note">Câu ví dụ của bài được tách sang phần luyện viết sau khi học hết từ vựng.</p>`}
+    <div class="memory-content${wordTypes.length ? " has-word-type" : ""}">
+      <div class="memory-word">${chineseContent}</div>
+      <p class="memory-pinyin">${escapeHtml(item.pinyin || "")}</p>
+      <p class="memory-meaning">${escapeHtml(item.vietnamese || "")}</p>
+      ${wordTypes.length ? `<p class="memory-word-type">${wordTypes.map(escapeHtml).join(" / ")}</p>` : ""}
+      <p class="memory-note">Câu ví dụ của bài được tách sang phần luyện viết sau khi học hết từ vựng.</p>
     </div>
   `;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  })[character]);
+}
+
 function renderMemoryEmpty() {
   const isSentence = state.currentPhase === "sentence";
+  const reveal = document.getElementById("sentenceReveal");
+  reveal.replaceChildren();
+  reveal.hidden = true;
+  if (isSentence) return;
   document.getElementById("memoryBox").innerHTML = `
     <div class="memory-empty">
-      ${isSentence ? "Trả lời đúng hoặc bấm “Đáp án” để xem câu, pinyin và nghĩa." : "Trả lời đúng hoặc bấm “Đáp án” để xem từ, pinyin và nghĩa."}
+      Trả lời đúng hoặc bấm “Đáp án” để xem từ, pinyin và nghĩa.
     </div>
   `;
 }

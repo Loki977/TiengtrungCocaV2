@@ -125,7 +125,8 @@
       const payload = await response.json();
       collection.items = Array.isArray(payload.items) ? payload.items : [];
       collection.loaded = true;
-      collection.selectedId = localStorage.getItem(`ttc_${type}_selected`) || collection.items[0]?.id || "";
+      const requestedId = type === "idioms" ? new URLSearchParams(location.search).get("idiom") : "";
+      collection.selectedId = requestedId || localStorage.getItem(`ttc_${type}_selected`) || collection.items[0]?.id || "";
       renderAlphabet(type, payload.meta?.initials || []);
       applyFilters(type);
     } catch (error) {

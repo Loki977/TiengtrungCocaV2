@@ -2,6 +2,38 @@ import { getLessonConfig } from "./lesson-config.js";
 
 const dataCache = new Map();
 const lessonCache = new Map();
+let writingAnnotationsPromise = null;
+
+export function loadWritingAnnotations() {
+  if (!writingAnnotationsPromise) {
+    writingAnnotationsPromise = fetch("assets/data/writing/annotations.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("Khong tai duoc chu giai Luyen viet");
+        return response.json();
+      });
+  }
+  return writingAnnotationsPromise;
+}
+
+export function annotateWritingLesson(lesson, annotations = {}) {
+  const wordTypes = annotations?.wordTypes || {};
+  const sentenceComponents = annotations?.sentences || {};
+  return {
+    ...lesson,
+    vocabularies: (lesson?.vocabularies || []).map((item) => ({
+      ...item,
+      wordTypes: Array.isArray(item.wordTypes) && item.wordTypes.length
+        ? item.wordTypes
+        : wordTypes[item.chinese] || []
+    })),
+    sentences: (lesson?.sentences || []).map((item) => ({
+      ...item,
+      components: Array.isArray(item.components) && item.components.length
+        ? item.components
+        : sentenceComponents[item.chinese] || []
+    }))
+  };
+}
 
 export async function loadHSKData(level) {
   const key = normalizeLevel(level);
@@ -197,6 +229,7 @@ export function normalizeWritingLessonContent(content = {}, fallback = {}) {
         pinyin: String(item?.pinyin || "").trim(),
         vietnamese: capitalizeVietnameseLines(item?.vietnamese || item?.translation || item?.meaning || ""),
         answerTokens: Array.isArray(item?.answerTokens) ? item.answerTokens : null,
+        components: Array.isArray(item?.components) ? item.components : null,
         audio: String(item?.audio || "").trim(),
         vocabulary: { lessonId: Number(source.lessonId || fallback.lessonId || 1), chinese: String(item?.keyword || "").trim() },
         sourceIndex: index
@@ -226,6 +259,7 @@ function normalizeVocabulary(item) {
       vietnamese: capitalizeVietnameseLines(example.translation || example.meaning_vi || example.meaning || ""),
       audio: String(example.audio || example.audioPath || "").trim(),
       answerTokens: Array.isArray(example.answerTokens) ? example.answerTokens : null,
+      components: Array.isArray(example.components) ? example.components : null,
       sourceIndex
     })).filter((example) => example.chinese || example.pinyin || example.vietnamese)
     : [];
@@ -239,7 +273,8 @@ function normalizeVocabulary(item) {
     audio: String(item.audio || item.audioPath || "").trim(),
     lesson: item.lesson,
     lessonId: item.lessonId || item.lesson,
-    examples
+    examples,
+    wordTypes: Array.isArray(item.wordTypes) ? item.wordTypes : null
   };
 }
 
@@ -279,7 +314,8 @@ function collectSentences(vocabularies, { primaryExamplesOnly = false } = {}) {
       pinyin: example.pinyin,
       vietnamese: example.vietnamese,
       audio: example.audio,
-      answerTokens: example.answerTokens
+      answerTokens: example.answerTokens,
+      components: example.components
     }));
   }).filter((item) => {
     if (!item.chinese && !item.pinyin && !item.vietnamese) {

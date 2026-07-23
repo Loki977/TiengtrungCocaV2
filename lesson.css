@@ -269,6 +269,148 @@ button {
   font-weight: 950;
 }
 
+.lesson-shell.is-sentence {
+  padding-bottom: 380px;
+}
+
+.workspace.is-sentence {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.workspace.is-sentence .study-card {
+  width: 94%;
+  justify-self: center;
+}
+
+.workspace.is-sentence .study-inner {
+  width: min(1120px, 100%);
+}
+
+.prompt-word.has-components {
+  width: 100%;
+}
+
+.sentence-structure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  column-gap: clamp(20px, 3vw, 42px);
+  row-gap: 24px;
+  width: 100%;
+}
+
+.sentence-structure__part {
+  --component-color: #536274;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  min-width: max-content;
+  color: var(--component-color);
+  filter: drop-shadow(0 0 0 transparent);
+  transform: translateY(0);
+  transition: transform 200ms ease, filter 200ms ease;
+}
+
+.sentence-structure__symbol {
+  min-height: 24px;
+  margin-bottom: 8px;
+  font-size: clamp(17px, 0.28em, 22px);
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.sentence-structure__symbol.is-long-label {
+  font-size: clamp(11px, 0.18em, 14px);
+}
+
+.sentence-structure__text {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+  font-size: 1em;
+  line-height: 1.05;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.sentence-structure__text::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.78;
+  transition: height 200ms ease, opacity 200ms ease, filter 200ms ease;
+}
+
+.sentence-structure__part:hover,
+.sentence-structure__part:focus-within {
+  filter: drop-shadow(0 7px 7px color-mix(in srgb, var(--component-color) 24%, transparent));
+  transform: translateY(-4px);
+}
+
+.sentence-structure__part:hover .sentence-structure__text::after,
+.sentence-structure__part:focus-within .sentence-structure__text::after {
+  height: 3px;
+  opacity: 1;
+  filter: brightness(1.18);
+}
+
+.sentence-structure__part--subject,
+.sentence-structure__part--subject-head { --component-color: #246bce; }
+.sentence-structure__part--predicate,
+.sentence-structure__part--verb { --component-color: #d13f52; }
+.sentence-structure__part--object,
+.sentence-structure__part--object-head { --component-color: #c96b08; }
+.sentence-structure__part--adverbial,
+.sentence-structure__part--adverb { --component-color: #7b49c8; }
+.sentence-structure__part--attribute,
+.sentence-structure__part--head { --component-color: #9a6b00; }
+.sentence-structure__part--complement { --component-color: #168457; }
+.sentence-structure__part--conjunction { --component-color: #087f83; }
+.sentence-structure__part--time { --component-color: #237c9d; }
+.sentence-structure__part--location,
+.sentence-structure__part--pp { --component-color: #167b70; }
+.sentence-structure__part--purpose { --component-color: #348333; }
+.sentence-structure__part--reason { --component-color: #b54b54; }
+.sentence-structure__part--condition { --component-color: #6552b8; }
+.sentence-structure__part--ba { --component-color: #a05a18; }
+.sentence-structure__part--bei { --component-color: #8b4a72; }
+.sentence-structure__part--particle { --component-color: #667085; }
+
+.sentence-reveal {
+  width: 100%;
+  margin: -4px 0 28px;
+  color: var(--navy);
+  font-size: clamp(36px, 6vw, 68px);
+  line-height: 1.05;
+}
+
+.sentence-answer-translation {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(20px, 3vw, 30px);
+  line-height: 1.4;
+  font-weight: 850;
+  animation: sentence-structure-reveal 260ms ease-out both;
+}
+
+.sentence-structure.is-revealing {
+  animation: sentence-structure-reveal 260ms ease-out both;
+}
+
+@keyframes sentence-structure-reveal {
+  from { opacity: 0; transform: translateY(-9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .answer-input {
   width: min(520px, 100%);
   height: 64px;
@@ -439,6 +581,76 @@ button {
   font-size: 20px;
   line-height: 1.45;
   font-weight: 800;
+}
+
+.memory-content.has-word-type .memory-meaning {
+  margin-bottom: 6px;
+}
+
+.memory-word-type {
+  margin: 0 0 22px;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 750;
+}
+
+.sentence-legend {
+  width: 94%;
+  margin: 24px auto 0;
+  padding: 22px 26px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 253, 245, 0.92);
+  box-shadow: 0 14px 34px rgba(39, 62, 92, 0.09);
+}
+
+.sentence-legend h2 {
+  margin: 0 0 16px;
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.sentence-legend__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sentence-legend__item {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+  color: var(--component-color);
+}
+
+.sentence-legend__item strong {
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.sentence-legend__item--extra {
+  align-items: center;
+}
+
+.sentence-legend__item--extra strong {
+  font-size: 13px;
+}
+
+.sentence-legend__item span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.sentence-legend > p {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 700;
 }
 
 .example {
@@ -672,6 +884,10 @@ button {
   .memory-panel {
     min-height: auto;
   }
+
+  .sentence-legend__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 680px) {
@@ -703,6 +919,35 @@ button {
   .answer-input {
     height: 58px;
     font-size: 21px;
+  }
+
+  .workspace.is-sentence .study-card,
+  .sentence-legend {
+    width: 100%;
+  }
+
+  .sentence-structure {
+    column-gap: 16px;
+    row-gap: 20px;
+  }
+
+  .sentence-structure__symbol {
+    min-height: 19px;
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+
+  .sentence-reveal {
+    margin-bottom: 24px;
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .sentence-legend {
+    padding: 20px;
+  }
+
+  .sentence-legend__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .writing-token-progress {
@@ -768,8 +1013,14 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .writing-token-bar,
-  .writing-confetti {
+  .writing-confetti,
+  .sentence-structure.is-revealing {
     animation: none;
+    transition: none;
+  }
+
+  .sentence-structure__part,
+  .sentence-structure__text::after {
     transition: none;
   }
 }

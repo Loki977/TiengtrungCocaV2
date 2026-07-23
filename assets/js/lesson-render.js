@@ -70,6 +70,14 @@
     return [1, 2, 3].includes(Number(String(lesson?.level || '').replace(/\D/g, '')));
   }
 
+  function isCoursePinyinVisible() {
+    try {
+      return localStorage.getItem('cc_coursePinyinVisible') !== 'false';
+    } catch (_) {
+      return true;
+    }
+  }
+
   function getPinyinEntries(lesson) {
     if (lesson.__exercisePinyinEntries) return lesson.__exercisePinyinEntries;
     const entries = new Map();
@@ -101,6 +109,8 @@
 
   function getExercisePinyin(text, lesson) {
     if (!isBasicHskLesson(lesson)) return '';
+    const preparedPinyin = window.CoursePinyin?.get?.(text, lesson);
+    if (preparedPinyin) return preparedPinyin;
     const entries = getPinyinEntries(lesson);
     return (String(text).match(/[\u3400-\u9fff]+/g) || []).map(run => {
       const result = [];
@@ -418,7 +428,7 @@
             const hanzi = item.hanzi || item.chinese || item.word || '';
             const meaning = item.meaning || item.meaning_vi || item.vietnamese || item.translation || '';
             const example = item.example || item.examples?.[0]?.hanzi || '';
-            const examplePinyin = item.examplePinyin || item.examples?.[0]?.pinyin || '';
+            const examplePinyin = item.examplePinyin || item.examples?.[0]?.pinyin || getExercisePinyin(example, lesson);
             const exampleTranslation = item.exampleTranslation || item.examples?.[0]?.translation || '';
             return `
               <div class="gt-vocab-card" data-level="${escapeHtml(getLessonLevelKey(lesson))}" data-lesson-id="${escapeHtml(lesson.lessonId || '')}" data-word-key="${escapeHtml(key)}" data-word="${escapeHtml(hanzi)}">
@@ -570,15 +580,21 @@
     };
   }
 
-  function renderInteractiveReading(line) {
+  function renderInteractiveReading(line, lesson) {
     const reading = splitReadingContent(line);
+    const pinyin = line.pinyin || getExercisePinyin(reading.bodyText, lesson);
+    const titlePinyin = getExercisePinyin(line.title, lesson);
     return `
       <article class="gt-reading-card gt-interactive-reading">
         <div class="gt-reading-heading">
-          ${line.title ? `<h4>${escapeHtml(line.title)}</h4>` : '<span></span>'}
+          <div>
+            ${line.title ? `<h4>${escapeHtml(line.title)}</h4>` : '<span></span>'}
+            ${titlePinyin ? `<div class="gt-auto-pinyin">${escapeHtml(titlePinyin)}</div>` : ''}
+          </div>
           <button class="gt-reading-listen gt-speak-btn" data-speak="${escapeHtml(reading.bodyText)}" data-audio-lookup="${escapeHtml(line.chinese || reading.bodyText)}" data-audio-profile="lesson-passage" title="Nghe toàn bài">🔊 Nghe toàn bài</button>
         </div>
         <div class="gt-reading-chinese">${renderReadingSegments(reading.bodyLine)}</div>
+        ${pinyin ? `<div class="gt-auto-pinyin">${escapeHtml(pinyin)}</div>` : ''}
         ${reading.notes.length ? `
           <div class="gt-reading-annotation" data-reading-annotation aria-label="Giới thiệu và chú thích">
             ${reading.notes.map(note => `<p>${renderReadingSegments(note.line)}</p>`).join('')}
@@ -588,21 +604,24 @@
     `;
   }
 
-  function renderInteractiveDialogueLine(line) {
+  function renderInteractiveDialogueLine(line, lesson) {
     const chinese = line.chinese || '';
+    const sentencePinyin = line.pinyin || getExercisePinyin(chinese, lesson);
+    const speakerPinyin = getExercisePinyin(line.speaker, lesson);
+    const pinyin = [speakerPinyin, sentencePinyin].filter(Boolean).join(': ');
     return `
       <article class="gt-dialogue-line gt-interactive-dialogue">
         <div class="gt-dialogue-heading">
           <b>${escapeHtml(line.speaker || '')}</b>
           <button type="button" class="gt-dialogue-listen gt-speak-btn"
             data-speak="${escapeHtml(chinese)}"
-            data-pinyin="${escapeHtml(line.pinyin || '')}"
+            data-pinyin="${escapeHtml(pinyin)}"
             data-audio-profile="lesson-passage"
             data-audio="${escapeHtml(line.audio || '')}"
             title="Nghe câu thoại">🔊 Nghe câu</button>
         </div>
         <div class="gt-dialogue-chinese">${renderReadingSegments(line)}</div>
-        ${line.pinyin ? `<div class="gt-pinyin">${escapeHtml(line.pinyin)}</div>` : ''}
+        ${pinyin ? `<div class="gt-pinyin">${escapeHtml(pinyin)}</div>` : ''}
         ${line.vietnamese ? `<div class="gt-dialogue-translation">${escapeHtml(line.vietnamese)}</div>` : ''}
       </article>
     `;
@@ -637,12 +656,14 @@
           ${lines.map(line => {
             const chinese = line.chinese || '';
             if (Array.isArray(line.segments) && line.segments.length) {
-              return isDialogue ? renderInteractiveDialogueLine(line) : renderInteractiveReading(line);
+              return isDialogue ? renderInteractiveDialogueLine(line, lesson) : renderInteractiveReading(line, lesson);
             }
+            const sentencePinyin = line.pinyin || getExercisePinyin(chinese, lesson);
+            const linePinyin = [getExercisePinyin(line.speaker, lesson), sentencePinyin].filter(Boolean).join(': ');
             return `
-              <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-pinyin="${escapeHtml(line.pinyin || '')}" data-audio-profile="lesson-passage" data-audio="${escapeHtml(line.audio || '')}">
+              <button class="gt-dialogue-line" data-speak="${escapeHtml(chinese)}" data-pinyin="${escapeHtml(linePinyin)}" data-audio-profile="lesson-passage" data-audio="${escapeHtml(line.audio || '')}">
                 <b>${escapeHtml(line.speaker || '')}</b> ${escapeHtml(chinese)}<br>
-                <span class="gt-pinyin">${escapeHtml(line.pinyin || '')}</span><br>
+                ${linePinyin ? `<span class="gt-pinyin">${escapeHtml(linePinyin)}</span><br>` : ''}
                 <span>${escapeHtml(line.vietnamese || '')}</span>
               </button>
             `;
@@ -667,8 +688,9 @@
         ${items.map(item => `
           <div class="gt-reading-card">
             ${item.title ? `<h4>${escapeHtml(item.title)}</h4>` : ''}
+            ${item.title && getExercisePinyin(item.title, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(item.title, lesson))}</p>` : ''}
             ${item.chinese ? `<p class="gt-reading-chinese">${escapeHtml(item.chinese)}</p>` : ''}
-            ${item.pinyin ? `<p class="gt-pinyin">${escapeHtml(item.pinyin)}</p>` : ''}
+            ${item.chinese && (item.pinyin || getExercisePinyin(item.chinese, lesson)) ? `<p class="gt-pinyin">${escapeHtml(item.pinyin || getExercisePinyin(item.chinese, lesson))}</p>` : ''}
             ${item.vietnamese ? `<p>${escapeHtml(item.vietnamese)}</p>` : ''}
             ${item.content ? `<p>${escapeHtml(item.content)}</p>` : ''}
           </div>
@@ -689,12 +711,15 @@
         <div class="gt-grammar-card">
           <div class="gt-grammar-head">
             <span>${page + 1}</span>
-            <h4>${escapeHtml(item.title || '')}</h4>
+            <div>
+              <h4>${escapeHtml(item.title || '')}</h4>
+              ${getExercisePinyin(item.title, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(item.title, lesson))}</p>` : ''}
+            </div>
           </div>
-          ${item.pattern ? `<div class="gt-pattern">${escapeHtml(item.pattern)}</div>` : ''}
-          ${item.structure ? `<div class="gt-structure">Cấu trúc: ${escapeHtml(item.structure)}</div>` : ''}
-          ${item.explanation ? `<p>${renderHighlightedHtml(item.explanation)}</p>` : ''}
-          ${(item.examples || []).map(ex => `<p class="gt-grammar-example">• ${renderHighlightedHtml(ex)}</p>`).join('')}
+          ${item.pattern ? `<div class="gt-pattern">${escapeHtml(item.pattern)}</div>${getExercisePinyin(item.pattern, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(item.pattern, lesson))}</p>` : ''}` : ''}
+          ${item.structure ? `<div class="gt-structure">Cấu trúc: ${escapeHtml(item.structure)}</div>${getExercisePinyin(item.structure, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(item.structure, lesson))}</p>` : ''}` : ''}
+          ${item.explanation ? `<p>${renderHighlightedHtml(item.explanation)}</p>${getExercisePinyin(item.explanation, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(item.explanation, lesson))}</p>` : ''}` : ''}
+          ${(item.examples || []).map(ex => `<div class="gt-grammar-example-wrap"><p class="gt-grammar-example">• ${renderHighlightedHtml(ex)}</p>${getExercisePinyin(ex, lesson) ? `<p class="gt-auto-pinyin">${escapeHtml(getExercisePinyin(ex, lesson))}</p>` : ''}</div>`).join('')}
         </div>
         ${renderNav(lesson, 'grammar', page, pages.length)}
       </section>
@@ -714,7 +739,7 @@
   }
 
   function renderExercise(ex, i, lesson) {
-    const questionPinyin = ex.type === 'fill-blank' ? '' : getExercisePinyin(ex.question, lesson);
+    const questionPinyin = getExercisePinyin(ex.question, lesson);
     const question = `
       <p><b>Câu ${i}.</b> ${escapeHtml(ex.question || '')}</p>
       ${questionPinyin ? `<p class="gt-exercise-pinyin">${escapeHtml(questionPinyin)}</p>` : ''}
@@ -744,7 +769,7 @@
           ${getFillBlankOptions(ex, lesson).map((opt, index) => `
             <button class="gt-quiz-option gt-quiz-option--labeled" data-answer="${escapeHtml(ex.answer || '')}" data-value="${escapeHtml(opt)}">
               <span class="gt-option-label">${String.fromCharCode(65 + index)}</span>
-              <span>${escapeHtml(opt)}</span>
+              <span>${escapeHtml(opt)}${getExercisePinyin(opt, lesson) ? `<span class="gt-exercise-pinyin">${escapeHtml(getExercisePinyin(opt, lesson))}</span>` : ''}</span>
             </button>
           `).join('')}
         </div>
@@ -755,7 +780,7 @@
       <div class="gt-exercise-card">
         ${question}
         <div class="gt-answer-row">
-          <input class="gt-answer-input" type="text" placeholder="Nhập đáp án của bạn..." data-answer="${escapeHtml(ex.answer || '')}">
+          <input class="gt-answer-input" type="text" placeholder="Nhập đáp án của bạn..." data-answer="${escapeHtml(ex.answer || '')}" data-answer-pinyin="${escapeHtml(getExercisePinyin(ex.answer, lesson))}">
           <button class="gt-submit-btn">Nộp</button>
         </div>
         <div class="gt-feedback"></div>
@@ -860,14 +885,23 @@
     const nextId = options.nextId;
     const state = sanitizeState(lesson);
     const currentSection = getCurrentSection(lesson, state);
+    const basicPinyin = isBasicHskLesson(lesson);
+    const pinyinVisible = isCoursePinyinVisible();
+    const titlePinyin = basicPinyin ? getExercisePinyin(lesson.chineseTitle, lesson) : '';
 
     window.__currentLessonData = lesson;
 
     return `
-      <div class="lesson-detail-wrap gt-detail-wrap">
+      <div class="lesson-detail-wrap gt-detail-wrap${basicPinyin ? ' gt-basic-pinyin' : ''}${basicPinyin && !pinyinVisible ? ' gt-pinyin-hidden' : ''}"${basicPinyin ? ' data-basic-pinyin' : ''}>
         <div class="detail-back-row">
           <button class="btn btn--outline btn--sm detail-back-btn" onclick="backToLessonList()">← Danh sách bài</button>
           <span class="detail-breadcrumb">HSK ${lesson.level || 1} › Bài ${lesson.lessonId}</span>
+          ${basicPinyin ? `
+            <button type="button" class="gt-pinyin-toggle" data-pinyin-toggle aria-pressed="${pinyinVisible}" title="Bật hoặc tắt pinyin">
+              <span aria-hidden="true">拼</span>
+              <span data-pinyin-toggle-label>${pinyinVisible ? 'Ẩn pinyin' : 'Hiện pinyin'}</span>
+            </button>
+          ` : ''}
         </div>
 
         <div class="gt-hero">
@@ -875,6 +909,8 @@
           <div>
             <span class="badge badge--orange">Bài ${lesson.lessonId}</span>
             <h2>${escapeHtml(lesson.title || '')}</h2>
+            ${lesson.chineseTitle ? `<div class="gt-hero-chinese">${escapeHtml(lesson.chineseTitle)}</div>` : ''}
+            ${titlePinyin ? `<div class="gt-hero-pinyin">${escapeHtml(titlePinyin)}</div>` : ''}
             <p>${lesson.meta?.estimatedMinutes ? `Khoảng ${lesson.meta.estimatedMinutes} phút` : 'Bài học'}${lesson.desc ? ` · ${escapeHtml(lesson.desc)}` : ''}</p>
           </div>
         </div>
@@ -1009,6 +1045,20 @@
     root.addEventListener('click', function (e) {
       const lesson = window.__currentLessonData;
 
+      const pinyinToggle = e.target.closest('[data-pinyin-toggle]');
+      if (pinyinToggle) {
+        const detail = pinyinToggle.closest('.gt-detail-wrap');
+        const visible = detail?.classList.contains('gt-pinyin-hidden');
+        detail?.classList.toggle('gt-pinyin-hidden', !visible);
+        pinyinToggle.setAttribute('aria-pressed', String(visible));
+        const label = pinyinToggle.querySelector('[data-pinyin-toggle-label]');
+        if (label) label.textContent = visible ? 'Ẩn pinyin' : 'Hiện pinyin';
+        try {
+          localStorage.setItem('cc_coursePinyinVisible', String(visible));
+        } catch (_) {}
+        return;
+      }
+
       const readingToken = e.target.closest('.gt-reading-token');
       if (readingToken) showReadingLookup(readingToken);
 
@@ -1045,8 +1095,9 @@
           .finally(() => refreshCurrentLesson());
       }
 
-      if (e.target.classList.contains('gt-quiz-option')) {
-        const btn = e.target;
+      const quizOption = e.target.closest('.gt-quiz-option');
+      if (quizOption) {
+        const btn = quizOption;
         const parent = btn.closest('.gt-exercise-card');
         parent.querySelectorAll('.gt-quiz-option').forEach(b => {
           b.disabled = true;
@@ -1087,7 +1138,7 @@
           feedback.classList.add('wrong');
           showCourseWrongAnswer();
           playCourseFeedbackSound('sad');
-          feedback.innerHTML = `Chưa đúng. Đáp án gợi ý: <b>${escapeHtml(input.dataset.answer)}</b>`;
+          feedback.innerHTML = `Chưa đúng. Đáp án gợi ý: <b>${escapeHtml(input.dataset.answer)}</b>${input.dataset.answerPinyin ? `<span class="gt-exercise-pinyin">${escapeHtml(input.dataset.answerPinyin)}</span>` : ''}`;
         }
       }
     });

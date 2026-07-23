@@ -311,6 +311,7 @@
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
   <link rel="stylesheet" href="assets/css/hsk-hero-scene.css" />
+  <link rel="stylesheet" href="assets/css/hero-slogan.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -362,16 +363,15 @@
           <div class="hsk-hero-mouse">
             <img src="assets/images/hsk-hero/mouse-student.png" alt="" width="403" height="480" decoding="async" />
           </div>
-          <div class="hsk-hero-writing">
-            <span class="hsk-hero-writing__wrong">Trúng tiếng yêu</span>
-            <span class="hsk-hero-writing__correct">Yếu tiếng trung</span>
-            <span class="hsk-hero-pen" aria-hidden="true"></span>
-            <span class="hsk-hero-eraser" aria-hidden="true"></span>
+          <div class="hsk-hero-writing cc-hero-slogan" data-hero-slogan data-mouse=".hsk-hero-mouse" data-cat=".hsk-hero-cat">
+            <span class="cc-hero-slogan__line" data-slogan-line="mouse" lang="zh-CN">汉语太难了</span>
+            <span class="cc-hero-slogan__line" data-slogan-line="cat" lang="zh-CN">世上无难事，只怕有心人。</span>
+            <span class="cc-hero-slogan__bubble cc-hero-slogan__bubble--one" aria-hidden="true"></span>
+            <span class="cc-hero-slogan__bubble cc-hero-slogan__bubble--two" aria-hidden="true"></span>
           </div>
           <div class="hsk-hero-cat">
             <img src="assets/images/hsk-hero/cat-teacher.png" alt="" width="423" height="480" decoding="async" />
           </div>
-          <span class="hsk-hero-ink-line"></span>
         </div>
         <div class="hsk-hero-copy">
           <span class="badge badge--white">📚 Chương trình học</span>
@@ -491,13 +491,14 @@
   </div>
 
   <!-- Scripts: data first, then page logic, then shared app -->
-  <script src="assets/js/data.js"></script>
+<script src="assets/js/data.js"></script>
 <script src="assets/js/speech-service.js?v=5"></script>
+<script src="assets/js/course-pinyin.js"></script>
 <script src="assets/js/lesson-render.js"></script>
 <script src="assets/js/vocabulary-practice.js"></script>
 <script src="assets/js/hsk.js?v=2"></script>
 <script src="assets/js/app.js"></script>
-<script src="assets/js/hsk-hero-scene.js"></script>
+<script src="assets/js/hero-slogan.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>
