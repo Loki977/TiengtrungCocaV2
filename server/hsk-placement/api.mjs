@@ -77,7 +77,7 @@ async function authenticate(req) {
   const token = String(req.headers.authorization || '').match(/^Bearer\s+(.+)$/i)?.[1];
   if (!token) throw new PlacementApiError(401, 'auth_required', 'Vui lòng đăng nhập để làm bài kiểm tra.');
   try {
-    return await getAdmin().auth().verifyIdToken(token, true);
+    return await getAdmin().auth().verifyIdToken(token);
   } catch {
     throw new PlacementApiError(401, 'invalid_token', 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
   }
@@ -129,6 +129,11 @@ function shuffleIds(options) {
 
 function presentationFor(item) {
   return item?.options ? { optionOrder: shuffleIds(item.options) } : {};
+}
+
+function itemsForAttempt(attempt) {
+  if (!Array.isArray(attempt.itemOrder) || !attempt.itemOrder.length) return items;
+  return attempt.itemOrder.map((id) => placementItemRepository.getById(id)).filter(Boolean);
 }
 
 function progress(attempt) {
@@ -197,6 +202,7 @@ function currentResponse(attempt) {
 
 function createAttempt(uid) {
   const grid = createThetaGrid(config);
+  const itemOrder = shuffleIds(items);
   const attempt = {
     id: crypto.randomUUID(),
     uid,
@@ -209,9 +215,10 @@ function createAttempt(uid) {
     usedItemIds: [],
     answeredQuestionIds: {},
     audioPlays: {},
+    itemOrder,
     methodologyVersion: config.version
   };
-  const first = chooseNextItem(items, attempt, config);
+  const first = chooseNextItem(itemsForAttempt(attempt), attempt, config);
   if (!first) throw new PlacementApiError(503, 'question_bank_empty', 'Ngân hàng câu hỏi chưa sẵn sàng.');
   attempt.currentItemId = first.id;
   attempt.currentPresentation = presentationFor(first);
@@ -289,16 +296,14 @@ async function submitAnswer(uid, body) {
   const userStatsRef = statsRef(db, uid);
 
   return db.runTransaction(async (transaction) => {
-    const [attemptSnapshot, stateSnapshot, statsSnapshot] = await Promise.all([
+    const [attemptSnapshot, stateSnapshot] = await Promise.all([
       transaction.get(ref),
-      transaction.get(userStateRef),
-      transaction.get(userStatsRef)
+      transaction.get(userStateRef)
     ]);
     if (!attemptSnapshot.exists) {
       throw new PlacementApiError(404, 'attempt_not_found', 'Không tìm thấy bài kiểm tra.');
     }
     const attempt = attemptSnapshot.data();
-    const previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
     if (attempt.status === 'completed') return currentResponse(attempt);
     if (attempt.status !== 'in_progress') {
       throw new PlacementApiError(409, 'attempt_not_active', 'Bài kiểm tra không còn hoạt động.');
@@ -343,7 +348,7 @@ async function submitAnswer(uid, body) {
       attempt.currentItemId = null;
       attempt.currentPresentation = null;
     } else {
-      const next = chooseNextItem(items, attempt, config);
+      const next = chooseNextItem(itemsForAttempt(attempt), attempt, config);
       if (!next) {
         attempt.status = 'completed';
         attempt.result = buildResult(attempt, config);
@@ -356,6 +361,11 @@ async function submitAnswer(uid, body) {
       }
     }
 
+    let previousPlacement = {};
+    if (attempt.status === 'completed') {
+      const statsSnapshot = await transaction.get(userStatsRef);
+      previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
+    }
     transaction.set(ref, attempt);
     if (attempt.status === 'completed') {
       const state = stateSnapshot.exists ? stateSnapshot.data() : {};

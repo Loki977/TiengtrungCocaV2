@@ -1675,6 +1675,7 @@ function waitForObservedUser(timeoutMs = 3000) {
 function registerAuthObserver() {
   return onAuthStateChanged(auth, async (user) => {
     latestObservedUser = user;
+    window.dispatchEvent(new CustomEvent("cc-placement-auth-observed", { detail: { user } }));
     if (!firstAuthStateObserved) {
       firstAuthStateObserved = true;
       resolveFirstAuthState(user);

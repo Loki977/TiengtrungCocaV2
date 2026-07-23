@@ -2,8 +2,23 @@ export async function waitForPlacementAuth() {
   if (!window.CCFirebase) {
     await new Promise((resolve) => window.addEventListener('firebase-ready', resolve, { once: true }));
   }
-  await window.CCFirebase.authReady;
-  return window.CCFirebase.getCurrentUser();
+  const immediateUser = window.CCFirebase.getCurrentUser?.() || window.sharedFirebase?.auth?.currentUser;
+  if (immediateUser) return immediateUser;
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (user) => {
+      if (settled) return;
+      settled = true;
+      window.removeEventListener('cc-placement-auth-observed', onObserved);
+      window.removeEventListener('cc-auth-state-changed', onStateChanged);
+      resolve(user || null);
+    };
+    const onObserved = (event) => finish(event.detail?.user || window.CCFirebase.getCurrentUser?.());
+    const onStateChanged = (event) => finish(event.detail?.user || window.CCFirebase.getCurrentUser?.());
+    window.addEventListener('cc-placement-auth-observed', onObserved);
+    window.addEventListener('cc-auth-state-changed', onStateChanged);
+    window.CCFirebase.authReady.then((detail) => finish(detail?.user || window.CCFirebase.getCurrentUser?.()));
+  });
 }
 
 export async function placementApi(path, options = {}) {

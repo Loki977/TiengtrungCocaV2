@@ -167,7 +167,9 @@ export function chooseNextItem(items, session, config, rng = Math.random) {
     scored = candidates.map((item) => ({ item, score: adaptiveCandidateScore(item, summary, answers, config, rng) }));
   }
   scored.sort((a, b) => b.score - a.score);
-  return scored[0].item;
+  const bestScore = scored[0].score;
+  const nearBest = scored.filter(({ score }) => score >= bestScore - 0.22).slice(0, 4);
+  return nearBest[Math.floor(rng() * nearBest.length)]?.item || scored[0].item;
 }
 
 function hasSkillCoverage(answers, config) {

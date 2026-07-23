@@ -222,38 +222,69 @@
   place-items: center;
 }
 
-.placement-hero__art > img {
-  width: min(600px, 120%);
-  opacity: .94;
-  transform: translateX(4%);
+.placement-level-chart {
+  position: relative;
+  width: min(570px, 100%);
+  height: 360px;
+  padding: 24px 18px 52px;
+  border: 1px solid rgba(16, 35, 74, .1);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(255,244,229,.82));
+  box-shadow: 0 22px 48px rgba(20, 43, 78, .12);
 }
 
-.placement-level-orbit {
+.placement-chart-grid {
   position: absolute;
-  inset: 10% 4% 6% 9%;
+  inset: 24px 18px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.placement-level-orbit span {
-  position: absolute;
+.placement-chart-grid i {
+  display: block;
+  border-top: 1px dashed rgba(16, 35, 74, .14);
+}
+
+.placement-chart-bars {
+  position: relative;
+  z-index: 1;
   display: grid;
-  width: 46px;
-  height: 46px;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--orange), transparent 72%);
-  border-radius: 50%;
-  color: var(--orange-dark);
-  background: color-mix(in srgb, var(--bg-card), transparent 8%);
-  box-shadow: 0 12px 30px rgba(20, 43, 78, .14);
-  font-weight: 900;
-  animation: placement-float 4s ease-in-out infinite;
+  height: 100%;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+  gap: clamp(8px, 2vw, 18px);
 }
 
-.placement-level-orbit span:nth-child(1) { top: 58%; left: 6%; }
-.placement-level-orbit span:nth-child(2) { top: 22%; left: 20%; animation-delay: .4s; }
-.placement-level-orbit span:nth-child(3) { top: 4%; left: 44%; animation-delay: .8s; }
-.placement-level-orbit span:nth-child(4) { top: 18%; right: 18%; animation-delay: 1.2s; }
-.placement-level-orbit span:nth-child(5) { top: 49%; right: 3%; animation-delay: 1.6s; }
-.placement-level-orbit span:nth-child(6) { right: 29%; bottom: 3%; animation-delay: 2s; }
+.placement-chart-bar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: end;
+  gap: 12px;
+  color: #10234a;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.placement-chart-bar span {
+  display: block;
+  width: min(52px, 100%);
+  height: var(--bar-height);
+  min-height: 38px;
+  border-radius: 12px 12px 5px 5px;
+  background: linear-gradient(180deg, #ff9b43, #ff6f00);
+  box-shadow: 0 12px 20px rgba(255, 111, 0, .2);
+  transform-origin: bottom;
+  animation: placement-bar-rise 700ms var(--bar-delay, 0ms) both cubic-bezier(.2,.8,.2,1);
+}
+
+.placement-chart-bar:nth-child(2) span { --bar-delay: 80ms; }
+.placement-chart-bar:nth-child(3) span { --bar-delay: 160ms; }
+.placement-chart-bar:nth-child(4) span { --bar-delay: 240ms; }
+.placement-chart-bar:nth-child(5) span { --bar-delay: 320ms; }
+.placement-chart-bar:nth-child(6) span { --bar-delay: 400ms; }
 
 .placement-auth-card,
 .placement-deferred {
@@ -662,6 +693,11 @@ html.dark-mode .placement-ghost-button {
   50% { transform: translateY(-8px); }
 }
 
+@keyframes placement-bar-rise {
+  from { opacity: 0; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
 @media (max-width: 820px) {
   .placement-shell {
     width: min(100% - 24px, 720px);
@@ -715,9 +751,23 @@ html.dark-mode .placement-ghost-button {
     min-height: 230px;
   }
 
-  .placement-level-orbit span {
-    width: 38px;
-    height: 38px;
+  .placement-level-chart {
+    height: 230px;
+    padding: 16px 10px 40px;
+    border-radius: 20px;
+  }
+
+  .placement-chart-grid {
+    inset: 16px 10px 40px;
+  }
+
+  .placement-chart-bars {
+    gap: 5px;
+  }
+
+  .placement-chart-bar {
+    gap: 8px;
+    font-size: .58rem;
   }
 
   .placement-actions > :is(button, a) {
