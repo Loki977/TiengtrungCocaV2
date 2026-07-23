@@ -1,0 +1,240 @@
+.placement-home-section {
+  padding: 0 0 28px;
+}
+
+.placement-home-card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  overflow: hidden;
+  padding: 26px 30px;
+  border: 1px solid color-mix(in srgb, var(--orange), transparent 72%);
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(circle at 92% 15%, rgba(255, 181, 92, .24), transparent 26%),
+    linear-gradient(135deg, var(--bg-card), color-mix(in srgb, var(--bg-card), var(--orange) 5%));
+  box-shadow: var(--shadow-md);
+}
+
+.placement-home-card::after {
+  content: "测";
+  position: absolute;
+  z-index: -1;
+  right: 20%;
+  color: color-mix(in srgb, var(--orange), transparent 92%);
+  font-family: serif;
+  font-size: 9rem;
+  line-height: 1;
+}
+
+.placement-home-card__art {
+  display: grid;
+  width: 94px;
+  height: 94px;
+  place-items: center;
+}
+
+.placement-home-card__art img {
+  grid-area: 1 / 1;
+  width: 94px;
+  height: 94px;
+}
+
+.placement-home-card__art span {
+  grid-area: 1 / 1;
+  color: #8d2d21;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.placement-home-card__eyebrow,
+.placement-course-prompt__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--orange-dark);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.placement-home-card__copy h2 {
+  margin: 0;
+  color: var(--charcoal);
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.placement-home-card__copy p {
+  max-width: 700px;
+  margin: 5px 0 0;
+  color: var(--text-muted);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.placement-home-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: .76rem;
+  font-weight: 600;
+}
+
+.placement-home-card > .btn {
+  white-space: nowrap;
+}
+
+.placement-course-prompt[hidden] {
+  display: none;
+}
+
+.placement-course-prompt {
+  position: fixed;
+  z-index: 2600;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  opacity: 0;
+  background: rgba(20, 25, 35, .58);
+  backdrop-filter: blur(5px);
+  transition: opacity 180ms ease;
+}
+
+.placement-course-prompt.is-visible {
+  opacity: 1;
+}
+
+.placement-course-prompt__dialog {
+  position: relative;
+  width: min(520px, 100%);
+  padding: 30px;
+  border: 1px solid color-mix(in srgb, var(--orange), transparent 65%);
+  border-radius: 26px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 181, 92, .18), transparent 30%),
+    var(--bg-card);
+  box-shadow: 0 24px 70px rgba(20, 25, 35, .28);
+  transform: translateY(12px) scale(.98);
+  transition: transform 180ms ease;
+}
+
+.placement-course-prompt.is-visible .placement-course-prompt__dialog {
+  transform: translateY(0) scale(1);
+}
+
+.placement-course-prompt__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-muted);
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.placement-course-prompt__close:hover,
+.placement-course-prompt__close:focus-visible {
+  color: var(--charcoal);
+  background: color-mix(in srgb, var(--orange), transparent 88%);
+}
+
+.placement-course-prompt__seal {
+  margin: 0 auto 8px;
+}
+
+.placement-course-prompt__dialog h2 {
+  margin: 0;
+  color: var(--charcoal);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  line-height: 1.2;
+}
+
+.placement-course-prompt__dialog p {
+  margin: 10px auto 0;
+  color: var(--text-muted);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+
+.placement-course-prompt__actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.placement-course-prompt-open {
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .placement-home-section {
+    padding-bottom: 20px;
+  }
+
+  .placement-home-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .placement-home-card__art,
+  .placement-home-card__art img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .placement-home-card > .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .placement-home-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .placement-home-card__art {
+    margin: 0 auto;
+  }
+
+  .placement-home-card__meta {
+    justify-content: center;
+  }
+
+  .placement-course-prompt__dialog {
+    padding: 26px 20px 20px;
+  }
+
+  .placement-course-prompt__actions {
+    flex-direction: column;
+  }
+
+  .placement-course-prompt__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placement-course-prompt,
+  .placement-course-prompt__dialog {
+    transition-duration: .01ms;
+  }
+}

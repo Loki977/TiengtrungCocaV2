@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff7a00" />
+  <title>Kiểm tra trình độ HSK – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/images/hsk-placement/seal.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/hsk-placement.css" />
+  <script src="assets/js/dark-mode.js"></script>
+</head>
+<body class="placement-page" data-placement-page="test">
+  <a class="placement-skip-link" href="#placementApp">Bỏ qua điều hướng</a>
+  <header class="header placement-header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Về trang chủ">
+        <span class="logo__icon">🍊</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <div class="placement-header__actions">
+        <button id="soundToggle" class="placement-ghost-button" type="button" aria-pressed="true">🔊 Âm thanh: Bật</button>
+        <a class="btn btn--outline placement-profile-link" href="profile.html">Trang cá nhân</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="placementApp" class="placement-shell" aria-live="polite">
+    <section id="authScreen" class="placement-screen placement-auth-card">
+      <img src="assets/images/hsk-placement/seal.svg" alt="" width="72" height="72" />
+      <p class="placement-eyebrow">Kiểm tra thích ứng HSK 1–6</p>
+      <h1>Đăng nhập để lưu tiến độ</h1>
+      <p>Kết quả và bài đang làm được bảo vệ theo tài khoản của bạn.</p>
+      <button id="placementLoginButton" class="placement-primary-button" type="button">Đăng nhập bằng Google</button>
+    </section>
+
+    <section id="introScreen" class="placement-screen placement-hero placement-hidden">
+      <div class="placement-hero__copy">
+        <span class="placement-eyebrow">Bài kiểm tra thích ứng 6 cấp</span>
+        <h1>Khám phá trình độ tiếng Trung của bạn</h1>
+        <p class="placement-lead">Hệ thống chọn câu theo năng lực thực tế, cân bằng nghe, đọc và vận dụng ngôn ngữ để đưa ra kết quả bảo thủ và sát hơn một bài trắc nghiệm cố định.</p>
+        <div class="placement-meta">
+          <span>24–32 câu</span>
+          <span>Khoảng 12–18 phút</span>
+          <span>Không báo đúng sai giữa bài</span>
+        </div>
+        <div class="placement-actions">
+          <button id="startButton" class="placement-primary-button" type="button">Bắt đầu kiểm tra</button>
+          <button id="resumeButton" class="placement-secondary-button placement-hidden" type="button">Tiếp tục bài đang làm</button>
+          <button id="skipButton" class="placement-text-button" type="button">Để sau</button>
+        </div>
+        <p class="placement-fine-print">Kết quả chỉ là ước tính nội bộ, không thay thế điểm hoặc chứng chỉ HSK chính thức.</p>
+      </div>
+      <div class="placement-hero__art" aria-hidden="true">
+        <img src="assets/images/hsk-placement/ink-mountains.svg" alt="" />
+        <div class="placement-level-orbit">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="testScreen" class="placement-screen placement-test placement-hidden">
+      <div class="placement-progress-panel">
+        <div>
+          <span id="progressStatus" class="placement-eyebrow">Đang xác định vùng năng lực</span>
+          <strong id="progressText">Đã hoàn thành 0 câu</strong>
+        </div>
+        <div class="placement-progress-track" role="progressbar" aria-label="Tiến độ ước tính" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="progressBar"></div>
+        </div>
+      </div>
+
+      <article class="placement-question-card">
+        <div class="placement-question-topline">
+          <span id="skillBadge" class="placement-skill-badge">Đọc hiểu</span>
+          <span id="questionCounter" class="placement-question-counter">0 câu đã hoàn thành</span>
+        </div>
+        <h2 id="questionPrompt">Đang tải câu hỏi…</h2>
+
+        <div id="audioPanel" class="placement-audio-panel placement-hidden">
+          <button id="playAudioButton" class="placement-audio-button" type="button">
+            <span aria-hidden="true">▶</span>
+            <span>Nghe audio</span>
+          </button>
+          <span id="audioHint">Có thể nghe lại tối đa 2 lần</span>
+        </div>
+
+        <form id="answerForm" novalidate>
+          <fieldset class="placement-answer-fieldset">
+            <legend class="placement-sr-only">Chọn hoặc nhập đáp án</legend>
+            <div id="answerArea" class="placement-answer-area"></div>
+          </fieldset>
+          <div id="validationMessage" class="placement-validation" role="alert"></div>
+          <button id="submitButton" class="placement-primary-button placement-submit" type="submit">Xác nhận và tiếp tục</button>
+        </form>
+      </article>
+    </section>
+
+    <section id="deferredScreen" class="placement-screen placement-deferred placement-hidden">
+      <div class="placement-result-card">
+        <img src="assets/images/hsk-placement/cloud-divider.svg" alt="" />
+        <h1>Đã lưu lựa chọn “Để sau”</h1>
+        <p>Lời mời sẽ không xuất hiện lại liên tục. Bạn luôn có thể mở bài kiểm tra từ Trang cá nhân.</p>
+        <button id="startDeferredButton" class="placement-primary-button" type="button">Bắt đầu khi sẵn sàng</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="placementToast" class="placement-toast placement-hidden" role="status" aria-live="polite"></div>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/hsk-placement.js"></script>
+</body>
+</html>

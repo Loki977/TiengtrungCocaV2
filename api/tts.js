@@ -515,3 +515,7 @@ module.exports = async (req, res) => {
     }
   }
 };
+
+// Trusted server modules can reuse the existing TTS cache without sending the
+// private transcript through a browser request.
+module.exports.getOrCreateAudio = getOrCreateAudio;

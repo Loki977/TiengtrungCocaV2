@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff7a00" />
+  <title>Kết quả kiểm tra trình độ HSK – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/images/hsk-placement/seal.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/hsk-placement.css" />
+  <script src="assets/js/dark-mode.js"></script>
+</head>
+<body class="placement-page" data-placement-page="result">
+  <a class="placement-skip-link" href="#placementApp">Bỏ qua điều hướng</a>
+  <header class="header placement-header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo" aria-label="Về trang chủ">
+        <span class="logo__icon">🍊</span>
+        <span class="logo__text">Tiếng Trung Cam &amp; Coca</span>
+      </a>
+      <div class="placement-header__actions">
+        <a class="btn btn--outline" href="profile.html">Trang cá nhân</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="placementApp" class="placement-shell" aria-live="polite">
+    <section id="resultLoading" class="placement-screen placement-auth-card">
+      <img src="assets/images/hsk-placement/seal.svg" alt="" width="72" height="72" />
+      <p class="placement-eyebrow">Kết quả ước tính</p>
+      <h1>Đang tổng hợp kết quả</h1>
+      <p>Kết quả được tải an toàn từ bài kiểm tra của tài khoản hiện tại.</p>
+    </section>
+
+    <section id="resultScreen" class="placement-screen placement-result placement-hidden">
+      <div class="placement-result-hero">
+        <span class="placement-eyebrow">Kết quả ước tính</span>
+        <div class="placement-result-level"><span>HSK</span><strong id="resultLevel">–</strong></div>
+        <h1 id="resultHeadline">Đang tổng hợp kết quả</h1>
+        <p id="resultSummary" class="placement-lead"></p>
+        <div id="confidencePill" class="placement-confidence">Độ tin cậy: –</div>
+      </div>
+
+      <div class="placement-result-grid">
+        <section class="placement-result-card">
+          <h2>Hồ sơ kỹ năng</h2>
+          <div id="skillResults" class="placement-skill-results"></div>
+        </section>
+        <section class="placement-result-card">
+          <h2>Đề xuất học tiếp</h2>
+          <div id="recommendations" class="placement-recommendations"></div>
+        </section>
+      </div>
+
+      <div class="placement-actions placement-result-actions">
+        <a class="placement-secondary-button" href="hsk-placement.html?restart=1">Kiểm tra lại</a>
+        <a class="placement-primary-button" href="hsk.html">Xem lộ trình học</a>
+      </div>
+      <p class="placement-fine-print placement-centered">Kết quả này dùng để cá nhân hóa lộ trình học, không phải chứng nhận thi HSK.</p>
+    </section>
+  </main>
+  <div id="placementToast" class="placement-toast placement-hidden" role="status" aria-live="polite"></div>
+  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script type="module" src="assets/js/hsk-placement-result.js"></script>
+</body>
+</html>

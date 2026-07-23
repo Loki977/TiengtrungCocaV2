@@ -1,0 +1,3404 @@
+[
+  {
+    "id": "hsk1-lis-01",
+    "hskLevel": 1,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Nghe và chọn tên của người nói.",
+    "difficulty": -2.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Câu giới thiệu trực tiếp tên người nói.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "identity"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "王明"
+      },
+      {
+        "id": "b",
+        "text": "李华"
+      },
+      {
+        "id": "c",
+        "text": "张老师"
+      },
+      {
+        "id": "d",
+        "text": "小美"
+      }
+    ],
+    "audio": {
+      "text": "你好，我叫王明。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 1,
+      "file": "/audio/hsk1-lis-01.mp3",
+      "rate": "-10%"
+    }
+  },
+  {
+    "id": "hsk1-lis-02",
+    "hskLevel": 1,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Nghe và chọn thứ trong tuần.",
+    "difficulty": -2.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“今天星期三” nghĩa là hôm nay là thứ Tư.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "time"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "星期一"
+      },
+      {
+        "id": "b",
+        "text": "星期二"
+      },
+      {
+        "id": "c",
+        "text": "星期三"
+      },
+      {
+        "id": "d",
+        "text": "星期五"
+      }
+    ],
+    "audio": {
+      "text": "今天星期三。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 1,
+      "file": "/audio/hsk1-lis-02.mp3",
+      "rate": "-10%"
+    }
+  },
+  {
+    "id": "hsk1-lis-03",
+    "hskLevel": 1,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Mẹ của người nói làm việc ở đâu?",
+    "difficulty": -2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“在医院工作” là làm việc ở bệnh viện.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "family",
+      "work"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "学校"
+      },
+      {
+        "id": "b",
+        "text": "医院"
+      },
+      {
+        "id": "c",
+        "text": "商店"
+      },
+      {
+        "id": "d",
+        "text": "饭店"
+      }
+    ],
+    "audio": {
+      "text": "我妈妈在医院工作。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 1,
+      "file": "/audio/hsk1-lis-03.mp3",
+      "rate": "-10%"
+    }
+  },
+  {
+    "id": "hsk1-lis-04",
+    "hskLevel": 1,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Bây giờ là mấy giờ?",
+    "difficulty": -2.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“八点半” là 8 giờ 30.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "time"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "七点"
+      },
+      {
+        "id": "b",
+        "text": "八点"
+      },
+      {
+        "id": "c",
+        "text": "九点半"
+      },
+      {
+        "id": "d",
+        "text": "八点半"
+      }
+    ],
+    "audio": {
+      "text": "现在八点半，我们去上课吧。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 1,
+      "file": "/audio/hsk1-lis-04.mp3",
+      "rate": "-10%"
+    }
+  },
+  {
+    "id": "hsk1-rea-05",
+    "hskLevel": 1,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "Đọc câu và chọn thông tin đúng：我没有哥哥，但是有一个姐姐。",
+    "difficulty": -2.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Câu phủ định “哥哥” nhưng khẳng định có một “姐姐”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "family"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Tôi có một anh trai."
+      },
+      {
+        "id": "b",
+        "text": "Tôi có một chị gái."
+      },
+      {
+        "id": "c",
+        "text": "Tôi không có anh chị em."
+      },
+      {
+        "id": "d",
+        "text": "Tôi có hai chị gái."
+      }
+    ]
+  },
+  {
+    "id": "hsk1-rea-06",
+    "hskLevel": 1,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "桌子上有三本书。 Sách ở đâu?",
+    "difficulty": -2.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“桌子上” nghĩa là trên bàn.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "location"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Trên bàn"
+      },
+      {
+        "id": "b",
+        "text": "Dưới ghế"
+      },
+      {
+        "id": "c",
+        "text": "Trong cặp"
+      },
+      {
+        "id": "d",
+        "text": "Bên cửa"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-rea-07",
+    "hskLevel": 1,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "他每天坐公共汽车去学校。 Người này đi học bằng gì?",
+    "difficulty": -2.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“坐公共汽车” là đi xe buýt.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "transport"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Tàu hỏa"
+      },
+      {
+        "id": "b",
+        "text": "Xe đạp"
+      },
+      {
+        "id": "c",
+        "text": "Xe buýt"
+      },
+      {
+        "id": "d",
+        "text": "Đi bộ"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-voc-08",
+    "hskLevel": 1,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn lượng từ đúng：我要买一___水。",
+    "difficulty": -2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“杯” dùng cho một cốc nước.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "measure-word"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "杯"
+      },
+      {
+        "id": "b",
+        "text": "本"
+      },
+      {
+        "id": "c",
+        "text": "件"
+      },
+      {
+        "id": "d",
+        "text": "张"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-voc-09",
+    "hskLevel": 1,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ phù hợp：这个苹果很___。",
+    "difficulty": -2.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“甜” miêu tả vị ngọt của táo.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "adjective"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "远"
+      },
+      {
+        "id": "b",
+        "text": "甜"
+      },
+      {
+        "id": "c",
+        "text": "慢"
+      },
+      {
+        "id": "d",
+        "text": "早"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-voc-10",
+    "hskLevel": 1,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn động từ đúng：我们在饭店___饭。",
+    "difficulty": -2.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Cụm đúng là “吃饭”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "verb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "看"
+      },
+      {
+        "id": "b",
+        "text": "听"
+      },
+      {
+        "id": "c",
+        "text": "吃"
+      },
+      {
+        "id": "d",
+        "text": "住"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-gra-11",
+    "hskLevel": 1,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：你___中国人吗？",
+    "difficulty": -2.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Mẫu xác nhận thân phận dùng “是……吗”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "shi-sentence"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "是"
+      },
+      {
+        "id": "b",
+        "text": "有"
+      },
+      {
+        "id": "c",
+        "text": "在"
+      },
+      {
+        "id": "d",
+        "text": "叫"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-gra-12",
+    "hskLevel": 1,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：我___喜欢喝咖啡。",
+    "difficulty": -2.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“很喜欢” là rất thích.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "degree-adverb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "个"
+      },
+      {
+        "id": "b",
+        "text": "很"
+      },
+      {
+        "id": "c",
+        "text": "本"
+      },
+      {
+        "id": "d",
+        "text": "岁"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-gra-13",
+    "hskLevel": 1,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：他今天___来学校。",
+    "difficulty": -2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Hành động đã không xảy ra dùng “没”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "negation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "别"
+      },
+      {
+        "id": "b",
+        "text": "都"
+      },
+      {
+        "id": "c",
+        "text": "没"
+      },
+      {
+        "id": "d",
+        "text": "很"
+      }
+    ]
+  },
+  {
+    "id": "hsk1-wri-14",
+    "hskLevel": 1,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": -2.32,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "我",
+      "学习",
+      "汉语"
+    ],
+    "explanation": "Trật tự cơ bản: chủ ngữ + động từ + tân ngữ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "svo"
+    ],
+    "tokens": [
+      "汉语",
+      "我",
+      "学习"
+    ]
+  },
+  {
+    "id": "hsk1-wri-15",
+    "hskLevel": 1,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền một chữ Hán：她___老师。",
+    "difficulty": -2.15,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "是",
+    "explanation": "Câu phán đoán dùng “是”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "shi-sentence"
+    ],
+    "acceptedAnswers": [
+      "是"
+    ]
+  },
+  {
+    "id": "hsk2-lis-01",
+    "hskLevel": 2,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người nghe được khuyên làm gì?",
+    "difficulty": -1.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Ngày mai lạnh hơn nên được khuyên mặc thêm quần áo.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "comparison",
+      "advice"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Mang theo ô"
+      },
+      {
+        "id": "b",
+        "text": "Mặc thêm áo"
+      },
+      {
+        "id": "c",
+        "text": "Đi sớm hơn"
+      },
+      {
+        "id": "d",
+        "text": "Uống thuốc"
+      }
+    ],
+    "audio": {
+      "text": "明天比今天冷，你多穿一点儿。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 2,
+      "file": "/audio/hsk2-lis-01.mp3",
+      "rate": "-6%"
+    }
+  },
+  {
+    "id": "hsk2-lis-02",
+    "hskLevel": 2,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người trả lời đi đến công ty bằng gì?",
+    "difficulty": -1.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“骑自行车” là đi xe đạp.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "transport"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Xe buýt"
+      },
+      {
+        "id": "b",
+        "text": "Tàu điện"
+      },
+      {
+        "id": "c",
+        "text": "Xe đạp"
+      },
+      {
+        "id": "d",
+        "text": "Taxi"
+      }
+    ],
+    "audio": {
+      "text": "女：你怎么去公司？男：我骑自行车去。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 2,
+      "file": "/audio/hsk2-lis-02.mp3",
+      "rate": "-6%"
+    }
+  },
+  {
+    "id": "hsk2-lis-03",
+    "hskLevel": 2,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người nói muốn xem loại quần áo nào?",
+    "difficulty": -1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Người nói thấy món hiện tại quá đắt và muốn xem món rẻ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "shopping"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Loại rẻ hơn"
+      },
+      {
+        "id": "b",
+        "text": "Loại màu đỏ"
+      },
+      {
+        "id": "c",
+        "text": "Loại lớn hơn"
+      },
+      {
+        "id": "d",
+        "text": "Loại mới nhất"
+      }
+    ],
+    "audio": {
+      "text": "这件衣服太贵了，我想看看那件便宜的。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 2,
+      "file": "/audio/hsk2-lis-03.mp3",
+      "rate": "-6%"
+    }
+  },
+  {
+    "id": "hsk2-lis-04",
+    "hskLevel": 2,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Vì sao người nói không đi ăn cùng?",
+    "difficulty": -1.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“已经吃过饭了” nghĩa là đã ăn rồi.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "experience"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Phải làm việc"
+      },
+      {
+        "id": "b",
+        "text": "Không thích món ăn"
+      },
+      {
+        "id": "c",
+        "text": "Đang bị ốm"
+      },
+      {
+        "id": "d",
+        "text": "Đã ăn rồi"
+      }
+    ],
+    "audio": {
+      "text": "我已经吃过饭了，你们去吧。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 2,
+      "file": "/audio/hsk2-lis-04.mp3",
+      "rate": "-6%"
+    }
+  },
+  {
+    "id": "hsk2-rea-05",
+    "hskLevel": 2,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "虽然下雨，他还是去跑步了。 Điều gì đúng?",
+    "difficulty": -1.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“虽然……还是……” diễn tả nhượng bộ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "concession"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Anh ấy ở nhà vì mưa."
+      },
+      {
+        "id": "b",
+        "text": "Anh ấy quên mang ô."
+      },
+      {
+        "id": "c",
+        "text": "Dù mưa anh ấy vẫn chạy bộ."
+      },
+      {
+        "id": "d",
+        "text": "Anh ấy chạy bộ trước khi mưa."
+      }
+    ]
+  },
+  {
+    "id": "hsk2-rea-06",
+    "hskLevel": 2,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "小李来北京两年了，现在说汉语说得不错。 Có thể suy ra gì?",
+    "difficulty": -1.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Câu sau trực tiếp nói khả năng tiếng Trung khá tốt.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "duration",
+      "complement"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Tiểu Lý vừa đến Bắc Kinh."
+      },
+      {
+        "id": "b",
+        "text": "Tiếng Trung của Tiểu Lý khá tốt."
+      },
+      {
+        "id": "c",
+        "text": "Tiểu Lý dạy tiếng Trung."
+      },
+      {
+        "id": "d",
+        "text": "Tiểu Lý ở Bắc Kinh hai ngày."
+      }
+    ]
+  },
+  {
+    "id": "hsk2-rea-07",
+    "hskLevel": 2,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "图书馆九点开门，现在八点四十五。 Hiện tại có thể vào chưa?",
+    "difficulty": -1.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "8:45 sớm hơn giờ mở cửa 9:00.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "time",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Chưa thể vào"
+      },
+      {
+        "id": "b",
+        "text": "Đã đóng cửa"
+      },
+      {
+        "id": "c",
+        "text": "Chỉ còn 15 phút nữa đóng"
+      },
+      {
+        "id": "d",
+        "text": "Có thể vào ngay"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-voc-08",
+    "hskLevel": 2,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：他感冒了，应该多___水。",
+    "difficulty": -1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Cụm đúng là “喝水”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "health"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "看"
+      },
+      {
+        "id": "b",
+        "text": "听"
+      },
+      {
+        "id": "c",
+        "text": "喝"
+      },
+      {
+        "id": "d",
+        "text": "坐"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-voc-09",
+    "hskLevel": 2,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：这条路很___，开车要小心。",
+    "difficulty": -1.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Đường hẹp thì lái xe cần cẩn thận.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "adjective"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "饿"
+      },
+      {
+        "id": "b",
+        "text": "窄"
+      },
+      {
+        "id": "c",
+        "text": "甜"
+      },
+      {
+        "id": "d",
+        "text": "轻"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-voc-10",
+    "hskLevel": 2,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：请帮我___一下这个箱子。",
+    "difficulty": -1.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“拿箱子” là cầm/đem chiếc thùng.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "verb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "唱"
+      },
+      {
+        "id": "b",
+        "text": "洗"
+      },
+      {
+        "id": "c",
+        "text": "问"
+      },
+      {
+        "id": "d",
+        "text": "拿"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-gra-11",
+    "hskLevel": 2,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cặp từ：我们___看电影，___去吃饭。",
+    "difficulty": -1.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“先……再……” diễn tả thứ tự trước sau.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "sequence"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "先 / 再"
+      },
+      {
+        "id": "b",
+        "text": "因为 / 所以"
+      },
+      {
+        "id": "c",
+        "text": "一边 / 一边"
+      },
+      {
+        "id": "d",
+        "text": "虽然 / 但是"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-gra-12",
+    "hskLevel": 2,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn trợ từ：妹妹唱歌唱___很好。",
+    "difficulty": -1.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Sau động từ, bổ ngữ mức độ dùng “得”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "de-complement"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "的"
+      },
+      {
+        "id": "b",
+        "text": "得"
+      },
+      {
+        "id": "c",
+        "text": "地"
+      },
+      {
+        "id": "d",
+        "text": "了"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-gra-13",
+    "hskLevel": 2,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn từ nối：因为路上堵车，___我迟到了。",
+    "difficulty": -1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“因为……所以……” diễn tả nguyên nhân và kết quả.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "cause-effect"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "但是"
+      },
+      {
+        "id": "b",
+        "text": "还是"
+      },
+      {
+        "id": "c",
+        "text": "所以"
+      },
+      {
+        "id": "d",
+        "text": "或者"
+      }
+    ]
+  },
+  {
+    "id": "hsk2-wri-14",
+    "hskLevel": 2,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": -1.32,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "我们",
+      "明天",
+      "一起",
+      "去",
+      "游泳"
+    ],
+    "explanation": "Thời gian đứng sau chủ ngữ, sau đó là trạng ngữ và động từ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "word-order"
+    ],
+    "tokens": [
+      "一起",
+      "游泳",
+      "我们",
+      "去",
+      "明天"
+    ]
+  },
+  {
+    "id": "hsk2-wri-15",
+    "hskLevel": 2,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền lượng từ：我去过上海两___。",
+    "difficulty": -1.15,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "次",
+    "explanation": "“次” dùng để đếm số lần.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "measure-word",
+      "experience"
+    ],
+    "acceptedAnswers": [
+      "次"
+    ]
+  },
+  {
+    "id": "hsk3-lis-01",
+    "hskLevel": 3,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Cuộc họp được chuyển sang lúc nào?",
+    "difficulty": -0.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Câu nói rõ chuyển cuộc họp sang 3 giờ chiều.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "schedule"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Hai giờ"
+      },
+      {
+        "id": "b",
+        "text": "Hai giờ rưỡi"
+      },
+      {
+        "id": "c",
+        "text": "Ba giờ"
+      },
+      {
+        "id": "d",
+        "text": "Bốn giờ"
+      }
+    ],
+    "audio": {
+      "text": "因为王经理还在路上，下午两点的会议改到三点。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 3,
+      "file": "/audio/hsk3-lis-01.mp3",
+      "rate": "-2%"
+    }
+  },
+  {
+    "id": "hsk3-lis-02",
+    "hskLevel": 3,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Vì sao người nói phải quay lại văn phòng?",
+    "difficulty": -0.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Người nói để quên chìa khóa ở văn phòng.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "ba-sentence",
+      "reason"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Quên điện thoại"
+      },
+      {
+        "id": "b",
+        "text": "Để quên chìa khóa"
+      },
+      {
+        "id": "c",
+        "text": "Chưa ký tài liệu"
+      },
+      {
+        "id": "d",
+        "text": "Phải gặp quản lý"
+      }
+    ],
+    "audio": {
+      "text": "我把钥匙忘在办公室了，只好回去拿。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 3,
+      "file": "/audio/hsk3-lis-02.mp3",
+      "rate": "-2%"
+    }
+  },
+  {
+    "id": "hsk3-lis-03",
+    "hskLevel": 3,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người nói đánh giá nhà hàng thế nào?",
+    "difficulty": -0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“味道不错，就是服务有点儿慢” thể hiện ưu và nhược điểm.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "evaluation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Món ăn và phục vụ đều tệ."
+      },
+      {
+        "id": "b",
+        "text": "Món ăn đắt nhưng phục vụ nhanh."
+      },
+      {
+        "id": "c",
+        "text": "Món ăn bình thường, không gian đẹp."
+      },
+      {
+        "id": "d",
+        "text": "Món ăn ngon nhưng phục vụ hơi chậm."
+      }
+    ],
+    "audio": {
+      "text": "这家店的菜味道不错，就是服务有点儿慢。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 3,
+      "file": "/audio/hsk3-lis-03.mp3",
+      "rate": "-2%"
+    }
+  },
+  {
+    "id": "hsk3-lis-04",
+    "hskLevel": 3,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Bác sĩ khuyên người bệnh làm gì?",
+    "difficulty": -0.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Bác sĩ nói không nghiêm trọng, nghỉ vài ngày sẽ khỏi.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "health",
+      "advice"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Nghỉ ngơi vài ngày"
+      },
+      {
+        "id": "b",
+        "text": "Đi phẫu thuật"
+      },
+      {
+        "id": "c",
+        "text": "Đổi bệnh viện"
+      },
+      {
+        "id": "d",
+        "text": "Tập thể thao ngay"
+      }
+    ],
+    "audio": {
+      "text": "医生说我没什么大问题，休息几天就好了。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 3,
+      "file": "/audio/hsk3-lis-04.mp3",
+      "rate": "-2%"
+    }
+  },
+  {
+    "id": "hsk3-rea-05",
+    "hskLevel": 3,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "通知：为了修理电梯，本周六上午八点到十二点暂停使用。 Điều gì đúng?",
+    "difficulty": -0.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Thông báo quy định đúng khung giờ sáng thứ Bảy.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "notice"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thang máy ngừng cả tuần."
+      },
+      {
+        "id": "b",
+        "text": "Thang máy chỉ dùng buổi chiều."
+      },
+      {
+        "id": "c",
+        "text": "Sáng thứ Bảy không dùng được thang máy."
+      },
+      {
+        "id": "d",
+        "text": "Thang máy được thay mới vào Chủ nhật."
+      }
+    ]
+  },
+  {
+    "id": "hsk3-rea-06",
+    "hskLevel": 3,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "小张本来打算坐飞机去广州，后来发现高铁更方便，就改买了火车票。 Cuối cùng anh ấy đi bằng gì?",
+    "difficulty": -0.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“改买了火车票” cho biết đã đổi sang tàu.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "plan-change"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Máy bay"
+      },
+      {
+        "id": "b",
+        "text": "Tàu cao tốc"
+      },
+      {
+        "id": "c",
+        "text": "Ô tô"
+      },
+      {
+        "id": "d",
+        "text": "Xe buýt"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-rea-07",
+    "hskLevel": 3,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "这本书我只看了一半，不过已经觉得很有意思了。 Ý nào phù hợp?",
+    "difficulty": -0.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“只看了一半” là chưa xong; “很有意思” là thú vị.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Người nói chưa đọc xong nhưng thấy sách thú vị."
+      },
+      {
+        "id": "b",
+        "text": "Người nói đã đọc sách hai lần."
+      },
+      {
+        "id": "c",
+        "text": "Nửa sau của sách không hay."
+      },
+      {
+        "id": "d",
+        "text": "Người nói không hiểu nội dung."
+      }
+    ]
+  },
+  {
+    "id": "hsk3-voc-08",
+    "hskLevel": 3,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：请大家明天八点___到公司。",
+    "difficulty": -0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“按时到” nghĩa là đến đúng giờ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "adverb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "认真"
+      },
+      {
+        "id": "b",
+        "text": "终于"
+      },
+      {
+        "id": "c",
+        "text": "按时"
+      },
+      {
+        "id": "d",
+        "text": "随便"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-voc-09",
+    "hskLevel": 3,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：等了两个小时，他___来了。",
+    "difficulty": -0.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“终于” nhấn mạnh kết quả sau thời gian chờ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "adverb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "经常"
+      },
+      {
+        "id": "b",
+        "text": "终于"
+      },
+      {
+        "id": "c",
+        "text": "突然"
+      },
+      {
+        "id": "d",
+        "text": "刚才"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-voc-10",
+    "hskLevel": 3,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：这双鞋很轻，特别___旅行时穿。",
+    "difficulty": -0.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“适合……穿” là phù hợp để mặc.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "反对"
+      },
+      {
+        "id": "b",
+        "text": "解决"
+      },
+      {
+        "id": "c",
+        "text": "影响"
+      },
+      {
+        "id": "d",
+        "text": "适合"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-gra-11",
+    "hskLevel": 3,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___汉语___，他还会说英语和日语。",
+    "difficulty": -0.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“除了……以外，还……” mang nghĩa ngoài... còn...",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "addition"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "除了 / 以外"
+      },
+      {
+        "id": "b",
+        "text": "虽然 / 但是"
+      },
+      {
+        "id": "c",
+        "text": "因为 / 所以"
+      },
+      {
+        "id": "d",
+        "text": "先 / 再"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-gra-12",
+    "hskLevel": 3,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：我___到家___给你打电话。",
+    "difficulty": -0.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“一……就……” diễn tả vừa xảy ra việc trước thì việc sau xảy ra.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "sequence"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "越 / 越"
+      },
+      {
+        "id": "b",
+        "text": "又 / 又"
+      },
+      {
+        "id": "c",
+        "text": "一 / 就"
+      },
+      {
+        "id": "d",
+        "text": "不但 / 而且"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-gra-13",
+    "hskLevel": 3,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：我的自行车___弟弟骑走了。",
+    "difficulty": -0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Câu bị động dùng “被”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "bei-sentence"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "把"
+      },
+      {
+        "id": "b",
+        "text": "被"
+      },
+      {
+        "id": "c",
+        "text": "让给"
+      },
+      {
+        "id": "d",
+        "text": "从"
+      }
+    ]
+  },
+  {
+    "id": "hsk3-wri-14",
+    "hskLevel": 3,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": -0.32,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "请",
+      "把",
+      "门",
+      "关上"
+    ],
+    "explanation": "Câu chữ 把: chủ ngữ lược bỏ + 把 + tân ngữ + động từ + bổ ngữ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "ba-sentence"
+    ],
+    "tokens": [
+      "关上",
+      "门",
+      "请",
+      "把"
+    ]
+  },
+  {
+    "id": "hsk3-wri-15",
+    "hskLevel": 3,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền bổ ngữ kết quả：报告我已经写___了。",
+    "difficulty": -0.15,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "完",
+    "explanation": "“写完” nghĩa là viết xong.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "result-complement"
+    ],
+    "acceptedAnswers": [
+      "完"
+    ]
+  },
+  {
+    "id": "hsk4-lis-01",
+    "hskLevel": 4,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Ứng viên cần làm gì trước thứ Sáu?",
+    "difficulty": 0.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Người phỏng vấn yêu cầu gửi bản cập nhật trước thứ Sáu.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "work",
+      "deadline"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Đi làm chính thức"
+      },
+      {
+        "id": "b",
+        "text": "Gửi lại bản sơ yếu lý lịch"
+      },
+      {
+        "id": "c",
+        "text": "Tham gia khóa đào tạo"
+      },
+      {
+        "id": "d",
+        "text": "Ký hợp đồng thuê nhà"
+      }
+    ],
+    "audio": {
+      "text": "您的经历很符合要求，请在星期五以前把更新后的简历发给我们。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 4,
+      "file": "/audio/hsk4-lis-01.mp3",
+      "rate": "+2%"
+    }
+  },
+  {
+    "id": "hsk4-lis-02",
+    "hskLevel": 4,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Vì sao khách hàng muốn đổi sản phẩm?",
+    "difficulty": 0.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Khách nói chất lượng ổn nhưng kích thước nhỏ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "shopping",
+      "return"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Không thích màu"
+      },
+      {
+        "id": "b",
+        "text": "Giá giảm sau khi mua"
+      },
+      {
+        "id": "c",
+        "text": "Kích thước không phù hợp"
+      },
+      {
+        "id": "d",
+        "text": "Sản phẩm giao chậm"
+      }
+    ],
+    "audio": {
+      "text": "质量没有问题，不过尺寸比我想的要小，我想换大一号的。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 4,
+      "file": "/audio/hsk4-lis-02.mp3",
+      "rate": "+2%"
+    }
+  },
+  {
+    "id": "hsk4-lis-03",
+    "hskLevel": 4,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Ý chính của lời khuyên là gì?",
+    "difficulty": 0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Đoạn nói nhấn mạnh chia nhỏ mục tiêu và hoàn thành từng bước.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "advice",
+      "main-idea"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Nên chia mục tiêu lớn thành các bước nhỏ"
+      },
+      {
+        "id": "b",
+        "text": "Chỉ cần làm việc khi có cảm hứng"
+      },
+      {
+        "id": "c",
+        "text": "Nên đặt nhiều mục tiêu cùng lúc"
+      },
+      {
+        "id": "d",
+        "text": "Không cần ghi lại tiến độ"
+      }
+    ],
+    "audio": {
+      "text": "很多人坚持不下去，不是因为目标不重要，而是因为目标太大。把它分成几个小步骤，会更容易完成。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 4,
+      "file": "/audio/hsk4-lis-03.mp3",
+      "rate": "+2%"
+    }
+  },
+  {
+    "id": "hsk4-lis-04",
+    "hskLevel": 4,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Chuyến tàu bị chậm vì lý do gì?",
+    "difficulty": 0.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "Thông báo nói do ảnh hưởng của mưa lớn.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "announcement",
+      "delay"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thiếu nhân viên"
+      },
+      {
+        "id": "b",
+        "text": "Hành khách đến muộn"
+      },
+      {
+        "id": "c",
+        "text": "Sửa nhà ga"
+      },
+      {
+        "id": "d",
+        "text": "Thời tiết xấu"
+      }
+    ],
+    "audio": {
+      "text": "受大雨影响，原定十点到站的列车将晚点四十分钟。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 4,
+      "file": "/audio/hsk4-lis-04.mp3",
+      "rate": "+2%"
+    }
+  },
+  {
+    "id": "hsk4-rea-05",
+    "hskLevel": 4,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "公司决定每周三下午不开会，让员工集中处理需要深入思考的工作。 Mục đích chính là gì?",
+    "difficulty": 0.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Không họp nhằm dành thời gian cho công việc cần suy nghĩ sâu.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "work",
+      "purpose"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Giảm số nhân viên"
+      },
+      {
+        "id": "b",
+        "text": "Tạo thời gian làm việc tập trung"
+      },
+      {
+        "id": "c",
+        "text": "Đóng cửa vào thứ Tư"
+      },
+      {
+        "id": "d",
+        "text": "Tăng thời gian họp vào buổi sáng"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-rea-06",
+    "hskLevel": 4,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "研究发现，短时间休息并不会降低效率，反而能帮助大脑恢复注意力。 Có thể kết luận gì?",
+    "difficulty": 0.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“反而” đưa ra kết quả tích cực của việc nghỉ ngắn.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "research",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Nghỉ ngơi luôn làm mất tập trung."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ nên làm việc trong thời gian ngắn."
+      },
+      {
+        "id": "c",
+        "text": "Nghỉ hợp lý có thể nâng cao hiệu quả."
+      },
+      {
+        "id": "d",
+        "text": "Hiệu quả không liên quan đến sự chú ý."
+      }
+    ]
+  },
+  {
+    "id": "hsk4-rea-07",
+    "hskLevel": 4,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "他答应得很快，可真正开始做时却总找理由推迟。 Câu này thể hiện điều gì?",
+    "difficulty": 0.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "Đồng ý nhanh nhưng liên tục trì hoãn cho thấy nói và làm không thống nhất.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "behavior",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Anh ấy làm việc rất nhanh."
+      },
+      {
+        "id": "b",
+        "text": "Anh ấy không hiểu yêu cầu."
+      },
+      {
+        "id": "c",
+        "text": "Anh ấy không bao giờ đồng ý."
+      },
+      {
+        "id": "d",
+        "text": "Lời nói và hành động của anh ấy không nhất quán."
+      }
+    ]
+  },
+  {
+    "id": "hsk4-voc-08",
+    "hskLevel": 4,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：王主管主要___这个项目的进度。",
+    "difficulty": 0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“负责项目进度” là phụ trách tiến độ dự án.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "work",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "负责"
+      },
+      {
+        "id": "b",
+        "text": "拒绝"
+      },
+      {
+        "id": "c",
+        "text": "证明"
+      },
+      {
+        "id": "d",
+        "text": "表扬"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-voc-09",
+    "hskLevel": 4,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：睡眠不足会___第二天的工作状态。",
+    "difficulty": 0.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“影响工作状态” là ảnh hưởng trạng thái làm việc.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "health",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "适应"
+      },
+      {
+        "id": "b",
+        "text": "改变"
+      },
+      {
+        "id": "c",
+        "text": "影响"
+      },
+      {
+        "id": "d",
+        "text": "保持"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-voc-10",
+    "hskLevel": 4,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：发现问题后要___处理，不能一直等。",
+    "difficulty": 0.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“及时处理” là xử lý kịp thời.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "adverb"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "认真"
+      },
+      {
+        "id": "b",
+        "text": "及时"
+      },
+      {
+        "id": "c",
+        "text": "复杂"
+      },
+      {
+        "id": "d",
+        "text": "顺利"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-gra-11",
+    "hskLevel": 4,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___遇到困难，我们___不能轻易放弃。",
+    "difficulty": 0.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“即使……也……” diễn tả dù... vẫn...",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "concession"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "只要 / 就"
+      },
+      {
+        "id": "b",
+        "text": "既然 / 就"
+      },
+      {
+        "id": "c",
+        "text": "即使 / 也"
+      },
+      {
+        "id": "d",
+        "text": "不仅 / 还"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-gra-12",
+    "hskLevel": 4,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：这个方案___节省时间，___降低了成本。",
+    "difficulty": 0.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Hai ưu điểm tăng tiến dùng “不但……而且……”.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "addition"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "不但 / 而且"
+      },
+      {
+        "id": "b",
+        "text": "虽然 / 但是"
+      },
+      {
+        "id": "c",
+        "text": "一边 / 一边"
+      },
+      {
+        "id": "d",
+        "text": "如果 / 就"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-gra-13",
+    "hskLevel": 4,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___已经决定了，___别再犹豫。",
+    "difficulty": 0.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“既然……就……” dựa trên sự thật đã có để đưa kết luận.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "reasoning"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "无论 / 都"
+      },
+      {
+        "id": "b",
+        "text": "除非 / 才"
+      },
+      {
+        "id": "c",
+        "text": "尽管 / 可是"
+      },
+      {
+        "id": "d",
+        "text": "既然 / 就"
+      }
+    ]
+  },
+  {
+    "id": "hsk4-wri-14",
+    "hskLevel": 4,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": 0.68,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "这个问题",
+      "值得",
+      "我们",
+      "认真",
+      "考虑"
+    ],
+    "explanation": "Chủ đề + 值得 + người thực hiện + trạng ngữ + động từ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "worth-doing"
+    ],
+    "tokens": [
+      "认真",
+      "我们",
+      "考虑",
+      "值得",
+      "这个问题"
+    ]
+  },
+  {
+    "id": "hsk4-wri-15",
+    "hskLevel": 4,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền từ：这部纪录片很___一看。",
+    "difficulty": 0.85,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "值得",
+    "explanation": "“值得一看” nghĩa là đáng xem.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "worth-doing"
+    ],
+    "acceptedAnswers": [
+      "值得"
+    ]
+  },
+  {
+    "id": "hsk5-lis-01",
+    "hskLevel": 5,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người nói phản đối cách làm nào?",
+    "difficulty": 1.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Đoạn nói cho rằng kinh nghiệm cũ có giá trị nhưng không thể thay thế dữ liệu mới.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "argument",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thử nghiệm ở quy mô nhỏ"
+      },
+      {
+        "id": "b",
+        "text": "Chỉ dựa vào kinh nghiệm cũ để quyết định"
+      },
+      {
+        "id": "c",
+        "text": "Thu thập ý kiến người dùng"
+      },
+      {
+        "id": "d",
+        "text": "Điều chỉnh kế hoạch theo dữ liệu"
+      }
+    ],
+    "audio": {
+      "text": "过去的经验当然有参考价值，但如果完全按照旧办法做决定，就可能忽视市场已经发生的变化。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 5,
+      "file": "/audio/hsk5-lis-01.mp3",
+      "rate": "+6%"
+    }
+  },
+  {
+    "id": "hsk5-lis-02",
+    "hskLevel": 5,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Vì sao dự án chưa được triển khai ngay?",
+    "difficulty": 1.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "Người nói yêu cầu đánh giá chi phí và rủi ro trước khi quyết định.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "project",
+      "risk"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Không có người phụ trách"
+      },
+      {
+        "id": "b",
+        "text": "Khách hàng đã hủy"
+      },
+      {
+        "id": "c",
+        "text": "Công nghệ chưa tồn tại"
+      },
+      {
+        "id": "d",
+        "text": "Rủi ro và chi phí chưa được đánh giá đầy đủ"
+      }
+    ],
+    "audio": {
+      "text": "这个想法很有吸引力，不过成本和风险还没有评估清楚，现在就投入实施并不合适。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 5,
+      "file": "/audio/hsk5-lis-02.mp3",
+      "rate": "+6%"
+    }
+  },
+  {
+    "id": "hsk5-lis-03",
+    "hskLevel": 5,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Thái độ của người nói đối với làm việc từ xa là gì?",
+    "difficulty": 1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Đoạn nêu ưu điểm và điều kiện để tránh giảm giao tiếp.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "balanced-view"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Hoàn toàn phản đối"
+      },
+      {
+        "id": "b",
+        "text": "Cho rằng luôn hiệu quả hơn"
+      },
+      {
+        "id": "c",
+        "text": "Công nhận ưu điểm nhưng nhấn mạnh cần quản lý phù hợp"
+      },
+      {
+        "id": "d",
+        "text": "Chỉ phù hợp với công ty nhỏ"
+      }
+    ],
+    "audio": {
+      "text": "远程办公能节省通勤时间，但如果缺少明确的沟通规则，也容易造成信息不对称。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 5,
+      "file": "/audio/hsk5-lis-03.mp3",
+      "rate": "+6%"
+    }
+  },
+  {
+    "id": "hsk5-lis-04",
+    "hskLevel": 5,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Kết luận chính của đoạn nói là gì?",
+    "difficulty": 1.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Đoạn nhấn mạnh thay đổi nhỏ, lặp lại và môi trường hỗ trợ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "main-idea",
+      "habit"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thay đổi nhỏ nhưng duy trì lâu dài thường hiệu quả hơn"
+      },
+      {
+        "id": "b",
+        "text": "Muốn thành công phải thay đổi toàn bộ ngay lập tức"
+      },
+      {
+        "id": "c",
+        "text": "Thói quen không liên quan đến môi trường"
+      },
+      {
+        "id": "d",
+        "text": "Chỉ ý chí mới quyết định kết quả"
+      }
+    ],
+    "audio": {
+      "text": "改变习惯不一定要从很大的目标开始。一个容易重复的小行动，加上合适的环境，往往更容易长期坚持。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 5,
+      "file": "/audio/hsk5-lis-04.mp3",
+      "rate": "+6%"
+    }
+  },
+  {
+    "id": "hsk5-rea-05",
+    "hskLevel": 5,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "有些人把忙碌当成效率的证明，却很少停下来判断自己做的事情是否真正重要。 Tác giả phê bình điều gì?",
+    "difficulty": 1.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Câu phê bình việc coi bận rộn là bằng chứng của hiệu quả.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "critique",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Làm việc quá ít"
+      },
+      {
+        "id": "b",
+        "text": "Không ghi chép công việc"
+      },
+      {
+        "id": "c",
+        "text": "Đồng nhất bận rộn với hiệu quả"
+      },
+      {
+        "id": "d",
+        "text": "Dành quá nhiều thời gian để suy nghĩ"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-rea-06",
+    "hskLevel": 5,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "一家书店取消了畅销书排行榜，改为让店员写下推荐理由。结果，读者选择的书反而更多样了。 Điều gì dẫn đến sự đa dạng?",
+    "difficulty": 1.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Thay bảng xếp hạng bằng đề xuất giải thích giúp lựa chọn đa dạng.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "cause-effect"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Giảm giá toàn bộ sách"
+      },
+      {
+        "id": "b",
+        "text": "Đề xuất có lý do thay cho bảng xếp hạng"
+      },
+      {
+        "id": "c",
+        "text": "Chỉ bán sách mới"
+      },
+      {
+        "id": "d",
+        "text": "Tăng số lượng bảng quảng cáo"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-rea-07",
+    "hskLevel": 5,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "真正有效的反馈，不只是指出哪里做错了，还要让对方知道下一步可以怎样改进。 Ý chính?",
+    "difficulty": 1.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "Vế sau nhấn mạnh bước tiếp theo để cải thiện.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "main-idea"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Phản hồi nên tránh nói lỗi."
+      },
+      {
+        "id": "b",
+        "text": "Chỉ chuyên gia mới được phản hồi."
+      },
+      {
+        "id": "c",
+        "text": "Phản hồi càng dài càng tốt."
+      },
+      {
+        "id": "d",
+        "text": "Phản hồi tốt cần chỉ ra hướng cải thiện."
+      }
+    ]
+  },
+  {
+    "id": "hsk5-voc-08",
+    "hskLevel": 5,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：适当运动有助于___长期工作带来的压力。",
+    "difficulty": 1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“缓解压力” là giảm bớt áp lực.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "缓解"
+      },
+      {
+        "id": "b",
+        "text": "扩大"
+      },
+      {
+        "id": "c",
+        "text": "取消"
+      },
+      {
+        "id": "d",
+        "text": "模仿"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-voc-09",
+    "hskLevel": 5,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：系统上线后仍需要定期___，否则问题会越来越多。",
+    "difficulty": 1.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Hệ thống sau khi vận hành vẫn cần được “维护” (bảo trì) định kỳ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "technology",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "更新"
+      },
+      {
+        "id": "b",
+        "text": "庆祝"
+      },
+      {
+        "id": "c",
+        "text": "维护"
+      },
+      {
+        "id": "d",
+        "text": "命令"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-voc-10",
+    "hskLevel": 5,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：只顾眼前利益，往往会让人___长期风险的存在。",
+    "difficulty": 1.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“忽视……的存在” là bỏ qua sự tồn tại của rủi ro.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "risk",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "夸大"
+      },
+      {
+        "id": "b",
+        "text": "忽视"
+      },
+      {
+        "id": "c",
+        "text": "承担"
+      },
+      {
+        "id": "d",
+        "text": "证明"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-gra-11",
+    "hskLevel": 5,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___不断抱怨环境，___先从能改变的小事做起。",
+    "difficulty": 1.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“与其……不如……” biểu thị chọn phương án tốt hơn.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "preference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "与其 / 不如"
+      },
+      {
+        "id": "b",
+        "text": "只要 / 就"
+      },
+      {
+        "id": "c",
+        "text": "不但 / 而且"
+      },
+      {
+        "id": "d",
+        "text": "宁可 / 也不"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-gra-12",
+    "hskLevel": 5,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___结果如何，我们___要把过程记录清楚。",
+    "difficulty": 1.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“无论……都……” nghĩa là bất kể... đều...",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "condition"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "由于 / 因此"
+      },
+      {
+        "id": "b",
+        "text": "除非 / 才"
+      },
+      {
+        "id": "c",
+        "text": "无论 / 都"
+      },
+      {
+        "id": "d",
+        "text": "既然 / 就"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-gra-13",
+    "hskLevel": 5,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：他___能迅速解决问题，___长期积累了大量经验。",
+    "difficulty": 1.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“之所以……是因为……” nêu kết quả rồi giải thích nguyên nhân.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "cause-effect"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "不是 / 而是"
+      },
+      {
+        "id": "b",
+        "text": "一边 / 一边"
+      },
+      {
+        "id": "c",
+        "text": "只要 / 就"
+      },
+      {
+        "id": "d",
+        "text": "之所以 / 是因为"
+      }
+    ]
+  },
+  {
+    "id": "hsk5-wri-14",
+    "hskLevel": 5,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": 1.68,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "数据",
+      "未必",
+      "能",
+      "解释",
+      "所有问题"
+    ],
+    "explanation": "“未必” đứng trước động từ năng nguyện để biểu thị chưa chắc.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "modal-adverb"
+    ],
+    "tokens": [
+      "所有问题",
+      "解释",
+      "未必",
+      "数据",
+      "能"
+    ]
+  },
+  {
+    "id": "hsk5-wri-15",
+    "hskLevel": 5,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền từ：看起来复杂的问题，答案___很复杂。",
+    "difficulty": 1.85,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "未必",
+    "explanation": "“未必” nghĩa là chưa chắc.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "modal-adverb"
+    ],
+    "acceptedAnswers": [
+      "未必"
+    ]
+  },
+  {
+    "id": "hsk6-lis-01",
+    "hskLevel": 6,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Người nói muốn nhấn mạnh điều gì về đổi mới?",
+    "difficulty": 2.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Đoạn phân biệt đổi mới thực chất với việc chỉ chạy theo hình thức mới.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "argument",
+      "main-idea"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Đổi mới luôn phải dùng công nghệ mới nhất"
+      },
+      {
+        "id": "b",
+        "text": "Ý tưởng càng phức tạp càng có giá trị"
+      },
+      {
+        "id": "c",
+        "text": "Đổi mới cần giải quyết vấn đề thực tế chứ không chỉ tạo cảm giác mới mẻ"
+      },
+      {
+        "id": "d",
+        "text": "Doanh nghiệp nhỏ không thể đổi mới"
+      }
+    ],
+    "audio": {
+      "text": "创新并不等于追求最新的技术。真正有价值的创新，首先要回答它究竟解决了什么问题。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 6,
+      "file": "/audio/hsk6-lis-01.mp3",
+      "rate": "+10%"
+    }
+  },
+  {
+    "id": "hsk6-lis-02",
+    "hskLevel": 6,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Có thể suy ra thái độ của diễn giả đối với số liệu là gì?",
+    "difficulty": 2.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Đoạn thừa nhận giá trị của số liệu nhưng cảnh báo cách chọn và giải thích.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "critical-thinking"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Số liệu hoàn toàn khách quan và không cần giải thích"
+      },
+      {
+        "id": "b",
+        "text": "Số liệu quan trọng nhưng phải được đặt trong bối cảnh"
+      },
+      {
+        "id": "c",
+        "text": "Kinh nghiệm cá nhân luôn đáng tin hơn số liệu"
+      },
+      {
+        "id": "d",
+        "text": "Chỉ cần số liệu lớn là đủ kết luận"
+      }
+    ],
+    "audio": {
+      "text": "数据不会自动告诉我们真相。选择哪些数据、怎样解释数据，同样会影响最终的结论。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 6,
+      "file": "/audio/hsk6-lis-02.mp3",
+      "rate": "+10%"
+    }
+  },
+  {
+    "id": "hsk6-lis-03",
+    "hskLevel": 6,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Vấn đề cốt lõi của nhóm là gì?",
+    "difficulty": 2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "Đoạn nói tranh luận không phải do thái độ mà do cách hiểu mục tiêu không thống nhất.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "team",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thiếu ngân sách"
+      },
+      {
+        "id": "b",
+        "text": "Không có ý tưởng"
+      },
+      {
+        "id": "c",
+        "text": "Thành viên làm việc quá nhanh"
+      },
+      {
+        "id": "d",
+        "text": "Mọi người hiểu mục tiêu theo những cách khác nhau"
+      }
+    ],
+    "audio": {
+      "text": "团队争论不断，并不是谁不愿意合作，而是大家对项目目标的理解从一开始就不一致。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 6,
+      "file": "/audio/hsk6-lis-03.mp3",
+      "rate": "+10%"
+    }
+  },
+  {
+    "id": "hsk6-lis-04",
+    "hskLevel": 6,
+    "skill": "listening",
+    "type": "choice",
+    "prompt": "Giải pháp được đề xuất là gì?",
+    "difficulty": 2.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Đoạn khuyên kiểm chứng giả định bằng thử nghiệm nhỏ trước khi mở rộng.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "strategy",
+      "risk"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Thử nghiệm trong phạm vi nhỏ rồi mới mở rộng"
+      },
+      {
+        "id": "b",
+        "text": "Triển khai đồng loạt để tiết kiệm thời gian"
+      },
+      {
+        "id": "c",
+        "text": "Chờ đối thủ thực hiện trước"
+      },
+      {
+        "id": "d",
+        "text": "Bỏ qua phản hồi tiêu cực ban đầu"
+      }
+    ],
+    "audio": {
+      "text": "与其一开始就全面推广，不如先在小范围内验证关键假设，再根据结果决定是否扩大。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rateByLevel": 6,
+      "file": "/audio/hsk6-lis-04.mp3",
+      "rate": "+10%"
+    }
+  },
+  {
+    "id": "hsk6-rea-05",
+    "hskLevel": 6,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "规则的价值不在于消除所有例外，而在于为大多数情况提供稳定的判断依据。 Cách hiểu phù hợp nhất?",
+    "difficulty": 2.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Tác giả nhấn mạnh giá trị định hướng ổn định, không đòi hỏi tuyệt đối.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "abstract",
+      "main-idea"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Quy tắc hữu ích dù không bao quát mọi ngoại lệ."
+      },
+      {
+        "id": "b",
+        "text": "Quy tắc chỉ có giá trị khi không có ngoại lệ."
+      },
+      {
+        "id": "c",
+        "text": "Ngoại lệ luôn quan trọng hơn tình huống phổ biến."
+      },
+      {
+        "id": "d",
+        "text": "Phán đoán ổn định không cần quy tắc."
+      }
+    ]
+  },
+  {
+    "id": "hsk6-rea-06",
+    "hskLevel": 6,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "人们往往高估一次重大决定的影响，却低估每天重复的小选择。 Tác giả đối lập điều gì?",
+    "difficulty": 2.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "Cấu trúc “高估……却低估……” tạo đối lập trực tiếp.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "contrast"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Quyết định của cá nhân và tập thể"
+      },
+      {
+        "id": "b",
+        "text": "Ảnh hưởng của quá khứ và tương lai"
+      },
+      {
+        "id": "c",
+        "text": "Quyết định lớn một lần và lựa chọn nhỏ lặp lại"
+      },
+      {
+        "id": "d",
+        "text": "Lựa chọn đúng và lựa chọn sai"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-rea-07",
+    "hskLevel": 6,
+    "skill": "reading",
+    "type": "choice",
+    "prompt": "一项政策即使出发点良好，也可能因执行方式不同而产生完全相反的效果。 Có thể suy ra gì?",
+    "difficulty": 2.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "Vế sau cho thấy thực thi có thể làm kết quả đảo ngược.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "policy",
+      "inference"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "Ý định tốt bảo đảm kết quả tốt."
+      },
+      {
+        "id": "b",
+        "text": "Cách thực hiện có thể quyết định hiệu quả chính sách."
+      },
+      {
+        "id": "c",
+        "text": "Mọi chính sách đều tạo kết quả trái ngược."
+      },
+      {
+        "id": "d",
+        "text": "Không nên đánh giá chính sách bằng kết quả."
+      }
+    ]
+  },
+  {
+    "id": "hsk6-voc-08",
+    "hskLevel": 6,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：面对多个方案，管理者需要在成本和效果之间进行___。",
+    "difficulty": 2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "b",
+    "explanation": "“权衡” là cân nhắc giữa các yếu tố.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "formal",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "贯彻"
+      },
+      {
+        "id": "b",
+        "text": "权衡"
+      },
+      {
+        "id": "c",
+        "text": "模糊"
+      },
+      {
+        "id": "d",
+        "text": "揭露"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-voc-09",
+    "hskLevel": 6,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：再好的制度，如果不能得到有效___，也只是纸上谈兵。",
+    "difficulty": 2.68,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“贯彻制度” là quán triệt/thực hiện đến nơi đến chốn.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "formal",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "推测"
+      },
+      {
+        "id": "b",
+        "text": "妥协"
+      },
+      {
+        "id": "c",
+        "text": "缓和"
+      },
+      {
+        "id": "d",
+        "text": "贯彻"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-voc-10",
+    "hskLevel": 6,
+    "skill": "vocabulary",
+    "type": "choice",
+    "prompt": "Chọn từ đúng：这项研究提供了新的视角，但样本数量有限是它的主要___。",
+    "difficulty": 2.85,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "Mẫu hạn chế là “局限” của nghiên cứu.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "research",
+      "collocation"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "局限"
+      },
+      {
+        "id": "b",
+        "text": "趋势"
+      },
+      {
+        "id": "c",
+        "text": "立场"
+      },
+      {
+        "id": "d",
+        "text": "优势"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-gra-11",
+    "hskLevel": 6,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：这种方法___能提高速度，___可能牺牲部分准确性。",
+    "difficulty": 2.15,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "c",
+    "explanation": "“固然……但……” thừa nhận một mặt rồi chuyển sang hạn chế.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "concession"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "不是 / 而是"
+      },
+      {
+        "id": "b",
+        "text": "只要 / 就"
+      },
+      {
+        "id": "c",
+        "text": "固然 / 但"
+      },
+      {
+        "id": "d",
+        "text": "宁可 / 也不"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-gra-12",
+    "hskLevel": 6,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___他缺少能力，___现有机制没有给他发挥的空间。",
+    "difficulty": 2.32,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "a",
+    "explanation": "“与其说……不如说……” điều chỉnh cách giải thích, nhấn mạnh vế sau.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "reframing"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "与其说 / 不如说"
+      },
+      {
+        "id": "b",
+        "text": "一旦 / 就"
+      },
+      {
+        "id": "c",
+        "text": "除非 / 才"
+      },
+      {
+        "id": "d",
+        "text": "尽管 / 可是"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-gra-13",
+    "hskLevel": 6,
+    "skill": "grammar",
+    "type": "choice",
+    "prompt": "Chọn cấu trúc：___把评价标准说清楚，团队成员___可能作出一致判断。",
+    "difficulty": 2.5,
+    "discrimination": 1.05,
+    "guessing": 0.25,
+    "correct": "d",
+    "explanation": "“只有……才……” biểu thị điều kiện cần.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "necessary-condition"
+    ],
+    "options": [
+      {
+        "id": "a",
+        "text": "即使 / 也"
+      },
+      {
+        "id": "b",
+        "text": "无论 / 都"
+      },
+      {
+        "id": "c",
+        "text": "既然 / 就"
+      },
+      {
+        "id": "d",
+        "text": "只有 / 才"
+      }
+    ]
+  },
+  {
+    "id": "hsk6-wri-14",
+    "hskLevel": 6,
+    "skill": "writing",
+    "type": "order",
+    "prompt": "Sắp xếp thành câu đúng.",
+    "difficulty": 2.68,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": [
+      "我们",
+      "不妨",
+      "先",
+      "重新审视",
+      "问题本身"
+    ],
+    "explanation": "“不妨” đứng trước đề xuất; “先” đứng trước động từ.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "suggestion"
+    ],
+    "tokens": [
+      "问题本身",
+      "先",
+      "我们",
+      "重新审视",
+      "不妨"
+    ]
+  },
+  {
+    "id": "hsk6-wri-15",
+    "hskLevel": 6,
+    "skill": "writing",
+    "type": "input",
+    "prompt": "Điền từ：与其急着下结论，___先检查证据是否充分。",
+    "difficulty": 2.85,
+    "discrimination": 1.18,
+    "guessing": 0.03,
+    "correct": "不妨",
+    "explanation": "“不妨” dùng để đưa ra đề nghị nhẹ nhàng.",
+    "placementEligible": true,
+    "status": "active",
+    "version": 1,
+    "source": "original-grounded",
+    "tags": [
+      "suggestion"
+    ],
+    "acceptedAnswers": [
+      "不妨"
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560">
+  <defs>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8f1e6" stop-opacity=".1"/><stop offset="1" stop-color="#d9c7ae" stop-opacity=".8"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <circle cx="610" cy="120" r="64" fill="#c98d64" opacity=".55"/>
+  <path d="M40 420 205 196l72 88 86-146 158 233 77-100 162 149v93H40Z" fill="#3c413d" opacity=".84"/>
+  <path d="M88 436 244 278l63 72 68-100 130 184 94-89 130 96v72H88Z" fill="#617068" opacity=".7"/>
+  <path d="M0 412c126-55 228-9 335 0 134 12 236-63 465-12v160H0Z" fill="url(#mist)"/>
+  <path d="M95 445c168-60 268 22 410-5 112-21 176-45 295-10" fill="none" stroke="#f7efe2" stroke-width="34" stroke-linecap="round" opacity=".75" filter="url(#blur)"/>
+  <path d="M548 332c18-32 37-45 63-55-11 28-11 50 2 74-23-7-45-7-65-19Zm71-54c16-27 33-37 55-45-9 24-9 42 2 62-20-6-39-6-57-17Z" fill="#252a27" opacity=".75"/>
+</svg>

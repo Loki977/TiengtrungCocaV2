@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "minItems": 24,
+  "maxItems": 32,
+  "routingItems": 6,
+  "targetPosteriorSd": 0.45,
+  "thetaGrid": {
+    "min": -4,
+    "max": 4,
+    "step": 0.1
+  },
+  "levelBoundaries": [
+    -2.0,
+    -1.0,
+    0.0,
+    1.0,
+    2.0
+  ],
+  "levelCenters": [
+    -2.5,
+    -1.5,
+    -0.5,
+    0.5,
+    1.5,
+    2.5
+  ],
+  "skillGroups": {
+    "listening": [
+      "listening"
+    ],
+    "reading": [
+      "reading"
+    ],
+    "languageUse": [
+      "vocabulary",
+      "grammar",
+      "writing"
+    ]
+  },
+  "minimumGroupItems": {
+    "listening": 5,
+    "reading": 5,
+    "languageUse": 8
+  },
+  "maxConsecutiveSameSkill": 2,
+  "confidence": {
+    "highSd": 0.45,
+    "mediumSd": 0.75,
+    "highTopProbability": 0.62,
+    "mediumTopProbability": 0.45
+  },
+  "routingBlueprint": [
+    {
+      "level": 2,
+      "group": "listening"
+    },
+    {
+      "level": 3,
+      "group": "reading"
+    },
+    {
+      "level": 4,
+      "group": "languageUse"
+    },
+    {
+      "level": 2,
+      "group": "languageUse"
+    },
+    {
+      "level": 4,
+      "group": "listening"
+    },
+    {
+      "level": 3,
+      "group": "languageUse"
+    }
+  ]
+}

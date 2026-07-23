@@ -88,11 +88,22 @@ service cloud.firestore {
         allow delete: if isSuperAdmin() || isOwner(uid);
       }
 
+      match /private/hskPlacement {
+        // Trạng thái điều phối placement chỉ được backend tin cậy quản lý.
+        allow read, write: if false;
+      }
+
       match /private/{docId} {
         // stats is handled by the stricter rule above. Other private documents
         // contain personal preferences/saved words and never grant privileges.
         allow create, read, update, delete: if docId != 'stats'
+          && docId != 'hskPlacement'
           && (isSuperAdmin() || isOwner(uid));
+      }
+
+      match /hskPlacementAttempts/{attemptId} {
+        // Attempt chứa posterior, câu đã dùng và kết quả chấm riêng tư.
+        allow read, write: if false;
       }
     }
 

@@ -6,7 +6,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "check": "node --check api/tts.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node --check assets/js/vip-user.js && node --check assets/js/admin-super.js && node --check lesson-config.js && node --check lesson-engine.js && node --check lesson-page.js && npm run check:pinyin && node scripts/build-writing-content.mjs --check && npm run test:writing && npm run test:vip",
+    "check": "node --check api/tts.js && node --check api/hsk-placement/start.js && node --check api/hsk-placement/status.js && node --check api/hsk-placement/attempt.js && node --check api/hsk-placement/answer.js && node --check api/hsk-placement/skip.js && node --check api/hsk-placement/result.js && node --check api/hsk-placement/audio.js && node --check assets/js/hsk-placement-client.js && node --check assets/js/hsk-placement.js && node --check assets/js/hsk-placement-result.js && node --check assets/js/hsk-placement-invite.js && node --check assets/js/speech-service.js && node --check assets/js/theme-preferences.js && node --check assets/js/vip-user.js && node --check assets/js/admin-super.js && node --check lesson-config.js && node --check lesson-engine.js && node --check lesson-page.js && npm run check:pinyin && node scripts/build-writing-content.mjs --check && npm run test:writing && npm run test:vip && npm run test:hsk-placement",
     "check:pinyin": "node --check assets/js/pinyin-intro.js && node --check tools/build-pinyin-audio.mjs && node tools/build-pinyin-audio.mjs --verify-only",
     "build:audio-inventory": "node tools/build-learning-audio-inventory.mjs --output assets/data/audio/learning-audio-inventory.json",
     "check:audio-inventory": "node tools/build-learning-audio-inventory.mjs --check --output assets/data/audio/learning-audio-inventory.json",
@@ -17,7 +17,8 @@
     "build:writing-data": "node scripts/build-writing-content.mjs",
     "test:writing": "node --no-warnings scripts/test-writing-quality.mjs",
     "build": "npm run check",
-    "test:vip": "node --no-warnings scripts/test-vip-security.mjs"
+    "test:vip": "node --no-warnings scripts/test-vip-security.mjs",
+    "test:hsk-placement": "node --no-warnings tests/hsk-placement.test.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",
