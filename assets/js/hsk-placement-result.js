@@ -90,6 +90,9 @@ async function initialize() {
     const query = attemptId ? `?attemptId=${encodeURIComponent(attemptId)}` : '';
     const payload = await placementApi(`result${query}`);
     renderResult(payload.result);
+    window.CCFirebase?.ensureUserData?.(user).catch(() => {
+      // Kết quả vẫn hiển thị từ API; dữ liệu chung sẽ đồng bộ lại ở lần tải sau.
+    });
   } catch (error) {
     byId('resultLoading').querySelector('h1').textContent = 'Chưa có kết quả';
     byId('resultLoading').querySelector('p:last-child').textContent = error.message;

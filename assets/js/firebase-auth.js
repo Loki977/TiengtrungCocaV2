@@ -73,6 +73,19 @@ const DEFAULT_STATS = {
   unlockedLessons: {},
   writingCompleted: {},
   challengeStats: { attempts: 0, wins: 0, bestScore: 0, correctAnswers: 0, wrongAnswers: 0, rewardedSessions: {} },
+  placementStats: {
+    status: "not_started",
+    attempts: 0,
+    completedAttempts: 0,
+    activeAttemptId: "",
+    latestAttemptId: "",
+    estimatedHskLevel: null,
+    estimatedRange: [],
+    confidence: "",
+    skillEstimates: {},
+    completedAt: "",
+    methodologyVersion: ""
+  },
   coinHistory: [],
   checkInStreak: 0,
   lastCheckInDate: "",
@@ -169,6 +182,10 @@ function normalizeStats(raw = {}) {
   normalized.totalCoinsEarned = Math.max(0, Number(normalized.totalCoinsEarned) || 0);
   normalized.unlockedLessons = normalized.unlockedLessons && typeof normalized.unlockedLessons === "object" && !Array.isArray(normalized.unlockedLessons) ? normalized.unlockedLessons : {};
   normalized.writingCompleted = normalized.writingCompleted && typeof normalized.writingCompleted === "object" && !Array.isArray(normalized.writingCompleted) ? normalized.writingCompleted : {};
+  normalized.challengeStats = normalized.challengeStats && typeof normalized.challengeStats === "object" && !Array.isArray(normalized.challengeStats) ? normalized.challengeStats : structuredCloneSafe(DEFAULT_STATS.challengeStats);
+  normalized.placementStats = normalized.placementStats && typeof normalized.placementStats === "object" && !Array.isArray(normalized.placementStats)
+    ? deepMerge(DEFAULT_STATS.placementStats, normalized.placementStats)
+    : structuredCloneSafe(DEFAULT_STATS.placementStats);
   normalized.coinHistory = Array.isArray(normalized.coinHistory) ? normalized.coinHistory.slice(0, 80) : [];
   // VIP là trường đặc quyền do Super Admin quản lý. Không tự thêm giá trị mặc định
   // vào stats của user thường, nếu không mọi lần lưu tiến độ sẽ chạm trường bảo vệ.
@@ -200,7 +217,7 @@ function normalizeStats(raw = {}) {
 
 const PROGRESS_STATS_FIELDS = new Set([
   "xp", "coins", "totalCoinsEarned",
-  "unlockedLessons", "writingCompleted", "challengeStats", "coinHistory",
+  "unlockedLessons", "writingCompleted", "challengeStats", "placementStats", "coinHistory",
   "checkInStreak", "lastCheckInDate", "streak",
   "completedLessons", "completedLessonIds",
   "currentLevel", "currentLesson", "courses", "tasks", "history",

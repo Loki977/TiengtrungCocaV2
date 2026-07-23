@@ -76,6 +76,16 @@ const rules = fs.readFileSync(path.join(root, 'firestore.rules'), 'utf8');
 assert.match(rules, /match \/private\/hskPlacement[\s\S]*allow read, write: if false;/);
 assert.match(rules, /match \/hskPlacementAttempts\/\{attemptId\}[\s\S]*allow read, write: if false;/);
 assert.match(rules, /docId != 'hskPlacement'/);
+assert.match(rules, /'challengeStats', 'placementStats', 'coinHistory'/, 'shared stats must retain placement data');
+
+const firebaseAuthSource = fs.readFileSync(path.join(root, 'assets/js/firebase-auth.js'), 'utf8');
+assert.match(firebaseAuthSource, /placementStats:\s*\{[\s\S]*status:\s*"not_started"/);
+assert.match(firebaseAuthSource, /"challengeStats", "placementStats", "coinHistory"/);
+
+const placementApiSource = fs.readFileSync(path.join(root, 'server/hsk-placement/api.mjs'), 'utf8');
+assert.match(placementApiSource, /function placementStatsWrite\(/);
+assert.match(placementApiSource, /placementStatsWrite\(previousPlacement,/);
+assert.doesNotMatch(placementApiSource, /isVip|vipUntil|vipPlan/i, 'placement must not depend on VIP');
 
 let responseStatus = 0;
 let responseBody = null;

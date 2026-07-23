@@ -18,7 +18,7 @@
     "test:writing": "node --no-warnings scripts/test-writing-quality.mjs",
     "build": "npm run check",
     "test:vip": "node --no-warnings scripts/test-vip-security.mjs",
-    "test:hsk-placement": "node --no-warnings tests/hsk-placement.test.mjs"
+    "test:hsk-placement": "node --no-warnings tools/test-hsk-placement.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.6.1",

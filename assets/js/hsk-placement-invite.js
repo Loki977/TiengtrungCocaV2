@@ -5,6 +5,8 @@ let pendingCourseUrl = 'hsk.html';
 let lastFocusedElement = null;
 
 function hasSeenCoursePrompt() {
+  const placementStatus = window.CCFirebase?.getCurrentStats?.()?.placementStats?.status;
+  if (placementStatus && placementStatus !== 'not_started') return true;
   try {
     return localStorage.getItem(PROMPT_SEEN_KEY) === '1';
   } catch {

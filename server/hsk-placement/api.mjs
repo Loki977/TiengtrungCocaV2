@@ -95,6 +95,29 @@ function attemptRef(db, uid, attemptId) {
   return db.collection('users').doc(uid).collection('hskPlacementAttempts').doc(attemptId);
 }
 
+const LEGACY_PLACEMENT_STATS_FIELDS = [
+  'placementTestStatus',
+  'placementAttemptId',
+  'estimatedHskLevel',
+  'estimatedHskRange',
+  'placementConfidence',
+  'placementSkillEstimates',
+  'placementCompletedAt',
+  'placementTestVersion',
+  'placementTest'
+];
+
+function placementStatsWrite(previous, next) {
+  const update = {
+    placementStats: { ...(previous || {}), ...(next || {}) },
+    updatedAt: admin.firestore.FieldValue.serverTimestamp()
+  };
+  for (const field of LEGACY_PLACEMENT_STATS_FIELDS) {
+    update[field] = admin.firestore.FieldValue.delete();
+  }
+  return update;
+}
+
 function shuffleIds(options) {
   const ids = options.map((option) => option.id);
   for (let index = ids.length - 1; index > 0; index -= 1) {
@@ -202,8 +225,12 @@ async function startAttempt(uid, body) {
   const forceNew = body.restart === true;
 
   return db.runTransaction(async (transaction) => {
-    const stateSnapshot = await transaction.get(userStateRef);
+    const [stateSnapshot, statsSnapshot] = await Promise.all([
+      transaction.get(userStateRef),
+      transaction.get(userStatsRef)
+    ]);
     const state = stateSnapshot.exists ? stateSnapshot.data() : {};
+    const previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
     if (!forceNew && state.activeAttemptId) {
       const activeRef = attemptRef(db, uid, state.activeAttemptId);
       const activeSnapshot = await transaction.get(activeRef);
@@ -222,16 +249,14 @@ async function startAttempt(uid, body) {
       inviteDismissedAt: admin.firestore.FieldValue.delete(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
-    transaction.set(userStatsRef, {
-      placementTestStatus: 'in_progress',
-      placementAttemptId: attempt.id,
-      placementTest: {
-        status: 'in_progress',
-        attemptId: attempt.id,
-        updatedAt: attempt.updatedAt
-      },
-      updatedAt: admin.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+    transaction.set(userStatsRef, placementStatsWrite(previousPlacement, {
+      status: 'in_progress',
+      attempts: Number(previousPlacement.attempts || 0) + 1,
+      activeAttemptId: attempt.id,
+      latestAttemptId: attempt.id,
+      startedAt: attempt.startedAt,
+      updatedAt: attempt.updatedAt
+    }), { merge: true });
     return currentResponse(attempt);
   });
 }
@@ -264,14 +289,16 @@ async function submitAnswer(uid, body) {
   const userStatsRef = statsRef(db, uid);
 
   return db.runTransaction(async (transaction) => {
-    const [attemptSnapshot, stateSnapshot] = await Promise.all([
+    const [attemptSnapshot, stateSnapshot, statsSnapshot] = await Promise.all([
       transaction.get(ref),
-      transaction.get(userStateRef)
+      transaction.get(userStateRef),
+      transaction.get(userStatsRef)
     ]);
     if (!attemptSnapshot.exists) {
       throw new PlacementApiError(404, 'attempt_not_found', 'Không tìm thấy bài kiểm tra.');
     }
     const attempt = attemptSnapshot.data();
+    const previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
     if (attempt.status === 'completed') return currentResponse(attempt);
     if (attempt.status !== 'in_progress') {
       throw new PlacementApiError(409, 'attempt_not_active', 'Bài kiểm tra không còn hoạt động.');
@@ -340,26 +367,19 @@ async function submitAnswer(uid, body) {
         completedAt: attempt.result.completedAt,
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
       }, { merge: true });
-      transaction.set(userStatsRef, {
-        placementTestStatus: 'completed',
-        placementAttemptId: attempt.id,
+      transaction.set(userStatsRef, placementStatsWrite(previousPlacement, {
+        status: 'completed',
+        completedAttempts: Number(previousPlacement.completedAttempts || 0) + 1,
+        activeAttemptId: '',
+        latestAttemptId: attempt.id,
         estimatedHskLevel: attempt.result.estimatedHskLevel,
-        estimatedHskRange: attempt.result.estimatedRange,
-        placementConfidence: attempt.result.confidence,
-        placementSkillEstimates: attempt.result.skills,
-        placementCompletedAt: attempt.result.completedAt,
-        placementTestVersion: attempt.result.methodologyVersion,
-        placementTest: {
-          status: 'completed',
-          attemptId: attempt.id,
-          estimatedHskLevel: attempt.result.estimatedHskLevel,
-          estimatedRange: attempt.result.estimatedRange,
-          confidence: attempt.result.confidence,
-          completedAt: attempt.result.completedAt,
-          methodologyVersion: attempt.result.methodologyVersion
-        },
-        updatedAt: admin.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
+        estimatedRange: attempt.result.estimatedRange,
+        confidence: attempt.result.confidence,
+        skillEstimates: attempt.result.skills,
+        completedAt: attempt.result.completedAt,
+        methodologyVersion: attempt.result.methodologyVersion,
+        updatedAt: attempt.updatedAt
+      }), { merge: true });
       if (state.activeAttemptId && state.activeAttemptId !== attempt.id) {
         throw new PlacementApiError(409, 'attempt_conflict', 'Một bài kiểm tra khác đang hoạt động.');
       }
@@ -381,24 +401,25 @@ async function deferInvite(uid) {
   await db.runTransaction(async (transaction) => {
     const userStateRef = stateRef(db, uid);
     const userStatsRef = statsRef(db, uid);
-    const snapshot = await transaction.get(userStateRef);
+    const [snapshot, statsSnapshot] = await Promise.all([
+      transaction.get(userStateRef),
+      transaction.get(userStatsRef)
+    ]);
     const current = snapshot.exists ? snapshot.data() : {};
+    const previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
     const status = current.activeAttemptId ? 'in_progress' : 'skipped';
     transaction.set(userStateRef, {
       status,
       inviteDismissedAt: now,
       updatedAt: admin.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
-    transaction.set(userStatsRef, {
-      placementTestStatus: status,
-      placementAttemptId: current.activeAttemptId || current.latestAttemptId || '',
-      placementTest: {
-        status,
-        attemptId: current.activeAttemptId || current.latestAttemptId || '',
-        deferredAt: now
-      },
-      updatedAt: admin.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
+    transaction.set(userStatsRef, placementStatsWrite(previousPlacement, {
+      status,
+      activeAttemptId: current.activeAttemptId || '',
+      latestAttemptId: current.latestAttemptId || '',
+      deferredAt: now,
+      updatedAt: now
+    }), { merge: true });
   });
   return { ok: true, status: 'skipped' };
 }

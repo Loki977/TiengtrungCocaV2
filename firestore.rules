@@ -37,7 +37,7 @@ service cloud.firestore {
     function allowedProgressKeys() {
       return [
         'xp', 'coins', 'totalCoinsEarned',
-        'unlockedLessons', 'writingCompleted', 'challengeStats', 'coinHistory',
+        'unlockedLessons', 'writingCompleted', 'challengeStats', 'placementStats', 'coinHistory',
         'checkInStreak', 'lastCheckInDate', 'streak',
         'completedLessons', 'completedLessonIds',
         'currentLevel', 'currentLesson', 'courses', 'tasks', 'history',
