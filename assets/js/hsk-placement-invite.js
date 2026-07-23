@@ -1,14 +1,17 @@
-const PROMPT_SEEN_KEY = 'cc:hsk-placement-course-prompt-seen';
-const COURSE_SELECTOR = 'a[href="hsk.html"], a[href="./hsk.html"]';
+import { getLocalPlacementStatus } from './hsk-placement-runtime.js';
+
+const PROMPT_SEEN_KEY = 'cc:hsk-placement-course-prompt-seen:v2';
+const COURSE_SELECTOR = 'a[href="hsk.html"], a[href="./hsk.html"], [data-course-button]';
 
 let pendingCourseUrl = 'hsk.html';
 let lastFocusedElement = null;
 
 function hasSeenCoursePrompt() {
+  if (getLocalPlacementStatus().status !== 'not_started') return true;
   const placementStatus = window.CCFirebase?.getCurrentStats?.()?.placementStats?.status;
   if (placementStatus && placementStatus !== 'not_started') return true;
   try {
-    return localStorage.getItem(PROMPT_SEEN_KEY) === '1';
+    return localStorage.getItem(getPromptSeenKey()) === '1';
   } catch {
     return false;
   }
@@ -16,10 +19,28 @@ function hasSeenCoursePrompt() {
 
 function rememberCoursePrompt() {
   try {
-    localStorage.setItem(PROMPT_SEEN_KEY, '1');
+    localStorage.setItem(getPromptSeenKey(), '1');
   } catch {
     // Điều hướng vẫn hoạt động nếu trình duyệt chặn localStorage.
   }
+}
+
+function getPromptSeenKey() {
+  let uid = window.CCFirebase?.getCurrentUser?.()?.uid || '';
+  if (!uid) {
+    try {
+      uid = JSON.parse(localStorage.getItem('cc_user') || 'null')?.uid || '';
+    } catch {
+      uid = '';
+    }
+  }
+  return `${PROMPT_SEEN_KEY}:${uid || 'guest'}`;
+}
+
+function resolveCourseUrl(entry) {
+  if (entry.matches('a[href]')) return entry.href;
+  const level = String(entry.dataset.courseButton || 'hsk1').toLowerCase();
+  return `lesson.html?level=${encodeURIComponent(level)}&lesson=1`;
 }
 
 function navigate(url) {
@@ -44,7 +65,12 @@ function createPrompt() {
     <img class="placement-course-prompt__seal" src="assets/images/hsk-placement/seal.svg" alt="" width="68" height="68" />
     <span class="placement-course-prompt__eyebrow">Gợi ý dành cho người mới</span>
     <h2 id="placementCoursePromptTitle">Bạn đã biết trình độ HSK của mình chưa?</h2>
-    <p id="placementCoursePromptDescription">Làm bài kiểm tra thích ứng để tìm cấp độ phù hợp. Nếu chưa muốn làm, bạn có thể bỏ qua và vào khóa học ngay.</p>
+    <p id="placementCoursePromptDescription">Làm nhanh một bài kiểm tra như bài tập trong khóa học để chọn đúng cấp độ bắt đầu.</p>
+    <div class="placement-course-prompt__benefits" aria-label="Ưu điểm bài kiểm tra">
+      <span>Không cần đăng nhập lại</span>
+      <span>Chuyển câu tức thì</span>
+      <span>Khoảng 12–18 phút</span>
+    </div>
     <div class="placement-course-prompt__actions">
       <a class="btn btn--primary btn--lg" href="hsk-placement.html">Kiểm tra trình độ</a>
       <button class="btn btn--outline btn--lg" type="button" data-placement-skip>Không cần, vào khóa học</button>
@@ -97,11 +123,12 @@ function closePrompt() {
 }
 
 document.addEventListener('click', (event) => {
-  const courseLink = event.target.closest(COURSE_SELECTOR);
-  if (!courseLink || hasSeenCoursePrompt()) return;
+  const courseEntry = event.target.closest(COURSE_SELECTOR);
+  if (!courseEntry || hasSeenCoursePrompt()) return;
   event.preventDefault();
-  openPrompt(courseLink.href);
-});
+  event.stopImmediatePropagation();
+  openPrompt(resolveCourseUrl(courseEntry));
+}, true);
 
 document.addEventListener('keydown', (event) => {
   const prompt = document.querySelector('.placement-course-prompt.is-visible');

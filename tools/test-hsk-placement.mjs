@@ -85,7 +85,35 @@ assert.doesNotMatch(firebaseAuthSource, /"challengeStats", "placementStats", "co
 const placementApiSource = fs.readFileSync(path.join(root, 'server/hsk-placement/api.mjs'), 'utf8');
 assert.match(placementApiSource, /function placementStatsWrite\(/);
 assert.match(placementApiSource, /placementStatsWrite\(previousPlacement,/);
+assert.match(placementApiSource, /async function completeLocalAttempt\(/);
 assert.doesNotMatch(placementApiSource, /isVip|vipUntil|vipPlan/i, 'placement must not depend on VIP');
+
+const placementHtml = fs.readFileSync(path.join(root, 'hsk-placement.html'), 'utf8');
+assert.doesNotMatch(placementHtml, /id="authScreen"/, 'the exercise must not wait on a login screen');
+assert.doesNotMatch(placementHtml, /firebase-auth\.js/, 'the exercise page must not load Firebase auth');
+
+const placementRuntimeSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-runtime.js'), 'utf8');
+assert.match(placementRuntimeSource, /export const placementBankReady = loadPlacementBank\(\)/);
+assert.match(placementRuntimeSource, /itemOrder:\s*shuffledIds\(bank\.items\)/, 'each local attempt must randomize its bank');
+assert.match(placementRuntimeSource, /export async function answerLocalPlacement\(/);
+
+const placementPageSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement.js'), 'utf8');
+assert.match(placementPageSource, /answerLocalPlacement\(/);
+assert.match(placementPageSource, /void playAudio\(\{ automatic: true \}\)/, 'listening questions should autoplay');
+assert.doesNotMatch(placementPageSource, /placementApi\(['"]answer['"]/, 'answering must stay local');
+
+const placementClientSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-client.js'), 'utf8');
+assert.match(placementClientSource, /assets\/audio\/hsk-placement/);
+assert.doesNotMatch(placementClientSource, /placementApi\(['"]audio['"]/, 'static audio must not wait on an API call');
+
+const placementInviteSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-invite.js'), 'utf8');
+assert.match(placementInviteSource, /\[data-course-button\]/, 'course buttons must trigger the placement prompt');
+assert.match(placementInviteSource, /stopImmediatePropagation\(\)/, 'the prompt must intercept course navigation');
+assert.match(placementInviteSource, /\}, true\);/, 'the prompt listener must run during capture');
+
+const placementResultSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-result.js'), 'utf8');
+assert.match(placementResultSource, /getLocalPlacementResult\(/, 'results must render before auth hydration');
+assert.match(placementResultSource, /placementApi\(['"]complete['"]/, 'completed local attempts must sync once');
 
 let responseStatus = 0;
 let responseBody = null;

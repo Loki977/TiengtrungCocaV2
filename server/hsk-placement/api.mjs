@@ -18,6 +18,7 @@ const config = placementItemRepository.getConfig();
 const items = placementItemRepository.getAll();
 const MAX_BODY_BYTES = 64 * 1024;
 const MAX_RESPONSE_TIME_MS = 10 * 60 * 1000;
+const MAX_SYNC_RESPONSES = 32;
 const ALLOWED_ORIGIN = /^https:\/\/.*\.vercel\.app$|^https:\/\/tiengtrungcoca\.firebaseapp\.com$|^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i;
 
 export class PlacementApiError extends Error {
@@ -405,6 +406,107 @@ async function submitAnswer(uid, body) {
   });
 }
 
+async function completeLocalAttempt(uid, body) {
+  const attemptId = String(body.attemptId || '').trim();
+  const responses = Array.isArray(body.responses) ? body.responses : [];
+  if (!attemptId || attemptId.length > 128) {
+    throw new PlacementApiError(400, 'invalid_request', 'Thiếu mã bài kiểm tra hợp lệ.');
+  }
+  if (responses.length < config.minItems || responses.length > MAX_SYNC_RESPONSES) {
+    throw new PlacementApiError(400, 'invalid_responses', 'Số câu trả lời không hợp lệ.');
+  }
+
+  const grid = createThetaGrid(config);
+  const attempt = {
+    id: attemptId,
+    uid,
+    status: 'in_progress',
+    startedAt: String(body.startedAt || new Date().toISOString()),
+    updatedAt: new Date().toISOString(),
+    grid,
+    posterior: createPrior(grid),
+    answers: [],
+    usedItemIds: [],
+    answeredQuestionIds: {},
+    audioPlays: {},
+    methodologyVersion: config.version
+  };
+
+  for (const response of responses) {
+    const questionId = String(response?.questionId || '').trim();
+    const item = placementItemRepository.getById(questionId);
+    if (!item?.placementEligible || item.status !== 'active' || attempt.answeredQuestionIds[questionId]) {
+      throw new PlacementApiError(400, 'invalid_response_item', 'Dữ liệu câu trả lời không hợp lệ.');
+    }
+    const isCorrect = scoreResponse(item, response.answer);
+    const before = summarizePosterior(attempt.posterior, attempt.grid, config);
+    attempt.posterior = updatePosterior(attempt.posterior, attempt.grid, item, isCorrect);
+    const after = summarizePosterior(attempt.posterior, attempt.grid, config);
+    attempt.answers.push({
+      questionId: item.id,
+      hskLevel: item.hskLevel,
+      skill: item.skill,
+      type: item.type,
+      difficulty: item.difficulty,
+      discrimination: item.discrimination,
+      isCorrect,
+      responseTimeMs: Math.max(0, Math.min(MAX_RESPONSE_TIME_MS, Number(response.responseTimeMs || 0))),
+      abilityBefore: before.mean,
+      abilityAfter: after.mean,
+      answeredAt: String(response.answeredAt || new Date().toISOString())
+    });
+    attempt.usedItemIds.push(item.id);
+    attempt.answeredQuestionIds[item.id] = true;
+  }
+
+  attempt.status = 'completed';
+  attempt.result = buildResult(attempt, config);
+  attempt.currentItemId = null;
+  attempt.currentPresentation = null;
+
+  const db = getAdmin().firestore();
+  const ref = attemptRef(db, uid, attempt.id);
+  const userStateRef = stateRef(db, uid);
+  const userStatsRef = statsRef(db, uid);
+
+  return db.runTransaction(async (transaction) => {
+    const [existingSnapshot, statsSnapshot] = await Promise.all([
+      transaction.get(ref),
+      transaction.get(userStatsRef)
+    ]);
+    const existing = existingSnapshot.exists ? existingSnapshot.data() : null;
+    if (existing?.status === 'completed' && existing.result) {
+      return { attemptId: existing.id, result: sanitizeResult(existing.result), synced: true };
+    }
+
+    const previousPlacement = statsSnapshot.exists ? statsSnapshot.data()?.placementStats || {} : {};
+    transaction.set(ref, attempt);
+    transaction.set(userStateRef, {
+      status: 'completed',
+      activeAttemptId: admin.firestore.FieldValue.delete(),
+      latestAttemptId: attempt.id,
+      latestCompletedAttemptId: attempt.id,
+      completedAt: attempt.result.completedAt,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    transaction.set(userStatsRef, placementStatsWrite(previousPlacement, {
+      status: 'completed',
+      attempts: Number(previousPlacement.attempts || 0) + 1,
+      completedAttempts: Number(previousPlacement.completedAttempts || 0) + 1,
+      activeAttemptId: '',
+      latestAttemptId: attempt.id,
+      estimatedHskLevel: attempt.result.estimatedHskLevel,
+      estimatedRange: attempt.result.estimatedRange,
+      confidence: attempt.result.confidence,
+      skillEstimates: attempt.result.skills,
+      completedAt: attempt.result.completedAt,
+      methodologyVersion: attempt.result.methodologyVersion,
+      updatedAt: attempt.updatedAt
+    }), { merge: true });
+    return { attemptId: attempt.id, result: sanitizeResult(attempt.result), synced: true };
+  });
+}
+
 async function deferInvite(uid) {
   const db = getAdmin().firestore();
   const now = new Date().toISOString();
@@ -519,6 +621,7 @@ export async function handlePlacementRequest(action, req, res) {
     if (action === 'start' && req.method === 'POST') return sendJson(res, 201, await startAttempt(uid, body));
     if (action === 'attempt' && req.method === 'GET') return sendJson(res, 200, currentResponse(await loadAttempt(uid, attemptId)));
     if (action === 'answer' && req.method === 'POST') return sendJson(res, 200, await submitAnswer(uid, body));
+    if (action === 'complete' && req.method === 'POST') return sendJson(res, 200, await completeLocalAttempt(uid, body));
     if (action === 'skip' && req.method === 'POST') return sendJson(res, 200, await deferInvite(uid));
     if (action === 'result' && req.method === 'GET') return sendJson(res, 200, await getResult(uid, attemptId));
     if (action === 'audio' && req.method === 'POST') {

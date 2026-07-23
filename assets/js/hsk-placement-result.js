@@ -4,6 +4,10 @@ import {
   showPlacementToast,
   placementLabels
 } from './hsk-placement-client.js';
+import {
+  getLocalPlacementResult,
+  getLocalPlacementSyncPayload
+} from './hsk-placement-runtime.js';
 
 const byId = (id) => document.getElementById(id);
 
@@ -79,14 +83,21 @@ function renderResult(result) {
 }
 
 async function initialize() {
+  const attemptId = new URLSearchParams(location.search).get('attemptId') || '';
+  const localPayload = getLocalPlacementResult(attemptId);
+  if (localPayload?.result) {
+    renderResult(localPayload.result);
+    void syncLocalResult(attemptId);
+    return;
+  }
+
   const user = await waitForPlacementAuth();
   if (!user) {
-    byId('resultLoading').querySelector('h1').textContent = 'Vui lòng đăng nhập';
-    byId('resultLoading').querySelector('p:last-child').textContent = 'Kết quả chỉ hiển thị cho chủ tài khoản đã làm bài.';
+    byId('resultLoading').querySelector('h1').textContent = 'Chưa có kết quả';
+    byId('resultLoading').querySelector('p:last-child').textContent = 'Hãy hoàn thành bài kiểm tra trên thiết bị này để xem kết quả.';
     return;
   }
   try {
-    const attemptId = new URLSearchParams(location.search).get('attemptId') || '';
     const query = attemptId ? `?attemptId=${encodeURIComponent(attemptId)}` : '';
     const payload = await placementApi(`result${query}`);
     renderResult(payload.result);
@@ -97,6 +108,21 @@ async function initialize() {
     byId('resultLoading').querySelector('h1').textContent = 'Chưa có kết quả';
     byId('resultLoading').querySelector('p:last-child').textContent = error.message;
     showPlacementToast(error.message);
+  }
+}
+
+async function syncLocalResult(attemptId) {
+  try {
+    const user = await waitForPlacementAuth();
+    const payload = getLocalPlacementSyncPayload(attemptId);
+    if (!user || !payload) return;
+    await placementApi('complete', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    window.CCFirebase?.ensureUserData?.(user).catch(() => {});
+  } catch (error) {
+    console.warn('[hsk-placement] Kết quả đang được giữ trên thiết bị và sẽ đồng bộ lại sau.', error);
   }
 }
 

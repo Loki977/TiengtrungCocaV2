@@ -60,34 +60,34 @@ export function showPlacementToast(message) {
 export function stopPlacementAudio() {
   if (stopPlacementAudio.current) {
     stopPlacementAudio.current.pause();
-    stopPlacementAudio.current.src = '';
-    stopPlacementAudio.current = null;
+    stopPlacementAudio.current.currentTime = 0;
   }
 }
 
-export async function playPlacementAudio(attemptId, questionId) {
-  stopPlacementAudio();
-  let payload = await placementApi('audio', {
-    method: 'POST',
-    body: JSON.stringify({ attemptId, questionId })
-  });
-  let audio = new Audio(payload.audioUrl);
-  audio.preload = 'auto';
-  stopPlacementAudio.current = audio;
-  try {
-    await audio.play();
-  } catch (error) {
-    if (error?.name === 'NotAllowedError') throw error;
-    payload = await placementApi('audio', {
-      method: 'POST',
-      body: JSON.stringify({ attemptId, questionId, fallback: true })
-    });
-    audio = new Audio(payload.audioUrl);
-    audio.preload = 'auto';
-    stopPlacementAudio.current = audio;
-    await audio.play();
+export function preloadPlacementAudio(questionId) {
+  const normalizedId = String(questionId || '').trim();
+  if (!normalizedId) return null;
+  if (stopPlacementAudio.questionId === normalizedId && stopPlacementAudio.current) {
+    return stopPlacementAudio.current;
   }
-  return payload;
+  if (stopPlacementAudio.current) {
+    stopPlacementAudio.current.pause();
+    stopPlacementAudio.current.src = '';
+  }
+  const audio = new Audio(`/assets/audio/hsk-placement/${encodeURIComponent(normalizedId)}.mp3`);
+  audio.preload = 'auto';
+  audio.load();
+  stopPlacementAudio.current = audio;
+  stopPlacementAudio.questionId = normalizedId;
+  return audio;
+}
+
+export async function playPlacementAudio(questionId) {
+  const audio = preloadPlacementAudio(questionId);
+  if (!audio) throw new Error('Audio không khả dụng.');
+  audio.currentTime = 0;
+  await audio.play();
+  return audio;
 }
 
 export const placementLabels = Object.freeze({

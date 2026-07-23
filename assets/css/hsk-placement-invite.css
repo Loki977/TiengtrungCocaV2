@@ -171,6 +171,24 @@
   line-height: 1.65;
 }
 
+.placement-course-prompt__benefits {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.placement-course-prompt__benefits span {
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--orange), transparent 78%);
+  border-radius: 999px;
+  color: var(--orange-dark);
+  background: color-mix(in srgb, var(--orange), transparent 92%);
+  font-size: .74rem;
+  font-weight: 800;
+}
+
 .placement-course-prompt__actions {
   display: flex;
   justify-content: center;

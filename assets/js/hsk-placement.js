@@ -1,14 +1,21 @@
 import {
-  waitForPlacementAuth,
-  placementApi,
   showPlacementToast,
   playPlacementAudio,
+  preloadPlacementAudio,
   stopPlacementAudio,
   placementLabels
 } from './hsk-placement-client.js';
+import {
+  placementBankReady,
+  getLocalPlacementStatus,
+  startLocalPlacement,
+  resumeLocalPlacement,
+  answerLocalPlacement,
+  deferLocalPlacement
+} from './hsk-placement-runtime.js';
 
 const byId = (id) => document.getElementById(id);
-const screenIds = ['authScreen', 'introScreen', 'testScreen', 'deferredScreen'];
+const screenIds = ['introScreen', 'testScreen', 'deferredScreen'];
 const state = {
   attemptId: '',
   question: null,
@@ -17,7 +24,7 @@ const state = {
   orderedTokens: [],
   audioPlays: 0,
   soundEnabled: localStorage.getItem('hskPlacementSound') !== 'false',
-  remoteStatus: 'not_started',
+  localStatus: 'not_started',
   busy: false
 };
 
@@ -36,13 +43,13 @@ function setBusy(value) {
   });
 }
 
-function renderQuestion(payload) {
+function renderQuestion(payload, { autoplay = true } = {}) {
   state.attemptId = payload.attemptId;
   state.question = payload.question;
   state.questionStartedAt = performance.now();
   state.selectedAnswer = null;
   state.orderedTokens = [];
-  state.audioPlays = Number(payload.audioPlaysUsed || 0);
+  state.audioPlays = 0;
   stopPlacementAudio();
 
   byId('progressStatus').textContent = payload.progress.statusText;
@@ -57,11 +64,15 @@ function renderQuestion(payload) {
 
   const audioAvailable = Boolean(payload.question.audioAvailable);
   byId('audioPanel').classList.toggle('placement-hidden', !audioAvailable);
+  if (audioAvailable) preloadPlacementAudio(payload.question.id);
   const remaining = Math.max(0, 2 - state.audioPlays);
   byId('audioHint').textContent = remaining ? `Còn ${remaining} lượt nghe` : 'Đã dùng đủ lượt nghe';
   byId('playAudioButton').disabled = remaining === 0;
   renderAnswerArea(payload.question);
   showScreen('testScreen');
+  if (audioAvailable && state.soundEnabled && autoplay) {
+    void playAudio({ automatic: true });
+  }
 }
 
 function renderAnswerArea(question) {
@@ -157,10 +168,7 @@ async function startTest(restart = false) {
   if (state.busy) return;
   setBusy(true);
   try {
-    const payload = await placementApi('start', {
-      method: 'POST',
-      body: JSON.stringify({ restart })
-    });
+    const payload = await startLocalPlacement({ restart });
     if (payload.finished) {
       window.location.assign(`hsk-placement-result.html?attemptId=${encodeURIComponent(payload.attemptId)}`);
       return;
@@ -177,8 +185,7 @@ async function resumeTest() {
   if (state.busy) return;
   setBusy(true);
   try {
-    const query = state.attemptId ? `?attemptId=${encodeURIComponent(state.attemptId)}` : '';
-    const payload = await placementApi(`attempt${query}`);
+    const payload = await resumeLocalPlacement(state.attemptId);
     if (payload.finished) {
       window.location.assign(`hsk-placement-result.html?attemptId=${encodeURIComponent(payload.attemptId)}`);
       return;
@@ -203,14 +210,11 @@ async function submitAnswer(event) {
   }
   setBusy(true);
   try {
-    const payload = await placementApi('answer', {
-      method: 'POST',
-      body: JSON.stringify({
-        attemptId: state.attemptId,
-        questionId: state.question.id,
-        answer,
-        responseTimeMs: Math.round(performance.now() - state.questionStartedAt)
-      })
+    const payload = await answerLocalPlacement({
+      attemptId: state.attemptId,
+      questionId: state.question.id,
+      answer,
+      responseTimeMs: Math.round(performance.now() - state.questionStartedAt)
     });
     if (payload.finished) {
       window.location.assign(`hsk-placement-result.html?attemptId=${encodeURIComponent(payload.attemptId)}`);
@@ -218,18 +222,13 @@ async function submitAnswer(event) {
     }
     renderQuestion(payload);
   } catch (error) {
-    if (['question_mismatch', 'duplicate_answer'].includes(error.code)) {
-      showPlacementToast('Tiến độ đã thay đổi. Đang tải lại câu hiện tại…');
-      await resumeTest();
-    } else {
-      showPlacementToast(error.message);
-    }
+    showPlacementToast(error.message);
   } finally {
     setBusy(false);
   }
 }
 
-async function playAudio() {
+async function playAudio({ automatic = false } = {}) {
   if (!state.soundEnabled) {
     showPlacementToast('Hãy bật âm thanh ở góc trên.');
     return;
@@ -238,29 +237,27 @@ async function playAudio() {
   const button = byId('playAudioButton');
   button.disabled = true;
   try {
-    const payload = await playPlacementAudio(state.attemptId, state.question.id);
-    state.audioPlays = payload.playsUsed;
-    byId('audioHint').textContent = payload.playsRemaining
-      ? `Còn ${payload.playsRemaining} lượt nghe`
+    await playPlacementAudio(state.question.id);
+    state.audioPlays += 1;
+    const playsRemaining = Math.max(0, 2 - state.audioPlays);
+    byId('audioHint').textContent = playsRemaining
+      ? `Còn ${playsRemaining} lượt nghe`
       : 'Đã dùng đủ lượt nghe';
-    button.disabled = payload.playsRemaining === 0;
+    button.disabled = playsRemaining === 0;
   } catch (error) {
     button.disabled = false;
+    if (automatic && error?.name === 'NotAllowedError') return;
     showPlacementToast(error.code === 'audio_limit_reached' ? 'Bạn đã dùng đủ 2 lượt nghe.' : 'Không phát được audio câu hiện tại.');
   }
 }
 
 async function deferTest() {
-  if (state.remoteStatus === 'completed') {
+  if (state.localStatus === 'completed') {
     window.location.assign('profile.html');
     return;
   }
-  try {
-    await placementApi('skip', { method: 'POST', body: '{}' });
-    showScreen('deferredScreen');
-  } catch (error) {
-    showPlacementToast(error.message);
-  }
+  deferLocalPlacement();
+  showScreen('deferredScreen');
 }
 
 function toggleSound() {
@@ -272,52 +269,36 @@ function toggleSound() {
 }
 
 async function initialize() {
-  const user = await waitForPlacementAuth();
-  if (!user) {
-    showScreen('authScreen');
+  const status = getLocalPlacementStatus();
+  state.localStatus = status.status;
+  state.attemptId = status.activeAttemptId || '';
+  showScreen(status.status === 'skipped' ? 'deferredScreen' : 'introScreen');
+  placementBankReady.catch((error) => showPlacementToast(error.message));
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('restart') === '1') {
+    await startTest(true);
     return;
   }
-  try {
-    const status = await placementApi('status');
-    state.remoteStatus = status.status;
-    state.attemptId = status.activeAttemptId || '';
-    const restartRequested = new URLSearchParams(location.search).get('restart') === '1';
-    if (restartRequested) {
-      await startTest(true);
+  if (status.status === 'in_progress' && status.activeAttemptId) {
+    byId('resumeButton').classList.remove('placement-hidden');
+    if (params.get('resume') === '1') {
+      await resumeTest();
       return;
     }
-    if (status.status === 'in_progress' && status.activeAttemptId) {
-      byId('resumeButton').classList.remove('placement-hidden');
-      if (new URLSearchParams(location.search).get('resume') === '1') {
-        await resumeTest();
-        return;
-      }
-    }
-    if (status.status === 'completed') {
-      byId('startButton').textContent = 'Kiểm tra lại';
-      byId('skipButton').textContent = 'Về trang cá nhân';
-    }
-    if (status.status === 'skipped') showScreen('deferredScreen');
-    else showScreen('introScreen');
-  } catch (error) {
-    showScreen('introScreen');
-    showPlacementToast(error.message);
+  }
+  if (status.status === 'completed') {
+    byId('startButton').textContent = 'Kiểm tra lại';
+    byId('skipButton').textContent = 'Về trang cá nhân';
   }
 }
 
-byId('placementLoginButton')?.addEventListener('click', async () => {
-  try {
-    await window.CCFirebase.signInGoogle();
-  } catch (error) {
-    showPlacementToast(error.message || 'Không thể đăng nhập.');
-  }
-});
-byId('startButton')?.addEventListener('click', () => startTest(byId('startButton').textContent.includes('lại')));
+byId('startButton')?.addEventListener('click', () => startTest(state.localStatus === 'completed'));
 byId('resumeButton')?.addEventListener('click', resumeTest);
 byId('skipButton')?.addEventListener('click', deferTest);
 byId('startDeferredButton')?.addEventListener('click', () => startTest(false));
 byId('answerForm')?.addEventListener('submit', submitAnswer);
-byId('playAudioButton')?.addEventListener('click', playAudio);
+byId('playAudioButton')?.addEventListener('click', () => playAudio());
 byId('soundToggle')?.addEventListener('click', toggleSound);
 byId('soundToggle').textContent = `${state.soundEnabled ? '🔊' : '🔇'} Âm thanh: ${state.soundEnabled ? 'Bật' : 'Tắt'}`;
 byId('soundToggle').setAttribute('aria-pressed', String(state.soundEnabled));

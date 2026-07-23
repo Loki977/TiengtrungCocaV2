@@ -30,15 +30,7 @@
   </header>
 
   <main id="placementApp" class="placement-shell" aria-live="polite">
-    <section id="authScreen" class="placement-screen placement-auth-card">
-      <img src="assets/images/hsk-placement/seal.svg" alt="" width="72" height="72" />
-      <p class="placement-eyebrow">Kiểm tra thích ứng HSK 1–6</p>
-      <h1>Đăng nhập để lưu tiến độ</h1>
-      <p>Kết quả và bài đang làm được bảo vệ theo tài khoản của bạn.</p>
-      <button id="placementLoginButton" class="placement-primary-button" type="button">Đăng nhập bằng Google</button>
-    </section>
-
-    <section id="introScreen" class="placement-screen placement-hero placement-hidden">
+    <section id="introScreen" class="placement-screen placement-hero">
       <div class="placement-hero__copy">
         <span class="placement-eyebrow">Bài kiểm tra thích ứng 6 cấp</span>
         <h1>Khám phá trình độ tiếng Trung của bạn</h1>
@@ -46,7 +38,7 @@
         <div class="placement-meta">
           <span>24–32 câu</span>
           <span>Khoảng 12–18 phút</span>
-          <span>Không báo đúng sai giữa bài</span>
+          <span>Không cần đăng nhập lại</span>
         </div>
         <div class="placement-actions">
           <button id="startButton" class="placement-primary-button" type="button">Bắt đầu kiểm tra</button>
@@ -118,7 +110,6 @@
   </main>
 
   <div id="placementToast" class="placement-toast placement-hidden" role="status" aria-live="polite"></div>
-  <script type="module" src="assets/js/firebase-auth.js"></script>
   <script type="module" src="assets/js/hsk-placement.js"></script>
 </body>
 </html>
