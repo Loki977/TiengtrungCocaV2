@@ -217,7 +217,7 @@ function normalizeStats(raw = {}) {
 
 const PROGRESS_STATS_FIELDS = new Set([
   "xp", "coins", "totalCoinsEarned",
-  "unlockedLessons", "writingCompleted", "challengeStats", "placementStats", "coinHistory",
+  "unlockedLessons", "writingCompleted", "challengeStats", "coinHistory",
   "checkInStreak", "lastCheckInDate", "streak",
   "completedLessons", "completedLessonIds",
   "currentLevel", "currentLesson", "courses", "tasks", "history",

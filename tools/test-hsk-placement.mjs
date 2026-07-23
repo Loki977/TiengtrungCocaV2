@@ -76,11 +76,11 @@ const rules = fs.readFileSync(path.join(root, 'firestore.rules'), 'utf8');
 assert.match(rules, /match \/private\/hskPlacement[\s\S]*allow read, write: if false;/);
 assert.match(rules, /match \/hskPlacementAttempts\/\{attemptId\}[\s\S]*allow read, write: if false;/);
 assert.match(rules, /docId != 'hskPlacement'/);
-assert.match(rules, /'challengeStats', 'placementStats', 'coinHistory'/, 'shared stats must retain placement data');
+assert.doesNotMatch(rules, /'challengeStats', 'placementStats', 'coinHistory'/, 'clients must not write placement results');
 
 const firebaseAuthSource = fs.readFileSync(path.join(root, 'assets/js/firebase-auth.js'), 'utf8');
 assert.match(firebaseAuthSource, /placementStats:\s*\{[\s\S]*status:\s*"not_started"/);
-assert.match(firebaseAuthSource, /"challengeStats", "placementStats", "coinHistory"/);
+assert.doesNotMatch(firebaseAuthSource, /"challengeStats", "placementStats", "coinHistory"/, 'shared auth must treat placement results as read-only');
 
 const placementApiSource = fs.readFileSync(path.join(root, 'server/hsk-placement/api.mjs'), 'utf8');
 assert.match(placementApiSource, /function placementStatsWrite\(/);
