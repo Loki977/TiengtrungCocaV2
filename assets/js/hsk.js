@@ -65,7 +65,7 @@
     const totals = { hsk1:15, hsk2:15, hsk3:20, hsk4:20, hsk5:36, hsk6:40 };
     const courses = {};
     Object.entries(totals).forEach(([level,total]) => {
-      courses[level] = { enabled: true, lessons: {} };
+      courses[level] = { enabled: true, guided: true, lessons: {} };
       for (let i = 1; i <= total; i++) courses[level].lessons[`B${i}`] = { enabled: true, unlockType: 'free', coinCost: 0 };
     });
     return { courses, features:{} };
@@ -81,7 +81,7 @@
       if (typeof value === 'object') lessons[key] = { enabled: value.enabled !== false, unlockType: value.unlockType || (value.enabled === false ? 'locked' : 'free'), coinCost: Number(value.coinCost || 0) };
       else lessons[key] = { enabled: value !== false, unlockType: value === false ? 'locked' : 'free', coinCost: 0 };
     });
-    return { enabled: course.enabled !== false, lessons };
+    return { enabled: course.enabled !== false, guided: course.guided !== false, lessons };
   }
 
   function getLessonAccessConfig(level, lessonId) {
@@ -89,73 +89,33 @@
     const course = normalizeCourseConfig(cfg, level);
     const key = `B${Number(lessonId) || 1}`;
     const raw = course.lessons?.[key] || course.lessons?.[String(Number(lessonId) || 1)] || {};
-    const enabled = course.enabled !== false && raw.enabled !== false;
-    const unlockType = enabled ? (raw.unlockType || 'free') : 'locked';
-    return { enabled, unlockType, coinCost: Math.max(0, Number(raw.coinCost || 0)) };
+    const enabled = raw.enabled !== false && raw.unlockType !== 'locked';
+    return { enabled, unlockType: enabled ? 'free' : 'locked', coinCost: 0 };
   }
 
-  function userHasCoinUnlock(level, lessonId) {
-    const opened = currentStats?.unlockedLessons?.[level];
-    return Array.isArray(opened) && opened.map(String).includes(String(Number(lessonId)));
-  }
-
-  function userIsVip() {
-    // Chỉ dùng kết quả VIP đã được xác minh từ Firestore server, không dùng cache/localStorage.
-    return Boolean(window.CCFirebase?.vip?.isVerifiedActive?.());
-  }
-
-  function showVipPurchase(reason) {
-    const openPurchase = window.CCFirebase?.vip?.openPurchase || window.CCVip?.openPurchase;
-    if (openPurchase) {
-      openPurchase({
-        reason,
-        user: window.CCFirebase?.getCurrentUser?.() || null,
-        backUrl: 'hsk.html'
-      });
-    } else {
-      toast(reason);
-    }
-  }
-
-  async function requireFreshVipAccess(level, lessonId) {
-    try {
-      const firebase = await waitForSharedFirebase();
-      await firebase.authReady;
-      const result = await firebase.getFreshVipAccess({ syncUi: true });
-      currentStats = result?.stats || firebase.getCurrentStats?.() || currentStats;
-      if (result?.verified && result?.state?.active) return true;
-
-      const reason = result?.reason === 'unavailable'
-        ? 'Không thể xác minh quyền VIP vì kết nối Firestore đang gián đoạn. Nội dung VIP đã được chặn để bảo vệ tài khoản.'
-        : result?.reason === 'signed-out'
-          ? 'Bài học này dành cho thành viên VIP. Hãy đăng nhập đúng tài khoản hoặc chọn gói nâng cấp.'
-          : result?.state?.expired
-            ? 'VIP của tài khoản đã hết hạn. Chọn gói để gia hạn và tiếp tục học.'
-            : 'Bài học này dành cho thành viên VIP. Chọn gói phù hợp để mở khóa.';
-      showVipPurchase(reason);
-      return false;
-    } catch (error) {
-      console.warn('[hsk] Không xác minh được quyền VIP.', { level, lessonId, error });
-      showVipPurchase('Không thể xác minh quyền VIP lúc này. Nội dung đã được chặn; vui lòng kiểm tra mạng rồi thử lại.');
-      return false;
-    }
+  function getLearningPathAccess(level, lessonId) {
+    const liveStats = window.CCFirebase?.getCurrentStats?.() || currentStats || {};
+    currentStats = liveStats;
+    return window.CCHskLearningAccess?.resolveLessonAccess?.({
+      level,
+      lessonId,
+      stats: liveStats,
+      settings: adminLearningSettings || defaultLearningSettings()
+    }) || { allowed: true, reason: 'open', message: '' };
   }
 
   function canOpenLesson(level, lessonId) {
     if (currentStats?.unlockedAll) return true;
     const access = getLessonAccessConfig(level, lessonId);
     if (!access.enabled || access.unlockType === 'locked') return false;
-    if (access.unlockType === 'free') return true;
-    if (access.unlockType === 'vip') return userIsVip();
-    if (access.unlockType === 'coins') return userHasCoinUnlock(level, lessonId);
-    return false;
+    if (!getLearningPathAccess(level, lessonId).allowed) return false;
+    return true;
   }
 
   function getLessonActionLabel(level, lessonId) {
     const access = getLessonAccessConfig(level, lessonId);
-    if (!access.enabled || access.unlockType === 'locked') return 'Đang cập nhật';
-    if (access.unlockType === 'vip') return userIsVip() ? 'Học ngay' : 'VIP';
-    if (access.unlockType === 'coins') return userHasCoinUnlock(level, lessonId) ? 'Học ngay' : `Mở bằng ${access.coinCost} xu`;
+    const learningPath = getLearningPathAccess(level, lessonId);
+    if (!learningPath.allowed || !access.enabled || access.unlockType === 'locked') return 'Chưa mở khóa';
     return 'Học ngay';
   }
 
@@ -183,7 +143,7 @@
       return true;
     } catch (error) {
       console.warn('[hsk] Không xác minh được cấu hình khóa bài mới nhất.', error);
-      showVipPurchase('Không thể xác minh trạng thái khóa bài vì Firestore đang gián đoạn. Nội dung đã được chặn; vui lòng kiểm tra mạng rồi thử lại.');
+      toast('Không thể xác minh trạng thái khóa bài vì kết nối đang gián đoạn. Vui lòng kiểm tra mạng rồi thử lại.');
       return false;
     }
   }
@@ -201,8 +161,7 @@
 
   function isCourseUnlocked(level) {
     if (currentStats?.unlockedAll) return true;
-    const cfg = adminLearningSettings || defaultLearningSettings();
-    return normalizeCourseConfig(cfg, level).enabled !== false;
+    return getLearningPathAccess(level, 1).allowed;
   }
 
   function isLessonUnlocked(level, lessonId) {
@@ -333,19 +292,21 @@
     const lessonRows = lessonIndex.length
       ? lessonIndex.map(l => {
           const access = getLessonAccessConfig(currentLevel, l.lessonId);
+          const learningPath = getLearningPathAccess(currentLevel, l.lessonId);
           const isAvailable = !isLocked && canOpenLesson(currentLevel, l.lessonId);
           const completed = isLessonCompleted(currentLevel, l.lessonId);
           const lessonProgress = completed ? 100 : Number(l.progress || 0);
           const actionLabel = getLessonActionLabel(currentLevel, l.lessonId);
-          const lockIcon = access.unlockType === 'vip' ? '👑' : (access.unlockType === 'coins' ? '🪙' : '🔒');
+          const lockIcon = '🔒';
           const statusHtml = completed
             ? '<span class="lesson-status lesson-status--done">Đã học</span>'
             : (isAvailable ? `<span class="lesson-status lesson-status--active">${actionLabel}</span>` : `<span class="lesson-status lesson-status--locked">${lockIcon} ${actionLabel}</span>`);
-          const canClick = !isLocked && access.enabled !== false && access.unlockType !== 'locked';
+          const canClick = true;
           return `
             <div class="lesson-item ${completed ? 'completed' : ''} ${canClick ? 'clickable-lesson' : 'locked'} ${isAvailable ? 'active-lesson' : 'needs-unlock'}"
                  data-detail="${l.lessonId}"
                  data-unlock-type="${access.unlockType}"
+                 data-path-reason="${learningPath.reason}"
                  data-coin-cost="${access.coinCost}"
                  role="${canClick ? 'button' : 'listitem'}"
                  tabindex="${canClick ? '0' : '-1'}">
@@ -394,7 +355,7 @@
         ` : `
           <div style="display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.6">
             <span style="font-size:2rem">🔒</span>
-            <span style="font-size:.8rem;color:var(--text-muted)">Admin chưa mở khóa cấp này</span>
+            <span style="font-size:.8rem;color:var(--text-muted)">Hoàn thành cấp hoặc bài học phía trước để mở khóa</span>
           </div>
         `}
       </div>
@@ -435,25 +396,10 @@
 
   async function handleLessonClick(lessonId) {
     if (!await requireFreshLearningSettings()) return;
+    const learningPath = getLearningPathAccess(currentLevel, lessonId);
+    if (!learningPath.allowed) return toast(learningPath.message || 'Hãy hoàn thành bài học phía trước để mở khóa.');
     const access = getLessonAccessConfig(currentLevel, lessonId);
-    if (!access.enabled || access.unlockType === 'locked') return toast('Bài học này đang được cập nhật.');
-    if (access.unlockType === 'vip') {
-      toast('Đang xác minh quyền VIP...');
-      if (!await requireFreshVipAccess(currentLevel, lessonId)) return;
-    }
-    if (access.unlockType === 'coins' && !userHasCoinUnlock(currentLevel, lessonId)) {
-      if (Number(currentStats?.coins || 0) < access.coinCost) return toast('Bạn chưa đủ xu.');
-      if (!confirm(`Dùng ${access.coinCost} xu để mở vĩnh viễn bài này?`)) return;
-      try {
-        await window.CCFirebase?.unlockLessonWithCoins?.({ level: currentLevel, lessonId, coinCost: access.coinCost });
-        currentStats = window.CCFirebase?.getCurrentStats?.() || currentStats;
-        toast('Đã mở bài bằng xu.');
-        await renderPanel(currentTab);
-      } catch (error) {
-        toast(error?.message || 'Không mở được bài bằng xu.');
-        return;
-      }
-    }
+    if (!access.enabled || access.unlockType === 'locked') return toast('Hãy mở khóa hoặc hoàn thành bài học phía trước trước.');
     openLessonDetail(lessonId);
   }
 
@@ -476,22 +422,23 @@
         return;
       }
       const access = getLessonAccessConfig(currentLevel, lessonId);
-      if (access.unlockType === 'vip' && !await requireFreshVipAccess(currentLevel, lessonId)) {
-        showCoursePanel();
+      const learningPath = getLearningPathAccess(currentLevel, lessonId);
+      if (!learningPath.allowed) {
+        detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">🔒 ${learningPath.message}</p>`;
         return;
       }
-      if (!access.enabled || access.unlockType === 'locked' || (access.unlockType === 'coins' && !userHasCoinUnlock(currentLevel, lessonId))) {
-        const msg = access.unlockType === 'coins' ? `🪙 Bài học cần ${access.coinCost} xu để mở.` : '🔒 Bài học này đang được Admin khóa.';
+      if (!access.enabled || access.unlockType === 'locked') {
+        const msg = '🔒 Hãy mở khóa hoặc hoàn thành bài học phía trước trước.';
         detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">${msg}</p>`;
         return;
       }
 
-      // Chỉ tải JSON/static lesson sau khi quyền VIP đã được xác minh từ Firestore.
+      // Chỉ tải JSON/static lesson sau khi quyền học theo lộ trình đã được xác minh.
       detailWrap.innerHTML = '<p style="padding:24px;text-align:center">Đang tải bài học...</p>';
       const override = await loadLessonOverride(currentLevel, lessonId);
       const lesson = override?.content || await loadLessonJson(currentLevel, currentItem.file);
       if (override?.visible === false || lesson.visible === false || override?.isLocked || lesson.isLocked) {
-        detailWrap.innerHTML = '<p style="padding:24px;text-align:center;color:#9a3412">🔒 Bài học này đang được Admin khóa.</p>';
+        detailWrap.innerHTML = '<p style="padding:24px;text-align:center;color:#9a3412">🔒 Hãy mở khóa hoặc hoàn thành bài học phía trước trước.</p>';
         return;
       }
       lesson.level = lesson.level || currentTab;
@@ -515,8 +462,10 @@
   }
   window.openLessonDetail = openLessonDetail;
 
-  window.backToLessonList = function () {
+  window.backToLessonList = async function () {
     showCoursePanel();
+    currentStats = window.CCFirebase?.getCurrentStats?.() || currentStats;
+    await renderPanel(currentTab);
   };
 
   window.handleLocked = function (title) {

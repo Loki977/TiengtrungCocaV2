@@ -1,10 +1,34 @@
-import { getApps } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
+import { getApps, initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
 
 const HOME_PATHS = ['/', '/index.html'];
 const LEARNING_SETTINGS_REST_URL = 'https://firestore.googleapis.com/v1/projects/tiengtrungcoca/databases/(default)/documents/adminSettings/learning';
 const isHome = HOME_PATHS.includes(location.pathname) || location.pathname.endsWith('/index.html');
-if (isHome) void initHomeFabs();
+void initGlobalFabs();
+
+function ensureFirebaseApp() {
+  if (getApps().length) return getApps()[0];
+  const hostname = window.location.hostname.toLowerCase();
+  const authDomain = hostname === 'tiengtrungcoca.vercel.app' ? hostname : 'tiengtrungcoca.firebaseapp.com';
+  return initializeApp({
+    apiKey: 'AIzaSyDoTP-Rw5Jb-wYJPbmwiTLwkcjIpdM_bLA',
+    authDomain,
+    projectId: 'tiengtrungcoca',
+    storageBucket: 'tiengtrungcoca.firebasestorage.app',
+    messagingSenderId: '216281367513',
+    appId: '1:216281367513:web:97cfffea1f595c997b8fc8',
+    measurementId: 'G-S8ZM43HKX1'
+  });
+}
+
+function ensureFabStyles() {
+  if (document.querySelector('link[data-cc-global-fabs]')) return;
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet';
+  stylesheet.href = new URL('../css/home-fabs.css?v=3', import.meta.url).href;
+  stylesheet.dataset.ccGlobalFabs = '';
+  document.head.appendChild(stylesheet);
+}
 
 async function waitForFirebaseDb() {
   const resolveDb = () => window.CCFirebase?.db
@@ -18,7 +42,7 @@ async function waitForFirebaseDb() {
     const finish = () => {
       window.removeEventListener('firebase-ready', finish);
       if (timeoutId) clearTimeout(timeoutId);
-      resolve(resolveDb());
+      resolve(resolveDb() || getFirestore(ensureFirebaseApp()));
     };
     window.addEventListener('firebase-ready', finish, { once: true });
     timeoutId = window.setTimeout(finish, 1500);
@@ -50,11 +74,14 @@ async function isDonateEnabled() {
   }
 }
 
-async function initHomeFabs() {
+async function initGlobalFabs() {
   if (document.querySelector('.cc-home-fabs')) return;
+  ensureFabStyles();
   document.body.insertAdjacentHTML('beforeend', `
-    <div class="cc-home-fabs" aria-label="Công cụ trang chủ">
-      <button class="cc-fab" id="ccFeedbackFab" type="button"><span>💬</span>Góp ý</button>
+    <div class="cc-home-fabs" aria-label="Công cụ nhanh">
+      <button class="cc-fab" id="ccFeedbackFab" type="button" aria-label="Gửi góp ý">
+        <span class="cc-fab__icon" aria-hidden="true">💬</span><span class="cc-fab__label">Góp ý</span>
+      </button>
     </div>
     <div class="cc-popup-backdrop" id="ccFeedbackModal">
       <div class="cc-popup" role="dialog" aria-modal="true" aria-labelledby="ccFeedbackTitle">
@@ -73,10 +100,13 @@ async function initHomeFabs() {
   document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeModal(btn.dataset.close)));
   document.querySelectorAll('.cc-popup-backdrop').forEach(el => el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); }));
   document.getElementById('ccFeedbackForm').addEventListener('submit', submitFeedback);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') document.querySelectorAll('.cc-popup-backdrop.open').forEach(el => closeModal(el.id));
+  });
 
-  if (!await isDonateEnabled() || !document.querySelector('.cc-home-fabs')) return;
+  if (!isHome || !await isDonateEnabled() || !document.querySelector('.cc-home-fabs')) return;
   document.querySelector('.cc-home-fabs').insertAdjacentHTML('beforeend',
-    '<button class="cc-fab" id="ccDonateFab" type="button"><span>❤️</span>Ủng hộ</button>');
+    '<button class="cc-fab" id="ccDonateFab" type="button"><span class="cc-fab__icon" aria-hidden="true">❤️</span><span class="cc-fab__label">Ủng hộ</span></button>');
   document.body.insertAdjacentHTML('beforeend', `
     <div class="cc-popup-backdrop" id="ccDonateModal">
       <div class="cc-popup cc-donate-card" role="dialog" aria-modal="true" aria-labelledby="ccDonateTitle">
@@ -104,8 +134,9 @@ async function submitFeedback(event){
   const msg = document.getElementById('ccFeedbackMessage').value.trim();
   if (!msg) return;
   const fb = window.CCFirebase;
-  if (!fb?.db) return alert('Firebase chưa sẵn sàng.');
-  const user = fb.getCurrentUser?.() || fb.auth?.currentUser || null;
+  const feedbackDb = fb?.db || await waitForFirebaseDb();
+  if (!feedbackDb) return alert('Firebase chưa sẵn sàng.');
+  const user = fb?.getCurrentUser?.() || fb?.auth?.currentUser || null;
   const payload = {
     uid: user?.uid || '', displayName: user?.displayName || '', email: user?.email || '', photoURL: user?.photoURL || '',
     type: document.getElementById('ccFeedbackType').value,
@@ -114,7 +145,7 @@ async function submitFeedback(event){
   };
   form.querySelectorAll('button,input,textarea,select').forEach(x=>x.disabled=true);
   try {
-    await addDoc(collection(fb.db, 'feedbacks'), payload);
+    await addDoc(collection(feedbackDb, 'feedbacks'), payload);
     document.getElementById('ccFeedbackSuccess').classList.add('show');
     form.reset();
     setTimeout(()=>{document.getElementById('ccFeedbackSuccess').classList.remove('show');closeModal('ccFeedbackModal');},900);

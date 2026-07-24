@@ -29,6 +29,7 @@ import {
   runTransaction,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import "./home-fabs.js";
 import {
   getVipState,
   isVipActive,

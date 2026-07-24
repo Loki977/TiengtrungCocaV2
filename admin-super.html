@@ -74,15 +74,15 @@
 
       <section id="tab-learning" class="tab-panel hidden">
         <div class="panel">
-          <h2>🎓 Khóa / mở khóa học tập</h2>
-          <p class="muted">Cấu hình này lưu ở Firestore <b>adminSettings/learning</b>. Website sẽ đọc để khóa/mở khóa khóa học và từng lesson.</p>
-          <div class="notice">Gợi ý: bật HSK1, chỉ mở Lesson 1 nếu muốn người học đi tuần tự. Admin có thể mở toàn bộ bất cứ lúc nào.</div>
+          <h2>🎓 Lộ trình mở khóa học tập</h2>
+          <p class="muted">Cấu hình lưu ở Firestore <b>adminSettings/learning</b>. Công tắc cấp HSK bật chế độ mở tuần tự theo bài test và tiến độ; tắt công tắc để mở tự do cấp đó. Đây là quyền học, không phải quyền VIP.</p>
+          <div class="notice">Mặc định: chưa test chỉ học tuần tự Pinyin và 3 bài HSK1 miễn phí; sau test sẽ mở đến cấp tương ứng và toàn bộ cấp thấp hơn.</div>
           <div class="admin-grid two" style="margin-top:14px">
             <div class="admin-box"><h3>📚 Khóa học</h3><div id="courseToggles" class="toggle-list"></div></div>
             <div class="admin-box"><h3>⚙️ Tính năng</h3><div id="featureToggles" class="toggle-list"></div></div>
           </div>
           <div class="admin-box" style="margin-top:14px">
-            <div class="toolbar"><select id="lessonLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><button id="openAllLessons" class="btn ok">Mở tất cả bài cấp này</button><button id="lockAllLessons" class="btn warn">Khóa tất cả bài cấp này</button><button id="freeAllLessons" class="btn ok">Đặt free</button><button id="vipAllLessons" class="btn warn">Đặt VIP</button><button id="coinsAllLessons" class="btn">Đặt dùng xu</button><input id="bulkCoinCost" class="input" type="number" min="0" value="50" style="max-width:120px" placeholder="Xu"><button id="saveLearningSettings" class="btn primary">Lưu cấu hình</button></div>
+            <div class="toolbar"><select id="lessonLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><button id="openAllLessons" class="btn ok">Cho phép tất cả bài cấp này</button><button id="lockAllLessons" class="btn warn">Khóa thủ công tất cả</button><button id="saveLearningSettings" class="btn primary">Lưu cấu hình</button></div>
             <div id="lessonLockGrid" class="lesson-lock-grid"></div>
           </div>
           <div class="lesson-total" id="lessonTotals" style="margin-top:14px"></div>

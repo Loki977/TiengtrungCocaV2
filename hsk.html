@@ -92,6 +92,9 @@
     .lesson-item:hover { transform: translateY(-3px); border-color: rgba(247,180,0,.68); box-shadow: 0 21px 42px rgba(39,62,92,.15); }
     .lesson-item.locked { opacity: .58; cursor: not-allowed; }
     .lesson-item.locked:hover { transform: none; border-color: rgba(255,194,26,.28); box-shadow: 0 14px 34px rgba(39,62,92,.08); }
+    .lesson-item.needs-unlock { opacity: .6; cursor: help; filter: saturate(.72); }
+    .lesson-item.needs-unlock:hover { opacity: .78; transform: translateY(-1px); }
+    .lesson-item.needs-unlock:focus-visible { opacity: .82; outline: 3px solid rgba(255,122,24,.34); outline-offset: 3px; }
     .lesson-item.completed { border-color: rgba(56,176,0,.45); background: linear-gradient(138deg, #fff 0%, #f7fff1 55%, rgba(218,255,199,.65) 100%); }
     .lesson-item.active-lesson { border-color: rgba(255,122,0,.58); }
     .lesson-item.foundation-lesson { border-color: rgba(39,181,154,.46); background: linear-gradient(138deg, #fff 0%, #f2fffb 56%, rgba(200,247,232,.72) 100%); }
@@ -496,7 +499,8 @@
 <script src="assets/js/course-pinyin.js"></script>
 <script src="assets/js/lesson-render.js"></script>
 <script src="assets/js/vocabulary-practice.js"></script>
-<script src="assets/js/hsk.js?v=2"></script>
+<script src="assets/js/hsk-learning-access.js"></script>
+<script src="assets/js/hsk.js?v=3"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/js/hero-slogan.js"></script>
 <script type="module" src="assets/js/firebase-auth.js"></script>

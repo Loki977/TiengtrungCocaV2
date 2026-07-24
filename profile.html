@@ -622,6 +622,10 @@
     body.profile-bg-enabled .profile-hero {
       background: linear-gradient(135deg, rgba(10, 27, 64, .66), rgba(255, 122, 24, .38)) !important;
     }
+    body.profile-bg-enabled .header .logo__text {
+      color: #fff4d6 !important;
+      text-shadow: 0 2px 12px rgba(5, 17, 39, .58);
+    }
     body.profile-bg-enabled .profile-page {
       --glass-text-strong: #10234a;
       --glass-text: #2f3f5f;
@@ -918,17 +922,7 @@
     document.body.style.setProperty('--profile-background-image', 'url("' + initialProfileBgUrl + '")');
     try {
       var initialProfileUser = JSON.parse(localStorage.getItem('cc_user') || 'null');
-      var initialProfileStats = initialProfileUser?.uid
-        ? JSON.parse(localStorage.getItem('cc_stats_' + initialProfileUser.uid) || 'null')
-        : null;
-      var initialVipUntil = initialProfileStats?.vipUntil;
-      var initialVipExpiry = initialVipUntil && typeof initialVipUntil === 'object'
-        ? Number(initialVipUntil.seconds ?? initialVipUntil._seconds) * 1000
-        : Date.parse(initialVipUntil);
-      var initialVipActive = initialProfileStats?.isVip === true && (
-        initialVipUntil === null || (Number.isFinite(initialVipExpiry) && initialVipExpiry > Date.now())
-      );
-      if (localStorage.getItem('cc_profileBackground') === 'true' && initialVipActive) {
+      if (localStorage.getItem('cc_profileBackground') === 'true' && initialProfileUser?.uid) {
         document.body.classList.add('profile-bg-enabled');
         window.__ccInitialProfileBackground = true;
         var initialProfilePreload = document.createElement('link');
@@ -2125,6 +2119,8 @@
   </script>
 
   <script src="assets/js/spirit-pet.js?v=pet2"></script>
+  <script src="assets/js/hsk-learning-access.js"></script>
+  <script src="assets/js/profile-hsk-level.js"></script>
   <script type="module" src="assets/js/firebase-auth.js?v=auth-state-20260718"></script>
   <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
