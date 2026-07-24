@@ -74,11 +74,18 @@ assert.match(authSource, /progressStatsForWrite\(currentStats\)/, 'Lưu tiến �
 
 const hskSource = read('assets/js/hsk.js');
 const hskDetailStart = hskSource.indexOf('async function renderLessonDetail');
-const hskGuard = hskSource.indexOf('requireFreshVipAccess', hskDetailStart);
+const hskSettingsGuard = hskSource.indexOf('requireFreshLearningSettings', hskDetailStart);
+const hskPathGuard = hskSource.indexOf('getLearningPathAccess', hskSettingsGuard);
 const hskLoad = hskSource.indexOf('loadLessonJson', hskDetailStart);
-assert.ok(hskDetailStart >= 0 && hskGuard > hskDetailStart && hskLoad > hskGuard, 'hsk.js phải guard VIP trước khi tải JSON');
+assert.ok(
+  hskDetailStart >= 0
+    && hskSettingsGuard > hskDetailStart
+    && hskPathGuard > hskSettingsGuard
+    && hskLoad > hskPathGuard,
+  'hsk.js phải xác minh cấu hình và quyền theo lộ trình trước khi tải JSON'
+);
 assert.match(hskSource, /getDocFromServer/, 'hsk.js phải xác minh cấu hình khóa bài từ server');
-assert.match(hskSource, /isVerifiedActive/, 'hsk.js không được quyết định VIP từ localStorage/cache');
+assert.doesNotMatch(hskSource, /requireFreshVipAccess|unlockLessonWithCoins/, 'Quyền học HSK không được phụ thuộc VIP hoặc xu');
 
 const lessonSource = read('lesson-page.js');
 const lessonInit = lessonSource.indexOf('async function init()');
