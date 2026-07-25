@@ -5,6 +5,8 @@
   "engines": { "node": "20" },
   "main": "index.js",
   "scripts": {
+    "check": "node --check index.js && node --check admin-core.js",
+    "test": "npm run check && node test/admin-core.test.js",
     "deploy": "firebase deploy --only functions",
     "serve": "firebase emulators:start --only functions"
   },

@@ -15,7 +15,7 @@
     <div class="login-card">
       <div class="login-logo">🛡️</div>
       <h1>Admin Super</h1>
-      <p>Chỉ tài khoản Google <b>nqthanhforwork@gmail.com</b> được truy cập.</p>
+      <p>Đăng nhập bằng tài khoản đã được cấp quyền <b>Super Admin, Admin hoặc Editor</b>.</p>
       <button id="loginBtn" class="btn primary">Đăng nhập Google</button>
       <a class="home-link" href="index.html">← Về trang chủ</a>
       <p id="loginMsg" class="muted"></p>
@@ -36,7 +36,7 @@
         <button class="nav-item" data-tab="logs" title="Thống kê truy cập">📈 Thống kê</button>
         <button class="nav-item" data-tab="database" title="Cài đặt dữ liệu">🧩 Cài đặt</button>
       </nav>
-      <div class="admin-user"><span class="cc-user-avatar cc-user-avatar--sm" id="adminAvatarShell"><img id="adminAvatar" alt=""></span><div><b id="adminEmail">Admin</b><button id="logoutBtn">Đăng xuất</button></div></div>
+      <div class="admin-user"><span class="cc-user-avatar cc-user-avatar--sm" id="adminAvatarShell"><img id="adminAvatar" alt=""></span><div><b id="adminEmail">Admin</b><small id="adminRole">Đang xác minh quyền…</small><button id="logoutBtn">Đăng xuất</button></div></div>
     </aside>
 
     <section class="content">
@@ -48,10 +48,12 @@
           <div class="stat"><span>💬</span><b id="statFeedback">0</b><p>Góp ý</p></div>
           <div class="stat"><span>🆕</span><b id="statNew">0</b><p>Góp ý mới</p></div>
           <div class="stat"><span>📈</span><b id="statVisits">0</b><p>Lượt truy cập</p></div>
-          <div class="stat"><span>🔥</span><b id="statXp">0</b><p>Tổng XP</p></div>
-          <div class="stat"><span>📚</span><b id="statLessons">0</b><p>Bài hoàn thành</p></div>
+          <div class="stat"><span>☀️</span><b id="statVisitsToday">0</b><p>Hôm nay</p></div>
+          <div class="stat"><span>🗓️</span><b id="statVisitsMonth">0</b><p>Tháng này</p></div>
+          <div class="stat"><span>🔥</span><b id="statXp">0</b><p>XP trang người dùng</p></div>
+          <div class="stat"><span>📚</span><b id="statLessons">0</b><p>Bài ở trang hiện tại</p></div>
         </div>
-        <div class="panel"><h2>Trạng thái Backend Admin</h2><div id="backendNotice" class="notice ok">Đang kiểm tra Cloud Functions Admin SDK...</div></div>
+        <div class="panel"><h2>Trạng thái Backend Admin</h2><div id="backendNotice" class="notice ok">Đang kiểm tra Vercel Admin API...</div></div>
       </section>
 
       <section id="tab-feedback" class="tab-panel hidden">
@@ -59,16 +61,16 @@
       </section>
 
       <section id="tab-users" class="tab-panel hidden">
-        <div class="panel"><h2>👥 Quản lý người dùng</h2><div class="toolbar"><input id="userSearch" class="input" placeholder="Tìm email/tên/UID"><select id="userSort" class="input"><option value="xp">XP cao nhất</option><option value="newest">Mới cập nhật</option><option value="email">Email A-Z</option></select><button id="exportUsers" class="btn">Tải JSON</button></div><div id="usersTable"></div></div>
+        <div class="panel"><h2>👥 Quản lý người dùng</h2><div class="toolbar"><input id="userSearch" class="input" placeholder="Tìm email/tên/UID"><select id="userSort" class="input"><option value="xp">XP cao nhất</option><option value="newest">Mới cập nhật</option><option value="email">Email A-Z</option></select><button id="exportUsers" class="btn">Tải JSON</button><button id="usersPrev" class="btn" disabled>← Trang trước</button><button id="usersNext" class="btn" disabled>Trang sau →</button><span id="usersPageStatus" class="save-status">Chưa tải</span></div><div id="usersTable"><div class="muted">Đang tải người dùng…</div></div></div>
       </section>
 
 
       <section id="tab-auth" class="tab-panel hidden">
         <div class="panel">
           <h2>🔐 Phân quyền Firebase Authentication</h2>
-          <div class="notice">Phần này cần deploy Cloud Functions trong thư mục <b>functions</b>. Sau khi deploy, admin có thể xem, khóa/mở khóa và xóa tài khoản Auth thật.</div>
-          <div class="toolbar"><input id="authSearch" class="input" placeholder="Tìm email/UID/tên"><button id="loadAuthUsers" class="btn primary">Tải tài khoản Auth</button></div>
-          <div id="authUsersTable"><div class="muted">Bấm Tải tài khoản Auth sau khi deploy Functions.</div></div>
+          <div class="notice">Dữ liệu được tải theo trang qua Vercel Admin API. Chỉ Super Admin được đổi quyền, khóa/mở khóa hoặc xóa tài khoản.</div>
+          <div class="toolbar"><input id="authSearch" class="input" placeholder="Tìm email/UID/tên"><button id="loadAuthUsers" class="btn primary">Tải tài khoản Auth</button><button id="authPrev" class="btn" disabled>← Trang trước</button><button id="authNext" class="btn" disabled>Trang sau →</button><span id="authPageStatus" class="save-status">Chưa tải</span></div>
+          <div id="authUsersTable"><div class="muted">Bấm Tải tài khoản Auth sau khi deploy Vercel Admin API.</div></div>
         </div>
       </section>
 
@@ -180,7 +182,7 @@
       </section>
 
       <section id="tab-logs" class="tab-panel hidden">
-        <div class="panel"><h2>📈 Dữ liệu truy cập</h2><div class="toolbar"><input id="logSearch" class="input" placeholder="Tìm page/email/browser"><button id="exportLogs" class="btn">Export JSON</button></div><div id="logsTable"></div></div>
+        <div class="panel"><h2>📈 Dữ liệu truy cập</h2><div id="visitSummary" class="notice ok">Đang tải bộ đếm tổng hợp…</div><div class="toolbar" style="margin-top:14px"><input id="logSearch" class="input" placeholder="Tìm page/UID/browser"><button id="exportLogs" class="btn">Export JSON</button><button id="migrateVisits" class="btn warn">Hợp nhất dữ liệu cũ</button><button id="logsPrev" class="btn" disabled>← Trang trước</button><button id="logsNext" class="btn" disabled>Trang sau →</button><span id="logsPageStatus" class="save-status">Chưa tải</span></div><div id="logsTable"><div class="muted">Đang tải lịch sử truy cập…</div></div></div>
       </section>
 
       <section id="tab-database" class="tab-panel hidden">

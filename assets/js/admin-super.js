@@ -1,10 +1,8 @@
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
-import { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
-import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-functions.js';
+import { getFirestore, collection, query, orderBy, limit, onSnapshot, getDocs, getDoc, doc, updateDoc, deleteDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
 import { getLessonContent, normalizeWritingLessonContent } from '../../lesson-engine.js';
 import { getLessonConfig } from '../../lesson-config.js';
 
-const ADMIN_EMAIL = 'nqthanhforwork@gmail.com';
 const sharedFirebase = window.CCFirebase;
 if (!sharedFirebase?.auth || !sharedFirebase?.db) {
   throw new Error('Firebase Auth chưa được khởi tạo. Kiểm tra thứ tự script firebase-auth.js trước admin-super.js.');
@@ -12,18 +10,68 @@ if (!sharedFirebase?.auth || !sharedFirebase?.db) {
 
 const auth = sharedFirebase.auth;
 const db = sharedFirebase.db || getFirestore(auth.app);
-const functions = getFunctions(auth.app);
+const IS_LOCAL_CMS = ['127.0.0.1', 'localhost'].includes(window.location.hostname);
+const ADMIN_API_URL = IS_LOCAL_CMS ? 'https://tiengtrungcoca.vercel.app/api/admin' : '/api/admin';
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const state = { feedbacks: [], users: [], logs: [], collectionRows: [], authUsers: [], learningSettings: null, cmsLessonData: null, cmsOriginalData: null, cmsIndex: [], cmsSaving: false, cmsEditorBaseline: {}, writingCmsData: null, writingCmsStatic: null, writingCmsSaving: false };
+const state = {
+  feedbacks: [],
+  users: [],
+  logs: [],
+  collectionRows: [],
+  authUsers: [],
+  session: { role: 'user', cms: false, viewUsers: false, viewAnalytics: false, manageUsers: false, manageRoles: false, manageSensitiveFields: false },
+  usersPager: { currentToken: '', nextToken: '', previousTokens: [], page: 1, search: '' },
+  authPager: { currentToken: '', nextToken: '', previousTokens: [], page: 1, search: '' },
+  logsPager: { cursor: null, previousCursors: [], page: 1, hasMore: false },
+  unsubscribers: [],
+  inFlight: new Map(),
+  learningSettings: null,
+  cmsLessonData: null,
+  cmsOriginalData: null,
+  cmsIndex: [],
+  cmsSaving: false,
+  cmsEditorBaseline: {},
+  writingCmsData: null,
+  writingCmsStatic: null,
+  writingCmsSaving: false
+};
 const WRITING_VOCAB_TARGETS = { hsk1: 10, hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
 const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 
-const callListAuthUsers = httpsCallable(functions, 'adminListUsers');
-const callSetDisabled = httpsCallable(functions, 'adminSetUserDisabled');
-const callDeleteAuthUser = httpsCallable(functions, 'adminDeleteUser');
-const callSyncAdminClaim = httpsCallable(functions, 'adminSyncAdminClaim');
+const BOOTSTRAP_ADMIN_EMAILS = new Set(['nqthanhforwork@gmail.com']);
+const CMS_ROLES = new Set(['super_admin', 'admin', 'editor']);
+
+async function callAdminApi(action, data = {}){
+  const user = auth.currentUser;
+  if (!user) throw new Error('Vui lòng đăng nhập.');
+  const token = await user.getIdToken();
+  const response = await fetch(ADMIN_API_URL, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${token}` },
+    body:JSON.stringify({ action, data })
+  });
+  let payload = {};
+  try { payload = await response.json(); } catch {}
+  if (!response.ok || payload.ok === false) {
+    const error = new Error(payload.message || `Admin API lỗi HTTP ${response.status}`);
+    error.code = payload.code || `http_${response.status}`;
+    throw error;
+  }
+  return { data:payload };
+}
+
+const callListAuthUsers = data => callAdminApi('adminListUsers', data);
+const callSetDisabled = data => callAdminApi('adminSetUserDisabled', data);
+const callDeleteAuthUser = data => callAdminApi('adminDeleteUser', data);
+const callBootstrap = data => callAdminApi('adminBootstrap', data);
+const callGetSession = data => callAdminApi('adminGetSession', data);
+const callGetDashboard = data => callAdminApi('adminGetDashboard', data);
+const callSetUserRole = data => callAdminApi('adminSetUserRole', data);
+const callUpdateUserData = data => callAdminApi('adminUpdateUserData', data);
+const callListAccessLogs = data => callAdminApi('adminListAccessLogs', data);
+const callMigrateVisitCounters = data => callAdminApi('adminMigrateVisitCounters', data);
 
 function toast(msg, type=''){ const el=$('#toast'); el.textContent=msg; el.classList.toggle('error', type === 'error'); el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600); }
 function fmt(t){ try{ return t?.toDate ? t.toDate().toLocaleString('vi-VN') : (t ? new Date(t).toLocaleString('vi-VN') : ''); }catch{return '';} }
@@ -31,11 +79,31 @@ function n(v){ return Number(v || 0).toLocaleString('vi-VN'); }
 function safeText(value){ return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 function structuredCloneSafe(value){ return JSON.parse(JSON.stringify(value)); }
 function downloadJson(name, data){ const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'}); const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); URL.revokeObjectURL(a.href); }
-function completedMap(){ const out = {}; Object.entries(COURSE_TOTALS).forEach(([level,total]) => { for(let i=1;i<=total;i++) out[`${level}-${i}`]=true; }); return out; }
-function statsRef(uid){ return doc(db, 'users', uid, 'private', 'stats'); }
-function userRef(uid){ return doc(db, 'users', uid); }
 function backendMessage(text, ok=false){ const el=$('#backendNotice'); if(!el) return; el.className = ok ? 'notice ok' : 'notice'; el.innerHTML = text; }
-function isAdminUser(user){ return Boolean(user?.email && user.email.toLowerCase() === ADMIN_EMAIL); }
+function hasCapability(name){ return state.session?.[name] === true; }
+function isAdminUser(user){ return Boolean(user && state.session?.cms); }
+async function compatibleSession(user){
+  const email = String(user.email || '').toLowerCase();
+  const isBootstrap = BOOTSTRAP_ADMIN_EMAILS.has(email);
+  const token = isBootstrap ? null : await user.getIdTokenResult();
+  const claimedRole = String(token?.claims?.role || '').toLowerCase();
+  const role = isBootstrap ? 'super_admin' : claimedRole;
+  if (!CMS_ROLES.has(role)) return null;
+  const isAdmin = role === 'super_admin' || role === 'admin';
+  const isSuperAdmin = role === 'super_admin';
+  return {
+    role,
+    cms:true,
+    viewUsers:isAdmin,
+    viewAnalytics:isAdmin,
+    manageUsers:isSuperAdmin,
+    manageRoles:isSuperAdmin,
+    manageSensitiveFields:isSuperAdmin,
+    backendAvailable:false,
+    email,
+    uid:user.uid
+  };
+}
 function syncAdminVipAvatar(user, stats = sharedFirebase.getCurrentStats?.() || {}){
   const shell = $('#adminAvatarShell');
   if (!shell || !user) return;
@@ -46,8 +114,31 @@ function syncAdminVipAvatar(user, stats = sharedFirebase.getCurrentStats?.() || 
 }
 function requireAdmin(){
   const user = auth.currentUser;
-  if (!isAdminUser(user)) throw new Error('Tài khoản hiện tại không có quyền Admin Super.');
+  if (!user || !hasCapability('cms')) throw new Error('Tài khoản hiện tại không có quyền chỉnh sửa CMS.');
   return user;
+}
+function requireSuperAdmin(){
+  const user = auth.currentUser;
+  if (!user || state.session?.role !== 'super_admin') throw new Error('Chỉ Super Admin được thực hiện thao tác này.');
+  return user;
+}
+function cleanupListeners(){
+  state.unsubscribers.splice(0).forEach(unsubscribe => {
+    try { unsubscribe?.(); } catch (_) {}
+  });
+}
+async function runSingle(key, task){
+  if (state.inFlight.has(key)) return state.inFlight.get(key);
+  const promise = Promise.resolve().then(task).finally(() => state.inFlight.delete(key));
+  state.inFlight.set(key, promise);
+  return promise;
+}
+function debounce(fn, delay=350){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
 }
 function setCmsStatus(text, type=''){
   const el = $('#cmsStatus');
@@ -79,34 +170,121 @@ function stripUndefined(value){
 $('#loginBtn').onclick = async () => { try{ await sharedFirebase.signInGoogle(); }catch(e){ $('#loginMsg').textContent = e?.message || 'Không đăng nhập được.'; } };
 $('#logoutBtn').onclick = () => sharedFirebase.logout();
 
-onAuthStateChanged(auth, user => {
-  if(!user){ $('#loginScreen').classList.remove('hidden'); $('#app').classList.add('hidden'); return; }
-  if(!isAdminUser(user)){ location.replace('index.html'); return; }
+onAuthStateChanged(auth, async user => {
+  cleanupListeners();
+  if(!user){
+    state.session = { role:'user', cms:false, viewUsers:false, viewAnalytics:false, manageUsers:false, manageRoles:false, manageSensitiveFields:false };
+    $('#loginScreen').classList.remove('hidden');
+    $('#app').classList.add('hidden');
+    return;
+  }
+  $('#loginMsg').textContent = 'Đang xác minh quyền quản trị…';
+  let compatibilityMode = false;
+  const localSession = IS_LOCAL_CMS ? await compatibleSession(user).catch(() => null) : null;
+  if (localSession) {
+    compatibilityMode = true;
+    state.session = localSession;
+  } else try {
+      const bootstrap = await callBootstrap({});
+      if (bootstrap.data?.refreshToken) await user.getIdToken(true);
+      const session = await callGetSession({});
+      state.session = { ...(session.data || state.session), backendAvailable:true };
+    } catch (error) {
+    let fallback = null;
+    try { fallback = await compatibleSession(user); } catch (tokenError) {
+      console.error('[admin-super] Không đọc được Firebase ID token', tokenError);
+    }
+    if (!fallback) {
+      console.error('[admin-super] Không xác minh được quyền quản trị', error);
+      $('#loginMsg').textContent = 'Tài khoản không có quyền truy cập CMS.';
+      $('#loginScreen').classList.remove('hidden');
+      $('#app').classList.add('hidden');
+      return;
+    }
+    compatibilityMode = true;
+    state.session = fallback;
+    console.warn('[admin-super] Admin backend chưa sẵn sàng; mở CMS ở chế độ tương thích.', error?.code || error?.message);
+  }
   $('#adminEmail').textContent = user.email;
+  $('#adminRole').textContent = String(state.session.role || 'user').replace('_', ' ');
   syncAdminVipAvatar(user);
   $('#loginScreen').classList.add('hidden');
   $('#app').classList.remove('hidden');
   bootOnce();
+  applyRoleUI();
+  if (compatibilityMode) {
+    backendMessage('ℹ️ CMS local đang dùng Vercel Admin API cho Người dùng, Phân quyền và Thống kê. Nếu API chưa được deploy, từng bảng sẽ hiển thị lỗi kết nối rõ ràng.');
+  }
 });
 window.addEventListener('cc:user-stats', event => {
-  if (isAdminUser(event.detail?.user)) syncAdminVipAvatar(event.detail.user, event.detail?.stats || {});
+  if (event.detail?.user?.uid === auth.currentUser?.uid && state.session?.cms) syncAdminVipAvatar(event.detail.user, event.detail?.stats || {});
 });
 
 let booted = false;
-function bootOnce(){ if(booted) return; booted = true; bindUI(); listenFeedbacks(); loadUsers(); loadLogs(); renderLessonTotals(); checkBackend(); loadLearningSettings(); initCms(); initWritingCms(); }
+function bootOnce(){
+  if(!booted) {
+    booted = true;
+    bindUI();
+    renderLessonTotals();
+  }
+  if (state.session?.backendAvailable !== false) checkBackend();
+  if (hasCapability('viewUsers')) loadUsers();
+  if (hasCapability('viewAnalytics')) {
+    loadDashboard();
+    loadLogs();
+    listenVisitCounter();
+    listenFeedbacks();
+  }
+  if (hasCapability('cms')) {
+    loadLearningSettings();
+    initCms();
+    initWritingCms();
+  }
+}
+function applyRoleUI(){
+  const role = state.session?.role || 'user';
+  const hiddenTabs = new Set();
+  if (!hasCapability('viewUsers')) hiddenTabs.add('users');
+  if (!hasCapability('viewAnalytics')) {
+    hiddenTabs.add('dashboard');
+    hiddenTabs.add('feedback');
+    hiddenTabs.add('logs');
+    hiddenTabs.add('database');
+  }
+  if (!hasCapability('manageRoles') && !hasCapability('viewUsers')) hiddenTabs.add('auth');
+  $$('.nav-item').forEach(button => button.classList.toggle('hidden', hiddenTabs.has(button.dataset.tab)));
+  $('#migrateVisits')?.classList.toggle('hidden', role !== 'super_admin');
+  if (hiddenTabs.has($('.nav-item.active')?.dataset.tab)) switchTab('learning');
+}
 function bindUI(){
   $$('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.dataset.tab));
-  $('#refreshAll').onclick = () => { loadUsers(); loadLogs(); toast('Đã làm mới'); };
+  $('#refreshAll').onclick = () => {
+    if (hasCapability('viewUsers')) loadUsers({ reset:true });
+    if (hasCapability('viewAnalytics')) { loadDashboard(); loadLogs({ reset:true }); }
+    toast('Đã làm mới');
+  };
   $('#feedbackSearch').oninput = renderFeedbacks; $('#feedbackStatus').onchange = renderFeedbacks;
-  $('#userSearch').oninput = renderUsers; $('#userSort').onchange = renderUsers; $('#exportUsers').onclick = () => downloadJson('users-firestore.json', state.users);
-  $('#authSearch').oninput = renderAuthUsers; $('#loadAuthUsers').onclick = loadAuthUsers;
+  $('#userSearch').oninput = debounce(() => loadUsers({ reset:true, search:$('#userSearch').value }));
+  $('#userSort').onchange = renderUsers;
+  $('#exportUsers').onclick = () => downloadJson('users-page.json', state.users);
+  $('#usersPrev').onclick = () => loadUsersPage(-1);
+  $('#usersNext').onclick = () => loadUsersPage(1);
+  $('#authSearch').oninput = debounce(() => loadAuthUsers({ reset:true, search:$('#authSearch').value }));
+  $('#loadAuthUsers').onclick = () => loadAuthUsers({ reset:true, search:$('#authSearch').value });
+  $('#authPrev').onclick = () => loadAuthUsersPage(-1);
+  $('#authNext').onclick = () => loadAuthUsersPage(1);
   $('#logSearch').oninput = renderLogs; $('#exportLogs').onclick = () => downloadJson('access-logs.json', state.logs);
+  $('#logsPrev').onclick = () => loadLogsPage(-1);
+  $('#logsNext').onclick = () => loadLogsPage(1);
+  $('#migrateVisits').onclick = migrateVisitCounters;
   $('#loadCollection').onclick = loadCollection; $('#exportCollection').onclick = () => downloadJson(`${$('#collectionSelect').value}.json`, state.collectionRows);
   bindLearningControls();
   bindCmsControls();
   bindWritingCmsControls();
 }
 function switchTab(tab){
+  const target = $(`.nav-item[data-tab="${tab}"]`);
+  if (!target || target.classList.contains('hidden')) return;
   $$('.nav-item').forEach(x => x.classList.toggle('active', x.dataset.tab === tab));
   $$('.tab-panel').forEach(x => x.classList.add('hidden'));
   $(`#tab-${tab}`)?.classList.remove('hidden');
@@ -114,18 +292,24 @@ function switchTab(tab){
 }
 function renderLessonTotals(){ $('#lessonTotals').innerHTML = Object.entries(COURSE_TOTALS).map(([k,v]) => `<div><b>${k.toUpperCase()}</b><p>${v} bài học</p></div>`).join(''); }
 async function checkBackend(){
-  try { await callSyncAdminClaim({}); backendMessage('✅ Cloud Functions Admin SDK đã hoạt động. Bạn có thể quản lý Firebase Authentication thật ở tab <b>Auth</b>.', true); }
-  catch(e){ backendMessage('⚠️ Chưa deploy hoặc chưa cấp quyền Cloud Functions Admin SDK. Tab Auth sẽ chưa hoạt động. Hãy deploy thư mục <b>functions</b>.'); }
+  try {
+    const session = await callGetSession({});
+    state.session = session.data || state.session;
+    backendMessage(`✅ Vercel Admin API đang hoạt động. Quyền hiện tại: <b>${safeText(state.session.role)}</b>.`, true);
+  } catch(e) {
+    backendMessage(`⚠️ Không gọi được Vercel Admin API: ${safeText(e?.message || 'unknown error')}`);
+  }
 }
 
 function listenFeedbacks(){
   const q = query(collection(db, 'feedbacks'), orderBy('createdAt', 'desc'), limit(150));
-  onSnapshot(q, snap => {
+  const unsubscribe = onSnapshot(q, snap => {
     state.feedbacks = snap.docs.map(d => ({ id:d.id, ...d.data() }));
     $('#statFeedback').textContent = n(state.feedbacks.length);
     $('#statNew').textContent = n(state.feedbacks.filter(x => (x.status || 'new') === 'new').length);
     renderFeedbacks();
   }, err => { $('#feedbackList').innerHTML = `<div class="muted">Không đọc được feedbacks: ${safeText(err.message)}</div>`; });
+  state.unsubscribers.push(unsubscribe);
 }
 function renderFeedbacks(){
   const key = $('#feedbackSearch').value.toLowerCase().trim();
@@ -144,21 +328,52 @@ function renderFeedbacks(){
   $$('[data-del]').forEach(b => b.onclick = async () => { if(confirm('Xóa feedback này?')) await deleteDoc(doc(db,'feedbacks',b.dataset.del)); });
 }
 
-async function loadUsers(){
-  try{
-    const snap = await getDocs(query(collection(db, 'users'), limit(500)));
-    const users = [];
-    for (const d of snap.docs) {
-      const publicData = { id:d.id, ...d.data() };
-      let stats = {};
-      try { const s = await getDoc(statsRef(d.id)); if (s.exists()) stats = s.data(); } catch (_) {}
-      users.push({ ...publicData, stats });
-    }
-    state.users = users;
-    updateDashboardStats();
-    renderUsers();
-    renderFeedbacks();
-  } catch(e){ $('#usersTable').innerHTML = `<div class="muted">Không đọc được users: ${safeText(e.message)}</div>`; }
+function mergeAdminUser(user){
+  return { ...(user.public || {}), ...user, id:user.uid || user.id, stats:user.stats || {} };
+}
+function setUsersPagerUI(pager, prefix, count){
+  $(`#${prefix}Prev`).disabled = pager.previousTokens.length === 0;
+  $(`#${prefix}Next`).disabled = !pager.nextToken || Boolean(pager.search);
+  $(`#${prefix}PageStatus`).textContent = pager.search
+    ? `${count} kết quả tìm kiếm`
+    : `Trang ${pager.page} · ${count} tài khoản`;
+}
+async function loadUsers({ reset=false, search } = {}){
+  if (!hasCapability('viewUsers')) return;
+  const pager = state.usersPager;
+  if (reset) Object.assign(pager, { currentToken:'', nextToken:'', previousTokens:[], page:1 });
+  pager.search = String(search ?? pager.search ?? '').trim();
+  $('#usersTable').innerHTML = '<div class="table-state">Đang tải người dùng…</div>';
+  try {
+    await runSingle('load-users', async () => {
+      const response = await callListAuthUsers({
+        maxResults:25,
+        pageToken:pager.search ? '' : pager.currentToken,
+        search:pager.search
+      });
+      state.users = (response.data?.users || []).map(mergeAdminUser);
+      pager.nextToken = response.data?.pageToken || '';
+      updateDashboardStats();
+      renderUsers();
+      renderFeedbacks();
+      setUsersPagerUI(pager, 'users', state.users.length);
+    });
+  } catch(e) {
+    $('#usersTable').innerHTML = `<div class="table-state error">Không tải được người dùng: ${safeText(e.message)}</div>`;
+    setUsersPagerUI(pager, 'users', 0);
+  }
+}
+function loadUsersPage(direction){
+  const pager = state.usersPager;
+  if (direction > 0 && pager.nextToken) {
+    pager.previousTokens.push(pager.currentToken);
+    pager.currentToken = pager.nextToken;
+    pager.page += 1;
+  } else if (direction < 0 && pager.previousTokens.length) {
+    pager.currentToken = pager.previousTokens.pop();
+    pager.page = Math.max(1, pager.page - 1);
+  } else return;
+  loadUsers();
 }
 function getUserXp(u){ return Number(u.stats?.xp ?? u.xp ?? 0); }
 function getUserCoins(u){ return Number(u.stats?.coins ?? u.coins ?? 0); }
@@ -169,19 +384,25 @@ function getUserLevel(u){ return u.stats?.currentLevel || u.currentLevel || u.le
 function getPetLevel(u){ return Number(u.stats?.petLevel ?? u.petLevel ?? Math.min(10, Math.max(1, Math.floor(getUserXp(u) / 1000) + 1))); }
 function getCompletedCount(u){ const ids = u.stats?.completedLessonIds || u.completedLessonIds || {}; if(Array.isArray(ids)) return ids.length; if(ids && typeof ids === 'object') return Object.keys(ids).length; return Number(u.stats?.completedLessons || u.completedLessons || 0); }
 function updateDashboardStats(){
-  $('#statUsers').textContent = n(state.users.length);
   $('#statXp').textContent = n(state.users.reduce((s,u)=>s+getUserXp(u),0));
   $('#statLessons').textContent = n(state.users.reduce((s,u)=>s+getCompletedCount(u),0));
 }
 function renderUsers(){
-  const key = $('#userSearch').value.toLowerCase().trim();
   const sort = $('#userSort').value;
-  let arr = state.users.filter(u => !key || [u.email,u.displayName,u.name,u.id].join(' ').toLowerCase().includes(key));
+  let arr = [...state.users];
   arr = arr.sort((a,b) => sort === 'email' ? String(a.email||'').localeCompare(String(b.email||'')) : sort === 'newest' ? String(b.updatedAt?.seconds||0).localeCompare(String(a.updatedAt?.seconds||0)) : getUserXp(b)-getUserXp(a));
-  $('#usersTable').innerHTML = `<table><thead><tr><th>Người dùng</th><th>XP / Cấp</th><th>Xu / VIP</th><th>Tiến độ</th><th>Cập nhật</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => {
+  if (!arr.length) {
+    $('#usersTable').innerHTML = '<div class="table-state">Không có tài khoản phù hợp.</div>';
+    return;
+  }
+  const sensitiveActions = hasCapability('manageSensitiveFields');
+  $('#usersTable').innerHTML = `<table><thead><tr><th>Người dùng</th><th>Quyền / Auth</th><th>XP / Cấp</th><th>Xu / VIP</th><th>Tiến độ</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => {
     const vipState = getUserVipState(u);
     const vipClass = vipState.active ? 'done' : (vipState.expired || vipState.invalidExpiry ? 'new' : '');
-    return `<tr><td><b>${safeText(u.displayName || u.name || 'Học viên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.id)}</div></td><td>XP: <b>${n(getUserXp(u))}</b><br>Cấp: ${safeText(getUserLevel(u))}<br>Pet: ${getPetLevel(u)}/10</td><td>Xu: <b>${n(getUserCoins(u))}</b><br><span class="pill ${vipClass}">${safeText(getUserVipLabel(u))}</span><br><span class="muted">Bài đã mở: ${safeText(JSON.stringify(u.stats?.unlockedLessons || {})).slice(0,90)}</span></td><td>Hoàn thành: ${getCompletedCount(u)}<br>Mở tất cả: ${(u.stats?.unlockedAll || u.unlockedAll) ? 'có' : 'không'}</td><td>${fmt(u.updatedAt || u.stats?.updatedAt)}</td><td class="right"><button class="btn small primary" data-max="${u.id}">Max tất cả</button> <button class="btn small ok" data-unlock="${u.id}">Mở khóa</button> <button class="btn small ok" data-vip-manage="${u.id}">Quản lý VIP</button> <button class="btn small" data-coins="${u.id}">± Xu</button> <button class="btn small danger" data-reset="${u.id}">Reset</button></td></tr>`;
+    const actions = sensitiveActions && u.id !== auth.currentUser?.uid
+      ? `<button class="btn small primary" data-max="${u.id}">Max tất cả</button> <button class="btn small ok" data-unlock="${u.id}">Mở khóa</button> <button class="btn small ok" data-vip-manage="${u.id}">Quản lý VIP</button> <button class="btn small" data-coins="${u.id}">± Xu</button> <button class="btn small danger" data-reset="${u.id}">Reset</button>`
+      : '<span class="muted">Chỉ Super Admin</span>';
+    return `<tr><td><b>${safeText(u.displayName || u.name || 'Học viên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.id)}</div></td><td><span class="pill">${safeText(u.role || 'user')}</span><br>${u.disabled ? '<span class="pill new">Đã khóa</span>' : '<span class="pill done">Hoạt động</span>'}</td><td>XP: <b>${n(getUserXp(u))}</b><br>Cấp: ${safeText(getUserLevel(u))}<br>Pet: ${getPetLevel(u)}/10</td><td>Xu: <b>${n(getUserCoins(u))}</b><br><span class="pill ${vipClass}">${safeText(getUserVipLabel(u))}</span><br><span class="muted">Bài đã mở: ${safeText(JSON.stringify(u.stats?.unlockedLessons || {})).slice(0,90)}</span></td><td>Hoàn thành: ${getCompletedCount(u)}<br>Mở tất cả: ${(u.stats?.unlockedAll || u.unlockedAll) ? 'có' : 'không'}<br>${fmt(u.updatedAt || u.stats?.updatedAt)}</td><td class="right">${actions}</td></tr>`;
   }).join('')}</tbody></table>`;
   $$('[data-max]').forEach(b => b.onclick = () => maxUser(b.dataset.max));
   $$('[data-unlock]').forEach(b => b.onclick = () => unlockUser(b.dataset.unlock));
@@ -189,12 +410,9 @@ function renderUsers(){
   $$('[data-coins]').forEach(b => b.onclick = () => adjustUserCoins(b.dataset.coins));
   $$('[data-reset]').forEach(b => b.onclick = () => resetUser(b.dataset.reset));
 }
-async function writeUserStats(uid, patch = {}){
-  requireAdmin();
-  const jobs = [];
-  if (patch.public && Object.keys(patch.public).length) jobs.push(setDoc(userRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.public }, { merge:true }));
-  if (patch.stats && Object.keys(patch.stats).length) jobs.push(setDoc(statsRef(uid), { updatedAt:serverTimestamp(), adminUpdatedAt:serverTimestamp(), ...patch.stats }, { merge:true }));
-  await Promise.all(jobs);
+async function updateSensitiveUser(uid, action, data = {}){
+  requireSuperAdmin();
+  return runSingle(`sensitive:${uid}:${action}`, () => callUpdateUserData({ uid, action, ...data }));
 }
 
 const VIP_ADMIN_PLANS = Object.freeze({
@@ -249,16 +467,11 @@ function dateAtLocalEnd(dateText){
   return Number.isNaN(date.getTime()) ? null : date;
 }
 async function writeCanonicalVip(uid, { isVip, vipUntil, vipPlan }){
-  const admin = requireAdmin();
-  await setDoc(statsRef(uid), {
-    isVip: isVip === true,
-    vipUntil,
-    vipPlan: vipPlan ?? null,
-    vipUpdatedAt: serverTimestamp(),
-    vipUpdatedBy: admin.email,
-    updatedAt: serverTimestamp(),
-    adminUpdatedAt: serverTimestamp()
-  }, { merge:true });
+  await updateSensitiveUser(uid, 'vip', {
+    isVip:isVip === true,
+    vipUntilMillis:vipUntil,
+    vipPlan:vipPlan ?? null
+  });
 }
 async function saveVipManager(extend){
   const modal = $('#adminVipModal');
@@ -273,13 +486,13 @@ async function saveVipManager(extend){
     if (plan.days === 'custom') {
       const customDate = dateAtLocalEnd($('#adminVipCustomDate')?.value);
       if (!customDate || customDate.getTime() <= Date.now()) return toast('Ngày hết hạn phải ở tương lai', 'error');
-      vipUntil = Timestamp.fromDate(customDate);
+      vipUntil = customDate.getTime();
     } else if (Number.isFinite(plan.days)) {
       const current = getUserVipState(user);
       const base = extend && current.active && !current.permanent && current.expiresDate
         ? current.expiresDate.getTime()
         : Date.now();
-      vipUntil = Timestamp.fromDate(new Date(base + plan.days * 86400000));
+      vipUntil = base + plan.days * 86400000;
     }
     await writeCanonicalVip(uid, { isVip:true, vipUntil, vipPlan:planId });
     toast(extend ? `Đã gia hạn ${plan.label}` : `Đã cấp ${plan.label}`);
@@ -310,76 +523,213 @@ async function adjustUserCoins(uid){
   if(raw === null) return;
   const delta = Number(raw);
   if(!Number.isFinite(delta) || delta === 0) return toast('Số xu không hợp lệ');
-  const next = Math.max(0, current + delta);
-  const item = { id:`admin-coins-${Date.now()}`, reason:'admin-adjust', amount:delta, date:new Date().toLocaleDateString('vi-VN'), meta:{ admin:auth.currentUser?.email || ADMIN_EMAIL } };
-  await writeUserStats(uid, { public:{ coins:next }, stats:{ coins:next, totalCoinsEarned: delta > 0 ? Number(user?.stats?.totalCoinsEarned || 0) + delta : Number(user?.stats?.totalCoinsEarned || 0), coinHistory:[item, ...((user?.stats?.coinHistory || []).slice(0,79))] } });
+  await updateSensitiveUser(uid, 'coins', { delta });
   toast('Đã cập nhật xu'); loadUsers();
 }
 async function maxUser(uid){
-  const ids = completedMap();
-  const courses = Object.fromEntries(Object.keys(COURSE_TOTALS).map(k => [k, 100]));
-  await writeUserStats(uid, { public:{ adminBoost:true }, stats:{ xp:999999, todayXp:999999, lastXp:999999, level:10, petLevel:10, spiritLevel:10, unlockedAll:true, completedLessonIds:ids, completedLessons:Object.keys(ids).length, courses, currentLevel:'HSK 6', streak:999 } });
+  await updateSensitiveUser(uid, 'max');
   toast('Đã set MAX user'); loadUsers();
 }
 async function unlockUser(uid){
-  const ids = completedMap();
-  const courses = Object.fromEntries(Object.keys(COURSE_TOTALS).map(k => [k, 100]));
-  await writeUserStats(uid, { public:{ unlockedAll:true }, stats:{ unlockedAll:true, completedLessonIds:ids, completedLessons:Object.keys(ids).length, courses } });
+  await updateSensitiveUser(uid, 'unlock');
   toast('Đã unlock toàn bộ'); loadUsers();
 }
 async function resetUser(uid){
-  if(!confirm('Reset tiến độ user này?')) return;
-  await writeUserStats(uid, { public:{ adminBoost:false, unlockedAll:false }, stats:{ xp:0, coins:0, totalCoinsEarned:0, isVip:false, vipUntil:null, vipPlan:null, unlockedLessons:{}, writingCompleted:{}, coinHistory:[], checkInStreak:0, lastCheckInDate:'', todayXp:0, lastXp:0, level:1, petLevel:1, spiritLevel:1, unlockedAll:false, completedLessonIds:{}, completedLessons:0, courses:{hsk1:0,hsk2:0,hsk3:0,hsk4:0,hsk5:0,hsk6:0}, streak:0, history:[] } });
+  if(!confirm(`Reset toàn bộ tiến độ và VIP của UID ${uid}?`)) return;
+  await updateSensitiveUser(uid, 'reset');
   toast('Đã reset user'); loadUsers();
 }
 
-async function loadAuthUsers(){
-  $('#authUsersTable').innerHTML = '<div class="muted">Đang tải tài khoản Firebase Auth...</div>';
+async function loadAuthUsers({ reset=false, search } = {}){
+  if (!hasCapability('viewUsers')) return;
+  const pager = state.authPager;
+  if (reset) Object.assign(pager, { currentToken:'', nextToken:'', previousTokens:[], page:1 });
+  pager.search = String(search ?? pager.search ?? '').trim();
+  $('#authUsersTable').innerHTML = '<div class="table-state">Đang tải tài khoản Firebase Auth…</div>';
   try{
-    const res = await callListAuthUsers({ maxResults: 1000 });
-    state.authUsers = res.data?.users || [];
-    renderAuthUsers();
-    backendMessage('✅ Cloud Functions Admin SDK đã hoạt động. Tab Auth có thể khóa/mở khóa/xóa tài khoản thật.', true);
+    await runSingle('load-auth-users', async () => {
+      const res = await callListAuthUsers({
+        maxResults:25,
+        pageToken:pager.search ? '' : pager.currentToken,
+        search:pager.search
+      });
+      state.authUsers = (res.data?.users || []).map(mergeAdminUser);
+      pager.nextToken = res.data?.pageToken || '';
+      renderAuthUsers();
+      setUsersPagerUI(pager, 'auth', state.authUsers.length);
+      backendMessage('✅ Vercel Admin API đã hoạt động. Danh sách Auth đang được phân trang an toàn.', true);
+    });
   } catch(e){
-    $('#authUsersTable').innerHTML = `<div class="notice">Không gọi được Cloud Functions: ${safeText(e.message)}<br>Hãy deploy thư mục functions và đăng nhập đúng Gmail admin.</div>`;
+    $('#authUsersTable').innerHTML = `<div class="table-state error">Không gọi được Vercel Admin API: ${safeText(e.message)}</div>`;
+    setUsersPagerUI(pager, 'auth', 0);
   }
 }
+function loadAuthUsersPage(direction){
+  const pager = state.authPager;
+  if (direction > 0 && pager.nextToken) {
+    pager.previousTokens.push(pager.currentToken);
+    pager.currentToken = pager.nextToken;
+    pager.page += 1;
+  } else if (direction < 0 && pager.previousTokens.length) {
+    pager.currentToken = pager.previousTokens.pop();
+    pager.page = Math.max(1, pager.page - 1);
+  } else return;
+  loadAuthUsers();
+}
 function renderAuthUsers(){
-  const key = $('#authSearch').value.toLowerCase().trim();
-  const arr = state.authUsers.filter(u => !key || [u.email,u.uid,u.displayName].join(' ').toLowerCase().includes(key));
-  $('#authUsersTable').innerHTML = arr.length ? `<table><thead><tr><th>Tài khoản Auth</th><th>Trạng thái</th><th>Thời gian</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => `
-    <tr><td><b>${safeText(u.displayName || 'Không tên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.uid)}</div></td><td>${u.disabled ? '<span class="pill new">Đã khóa</span>' : '<span class="pill done">Đang hoạt động</span>'}<br>Xác minh email: ${u.emailVerified ? 'có' : 'không'}</td><td>Tạo: ${safeText(u.creationTime || '')}<br>Đăng nhập cuối: ${safeText(u.lastSignInTime || '')}</td><td class="right"><button class="btn small ${u.disabled ? 'ok' : 'warn'}" data-disable="${u.uid}" data-value="${u.disabled ? 'false' : 'true'}">${u.disabled ? 'Mở khóa' : 'Khóa'}</button> <button class="btn small danger" data-authdel="${u.uid}">Xóa Auth</button></td></tr>`).join('')}</tbody></table>` : '<div class="muted">Không có Auth user phù hợp.</div>';
+  const arr = state.authUsers;
+  if (!arr.length) {
+    $('#authUsersTable').innerHTML = '<div class="table-state">Không có tài khoản Auth phù hợp.</div>';
+    return;
+  }
+  const canManage = hasCapability('manageUsers');
+  $('#authUsersTable').innerHTML = `<table><thead><tr><th>Tài khoản Auth</th><th>Vai trò</th><th>Trạng thái</th><th>Thời gian</th><th class="right">Thao tác</th></tr></thead><tbody>${arr.map(u => {
+    const isSelf = u.uid === auth.currentUser?.uid;
+    const roleControl = canManage && !isSelf
+      ? `<select class="role-select" data-role-user="${u.uid}" data-current-role="${safeText(u.role || 'user')}">${['super_admin','admin','editor','user'].map(role => `<option value="${role}" ${role === (u.role || 'user') ? 'selected' : ''}>${role}</option>`).join('')}</select>`
+      : `<span class="pill">${safeText(u.role || 'user')}</span>`;
+    const actions = canManage && !isSelf
+      ? `<button class="btn small ${u.disabled ? 'ok' : 'warn'}" data-disable="${u.uid}" data-value="${u.disabled ? 'false' : 'true'}">${u.disabled ? 'Mở khóa' : 'Khóa'}</button> <button class="btn small danger" data-authdel="${u.uid}">Xóa tài khoản</button>`
+      : '<span class="muted">Không được thao tác</span>';
+    return `<tr><td><b>${safeText(u.displayName || 'Không tên')}</b><div class="email">${safeText(u.email || '')}</div><div class="muted">${safeText(u.uid)}</div></td><td>${roleControl}</td><td>${u.disabled ? '<span class="pill new">Đã khóa</span>' : '<span class="pill done">Đang hoạt động</span>'}<br>Xác minh email: ${u.emailVerified ? 'có' : 'không'}</td><td>Tạo: ${safeText(u.creationTime || '')}<br>Đăng nhập cuối: ${safeText(u.lastSignInTime || '')}</td><td class="right">${actions}</td></tr>`;
+  }).join('')}</tbody></table>`;
+  $$('[data-role-user]').forEach(select => select.onchange = () => setUserRole(select.dataset.roleUser, select.value, select.dataset.currentRole, select));
   $$('[data-disable]').forEach(b => b.onclick = () => setAuthDisabled(b.dataset.disable, b.dataset.value === 'true'));
   $$('[data-authdel]').forEach(b => b.onclick = () => deleteAuthUser(b.dataset.authdel));
 }
+async function setUserRole(uid, role, previousRole, select){
+  if(!confirm(`Đổi quyền UID ${uid}\nTừ: ${previousRole}\nSang: ${role}?`)) {
+    select.value = previousRole;
+    return;
+  }
+  setButtonBusy(select, true);
+  try {
+    await runSingle(`role:${uid}`, () => callSetUserRole({ uid, role }));
+    toast(`Đã đổi quyền thành ${role}`);
+    await loadAuthUsers();
+  } catch (error) {
+    select.value = previousRole;
+    toast(error?.message || 'Không đổi được quyền', 'error');
+  } finally {
+    setButtonBusy(select, false);
+  }
+}
 async function setAuthDisabled(uid, disabled){
-  if(!confirm(`${disabled ? 'Khóa' : 'Mở khóa'} tài khoản Auth này?`)) return;
-  await callSetDisabled({ uid, disabled });
-  toast(disabled ? 'Đã khóa tài khoản Auth' : 'Đã mở khóa tài khoản Auth');
-  await loadAuthUsers();
+  if(!confirm(`${disabled ? 'Khóa' : 'Mở khóa'} tài khoản UID ${uid}?`)) return;
+  try {
+    await runSingle(`disabled:${uid}`, () => callSetDisabled({ uid, disabled }));
+    toast(disabled ? 'Đã khóa tài khoản Auth' : 'Đã mở khóa tài khoản Auth');
+    await Promise.all([loadAuthUsers(), loadUsers()]);
+  } catch (error) {
+    toast(error?.message || 'Không cập nhật được trạng thái tài khoản', 'error');
+  }
 }
 async function deleteAuthUser(uid){
-  if(!confirm('Xóa vĩnh viễn tài khoản Firebase Auth này? Firestore data sẽ không tự xóa nếu bạn không xóa riêng.')) return;
-  await callDeleteAuthUser({ uid });
-  toast('Đã xóa tài khoản Auth');
-  await loadAuthUsers();
+  const typed = prompt(`XÓA VĨNH VIỄN tài khoản và toàn bộ dữ liệu riêng tại users/${uid}.\nDữ liệu dùng chung và audit log được giữ lại.\nNhập chính xác UID để xác nhận:`, '');
+  if (typed !== uid) return toast('UID xác nhận không khớp. Đã hủy xóa.', 'error');
+  if(!confirm(`Xác nhận lần cuối: xóa Firebase Authentication UID ${uid} và cây dữ liệu Firestore riêng?`)) return;
+  try {
+    await runSingle(`delete:${uid}`, () => callDeleteAuthUser({ uid, confirmationUid:typed }));
+    toast('Đã xóa tài khoản Auth và dữ liệu riêng');
+    await Promise.all([loadAuthUsers({reset:true}), loadUsers({reset:true}), loadDashboard()]);
+  } catch (error) {
+    toast(error?.message || 'Không xóa được đầy đủ tài khoản', 'error');
+  }
 }
 
-async function loadLogs(){
-  const collections = ['accessLogs','visits'];
-  let rows = [];
-  for(const name of collections){
-    try{ const snap = await getDocs(query(collection(db,name), orderBy('createdAt','desc'), limit(200))); rows = rows.concat(snap.docs.map(d => ({id:d.id, _collection:name, ...d.data()}))); } catch(_) {}
+function visitDateKeys(){
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return { day:`${values.year}-${values.month}-${values.day}`, month:`${values.year}-${values.month}` };
+}
+function updateVisitSummary(summary = {}){
+  $('#statVisits').textContent = n(summary.total);
+  $('#statVisitsToday').textContent = n(summary.today);
+  $('#statVisitsMonth').textContent = n(summary.month);
+  const migration = summary.migrationComplete ? `Đã hợp nhất dữ liệu cũ (${n(summary.legacyBaseline)} lượt)` : 'Chưa hợp nhất dữ liệu cũ';
+  $('#visitSummary').textContent = `Tổng: ${n(summary.total)} · Hôm nay: ${n(summary.today)} · Tháng này: ${n(summary.month)} · ${migration}`;
+}
+async function loadDashboard(){
+  if (!hasCapability('viewAnalytics')) return;
+  try {
+    const response = await runSingle('dashboard', () => callGetDashboard({}));
+    $('#statUsers').textContent = n(response.data?.totalUsers);
+    updateVisitSummary(response.data?.visits || {});
+  } catch (error) {
+    $('#visitSummary').className = 'notice error';
+    $('#visitSummary').textContent = `Không tải được thống kê: ${error?.message || error}`;
   }
-  rows.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-  state.logs = rows;
-  $('#statVisits').textContent = n(rows.length);
-  renderLogs();
+}
+function listenVisitCounter(){
+  const keys = visitDateKeys();
+  const values = { total:0, today:0, month:0, migrationComplete:false, legacyBaseline:0 };
+  const refs = [
+    [doc(db, 'analytics', 'visits'), data => {
+      values.total = Number(data.total || 0);
+      values.migrationComplete = data.migrationComplete === true;
+      values.legacyBaseline = Number(data.legacyBaseline || 0);
+    }],
+    [doc(db, 'analytics', 'visits', 'daily', keys.day), data => { values.today = Number(data.count || 0); }],
+    [doc(db, 'analytics', 'visits', 'monthly', keys.month), data => { values.month = Number(data.count || 0); }]
+  ];
+  refs.forEach(([ref, apply]) => {
+    const unsubscribe = onSnapshot(ref, snapshot => {
+      apply(snapshot.exists() ? snapshot.data() : {});
+      updateVisitSummary(values);
+    }, error => console.warn('[admin-analytics] realtime listener failed', error?.code || error?.message));
+    state.unsubscribers.push(unsubscribe);
+  });
+}
+async function loadLogs({ reset=false } = {}){
+  if (!hasCapability('viewAnalytics')) return;
+  const pager = state.logsPager;
+  if (reset) Object.assign(pager, { cursor:null, nextCursor:null, previousCursors:[], page:1, hasMore:false });
+  $('#logsTable').innerHTML = '<div class="table-state">Đang tải lịch sử truy cập…</div>';
+  try {
+    await runSingle('load-logs', async () => {
+      const response = await callListAccessLogs({ pageSize:50, cursor:pager.cursor || {} });
+      state.logs = response.data?.logs || [];
+      pager.nextCursor = response.data?.cursor || null;
+      pager.hasMore = response.data?.hasMore === true;
+      renderLogs();
+      $('#logsPrev').disabled = pager.previousCursors.length === 0;
+      $('#logsNext').disabled = !pager.hasMore;
+      $('#logsPageStatus').textContent = `Trang ${pager.page} · ${state.logs.length} bản ghi`;
+    });
+  } catch(error) {
+    $('#logsTable').innerHTML = `<div class="table-state error">Không tải được lịch sử: ${safeText(error.message)}</div>`;
+  }
+}
+function loadLogsPage(direction){
+  const pager = state.logsPager;
+  if (direction > 0 && pager.hasMore && pager.nextCursor) {
+    pager.previousCursors.push(pager.cursor);
+    pager.cursor = pager.nextCursor;
+    pager.page += 1;
+  } else if (direction < 0 && pager.previousCursors.length) {
+    pager.cursor = pager.previousCursors.pop();
+    pager.page = Math.max(1, pager.page - 1);
+  } else return;
+  loadLogs();
 }
 function renderLogs(){
   const key = $('#logSearch').value.toLowerCase().trim();
   const arr = state.logs.filter(l => !key || [l.email,l.uid,l.page,l.path,l.browser,l.userAgent,l.device].join(' ').toLowerCase().includes(key));
-  $('#logsTable').innerHTML = arr.length ? `<table><thead><tr><th>Time</th><th>User / Page</th><th>Browser</th><th>Device</th></tr></thead><tbody>${arr.map(l => `<tr><td>${fmt(l.createdAt || l.time)}</td><td>${safeText(l.email || l.uid || '')}<br><span class="muted">${safeText(l.page || l.path || '')}</span></td><td>${safeText(l.browser || l.userAgent || '')}</td><td>${safeText(l.device || '')}</td></tr>`).join('')}</tbody></table>` : '<div class="muted">Chưa có dữ liệu accessLogs/visits hoặc Rules chưa cho đọc.</div>';
+  $('#logsTable').innerHTML = arr.length ? `<table><thead><tr><th>Time</th><th>User / Page</th><th>Browser</th><th>Device</th></tr></thead><tbody>${arr.map(l => `<tr><td>${fmt(l.createdAt || l.time)}</td><td>${safeText(l.email || l.uid || '')}<br><span class="muted">${safeText(l.page || l.path || '')}</span></td><td>${safeText(l.browser || l.userAgent || '')}</td><td>${safeText(l.device || '')}</td></tr>`).join('')}</tbody></table>` : '<div class="table-state">Không có dữ liệu truy cập ở trang này.</div>';
+}
+async function migrateVisitCounters(){
+  requireSuperAdmin();
+  if (!confirm('Hợp nhất bộ đếm cũ từ accessLogs/visits vào counter mới? Thao tác chỉ chạy một lần và có audit log.')) return;
+  setButtonBusy($('#migrateVisits'), true, 'Đang hợp nhất…');
+  try {
+    const response = await runSingle('migrate-visits', () => callMigrateVisitCounters({}));
+    updateVisitSummary(response.data || {});
+    toast(response.data?.alreadyMigrated ? 'Dữ liệu cũ đã được hợp nhất trước đó' : 'Đã hợp nhất dữ liệu truy cập cũ');
+  } catch (error) {
+    toast(error?.message || 'Không hợp nhất được dữ liệu cũ', 'error');
+  } finally {
+    setButtonBusy($('#migrateVisits'), false, 'Đang hợp nhất…');
+  }
 }
 async function loadCollection(){
   const name = $('#collectionSelect').value;
@@ -504,7 +854,7 @@ function readLearningForm(){
   });
   cfg.courses[level] = c;
   delete cfg.lessons;
-  cfg.updatedAt = serverTimestamp(); cfg.updatedBy = auth.currentUser?.email || ADMIN_EMAIL;
+  cfg.updatedAt = serverTimestamp(); cfg.updatedBy = auth.currentUser?.email || '';
   state.learningSettings = cfg;
   return cfg;
 }

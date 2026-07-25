@@ -1,45 +1,64 @@
-import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+const PAGE_KEY = `cc_visit_recorded:${location.pathname}`;
+const IS_LOCAL = ['127.0.0.1', 'localhost'].includes(location.hostname);
+const ADMIN_API_URL = IS_LOCAL ? 'https://tiengtrungcoca.vercel.app/api/admin' : '/api/admin';
+let requestInFlight = false;
 
-const SESSION_KEY = 'cc_access_session_id';
-const sessionId = localStorage.getItem(SESSION_KEY) || crypto.randomUUID?.() || String(Date.now());
-localStorage.setItem(SESSION_KEY, sessionId);
-
-function deviceType(){
+function deviceType() {
   const ua = navigator.userAgent || '';
   if (/iPad|Tablet/i.test(ua)) return 'tablet';
   if (/Android|iPhone|Mobile/i.test(ua)) return 'mobile';
   return 'desktop';
 }
 
-async function logAccess(){
-  const fb = window.CCFirebase;
-  if (!fb?.db) return;
-  const user = fb.getCurrentUser?.() || fb.auth?.currentUser || null;
+function referrerPath() {
+  if (!document.referrer) return '';
   try {
-    await addDoc(collection(fb.db, 'accessLogs'), {
-      uid: user?.uid || '',
-      email: user?.email || '',
-      displayName: user?.displayName || '',
-      page: location.pathname,
-      href: location.href,
-      title: document.title,
-      referrer: document.referrer || '',
-      browser: navigator.userAgent,
-      language: navigator.language,
-      device: deviceType(),
-      sessionId,
-      createdAt: serverTimestamp()
-    });
-  } catch (error) {
-    console.warn('[access-logger] skip', error?.code || error?.message || error);
+    const url = new URL(document.referrer);
+    return url.origin === location.origin ? url.pathname : '/external';
+  } catch (_) {
+    return '';
   }
 }
 
-function start(){
-  if (sessionStorage.getItem('cc_logged_' + location.pathname)) return;
-  sessionStorage.setItem('cc_logged_' + location.pathname, '1');
+async function logAccess() {
+  if (requestInFlight || sessionStorage.getItem(PAGE_KEY)) return;
+  const firebase = window.CCFirebase;
+  if (!firebase?.auth?.app) return;
+  requestInFlight = true;
+  try {
+    const token = firebase.auth.currentUser ? await firebase.auth.currentUser.getIdToken() : '';
+    const response = await fetch(ADMIN_API_URL, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        ...(token ? { Authorization:`Bearer ${token}` } : {})
+      },
+      body:JSON.stringify({
+        action:'recordVisit',
+        data:{
+          page:location.pathname,
+          title:document.title,
+          referrer:referrerPath(),
+          language:navigator.language,
+          device:deviceType()
+        }
+      })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    // The backend is authoritative and also deduplicates by visitor, page and
+    // a 30-minute bucket. This flag only avoids duplicate calls in one tab.
+    sessionStorage.setItem(PAGE_KEY, '1');
+  } catch (error) {
+    console.warn('[access-logger] recordVisit failed', error?.code || error?.message || error);
+  } finally {
+    requestInFlight = false;
+  }
+}
+
+function start() {
+  if (sessionStorage.getItem(PAGE_KEY)) return;
   setTimeout(logAccess, 900);
 }
 
-if (window.CCFirebase?.db) start();
+if (window.CCFirebase?.auth?.app) start();
 else window.addEventListener('firebase-ready', start, { once: true });

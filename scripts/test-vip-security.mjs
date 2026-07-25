@@ -95,8 +95,10 @@ assert.ok(lessonInit >= 0 && lessonGuardCall > lessonInit && lessonLoadCall > le
 assert.match(lessonSource, /getDocFromServer/, 'lesson-page.js phải dùng Firestore server');
 
 const adminSource = read('assets/js/admin-super.js');
+const adminBackendSource = read('functions/index.js');
 for (const plan of ["lifetime", "'30d'", "'90d'", "'365d'", 'custom', 'off']) assert.ok(adminSource.includes(plan), `Admin phải có lựa chọn ${plan}`);
-assert.match(adminSource, /Timestamp\.fromDate/, 'Admin phải lưu hạn VIP bằng Firestore Timestamp');
+assert.match(adminSource, /callUpdateUserData/, 'Admin phải cập nhật VIP qua callable backend');
+assert.match(adminBackendSource, /Timestamp\.fromMillis\(Number\(rawUntil\)\)/, 'Backend phải lưu hạn VIP bằng Firestore Timestamp');
 assert.match(adminSource, /base = extend && current\.active/, 'Gia hạn phải dựa trên hạn hiện tại khi còn hiệu lực');
 assert.match(adminSource, /renderAvatar/, 'Avatar Admin phải dùng renderer chuẩn');
 assert.equal(adminSource.includes('applyAvatar('), false, 'Không được gọi applyAvatar sai cách trong Admin');
@@ -112,7 +114,7 @@ assert.equal(vipSource.includes('90d'), false, 'Bảng mua VIP không còn gói 
 assert.match(vipSource, /assets\/images\/donate\/qr\.png/, 'Modal VIP phải hiển thị QR chuyển khoản');
 assert.equal(fs.existsSync(path.join(root, 'assets/images/donate/qr.png')), true, 'File QR chuyển khoản phải tồn tại');
 
-assert.match(rules, /match \/writingLessonOverrides\/{docId}[\s\S]*allow read: if true;[\s\S]*allow write: if isSuperAdmin\(\)/, 'CMS Luyện viết phải chỉ cho Super Admin ghi');
+assert.match(rules, /match \/writingLessonOverrides\/{docId}[\s\S]*allow read: if true;[\s\S]*allow write: if isCmsEditor\(\)/, 'CMS Luyện viết phải chỉ cho vai trò CMS đã xác minh ghi');
 const adminHtml = read('admin-super.html');
 assert.match(adminHtml, /data-tab="writing"/, 'Admin phải có tab Luyện viết');
 assert.match(adminSource, /writingLessonOverrides/, 'Admin phải lưu override Luyện viết');

@@ -287,7 +287,7 @@ for (const id of ["writingCmsLevel", "writingCmsLesson", "writingCmsVocab", "wri
 }
 assert.match(adminSource, /writingLessonOverrides/, "CMS phải lưu override Luyện viết vào Firestore");
 assert.match(adminSource, /WRITING_VOCAB_TARGETS = \{ hsk1: 10, hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 \}/, "CMS phải kiểm tra đúng số từ từng HSK");
-assert.match(rulesSource, /match \/writingLessonOverrides\/\{docId\}[\s\S]*allow write: if isSuperAdmin\(\)/, "Chỉ Super Admin được ghi CMS Luyện viết");
+assert.match(rulesSource, /match \/writingLessonOverrides\/\{docId\}[\s\S]*allow write: if isCmsEditor\(\)/, "Chỉ vai trò CMS đã xác minh được ghi CMS Luyện viết");
 assert.match(writingListSource, /query\(collection\(shared\.db, "writingLessonOverrides"\), where\("level", "==", config\.level\)\)/, "Danh sách bài phải đọc thay đổi từ CMS");
 assert.match(writingListSource, /normalizeWritingLessonContent\(override, item\)/, "Danh sách bài phải áp dụng override đã chuẩn hóa");
 

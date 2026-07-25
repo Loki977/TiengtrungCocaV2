@@ -8,7 +8,26 @@ service cloud.firestore {
 
     function isSuperAdmin() {
       return isSignedIn()
-        && request.auth.token.email == "nqthanhforwork@gmail.com";
+        && (
+          request.auth.token.role == "super_admin"
+          || request.auth.token.email == "nqthanhforwork@gmail.com"
+        );
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && (
+          isSuperAdmin()
+          || request.auth.token.role == "admin"
+        );
+    }
+
+    function isCmsEditor() {
+      return isSignedIn()
+        && (
+          isAdmin()
+          || request.auth.token.role == "editor"
+        );
     }
 
     function isOwner(uid) {
@@ -61,31 +80,41 @@ service cloud.firestore {
 
     match /feedbacks/{id} {
       allow create: if true;
-      allow read, update, delete: if isSuperAdmin();
+      allow read, update, delete: if isAdmin();
     }
 
     match /accessLogs/{id} {
-      allow create: if true;
-      allow read, update, delete: if isSuperAdmin();
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
     }
 
     match /visits/{id} {
-      allow create: if true;
-      allow read, update, delete: if isSuperAdmin();
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    match /analytics/{document=**} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /adminAuditLogs/{id} {
+      allow read: if isAdmin();
+      allow write: if false;
     }
 
     match /users/{uid} {
-      allow create: if isSuperAdmin() || (isOwner(uid) && validPublicUserCreate(uid));
-      allow read: if isSuperAdmin() || isOwner(uid);
-      allow update: if isSuperAdmin() || (isOwner(uid) && validPublicUserUpdate(uid));
-      allow delete: if isSuperAdmin() || isOwner(uid);
+      allow create: if isOwner(uid) && validPublicUserCreate(uid);
+      allow read: if isAdmin() || isOwner(uid);
+      allow update: if isOwner(uid) && validPublicUserUpdate(uid);
+      allow delete: if isOwner(uid);
 
       match /private/stats {
-        allow read: if isSuperAdmin() || isOwner(uid);
-        allow create: if isSuperAdmin() || (isOwner(uid) && validStatsCreate());
-        allow update: if isSuperAdmin() || (isOwner(uid) && validStatsUpdate());
+        allow read: if isAdmin() || isOwner(uid);
+        allow create: if isOwner(uid) && validStatsCreate();
+        allow update: if isOwner(uid) && validStatsUpdate();
         // Giữ luồng tự xóa tài khoản hiện có; create/update vẫn không thể chạm VIP.
-        allow delete: if isSuperAdmin() || isOwner(uid);
+        allow delete: if isOwner(uid);
       }
 
       match /private/hskPlacement {
@@ -98,7 +127,7 @@ service cloud.firestore {
         // contain personal preferences/saved words and never grant privileges.
         allow create, read, update, delete: if docId != 'stats'
           && docId != 'hskPlacement'
-          && (isSuperAdmin() || isOwner(uid));
+          && (isAdmin() || isOwner(uid));
       }
 
       match /hskPlacementAttempts/{attemptId} {
@@ -109,41 +138,42 @@ service cloud.firestore {
 
     match /adminSettings/{docId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
     }
 
     match /lessonOverrides/{docId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
     }
 
     match /writingLessonOverrides/{docId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
     }
 
     match /courses/{courseId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
 
       match /lessons/{lessonId} {
         allow read: if true;
-        allow write: if isSuperAdmin();
+        allow write: if isCmsEditor();
       }
     }
 
     match /lessonContents/{lessonId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
     }
 
     match /cmsSettings/{docId} {
       allow read: if true;
-      allow write: if isSuperAdmin();
+      allow write: if isCmsEditor();
     }
 
     match /{document=**} {
-      allow read, write: if isSuperAdmin();
+      allow read: if isSuperAdmin();
+      allow write: if false;
     }
   }
 }
