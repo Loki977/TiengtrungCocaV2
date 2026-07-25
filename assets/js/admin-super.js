@@ -38,6 +38,8 @@ const state = {
   writingCmsSaving: false
 };
 const WRITING_VOCAB_TARGETS = { hsk1: 10, hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
+const ACCESS_TYPES = Object.freeze(['free', 'guided', 'vip', 'coins']);
+const ACCESS_LABELS = Object.freeze({ free:'Miễn phí', guided:'Theo lộ trình', vip:'VIP', coins:'Xu' });
 const COURSE_TOTALS = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 
 const BOOTSTRAP_ADMIN_EMAILS = new Set(['nqthanhforwork@gmail.com']);
@@ -745,39 +747,72 @@ function overrideRef(level, lessonId){ return doc(db, 'lessonOverrides', `${leve
 function writingOverrideRef(level, lessonId){ return doc(db, 'writingLessonOverrides', `${level}_${Number(lessonId)}`); }
 function defaultLearningSettings(){
   const courses = {};
+  const writingCourses = {};
   Object.entries(COURSE_TOTALS).forEach(([level,total]) => {
     courses[level] = { enabled:true, guided:true, lessons:{} };
-    for(let i=1;i<=total;i++) courses[level].lessons[`B${i}`] = { enabled:true, unlockType:'free', coinCost:0 };
+    writingCourses[level] = { enabled:true, guided:true, lessons:{} };
+    for(let i=1;i<=total;i++) {
+      courses[level].lessons[`B${i}`] = { enabled:true, unlockType:'guided', coinCost:0 };
+      writingCourses[level].lessons[`B${i}`] = { enabled:true, unlockType:'guided', coinCost:0 };
+    }
   });
-  return { courses, features:{...DEFAULT_FEATURES}, writing:{ showSentenceStructureLabels:true } };
+  return { accessModeVersion:2, courses, features:{...DEFAULT_FEATURES}, writing:{ accessModeVersion:2, showSentenceStructureLabels:true, courses:writingCourses } };
 }
-function normalizeCourseConfig(cfg, level){
-  const rawCourse = cfg?.courses?.[level];
+function normalizeAccessType(value, fallback='guided'){
+  const normalized = String(value || '').toLowerCase();
+  return ACCESS_TYPES.includes(normalized) ? normalized : fallback;
+}
+function accessArea(cfg, scope='course'){
+  if(scope === 'writing' && cfg?.writing?.courses) return cfg.writing;
+  return cfg || {};
+}
+function normalizeCourseConfig(cfg, level, scope='course'){
+  const area = accessArea(cfg, scope);
+  const rawCourse = area?.courses?.[level] ?? (scope === 'writing' ? cfg?.courses?.[level] : undefined);
   const course = rawCourse && typeof rawCourse === 'object' ? rawCourse : { enabled: rawCourse !== false, lessons:{} };
-  const legacyLessons = cfg?.lessons?.[level] || {};
+  const legacyLessons = area?.lessons?.[level] || (scope === 'writing' ? cfg?.lessons?.[level] : {}) || {};
   const lessons = { ...(course.lessons || {}) };
+  const explicitModes = Number(area?.accessModeVersion || (scope === 'writing' ? cfg?.accessModeVersion : 0)) >= 2;
   Object.entries(legacyLessons).forEach(([id,value]) => {
     const key = String(id).startsWith('B') ? String(id) : `B${Number(id)||id}`;
-    if(value && typeof value === 'object') lessons[key] = { enabled:value.enabled !== false, unlockType:value.unlockType || (value.enabled === false ? 'locked' : 'free'), coinCost:Number(value.coinCost || 0) };
-    else lessons[key] = { enabled:value !== false, unlockType:value === false ? 'locked' : 'free', coinCost:0 };
+    if(value && typeof value === 'object') lessons[key] = { enabled:value.enabled !== false, unlockType:value.unlockType || 'free', coinCost:Number(value.coinCost || 0) };
+    else lessons[key] = { enabled:value !== false, unlockType:'free', coinCost:0 };
+  });
+  Object.entries(lessons).forEach(([key,value]) => {
+    const enabled = value?.enabled !== false && value?.unlockType !== 'locked';
+    let unlockType = normalizeAccessType(value?.unlockType, course.guided === false ? 'free' : 'guided');
+    if(!explicitModes && unlockType === 'free' && course.guided !== false) unlockType = 'guided';
+    lessons[key] = { ...value, enabled, unlockType, coinCost:Math.max(0, Number(value?.coinCost || 0)) };
   });
   return { enabled:course.enabled !== false, guided:course.guided !== false, lessons };
 }
-function lessonAccess(cfg, level, lesson){
-  const course = normalizeCourseConfig(cfg, level);
+function lessonAccess(cfg, level, lesson, scope='course'){
+  const course = normalizeCourseConfig(cfg, level, scope);
   const key = `B${Number(lesson)||1}`;
-  return { enabled:true, unlockType:'free', coinCost:0, ...(course.lessons?.[key] || {}) };
+  return { enabled:true, unlockType:'guided', coinCost:0, ...(course.lessons?.[key] || {}) };
 }
 function bindLearningControls(){
-  $('#lessonLevelSelect') && ($('#lessonLevelSelect').onchange = renderLessonLockGrid);
+  $('#lessonLevelSelect') && ($('#lessonLevelSelect').onchange = () => renderAccessGrid('course'));
   $('#saveLearningSettings') && ($('#saveLearningSettings').onclick = saveLearningSettings);
-  $('#openAllLessons') && ($('#openAllLessons').onclick = () => setAllLessonsForLevel(true));
-  $('#lockAllLessons') && ($('#lockAllLessons').onclick = () => setAllLessonsForLevel(false));
+  $('#openAllLessons') && ($('#openAllLessons').onclick = () => setAllLessonsForScope('course', true));
+  $('#lockAllLessons') && ($('#lockAllLessons').onclick = () => setAllLessonsForScope('course', false));
+  $('#writingAccessLevelSelect') && ($('#writingAccessLevelSelect').onchange = () => renderAccessGrid('writing'));
+  $('#saveWritingAccessSettings') && ($('#saveWritingAccessSettings').onclick = saveWritingAccessSettings);
+  $('#openAllWritingLessons') && ($('#openAllWritingLessons').onclick = () => setAllLessonsForScope('writing', true));
+  $('#lockAllWritingLessons') && ($('#lockAllWritingLessons').onclick = () => setAllLessonsForScope('writing', false));
 }
 async function loadLearningSettings(){
   try{
     const snap = await getDoc(learningRef());
-    state.learningSettings = mergeDeep(defaultLearningSettings(), snap.exists() ? snap.data() : {});
+    const saved = snap.exists() ? snap.data() : null;
+    state.learningSettings = mergeDeep(defaultLearningSettings(), saved || {});
+    if(saved && Number(saved.accessModeVersion) < 2) state.learningSettings.accessModeVersion = 1;
+    if(saved && !saved.writing?.courses) {
+      state.learningSettings.writing.courses = structuredCloneSafe(state.learningSettings.courses);
+      state.learningSettings.writing.accessModeVersion = state.learningSettings.accessModeVersion;
+    } else if(saved && Number(saved.writing?.accessModeVersion) < 2) {
+      state.learningSettings.writing.accessModeVersion = 1;
+    }
     renderLearningSettings();
   }catch(e){ toast('Không tải được cấu hình học tập'); console.error(e); }
 }
@@ -797,7 +832,8 @@ function renderLearningSettings(){
   if(featureBox) featureBox.innerHTML = Object.keys(DEFAULT_FEATURES).map(key => `<label class="toggle-row"><b>${safeText(key)}</b><span>${cfg.features?.[key] ? 'Bật' : 'Tắt'}</span><input type="checkbox" data-feature-toggle="${key}" ${cfg.features?.[key] ? 'checked' : ''}></label>`).join('');
   const writingLabelsToggle = $('#writingCmsGlobalSentenceLabels');
   if(writingLabelsToggle) writingLabelsToggle.checked = cfg.writing?.showSentenceStructureLabels !== false;
-  renderLessonLockGrid();
+  renderAccessGrid('course');
+  renderAccessGrid('writing');
 }
 
 async function saveWritingSentenceLabelSetting(){
@@ -819,55 +855,88 @@ async function saveWritingSentenceLabelSetting(){
     toast(error?.message || 'Không lưu được thiết lập hiển thị', 'error');
   }
 }
-function renderLessonLockGrid(){
-  const level = $('#lessonLevelSelect')?.value || 'hsk1';
+function accessDom(scope){
+  return scope === 'writing'
+    ? { level:'#writingAccessLevelSelect', grid:'#writingLessonLockGrid' }
+    : { level:'#lessonLevelSelect', grid:'#lessonLockGrid' };
+}
+function renderAccessGrid(scope='course'){
+  const dom = accessDom(scope);
+  const level = $(dom.level)?.value || 'hsk1';
   const cfg = state.learningSettings || defaultLearningSettings();
   const total = COURSE_TOTALS[level] || 1;
-  const box = $('#lessonLockGrid');
+  const box = $(dom.grid);
   if(!box) return;
   box.innerHTML = Array.from({length:total}, (_,i) => {
-    const lesson = i+1; const a = lessonAccess(cfg, level, lesson);
+    const lesson = i+1; const a = lessonAccess(cfg, level, lesson, scope);
     return `<div class="lesson-lock-item cms-access-card">
-      <label><input type="checkbox" data-lesson-enabled="${lesson}" ${a.enabled !== false && a.unlockType !== 'locked' ? 'checked' : ''}> <b>B${lesson}</b></label>
-      <span class="muted">${a.enabled !== false && a.unlockType !== 'locked' ? 'Theo lộ trình' : 'Khóa thủ công'}</span>
+      <label><input type="checkbox" data-access-enabled="${lesson}" ${a.enabled !== false ? 'checked' : ''}> <b>B${lesson}</b></label>
+      <select class="input" data-access-type="${lesson}" aria-label="Cách mở B${lesson}">
+        ${ACCESS_TYPES.map(type => `<option value="${type}" ${a.unlockType === type ? 'selected' : ''}>${ACCESS_LABELS[type]}</option>`).join('')}
+      </select>
+      <label class="cms-access-card__cost ${a.unlockType === 'coins' ? '' : 'hidden'}"><span>Giá xu</span><input class="input" data-access-coins="${lesson}" type="number" min="0" step="1" value="${Math.max(0, Number(a.coinCost || 0))}"></label>
     </div>`;
   }).join('');
+  [...box.querySelectorAll('[data-access-type]')].forEach(select => {
+    select.onchange = () => {
+      const card = select.closest('.cms-access-card');
+      card?.querySelector('.cms-access-card__cost')?.classList.toggle('hidden', select.value !== 'coins');
+    };
+  });
+  [...box.querySelectorAll('[data-access-enabled]')].forEach(input => {
+    input.onchange = () => input.closest('.cms-access-card')?.classList.toggle('is-disabled', !input.checked);
+    input.closest('.cms-access-card')?.classList.toggle('is-disabled', !input.checked);
+  });
+}
+function readAccessGrid(scope='course'){
+  const cfg = state.learningSettings || defaultLearningSettings();
+  const dom = accessDom(scope);
+  const level = $(dom.level)?.value || 'hsk1';
+  const area = scope === 'writing' ? (cfg.writing = cfg.writing || {}) : cfg;
+  area.courses = area.courses || {};
+  area.accessModeVersion = 2;
+  const c = normalizeCourseConfig(cfg, level, scope);
+  const grid = $(dom.grid);
+  [...(grid?.querySelectorAll('[data-access-enabled]') || [])].forEach(input => {
+    const lesson = input.dataset.accessEnabled;
+    const key = `B${lesson}`;
+    const type = grid.querySelector(`[data-access-type="${lesson}"]`)?.value || 'guided';
+    const cost = Number(grid.querySelector(`[data-access-coins="${lesson}"]`)?.value || 0);
+    c.lessons[key] = { enabled:input.checked, unlockType:normalizeAccessType(type), coinCost:type === 'coins' ? Math.max(0, cost) : 0 };
+  });
+  area.courses[level] = c;
+  state.learningSettings = cfg;
+  return cfg;
 }
 function readLearningForm(){
-  const cfg = state.learningSettings || defaultLearningSettings();
+  const cfg = readAccessGrid('course');
   cfg.courses = cfg.courses || {};
+  cfg.accessModeVersion = 2;
   $$('[data-course-guided]').forEach(input => {
     const level = input.dataset.courseGuided;
     const c = normalizeCourseConfig(cfg, level);
     cfg.courses[level] = { ...c, enabled:true, guided:input.checked };
   });
   $$('[data-feature-toggle]').forEach(input => { cfg.features[input.dataset.featureToggle] = input.checked; });
-  const level = $('#lessonLevelSelect')?.value || 'hsk1';
-  const c = normalizeCourseConfig(cfg, level);
-  $$('[data-lesson-enabled]').forEach(input => {
-    const lesson = input.dataset.lessonEnabled;
-    const key = `B${lesson}`;
-    c.lessons[key] = c.lessons[key] || {};
-    c.lessons[key].enabled = input.checked;
-    c.lessons[key].unlockType = input.checked ? 'free' : 'locked';
-    c.lessons[key].coinCost = 0;
-  });
-  cfg.courses[level] = c;
   delete cfg.lessons;
   cfg.updatedAt = serverTimestamp(); cfg.updatedBy = auth.currentUser?.email || '';
   state.learningSettings = cfg;
   return cfg;
 }
-function setAllLessonsForLevel(value){
-  const level = $('#lessonLevelSelect')?.value || 'hsk1';
+function setAllLessonsForScope(scope, value){
+  const dom = accessDom(scope);
+  const level = $(dom.level)?.value || 'hsk1';
   const cfg = state.learningSettings || defaultLearningSettings();
-  const c = normalizeCourseConfig(cfg, level);
+  const area = scope === 'writing' ? (cfg.writing = cfg.writing || {}) : cfg;
+  area.courses = area.courses || {};
+  area.accessModeVersion = 2;
+  const c = normalizeCourseConfig(cfg, level, scope);
   for(let i=1;i<=(COURSE_TOTALS[level]||1);i++) {
     const key = `B${i}`;
-    c.lessons[key] = { ...(c.lessons[key] || {}), enabled:value, unlockType:value ? 'free' : 'locked', coinCost:0 };
+    c.lessons[key] = { ...(c.lessons[key] || {}), enabled:value, unlockType:value ? 'free' : normalizeAccessType(c.lessons[key]?.unlockType), coinCost:value ? 0 : Math.max(0, Number(c.lessons[key]?.coinCost || 0)) };
   }
-  cfg.courses[level] = c;
-  state.learningSettings = cfg; renderLessonLockGrid();
+  area.courses[level] = c;
+  state.learningSettings = cfg; renderAccessGrid(scope);
 }
 async function saveLearningSettings(){
   const btn = $('#saveLearningSettings');
@@ -882,6 +951,26 @@ async function saveLearningSettings(){
     console.error('[admin-super] Lưu cấu hình học tập thất bại', { code:e?.code, message:e?.message });
     toast('Không lưu được cấu hình: ' + (e.message || e), 'error');
   } finally {
+    setButtonBusy(btn, false, 'Đang lưu...');
+  }
+}
+async function saveWritingAccessSettings(){
+  const btn = $('#saveWritingAccessSettings');
+  setButtonBusy(btn, true, 'Đang lưu...');
+  try{
+    const admin = requireAdmin();
+    const cfg = readAccessGrid('writing');
+    await setDoc(learningRef(), {
+      writing:stripUndefined(cfg.writing),
+      updatedAt:serverTimestamp(),
+      updatedBy:admin.email
+    }, { merge:true });
+    toast('Đã lưu quyền truy cập Luyện viết');
+    renderAccessGrid('writing');
+  }catch(error){
+    console.error('[admin-writing] Không lưu được quyền truy cập', error);
+    toast(error?.message || 'Không lưu được quyền truy cập Luyện viết', 'error');
+  }finally{
     setButtonBusy(btn, false, 'Đang lưu...');
   }
 }
@@ -1030,7 +1119,8 @@ async function saveCmsLesson(){
     await setDoc(overrideRef(level, lessonId), lessonPatch, { merge:true });
     const cfg = state.learningSettings || defaultLearningSettings();
     const c = normalizeCourseConfig(cfg, level);
-    c.lessons[`B${lessonId}`] = { ...(c.lessons[`B${lessonId}`] || {}), enabled:!data.isLocked, unlockType:data.isLocked ? 'locked' : 'free', coinCost:0 };
+    const existingAccess = lessonAccess(cfg, level, lessonId);
+    c.lessons[`B${lessonId}`] = { ...existingAccess, enabled:!data.isLocked, unlockType:normalizeAccessType(existingAccess.unlockType), coinCost:Math.max(0, Number(existingAccess.coinCost || 0)) };
     cfg.courses[level] = c;
     state.learningSettings = cfg; await setDoc(learningRef(), stripUndefined({ courses: cfg.courses, updatedAt:serverTimestamp(), updatedBy:admin.email }), { merge:true });
     state.cmsOriginalData = structuredCloneSafe(data);

@@ -17,7 +17,8 @@ const level = (params.get("level") || "hsk1").toLowerCase();
 const lessonId = Number(params.get("lesson") || 1);
 const app = document.getElementById("app");
 const sentenceStructure = new SentenceStructure({ level });
-const DISABLE_SEQUENTIAL_LESSON_LOCK = true;
+const ACCESS_TYPES = new Set(["free", "guided", "vip", "coins"]);
+const DISABLE_CARD_ANSWER_LOCK = true;
 const TTS_NORMAL_RATE = 0.754; // 0.58 × 1.30; tốc độ nghe thường.
 const TTS_SLOW_RATE = 0.35;
 const TTS_PITCH = 0.92;
@@ -71,26 +72,32 @@ function waitForSharedFirebase(timeoutMs = 12000) {
 }
 
 function getConfiguredLessonAccess(settings = {}) {
-  const courseValue = settings?.courses?.[level];
+  const writingArea = settings?.writing?.courses ? settings.writing : settings;
+  const courseValue = writingArea?.courses?.[level] ?? settings?.courses?.[level];
   const course = courseValue && typeof courseValue === "object"
     ? courseValue
     : { enabled: courseValue !== false, lessons: {} };
-  const legacyLessons = settings?.lessons?.[level] || {};
+  const legacyLessons = writingArea?.lessons?.[level] || settings?.lessons?.[level] || {};
   const key = `B${lessonId}`;
   const raw = course.lessons?.[key]
     || course.lessons?.[String(lessonId)]
     || legacyLessons?.[key]
     || legacyLessons?.[String(lessonId)]
     || {};
-  const enabled = course.enabled !== false && raw.enabled !== false;
-  const unlockType = enabled ? (raw.unlockType || "free") : "locked";
+  const enabled = course.enabled !== false && raw.enabled !== false && raw.unlockType !== "locked";
+  const explicitModes = Number(writingArea?.accessModeVersion || 0) >= 2;
+  let unlockType = ACCESS_TYPES.has(String(raw.unlockType || "").toLowerCase())
+    ? String(raw.unlockType).toLowerCase()
+    : (course.guided === false ? "free" : "guided");
+  if (!explicitModes && unlockType === "free" && course.guided !== false) unlockType = "guided";
   return { enabled, unlockType, coinCost: Math.max(0, Number(raw.coinCost || 0)) };
 }
 
 function userHasCoinUnlock(stats = {}) {
   if (stats.unlockedAll) return true;
-  const opened = stats.unlockedLessons?.[level];
-  return Array.isArray(opened) && opened.map(String).includes(String(lessonId));
+  const scoped = stats.unlockedLessons?.[`writing:${level}`];
+  const legacy = stats.unlockedLessons?.[level];
+  return [scoped, legacy].some((opened) => Array.isArray(opened) && opened.map(String).includes(String(lessonId)));
 }
 
 function blockLesson(message, { showVip = false, firebase = null } = {}) {
@@ -128,6 +135,22 @@ async function verifyLessonAccessBeforeLoad() {
   if (!access.enabled || access.unlockType === "locked") {
     blockLesson("Bài học này đang được Admin khóa hoặc cập nhật.");
     return false;
+  }
+
+  if (access.unlockType === "guided") {
+    const writingSettings = settings?.writing?.courses
+      ? { courses:settings.writing.courses }
+      : settings;
+    const path = window.CCHskLearningAccess?.resolveLessonAccess?.({
+      level,
+      lessonId,
+      stats:firebase.getCurrentStats?.() || {},
+      settings:writingSettings
+    }) || { allowed:true };
+    if (!path.allowed) {
+      blockLesson(path.message || "Hãy hoàn thành bài học phía trước để mở khóa bài này.");
+      return false;
+    }
   }
 
   if (access.unlockType === "vip") {
@@ -642,7 +665,7 @@ function goNext() {
 
 function canGoNext() {
   if (state.isCompletingAnswer || state.isReadingAnswer) return false;
-  if (DISABLE_SEQUENTIAL_LESSON_LOCK) return true;
+  if (DISABLE_CARD_ANSWER_LOCK) return true;
   return state.answered.has(getCurrentCardKey()) || state.revealed.has(getCurrentCardKey());
 }
 

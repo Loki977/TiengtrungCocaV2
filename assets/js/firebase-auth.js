@@ -1190,22 +1190,24 @@ async function dailyCheckIn() {
   });
 }
 
-async function unlockLessonWithCoins({ level = 'hsk1', lessonId = 1, coinCost = 0 } = {}) {
+async function unlockLessonWithCoins({ level = 'hsk1', lessonId = 1, coinCost = 0, scope = 'course' } = {}) {
   if (!auth.currentUser) throw new Error('Vui lòng đăng nhập để mở bài bằng xu.');
   const normalizedLevel = String(level || 'hsk1').toLowerCase();
   const id = String(Number(lessonId) || 1);
+  const normalizedScope = scope === 'writing' ? 'writing' : 'course';
+  const accessBucket = normalizedScope === 'writing' ? `writing:${normalizedLevel}` : normalizedLevel;
   const cost = Math.max(0, Number(coinCost) || 0);
   let updatedStats = null;
   await runTransaction(db, async (transaction) => {
     const ref = userStatsDocRef(auth.currentUser.uid);
     const snap = await transaction.get(ref);
     const current = normalizeStats(snap.exists() ? snap.data() : currentStats);
-    const opened = Array.isArray(current.unlockedLessons?.[normalizedLevel]) ? current.unlockedLessons[normalizedLevel].map(String) : [];
+    const opened = Array.isArray(current.unlockedLessons?.[accessBucket]) ? current.unlockedLessons[accessBucket].map(String) : [];
     if (opened.includes(id)) { updatedStats = current; return; }
     if (Number(current.coins || 0) < cost) throw new Error('Bạn chưa đủ xu.');
     const nextOpened = [...opened, id];
-    const unlockedLessons = { ...(current.unlockedLessons || {}), [normalizedLevel]: nextOpened };
-    const historyItem = { id: `unlock-${normalizedLevel}-${id}`, reason: 'unlock-lesson', amount: -cost, meta: { level: normalizedLevel, lessonId: id }, date: todayKey() };
+    const unlockedLessons = { ...(current.unlockedLessons || {}), [accessBucket]: nextOpened };
+    const historyItem = { id: `unlock-${normalizedScope}-${normalizedLevel}-${id}`, reason: 'unlock-lesson', amount: -cost, meta: { scope:normalizedScope, level: normalizedLevel, lessonId: id }, date: todayKey() };
     updatedStats = normalizeStats({
       ...current,
       coins: Math.max(0, Number(current.coins || 0) - cost),

@@ -47,9 +47,17 @@ assert.equal(access.getDisplayLevel({}, localPlacement), 4);
 const hskSource = fs.readFileSync(new URL('../assets/js/hsk.js', import.meta.url), 'utf8');
 const adminSource = fs.readFileSync(new URL('../assets/js/admin-super.js', import.meta.url), 'utf8');
 const adminHtml = fs.readFileSync(new URL('../admin-super.html', import.meta.url), 'utf8');
-assert.doesNotMatch(hskSource, /requireFreshVipAccess|unlockLessonWithCoins/, 'HSK learning access must not grant or require VIP/coin access');
-assert.match(adminSource, /Khóa theo lộ trình/);
+const writingListSource = fs.readFileSync(new URL('../hsk1-writing-lessons.html', import.meta.url), 'utf8');
+const writingPageSource = fs.readFileSync(new URL('../lesson-page.js', import.meta.url), 'utf8');
+for (const accessType of ['free', 'guided', 'vip', 'coins']) {
+  assert.match(adminSource, new RegExp(`['"]${accessType}['"]`), `CMS must support ${accessType} access`);
+}
+assert.match(hskSource, /unlockLessonWithCoins\(\{ level, lessonId, coinCost:cost, scope:'course' \}\)/);
+assert.match(hskSource, /getFreshVipAccess/);
 assert.match(adminSource, /data-course-guided/);
-assert.doesNotMatch(adminHtml, /id="vipAllLessons"|id="coinsAllLessons"/);
+assert.match(adminHtml, /id="writingLessonLockGrid"/);
+assert.match(adminHtml, /id="saveWritingAccessSettings"/);
+assert.match(writingListSource, /scope:"writing"/);
+assert.match(writingPageSource, /settings\?\.writing\?\.courses/);
 
 console.log('HSK learning access checks passed.');

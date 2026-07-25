@@ -138,6 +138,22 @@
       box-shadow: 0 21px 42px rgba(39, 62, 92, 0.15);
     }
 
+    .lesson-card.is-locked {
+      opacity: 0.72;
+      filter: saturate(0.72);
+    }
+
+    .lesson-access {
+      display: inline-flex;
+      margin-top: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(39, 62, 92, 0.08);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
     .lesson-number {
       position: relative;
       z-index: 1;
@@ -278,6 +294,7 @@
     <section class="lesson-grid" id="lessonGrid" aria-label="Danh sách bài học HSK"></section>
   </main>
 
+  <script src="assets/js/hsk-learning-access.js"></script>
   <script type="module">
     import { getLessonConfig } from "./lesson-config.js";
     import { generateLessons, normalizeWritingLessonContent } from "./lesson-engine.js";
@@ -287,14 +304,18 @@
     const level = (params.get("level") || "hsk1").toLowerCase();
     const config = getLessonConfig(level) || getLessonConfig("hsk1");
 
-    async function loadWritingOverrides() {
+    async function loadWritingRemoteState() {
       try {
         await import("./assets/js/firebase-auth.js");
         const shared = window.CCFirebase;
-        if (!shared?.db) return new Map();
-        const { collection, getDocs, query, where } = await import(FIRESTORE_MODULE);
+        if (!shared?.db) return { overrides:new Map(), settings:{}, shared:null };
+        await shared.authReady;
+        const { collection, doc, getDoc, getDocs, query, where } = await import(FIRESTORE_MODULE);
         const overrideQuery = query(collection(shared.db, "writingLessonOverrides"), where("level", "==", config.level));
-        const snapshot = await getDocs(overrideQuery);
+        const [snapshot, settingsSnap] = await Promise.all([
+          getDocs(overrideQuery),
+          getDoc(doc(shared.db, "adminSettings", "learning"))
+        ]);
         const overrides = new Map();
         snapshot.forEach((item) => {
           const data = item.data() || {};
@@ -303,19 +324,20 @@
             overrides.set(lessonId, data.content || data);
           }
         });
-        return overrides;
+        return { overrides, settings:settingsSnap.exists() ? settingsSnap.data() : {}, shared };
       } catch (error) {
         console.warn("[writing-list] Không tải được nội dung CMS, dùng dữ liệu chuẩn.", error);
-        return new Map();
+        return { overrides:new Map(), settings:{}, shared:window.CCFirebase || null };
       }
     }
 
     const lessonContentPromise = generateLessons(config.level, config);
-    const overridesPromise = Promise.race([
-      loadWritingOverrides(),
-      new Promise((resolve) => window.setTimeout(() => resolve(new Map()), 3000))
+    const remoteStatePromise = Promise.race([
+      loadWritingRemoteState(),
+      new Promise((resolve) => window.setTimeout(() => resolve({ overrides:new Map(), settings:{}, shared:window.CCFirebase || null }), 3000))
     ]);
-    const [lessonContent, overrides] = await Promise.all([lessonContentPromise, overridesPromise]);
+    const [lessonContent, remoteState] = await Promise.all([lessonContentPromise, remoteStatePromise]);
+    const { overrides, settings, shared } = remoteState;
     const lessons = lessonContent.map((item, index) => {
       const override = overrides.get(item.lessonId);
       const resolved = override ? normalizeWritingLessonContent(override, item) : item;
@@ -339,11 +361,63 @@
       }[char]));
     }
 
+    function getAccess(lessonId) {
+      const area = settings?.writing?.courses ? settings.writing : settings;
+      const course = area?.courses?.[config.level] || settings?.courses?.[config.level] || {};
+      const raw = course.lessons?.[`B${lessonId}`] || course.lessons?.[String(lessonId)] || {};
+      const enabled = course.enabled !== false && raw.enabled !== false && raw.unlockType !== "locked";
+      const known = ["free", "guided", "vip", "coins"];
+      let unlockType = known.includes(String(raw.unlockType || "").toLowerCase())
+        ? String(raw.unlockType).toLowerCase()
+        : (course.guided === false ? "free" : "guided");
+      if (Number(area?.accessModeVersion || 0) < 2 && unlockType === "free" && course.guided !== false) unlockType = "guided";
+      return { enabled, unlockType, coinCost:Math.max(0, Number(raw.coinCost || 0)) };
+    }
+
+    function hasCoinUnlock(lessonId) {
+      const stats = shared?.getCurrentStats?.() || {};
+      if (stats.unlockedAll) return true;
+      return [`writing:${config.level}`, config.level].some((key) => {
+        const opened = stats.unlockedLessons?.[key];
+        return Array.isArray(opened) && opened.map(String).includes(String(lessonId));
+      });
+    }
+
+    function pathAccess(lessonId) {
+      const pathSettings = settings?.writing?.courses ? { courses:settings.writing.courses } : settings;
+      return window.CCHskLearningAccess?.resolveLessonAccess?.({
+        level:config.level,
+        lessonId,
+        stats:shared?.getCurrentStats?.() || {},
+        settings:pathSettings
+      }) || { allowed:true, message:"" };
+    }
+
+    function accessView(lessonId) {
+      const access = getAccess(lessonId);
+      if (!access.enabled) return { allowed:false, label:"Đang đóng" };
+      if (access.unlockType === "guided") {
+        const path = pathAccess(lessonId);
+        return { allowed:path.allowed, label:path.allowed ? "Theo lộ trình · Đã mở" : "Theo lộ trình", message:path.message };
+      }
+      if (access.unlockType === "vip") {
+        const active = Boolean(shared?.vip?.isActive?.(shared?.getCurrentStats?.() || {}));
+        return { allowed:active, label:active ? "VIP · Đã mở" : "Dành cho VIP" };
+      }
+      if (access.unlockType === "coins") {
+        const opened = hasCoinUnlock(lessonId);
+        return { allowed:opened, label:opened ? "Xu · Đã mở" : `Mở ${access.coinCost.toLocaleString("vi-VN")} xu` };
+      }
+      return { allowed:true, label:"Miễn phí" };
+    }
+
     function renderLessons() {
       lessonGrid.innerHTML = lessons.map((item, index) => {
+        const lessonId = index + 1;
+        const view = accessView(lessonId);
         return `
-          <a class="lesson-card" href="lesson.html?level=${encodeURIComponent(config.level)}&lesson=${index + 1}">
-            <div class="lesson-number">${index + 1}</div>
+          <a class="lesson-card ${view.allowed ? "" : "is-locked"}" data-writing-lesson="${lessonId}" href="lesson.html?level=${encodeURIComponent(config.level)}&lesson=${lessonId}">
+            <div class="lesson-number">${lessonId}</div>
             <div class="lesson-content">
               <p class="lesson-label">${escapeHtml(item.lesson)}</p>
               <h2 class="lesson-title">${escapeHtml(item.title)}</h2>
@@ -351,6 +425,7 @@
                 <span class="stat"><span class="dot"></span>${item.words} từ vựng</span>
                 <span class="stat"><span class="dot"></span>${item.sentences} câu</span>
               </div>
+              <span class="lesson-access">${escapeHtml(view.label)}</span>
             </div>
             <div class="chevron" aria-hidden="true">›</div>
           </a>
@@ -359,6 +434,34 @@
     }
 
     renderLessons();
+    lessonGrid.addEventListener("click", async (event) => {
+      const card = event.target.closest("[data-writing-lesson]");
+      if (!card) return;
+      const lessonId = Number(card.dataset.writingLesson);
+      const access = getAccess(lessonId);
+      const view = accessView(lessonId);
+      if (view.allowed) return;
+      event.preventDefault();
+      if (!access.enabled) return alert("Bài Luyện viết này đang được Admin đóng.");
+      if (access.unlockType === "guided") return alert(view.message || "Hãy hoàn thành bài học phía trước để mở khóa.");
+      if (access.unlockType === "vip") {
+        const result = await shared?.getFreshVipAccess?.({ syncUi:true });
+        if (result?.verified && result?.state?.active) return location.assign(card.href);
+        const message = "Bài Luyện viết này dành cho thành viên VIP.";
+        (shared?.vip?.openPurchase || window.CCVip?.openPurchase)?.({ reason:message, user:shared?.getCurrentUser?.() || null, backUrl:location.href });
+        return;
+      }
+      if (access.unlockType === "coins") {
+        if (!shared?.getCurrentUser?.()) return alert("Vui lòng đăng nhập để mở bài bằng xu.");
+        if (!confirm(`Dùng ${access.coinCost.toLocaleString("vi-VN")} xu để mở Bài ${lessonId}?`)) return;
+        try {
+          await shared.unlockLessonWithCoins({ level:config.level, lessonId, coinCost:access.coinCost, scope:"writing" });
+          location.assign(card.href);
+        } catch (error) {
+          alert(error?.message || "Không thể mở bài bằng xu.");
+        }
+      }
+    });
   </script>
   <script type="module" src="assets/js/access-logger.js"></script>
 </body>

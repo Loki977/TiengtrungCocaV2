@@ -77,14 +77,14 @@
       <section id="tab-learning" class="tab-panel hidden">
         <div class="panel">
           <h2>🎓 Lộ trình mở khóa học tập</h2>
-          <p class="muted">Cấu hình lưu ở Firestore <b>adminSettings/learning</b>. Công tắc cấp HSK bật chế độ mở tuần tự theo bài test và tiến độ; tắt công tắc để mở tự do cấp đó. Đây là quyền học, không phải quyền VIP.</p>
+          <p class="muted">Cấu hình lưu ở Firestore <b>adminSettings/learning</b>. Mỗi bài có thể đóng hoàn toàn hoặc mở theo một trong bốn cách: miễn phí, theo lộ trình, VIP hoặc xu.</p>
           <div class="notice">Mặc định: chưa test chỉ học tuần tự Pinyin và 3 bài HSK1 miễn phí; sau test sẽ mở đến cấp tương ứng và toàn bộ cấp thấp hơn.</div>
           <div class="admin-grid two" style="margin-top:14px">
             <div class="admin-box"><h3>📚 Khóa học</h3><div id="courseToggles" class="toggle-list"></div></div>
             <div class="admin-box"><h3>⚙️ Tính năng</h3><div id="featureToggles" class="toggle-list"></div></div>
           </div>
           <div class="admin-box" style="margin-top:14px">
-            <div class="toolbar"><select id="lessonLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><button id="openAllLessons" class="btn ok">Cho phép tất cả bài cấp này</button><button id="lockAllLessons" class="btn warn">Khóa thủ công tất cả</button><button id="saveLearningSettings" class="btn primary">Lưu cấu hình</button></div>
+            <div class="toolbar"><select id="lessonLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select><button id="openAllLessons" class="btn ok">Mở miễn phí tất cả</button><button id="lockAllLessons" class="btn warn">Đóng tất cả</button><button id="saveLearningSettings" class="btn primary">Lưu cấu hình</button></div>
             <div id="lessonLockGrid" class="lesson-lock-grid"></div>
           </div>
           <div class="lesson-total" id="lessonTotals" style="margin-top:14px"></div>
@@ -107,6 +107,17 @@
             <span id="writingCmsStatus" class="save-status">Sẵn sàng</span>
           </div>
           <div class="writing-cms-summary" id="writingCmsSummary"></div>
+          <div class="admin-box writing-access-box">
+            <h3>🔐 Quyền truy cập bài Luyện viết</h3>
+            <p class="muted">Cấu hình độc lập với Khóa học, gồm miễn phí, theo lộ trình, VIP và xu.</p>
+            <div class="toolbar">
+              <select id="writingAccessLevelSelect" class="input"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option><option value="hsk5">HSK5</option><option value="hsk6">HSK6</option></select>
+              <button id="openAllWritingLessons" class="btn ok">Mở miễn phí tất cả</button>
+              <button id="lockAllWritingLessons" class="btn warn">Đóng tất cả</button>
+              <button id="saveWritingAccessSettings" class="btn primary">Lưu quyền truy cập</button>
+            </div>
+            <div id="writingLessonLockGrid" class="lesson-lock-grid"></div>
+          </div>
           <label class="toggle-row writing-cms-global-toggle"><b>Ký hiệu cấu trúc câu</b><span>Áp dụng toàn bộ Luyện viết</span><input id="writingCmsGlobalSentenceLabels" type="checkbox" checked></label>
           <p class="muted">Tắt để ẩn toàn bộ ký hiệu S/V/O… và card chú giải ở cuối bài. Màu sắc, gạch chân và cách chia cụm câu vẫn hiển thị.</p>
           <div class="admin-grid two">

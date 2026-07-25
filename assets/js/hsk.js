@@ -14,6 +14,7 @@
   const COURSE = window.HSK_COURSE_DATA || {};
   const DISABLE_LESSON_LOCKS = false;
   const FOUNDATION_LESSON_ID = 'hsk1-pinyin-intro';
+  const ACCESS_TYPES = new Set(['free', 'guided', 'vip', 'coins']);
 
   const panelsWrap = document.getElementById('tabPanels');
   const detailWrap = document.getElementById('lessonDetail');
@@ -66,9 +67,9 @@
     const courses = {};
     Object.entries(totals).forEach(([level,total]) => {
       courses[level] = { enabled: true, guided: true, lessons: {} };
-      for (let i = 1; i <= total; i++) courses[level].lessons[`B${i}`] = { enabled: true, unlockType: 'free', coinCost: 0 };
+      for (let i = 1; i <= total; i++) courses[level].lessons[`B${i}`] = { enabled: true, unlockType: 'guided', coinCost: 0 };
     });
-    return { courses, features:{} };
+    return { accessModeVersion:2, courses, features:{} };
   }
 
   function normalizeCourseConfig(cfg, level) {
@@ -81,6 +82,15 @@
       if (typeof value === 'object') lessons[key] = { enabled: value.enabled !== false, unlockType: value.unlockType || (value.enabled === false ? 'locked' : 'free'), coinCost: Number(value.coinCost || 0) };
       else lessons[key] = { enabled: value !== false, unlockType: value === false ? 'locked' : 'free', coinCost: 0 };
     });
+    const explicitModes = Number(cfg?.accessModeVersion || 0) >= 2;
+    Object.entries(lessons).forEach(([key, value]) => {
+      const enabled = value?.enabled !== false && value?.unlockType !== 'locked';
+      let unlockType = ACCESS_TYPES.has(String(value?.unlockType || '').toLowerCase())
+        ? String(value.unlockType).toLowerCase()
+        : (course.guided === false ? 'free' : 'guided');
+      if (!explicitModes && unlockType === 'free' && course.guided !== false) unlockType = 'guided';
+      lessons[key] = { ...value, enabled, unlockType, coinCost:Math.max(0, Number(value?.coinCost || 0)) };
+    });
     return { enabled: course.enabled !== false, guided: course.guided !== false, lessons };
   }
 
@@ -89,8 +99,11 @@
     const course = normalizeCourseConfig(cfg, level);
     const key = `B${Number(lessonId) || 1}`;
     const raw = course.lessons?.[key] || course.lessons?.[String(Number(lessonId) || 1)] || {};
-    const enabled = raw.enabled !== false && raw.unlockType !== 'locked';
-    return { enabled, unlockType: enabled ? 'free' : 'locked', coinCost: 0 };
+    const enabled = course.enabled !== false && raw.enabled !== false && raw.unlockType !== 'locked';
+    const unlockType = ACCESS_TYPES.has(String(raw.unlockType || '').toLowerCase())
+      ? String(raw.unlockType).toLowerCase()
+      : (course.guided === false ? 'free' : 'guided');
+    return { enabled, unlockType, coinCost:Math.max(0, Number(raw.coinCost || 0)) };
   }
 
   function getLearningPathAccess(level, lessonId) {
@@ -107,16 +120,74 @@
   function canOpenLesson(level, lessonId) {
     if (currentStats?.unlockedAll) return true;
     const access = getLessonAccessConfig(level, lessonId);
-    if (!access.enabled || access.unlockType === 'locked') return false;
-    if (!getLearningPathAccess(level, lessonId).allowed) return false;
-    return true;
+    if (!access.enabled) return false;
+    if (access.unlockType === 'guided') return getLearningPathAccess(level, lessonId).allowed;
+    if (access.unlockType === 'vip') return Boolean(window.CCFirebase?.vip?.isActive?.(currentStats || {}));
+    if (access.unlockType === 'coins') return userHasCoinUnlock(level, lessonId);
+    return access.unlockType === 'free';
   }
 
   function getLessonActionLabel(level, lessonId) {
     const access = getLessonAccessConfig(level, lessonId);
-    const learningPath = getLearningPathAccess(level, lessonId);
-    if (!learningPath.allowed || !access.enabled || access.unlockType === 'locked') return 'Chưa mở khóa';
+    if (!access.enabled) return 'Đang đóng';
+    if (access.unlockType === 'guided' && !getLearningPathAccess(level, lessonId).allowed) return 'Theo lộ trình';
+    if (access.unlockType === 'vip' && !canOpenLesson(level, lessonId)) return 'Dành cho VIP';
+    if (access.unlockType === 'coins' && !canOpenLesson(level, lessonId)) return `Mở ${access.coinCost} xu`;
     return 'Học ngay';
+  }
+
+  function userHasCoinUnlock(level, lessonId) {
+    if (currentStats?.unlockedAll) return true;
+    const opened = currentStats?.unlockedLessons?.[String(level).toLowerCase()];
+    return Array.isArray(opened) && opened.map(String).includes(String(Number(lessonId) || 1));
+  }
+
+  async function authorizeLessonAccess(level, lessonId, { interactive = true } = {}) {
+    const access = getLessonAccessConfig(level, lessonId);
+    if (!access.enabled) {
+      if (interactive) toast('Bài học này đang được Admin đóng.');
+      return false;
+    }
+    if (access.unlockType === 'guided') {
+      const path = getLearningPathAccess(level, lessonId);
+      if (!path.allowed && interactive) toast(path.message || 'Hãy hoàn thành bài học phía trước để mở khóa.');
+      return path.allowed;
+    }
+    if (access.unlockType === 'vip') {
+      const firebase = window.CCFirebase;
+      const result = await firebase?.getFreshVipAccess?.({ syncUi:true });
+      if (result?.verified && result?.state?.active) {
+        currentStats = firebase.getCurrentStats?.() || currentStats;
+        return true;
+      }
+      if (interactive) {
+        const message = result?.reason === 'signed-out'
+          ? 'Bài học này dành cho thành viên VIP. Hãy đăng nhập hoặc chọn gói nâng cấp.'
+          : 'Bạn cần VIP còn hiệu lực để mở bài học này.';
+        toast(message);
+        (firebase?.vip?.openPurchase || window.CCVip?.openPurchase)?.({ reason:message, user:firebase?.getCurrentUser?.() || null, backUrl:'hsk.html' });
+      }
+      return false;
+    }
+    if (access.unlockType === 'coins' && !userHasCoinUnlock(level, lessonId)) {
+      const firebase = window.CCFirebase;
+      if (!interactive) return false;
+      if (!firebase?.getCurrentUser?.()) {
+        toast('Vui lòng đăng nhập để mở bài bằng xu.');
+        return false;
+      }
+      const cost = Math.max(0, Number(access.coinCost || 0));
+      if (!confirm(`Dùng ${cost.toLocaleString('vi-VN')} xu để mở Bài ${lessonId}?`)) return false;
+      try {
+        currentStats = await firebase.unlockLessonWithCoins({ level, lessonId, coinCost:cost, scope:'course' });
+        toast('Đã mở khóa bài học.');
+        return true;
+      } catch (error) {
+        toast(error?.message || 'Không thể mở bài bằng xu.');
+        return false;
+      }
+    }
+    return true;
   }
 
   async function loadAdminLearningSettings(options = {}) {
@@ -126,7 +197,9 @@
       const { db, doc, getDoc, getDocFromServer } = await getContentDb();
       const ref = doc(db, 'adminSettings', 'learning');
       const snap = forceServer ? await getDocFromServer(ref) : await getDoc(ref);
-      adminLearningSettings = mergeDeep(defaultLearningSettings(), snap.exists() ? snap.data() : {});
+      const saved = snap.exists() ? snap.data() : null;
+      adminLearningSettings = mergeDeep(defaultLearningSettings(), saved || {});
+      if (saved && Number(saved.accessModeVersion) < 2) adminLearningSettings.accessModeVersion = 1;
       if (forceServer) adminLearningSettingsVerifiedAt = Date.now();
     } catch (error) {
       if (forceServer) throw error;
@@ -285,14 +358,14 @@
       console.warn(err);
     }
 
-    const isLocked = !DISABLE_LESSON_LOCKS && !isCourseUnlocked(currentLevel);
+    const isLocked = !DISABLE_LESSON_LOCKS && normalizeCourseConfig(adminLearningSettings || defaultLearningSettings(), currentLevel).enabled === false;
     const progressColor = d.status === 'completed' ? 'var(--green)' : 'var(--orange)';
 
     const coursePercent = getCoursePercent(currentLevel, lessonIndex.length || d.lessons || 0);
     const lessonRows = lessonIndex.length
       ? lessonIndex.map(l => {
           const access = getLessonAccessConfig(currentLevel, l.lessonId);
-          const learningPath = getLearningPathAccess(currentLevel, l.lessonId);
+          const learningPath = access.unlockType === 'guided' ? getLearningPathAccess(currentLevel, l.lessonId) : { allowed:true, reason:access.unlockType };
           const isAvailable = !isLocked && canOpenLesson(currentLevel, l.lessonId);
           const completed = isLessonCompleted(currentLevel, l.lessonId);
           const lessonProgress = completed ? 100 : Number(l.progress || 0);
@@ -396,10 +469,7 @@
 
   async function handleLessonClick(lessonId) {
     if (!await requireFreshLearningSettings()) return;
-    const learningPath = getLearningPathAccess(currentLevel, lessonId);
-    if (!learningPath.allowed) return toast(learningPath.message || 'Hãy hoàn thành bài học phía trước để mở khóa.');
-    const access = getLessonAccessConfig(currentLevel, lessonId);
-    if (!access.enabled || access.unlockType === 'locked') return toast('Hãy mở khóa hoặc hoàn thành bài học phía trước trước.');
+    if (!await authorizeLessonAccess(currentLevel, lessonId, { interactive:true })) return;
     openLessonDetail(lessonId);
   }
 
@@ -421,15 +491,8 @@
         showCoursePanel();
         return;
       }
-      const access = getLessonAccessConfig(currentLevel, lessonId);
-      const learningPath = getLearningPathAccess(currentLevel, lessonId);
-      if (!learningPath.allowed) {
-        detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">🔒 ${learningPath.message}</p>`;
-        return;
-      }
-      if (!access.enabled || access.unlockType === 'locked') {
-        const msg = '🔒 Hãy mở khóa hoặc hoàn thành bài học phía trước trước.';
-        detailWrap.innerHTML = `<p style="padding:24px;text-align:center;color:#9a3412">${msg}</p>`;
+      if (!await authorizeLessonAccess(currentLevel, lessonId, { interactive:false })) {
+        detailWrap.innerHTML = '<p style="padding:24px;text-align:center;color:#9a3412">🔒 Bạn chưa có quyền truy cập bài học này.</p>';
         return;
       }
 
