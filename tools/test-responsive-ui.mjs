@@ -44,6 +44,8 @@ assert.match(quickMenu, /aria-expanded/);
 assert.match(quickMenu, /event\.key (?:===|!==) ' '/, 'Space must operate a focused card');
 assert.match(quickMenu, /event\.key === 'Escape'/, 'Escape must collapse the cards');
 assert.match(quickMenuCss, /white-space:\s*nowrap/, 'expanded Home card titles must remain visually stable');
+assert.match(quickMenuCss, /@media \(min-width:\s*769px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__body\s*\{[^}]*gap:\s*0/s, 'hidden desktop card rows must not leave a vertical gap above the visible titles');
+assert.match(quickMenuCss, /@media \(min-width:\s*769px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__cta\s*\{[^}]*min-height:\s*0/s, 'hidden desktop card actions must not shift the visible titles');
 
 const shell = read('assets/js/site-shell.js');
 const shellCss = read('assets/css/app-shell.css');

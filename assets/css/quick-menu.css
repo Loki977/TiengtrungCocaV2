@@ -169,6 +169,17 @@
   filter: brightness(.97);
 }
 
+@media (min-width: 769px) {
+  .quick-card:not(.is-active) .quick-card__body {
+    gap: 0;
+  }
+
+  .quick-card:not(.is-active) .quick-card__cta {
+    min-height: 0;
+    padding-inline: 0;
+  }
+}
+
 @media (max-width: 1180px) {
   .quick-menu__inner,
   .quick-menu__inner.has-active {
