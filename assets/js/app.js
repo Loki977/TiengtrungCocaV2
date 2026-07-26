@@ -86,12 +86,16 @@
     if (!loginModal) return;
     switchAuthMode('register');
     loginModal.classList.add('open');
+    loginModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cc-auth-modal-open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
     if (!loginModal) return;
     loginModal.classList.remove('open');
+    loginModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cc-auth-modal-open');
     document.body.style.overflow = '';
   }
 

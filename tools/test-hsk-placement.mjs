@@ -90,7 +90,14 @@ assert.doesNotMatch(placementApiSource, /isVip|vipUntil|vipPlan/i, 'placement mu
 
 const placementHtml = fs.readFileSync(path.join(root, 'hsk-placement.html'), 'utf8');
 assert.doesNotMatch(placementHtml, /id="authScreen"/, 'the exercise must not wait on a login screen');
-assert.doesNotMatch(placementHtml, /firebase-auth\.js/, 'the exercise page must not load Firebase auth');
+assert.match(placementHtml, /firebase-auth\.js/, 'the exercise page must restore Firebase Auth before starting');
+assert.match(placementHtml, /hsk-placement-auth-guard\.js/, 'direct placement URLs must use the shared auth guard');
+assert.match(placementHtml, /placement-auth-pending/, 'placement content must stay hidden while auth is loading');
+
+const placementAuthGuardSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-auth-guard.js'), 'utf8');
+assert.match(placementAuthGuardSource, /CCFirebase\?\.authReady|CCFirebase\.authReady/, 'the guard must await shared Firebase Auth');
+assert.match(placementAuthGuardSource, /CCSiteShell\?\.openLogin/, 'signed-out users must see the shared login modal');
+assert.match(placementAuthGuardSource, /await import\(targetModule\)/, 'the test runtime must load only after authentication');
 
 const placementRuntimeSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-runtime.js'), 'utf8');
 assert.match(placementRuntimeSource, /export const placementBankReady = loadPlacementBank\(\)/);
@@ -112,7 +119,7 @@ assert.match(placementInviteSource, /stopImmediatePropagation\(\)/, 'the prompt 
 assert.match(placementInviteSource, /\}, true\);/, 'the prompt listener must run during capture');
 
 const placementResultSource = fs.readFileSync(path.join(root, 'assets/js/hsk-placement-result.js'), 'utf8');
-assert.match(placementResultSource, /getLocalPlacementResult\(/, 'results must render before auth hydration');
+assert.match(placementResultSource, /getLocalPlacementResult\(/, 'results must reuse the completed local attempt after auth hydration');
 assert.match(placementResultSource, /placementApi\(['"]complete['"]/, 'completed local attempts must sync once');
 
 let responseStatus = 0;

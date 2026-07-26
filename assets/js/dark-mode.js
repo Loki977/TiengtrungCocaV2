@@ -3,6 +3,10 @@
 
   const STORAGE_KEY = 'cc_darkMode';
   const MOTION_STORAGE_KEY = 'cc_motionEnabled';
+  const FONT_STORAGE_KEY = 'cc_fontSize';
+  const FONT_SIZES = new Set(['small', 'medium', 'large']);
+  let remoteSyncTimer = 0;
+  let remoteAppearanceLoadedFor = '';
 
   function readPreference() {
     try {
@@ -14,6 +18,7 @@
 
   function applyTheme(enabled) {
     document.documentElement.classList.toggle('dark-mode', enabled);
+    document.documentElement.dataset.theme = enabled ? 'dark' : 'light';
     if (document.body) document.body.classList.toggle('dark-mode', enabled);
   }
 
@@ -36,6 +41,8 @@
       }
     }
     window.dispatchEvent(new CustomEvent('cc:darkmode', { detail: { enabled: next } }));
+    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    if (persist !== false) scheduleRemoteSync();
   }
 
   function bindProfileToggle() {
@@ -113,6 +120,8 @@
       }
     }
     window.dispatchEvent(new CustomEvent('cc:motionchange', { detail: { enabled: next } }));
+    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    if (persist !== false) scheduleRemoteSync();
   }
 
   function bindMotionToggle() {
@@ -125,9 +134,72 @@
     });
   }
 
+  function readFontSize() {
+    try {
+      const stored = localStorage.getItem(FONT_STORAGE_KEY) || 'medium';
+      return FONT_SIZES.has(stored) ? stored : 'medium';
+    } catch (_) {
+      return 'medium';
+    }
+  }
+
+  function applyFontSize(fontSize) {
+    const next = FONT_SIZES.has(fontSize) ? fontSize : 'medium';
+    document.documentElement.dataset.fontSize = next;
+    return next;
+  }
+
+  function setFontSize(fontSize, persist) {
+    const next = applyFontSize(fontSize);
+    if (persist !== false) {
+      try { localStorage.setItem(FONT_STORAGE_KEY, next); } catch (_) {}
+    }
+    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    if (persist !== false) scheduleRemoteSync();
+    return next;
+  }
+
+  function getAppearanceState() {
+    return {
+      dark: readPreference(),
+      motion: readMotionPreference(),
+      fontSize: readFontSize()
+    };
+  }
+
+  function scheduleRemoteSync() {
+    window.clearTimeout(remoteSyncTimer);
+    remoteSyncTimer = window.setTimeout(async function () {
+      const firebase = window.CCFirebase;
+      if (!firebase?.getCurrentUser?.() || !firebase?.saveUserData) return;
+      try {
+        await firebase.saveUserData('appearance', getAppearanceState());
+      } catch (_) {
+        /* Local preferences remain the cache/fallback when Firestore is unavailable. */
+      }
+    }, 450);
+  }
+
+  async function restoreRemoteAppearance(user) {
+    if (!user?.uid || remoteAppearanceLoadedFor === user.uid) return;
+    remoteAppearanceLoadedFor = user.uid;
+    const firebase = window.CCFirebase;
+    if (!firebase?.getUserData) return;
+    try {
+      const remote = await firebase.getUserData('appearance', null);
+      if (!remote || typeof remote !== 'object') return;
+      if (typeof remote.dark === 'boolean') setTheme(remote.dark, true);
+      if (typeof remote.motion === 'boolean') setMotion(remote.motion, true);
+      if (FONT_SIZES.has(remote.fontSize)) setFontSize(remote.fontSize, true);
+    } catch (_) {
+      /* The already-applied local preference is the offline fallback. */
+    }
+  }
+
   const initialPreference = readPreference();
   applyTheme(initialPreference);
   applyMotion(readMotionPreference());
+  applyFontSize(readFontSize());
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
@@ -135,17 +207,24 @@
       bindProfileToggle();
       applyMotion(readMotionPreference());
       bindMotionToggle();
+      applyFontSize(readFontSize());
     }, { once: true });
   } else {
     applyTheme(readPreference());
     bindProfileToggle();
     applyMotion(readMotionPreference());
     bindMotionToggle();
+    applyFontSize(readFontSize());
   }
 
   window.addEventListener('storage', function (event) {
     if (event.key === STORAGE_KEY) setTheme(event.newValue === 'true', false);
     if (event.key === MOTION_STORAGE_KEY) setMotion(event.newValue !== 'false', false);
+    if (event.key === FONT_STORAGE_KEY) setFontSize(event.newValue || 'medium', false);
+  });
+
+  window.addEventListener('cc:auth-ready', function (event) {
+    restoreRemoteAppearance(event.detail?.user);
   });
 
   new MutationObserver(function (mutations) {
@@ -168,5 +247,17 @@
     get: readMotionPreference,
     set: function (enabled) { setMotion(enabled, true); },
     isEnabled: readMotionPreference
+  };
+
+  window.CCAppearance = {
+    get: getAppearanceState,
+    apply: function () {
+      applyTheme(readPreference());
+      applyMotion(readMotionPreference());
+      applyFontSize(readFontSize());
+      return getAppearanceState();
+    },
+    setDarkMode: function (enabled) { setTheme(enabled, true); return getAppearanceState(); },
+    setFontSize: function (fontSize) { setFontSize(fontSize, true); return getAppearanceState(); }
   };
 })();

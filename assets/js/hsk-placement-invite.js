@@ -67,7 +67,7 @@ function createPrompt() {
     <h2 id="placementCoursePromptTitle">Bạn đã biết trình độ HSK của mình chưa?</h2>
     <p id="placementCoursePromptDescription">Làm nhanh một bài kiểm tra như bài tập trong khóa học để chọn đúng cấp độ bắt đầu.</p>
     <div class="placement-course-prompt__benefits" aria-label="Ưu điểm bài kiểm tra">
-      <span>Không cần đăng nhập lại</span>
+      <span>Đăng nhập một lần</span>
       <span>Chuyển câu tức thì</span>
       <span>Khoảng 12–18 phút</span>
     </div>

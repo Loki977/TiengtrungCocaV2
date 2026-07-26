@@ -809,3 +809,52 @@ html.dark-mode .placement-ghost-button {
     transition-duration: .01ms !important;
   }
 }
+html.placement-auth-pending .placement-shell,
+html.placement-auth-required .placement-shell {
+  display: none;
+}
+
+.placement-auth-gate {
+  display: grid;
+  place-items: center;
+  width: min(680px, calc(100% - 32px));
+  min-height: min(460px, calc(100dvh - 120px));
+  margin: 0 auto;
+  padding: 32px;
+  color: var(--ch-deep, #16345f);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.placement-auth-gate h1 {
+  margin: 8px 0;
+}
+
+.placement-auth-gate p {
+  max-width: 520px;
+  color: var(--muted, #68738b);
+}
+
+.placement-auth-gate__spinner {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 16px;
+  border: 4px solid rgba(255, 122, 0, .18);
+  border-top-color: #ff7a00;
+  border-radius: 50%;
+  animation: placement-auth-spin 800ms linear infinite;
+}
+
+@keyframes placement-auth-spin {
+  to { transform: rotate(360deg); }
+}
+
+html.dark-mode .placement-auth-gate {
+  color: var(--charcoal, #edf4ff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placement-auth-gate__spinner {
+    animation-duration: 1600ms;
+  }
+}

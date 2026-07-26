@@ -120,6 +120,9 @@ const DEFAULT_STATS = {
 };
 
 const LOCAL_PROGRESS_KEY = "cc_local_progress";
+const REMEMBERED_ACCOUNTS_KEY = "cc_remembered_accounts_v1";
+const AUTH_RETURN_KEY = "cc_auth_return_url";
+const MAX_REMEMBERED_ACCOUNTS = 5;
 function userStatsCacheKey(uid) { return `cc_stats_${uid}`; }
 let currentUser = null;
 let currentStats = structuredCloneSafe(DEFAULT_STATS);
@@ -287,6 +290,187 @@ function publicUserData(user) {
     email: user.email || "",
     photoURL: user.photoURL || ""
   };
+}
+
+function getPrimaryProviderId(user) {
+  const providers = (user?.providerData || []).map((item) => item?.providerId).filter(Boolean);
+  if (providers.includes("google.com")) return "google.com";
+  if (providers.includes("password")) return "password";
+  return providers[0] || "password";
+}
+
+function normalizeRememberedAccount(value) {
+  if (!value || typeof value !== "object" || !value.uid) return null;
+  return {
+    uid: String(value.uid),
+    displayName: String(value.displayName || ""),
+    email: String(value.email || ""),
+    photoURL: String(value.photoURL || ""),
+    providerId: String(value.providerId || "password"),
+    lastUsedAt: Number(value.lastUsedAt || 0)
+  };
+}
+
+function readRememberedAccounts() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(REMEMBERED_ACCOUNTS_KEY) || "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .map(normalizeRememberedAccount)
+      .filter(Boolean)
+      .sort((a, b) => b.lastUsedAt - a.lastUsedAt)
+      .slice(0, MAX_REMEMBERED_ACCOUNTS);
+  } catch (_) {
+    return [];
+  }
+}
+
+function writeRememberedAccounts(accounts) {
+  const next = accounts
+    .map(normalizeRememberedAccount)
+    .filter(Boolean)
+    .sort((a, b) => b.lastUsedAt - a.lastUsedAt)
+    .slice(0, MAX_REMEMBERED_ACCOUNTS);
+  try { localStorage.setItem(REMEMBERED_ACCOUNTS_KEY, JSON.stringify(next)); } catch (_) {}
+  renderRememberedAccounts();
+  return next;
+}
+
+function rememberAccount(user) {
+  if (!user?.uid) return;
+  const account = {
+    uid: user.uid,
+    displayName: user.displayName || "",
+    email: user.email || "",
+    photoURL: user.photoURL || "",
+    providerId: getPrimaryProviderId(user),
+    lastUsedAt: Date.now()
+  };
+  writeRememberedAccounts([
+    account,
+    ...readRememberedAccounts().filter((item) => item.uid !== account.uid)
+  ]);
+}
+
+function removeRememberedAccount(uid) {
+  writeRememberedAccounts(readRememberedAccounts().filter((item) => item.uid !== uid));
+}
+
+function clearRememberedAccounts() {
+  try { localStorage.removeItem(REMEMBERED_ACCOUNTS_KEY); } catch (_) {}
+  renderRememberedAccounts();
+}
+
+function ensureRememberedAccountsHost() {
+  const existing = document.querySelector("[data-remembered-accounts]");
+  if (existing) return existing;
+  const modal = document.getElementById("loginModal");
+  const container = modal?.querySelector("[data-auth-panel=\"login\"]")
+    || modal?.querySelector(".cc-auth-dialog, .modal-content, .modal");
+  if (!container) return null;
+  const host = document.createElement("div");
+  host.dataset.rememberedAccounts = "";
+  const anchor = container.querySelector("#googleLogin, .social-login, #loginForm, form");
+  const directAnchor = anchor
+    ? [...container.children].find((child) => child === anchor || child.contains(anchor))
+    : null;
+  container.insertBefore(host, directAnchor || container.firstChild);
+  return host;
+}
+
+function createRememberedAvatar(account) {
+  const avatar = document.createElement("span");
+  avatar.className = "cc-remembered__avatar";
+  if (account.photoURL) {
+    const image = document.createElement("img");
+    image.src = account.photoURL;
+    image.alt = "";
+    image.referrerPolicy = "no-referrer";
+    image.addEventListener("error", () => {
+      avatar.textContent = (account.displayName || account.email || "CC").slice(0, 2).toUpperCase();
+    }, { once: true });
+    avatar.appendChild(image);
+  } else {
+    avatar.textContent = (account.displayName || account.email || "CC").slice(0, 2).toUpperCase();
+  }
+  return avatar;
+}
+
+function renderRememberedAccounts() {
+  const host = ensureRememberedAccountsHost();
+  if (!host) return;
+  const accounts = readRememberedAccounts();
+  host.replaceChildren();
+  host.hidden = !accounts.length;
+  if (!accounts.length) return;
+
+  const section = document.createElement("section");
+  section.className = "cc-remembered";
+  section.setAttribute("aria-label", "Tài khoản đã dùng trên thiết bị này");
+  const head = document.createElement("div");
+  head.className = "cc-remembered__head";
+  const title = document.createElement("strong");
+  title.textContent = "Tài khoản đã dùng trên thiết bị này";
+  const clear = document.createElement("button");
+  clear.className = "cc-remembered__clear";
+  clear.type = "button";
+  clear.textContent = "Xóa tất cả";
+  clear.addEventListener("click", clearRememberedAccounts);
+  head.append(title, clear);
+
+  const list = document.createElement("div");
+  list.className = "cc-remembered__list";
+  accounts.forEach((account) => {
+    const row = document.createElement("div");
+    row.className = "cc-remembered__account";
+    row.appendChild(createRememberedAvatar(account));
+
+    const select = document.createElement("button");
+    select.type = "button";
+    select.className = "cc-remembered__select";
+    select.dataset.rememberedAccount = account.uid;
+    select.dataset.providerId = account.providerId;
+    select.dataset.email = account.email;
+    const name = document.createElement("strong");
+    name.textContent = account.displayName || account.email || "Tài khoản";
+    const provider = document.createElement("small");
+    provider.textContent = account.providerId === "google.com"
+      ? `${account.email || "Google"} · Google`
+      : `${account.email || "Email"} · Email`;
+    select.append(name, provider);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "cc-remembered__remove";
+    remove.setAttribute("aria-label", `Xóa ${name.textContent} khỏi danh sách đã nhớ`);
+    remove.textContent = "×";
+    remove.addEventListener("click", () => removeRememberedAccount(account.uid));
+    row.append(select, remove);
+    list.appendChild(row);
+  });
+
+  section.append(head, list);
+  host.appendChild(section);
+}
+
+async function useRememberedAccount(accountButton) {
+  const providerId = accountButton?.dataset.providerId || "password";
+  if (providerId === "google.com") {
+    await signInGoogle();
+    return;
+  }
+  const input = document.getElementById("emailInput")
+    || document.getElementById("loginEmail")
+    || document.querySelector("#loginModal input[type=\"email\"]");
+  if (input) {
+    input.value = accountButton?.dataset.email || "";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+  const password = document.getElementById("passwordInput")
+    || document.getElementById("loginPwd")
+    || document.querySelector("#loginModal input[type=\"password\"]");
+  password?.focus();
+  showToast("Nhập mật khẩu để xác thực lại tài khoản email.");
 }
 
 function userDocRef(uid) {
@@ -466,6 +650,11 @@ const GOOGLE_OAUTH_PENDING_KEY = "cc_google_oauth_pending";
 const GOOGLE_OAUTH_PENDING_TTL_MS = 10 * 60 * 1000;
 
 function getPostLoginUrl() {
+  try {
+    const rememberedReturn = sessionStorage.getItem(AUTH_RETURN_KEY);
+    const safeReturn = getSafeRedirectUrl(rememberedReturn, "");
+    if (safeReturn) return safeReturn;
+  } catch (_) {}
   const params = new URLSearchParams(window.location.search);
   const next = params.get("return") || params.get("next") || params.get("redirect");
   if (next) {
@@ -498,6 +687,7 @@ function getSafeRedirectUrl(rawUrl, fallback = "") {
 
 function redirectAfterLogin(forceUrl = "") {
   const postLoginUrl = getSafeRedirectUrl(forceUrl, "") || getPostLoginUrl();
+  try { sessionStorage.removeItem(AUTH_RETURN_KEY); } catch (_) {}
   if (postLoginUrl && postLoginUrl !== window.location.href) window.location.replace(postLoginUrl);
 }
 
@@ -551,6 +741,7 @@ function readPendingGoogleLoginState() {
 function navigateAfterGoogleLogin(returnUrl = "") {
   const target = getSafeRedirectUrl(returnUrl, getDefaultProfileUrl());
   clearPendingGoogleLoginState();
+  try { sessionStorage.removeItem(AUTH_RETURN_KEY); } catch (_) {}
   if (target !== window.location.href) window.location.replace(target);
 }
 
@@ -709,6 +900,7 @@ async function completeGoogleLogin(user, context = {}) {
 
   currentStats = normalizeStats(cachedStats || DEFAULT_STATS);
   writeCachedUser(user);
+  rememberAccount(user);
   syncStatsUI(currentStats);
 
   try {
@@ -1498,6 +1690,18 @@ function bindAuthControls() {
   const loginBtn = document.getElementById("loginBtn") || document.getElementById("headerLoginBtn");
   const loginBtnMobile = document.getElementById("loginBtnMobile") || document.getElementById("mobileLoginBtn");
   const googleLogin = document.getElementById("googleLogin");
+  renderRememberedAccounts();
+
+  document.addEventListener("click", (event) => {
+    const remembered = event.target.closest("[data-remembered-account]");
+    if (!remembered) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    useRememberedAccount(remembered).catch((error) => {
+      console.error(error);
+      showAuthError(getFriendlyAuthError(error));
+    });
+  }, true);
 
   async function loginOrLogout(event) {
     if (!auth.currentUser) return;
@@ -1628,6 +1832,9 @@ window.CCFirebase = {
   getFreshVipAccess,
   getUserData,
   saveUserData,
+  readRememberedAccounts,
+  removeRememberedAccount,
+  clearRememberedAccounts,
   vip: Object.freeze({
     getState: getVipState,
     getStatusLabel: getVipStatusLabel,

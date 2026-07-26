@@ -51,6 +51,12 @@ const state = {
   showSentenceStructureLabels: true
 };
 
+function dispatchLearningEvent(name, detail = {}) {
+  window.dispatchEvent(new CustomEvent(name, {
+    detail: { level, lesson: lessonId, ...detail }
+  }));
+}
+
 function getLessonListUrl() {
   return level === "hsk1" ? "hsk1-writing-lessons.html" : "hsk-writing.html";
 }
@@ -407,6 +413,7 @@ function renderCurrentCard() {
 
   document.getElementById("progressLabel").textContent = `${globalIndex + 1}/${total}`;
   document.getElementById("progressBar").style.width = `${((globalIndex + 1) / total) * 100}%`;
+  dispatchLearningEvent("cc:learning-progress", { current: globalIndex + 1, total });
   document.getElementById("pageTitle").textContent = `${state.lesson.title} – ${isSentence ? "Luyện viết câu" : "Từ vựng"}`;
   document.getElementById("cardBadge").textContent = isSentence ? "Luyện viết câu" : "Từ vựng";
   const workspace = document.querySelector(".workspace");
@@ -499,6 +506,7 @@ function submitCurrentAnswer(input) {
     setNextButtonState(false);
     playSuccessSound();
     launchWritingCelebration();
+    dispatchLearningEvent("cc:learning-answer", { correct: true, phase: state.currentPhase });
     return;
   }
 
@@ -508,6 +516,7 @@ function submitCurrentAnswer(input) {
   playFeedbackSound("sad");
   setFeedback("Chưa đúng, thử lại nhé.", "bad");
   renderAnswerMeter(item, input.value, true);
+  dispatchLearningEvent("cc:learning-answer", { correct: false, phase: state.currentPhase });
 }
 
 async function completeCurrentSentence(input, item) {
@@ -527,6 +536,7 @@ async function completeCurrentSentence(input, item) {
 
   playSuccessSound();
   launchWritingCelebration();
+  dispatchLearningEvent("cc:learning-answer", { correct: true, phase: state.currentPhase });
   state.isReadingAnswer = true;
   await speakChineseAndWait(item.chinese);
 
@@ -615,6 +625,7 @@ function revealCurrentAnswer() {
   document.getElementById("checkAnswerBtn").disabled = true;
   document.getElementById("nextBtn").disabled = false;
   setFeedback("Đáp án đã được hiển thị.", "good");
+  dispatchLearningEvent("cc:learning-answer", { correct: false, revealed: true, phase: state.currentPhase });
 }
 
 function goPrev() {
@@ -967,6 +978,7 @@ async function markLessonComplete() {
 
   const xpReward = Number(state.lesson?.xp || state.config?.xp || 10) || 10;
   const firebase = window.CCFirebase;
+  let earnedXp = 0;
 
   try {
     if (firebase?.completeLesson) {
@@ -980,6 +992,7 @@ async function markLessonComplete() {
         xp: xpReward,
         meta: state.lesson?.desc || state.lesson?.description || ''
       });
+      earnedXp = alreadyCompleted ? 0 : xpReward;
       setFeedback(alreadyCompleted ? "Bài này đã được ghi nhận trước đó." : `Bạn đã hoàn thành bài học này. +${xpReward} XP đã được lưu.`, "good");
     } else {
       const localStats = JSON.parse(localStorage.getItem("cc_local_progress") || "{}");
@@ -996,8 +1009,10 @@ async function markLessonComplete() {
         completedLessons: Object.keys(completedLessonIds).length,
         completedLessonIds
       }));
+      earnedXp = alreadyCompleted ? 0 : xpReward;
       setFeedback("Bạn đã hoàn thành bài học. Tiến độ tạm lưu trên máy, đăng nhập để đồng bộ.", "good");
     }
+    dispatchLearningEvent("cc:learning-reward", { xp: earnedXp, reason: "lesson-complete" });
   } catch (error) {
     console.error("Không lưu được tiến độ bài học:", error);
     state.completionSaved = false;

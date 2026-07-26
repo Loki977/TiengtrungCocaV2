@@ -1,4 +1,20 @@
-/* Shared night theme. The Profile switch stores cc_darkMode for every page. */
+/* Shared appearance system. Dark mode, font scale and motion use one source of truth. */
+:root {
+  --cc-base-font-size: 16px;
+  --surface-canvas: var(--bg, #fffdf9);
+  --surface-raised: var(--bg-card, #ffffff);
+  --surface-soft: var(--bg-section, #fff7ee);
+  --content-primary: var(--charcoal, #2d2d2d);
+  --content-secondary: var(--text-muted, #68738b);
+  --outline-subtle: var(--border, rgba(38, 49, 75, .14));
+  --focus-ring: #2563eb;
+}
+
+html[data-font-size="small"] { --cc-base-font-size: 15px; }
+html[data-font-size="medium"] { --cc-base-font-size: 16px; }
+html[data-font-size="large"] { --cc-base-font-size: 18px; }
+html { font-size: var(--cc-base-font-size); }
+
 html[data-motion="off"] *,
 html[data-motion="off"] *::before,
 html[data-motion="off"] *::after {
@@ -35,6 +51,13 @@ html.dark-mode body {
   --ch-deep: #edf4ff;
   --ch-card: #121c2f;
   --ch-mint: #102d2a;
+  --surface-canvas: #0b1220;
+  --surface-raised: #121c2f;
+  --surface-soft: #101b2e;
+  --content-primary: #edf4ff;
+  --content-secondary: #a7b4c9;
+  --outline-subtle: rgba(164, 183, 216, .20);
+  --focus-ring: #7db3ff;
 }
 
 html.dark-mode body {
@@ -130,6 +153,36 @@ html.dark-mode :is(input, textarea, select, .input, .answer-box) {
 }
 
 html.dark-mode :is(input, textarea)::placeholder { color: #71809b !important; }
+
+html.dark-mode :is(
+  .modal,
+  .modal__content,
+  .cc-popup,
+  .auth-card,
+  .writing-card,
+  .practice-card,
+  .toast,
+  .dropdown-menu
+) {
+  color: var(--content-primary) !important;
+  background: var(--surface-raised) !important;
+  border-color: var(--outline-subtle) !important;
+}
+
+html.dark-mode :is(
+  .modal,
+  .modal__content,
+  .cc-popup,
+  .auth-card,
+  .writing-card,
+  .practice-card
+) :is(p, small, label) {
+  color: var(--content-secondary);
+}
+
+html.dark-mode :is(input, textarea, select, button, a):focus-visible {
+  outline-color: var(--focus-ring);
+}
 
 html.dark-mode :is(.secondary-btn, .btn:not(.btn--primary):not(.primary), .cms-tab) {
   color: var(--text) !important;

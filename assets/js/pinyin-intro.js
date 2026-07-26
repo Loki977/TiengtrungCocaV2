@@ -8,6 +8,12 @@
   const audioManifest = new Map();
   let audioRequest = 0;
 
+  function dispatchLearningEvent(name, detail = {}) {
+    window.dispatchEvent(new CustomEvent(name, {
+      detail: { level: "hsk1", lesson: "Pinyin", ...detail }
+    }));
+  }
+
   const wrongHints = {
     "tone-audio": "Âm mǎ hạ thấp rồi đi lên, nên đây là thanh 3.",
     blend: "Giữ nguyên thanh 1 trên a: m + ā = mā.",
@@ -137,6 +143,7 @@
     if (!isCorrect) {
       button.classList.add("is-wrong");
       feedback.textContent = wrongHints[question.dataset.question] || "Hãy nghe lại và thử thêm một lần nhé.";
+      dispatchLearningEvent("cc:learning-answer", { correct: false, source: "pinyin-practice" });
       return;
     }
 
@@ -146,6 +153,7 @@
     feedback.textContent = "Chính xác! Nghe lại đáp án một lần nhé.";
     correctQuestions.add(question.dataset.question);
     setPracticeScore();
+    dispatchLearningEvent("cc:learning-answer", { correct: true, source: "pinyin-practice" });
     playAudio(question.dataset.audioAnswer, button);
   }
 
@@ -242,6 +250,7 @@
       const step = Number(visible.target.dataset.step || 1);
       bar.style.width = `${Math.round((step / steps.length) * 100)}%`;
       label.textContent = `Phần ${step}/${steps.length}`;
+      dispatchLearningEvent("cc:learning-progress", { current: step, total: steps.length });
     }, { rootMargin: "-20% 0px -55%", threshold: [0, .25, .6] });
     steps.forEach((step) => observer.observe(step));
   }

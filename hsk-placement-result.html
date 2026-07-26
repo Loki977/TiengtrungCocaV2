@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ff7a00" />
+  <script>document.documentElement.classList.add('placement-auth-pending');</script>
   <title>Kết quả kiểm tra trình độ HSK – Tiếng Trung Cam &amp; Coca</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,6 +12,7 @@
   <link rel="icon" href="assets/images/hsk-placement/seal.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=4" />
   <link rel="stylesheet" href="assets/css/hsk-placement.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -64,7 +66,8 @@
     </section>
   </main>
   <div id="placementToast" class="placement-toast placement-hidden" role="status" aria-live="polite"></div>
-  <script type="module" src="assets/js/hsk-placement-result.js"></script>
-  <script type="module" src="assets/js/firebase-auth.js"></script>
+  <script src="assets/js/site-shell.js?v=3"></script>
+  <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
+  <script type="module" src="assets/js/hsk-placement-auth-guard.js?v=1"></script>
 </body>
 </html>

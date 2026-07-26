@@ -39,6 +39,16 @@
   ];
   const boundRoots = new WeakSet();
 
+  function dispatchLearningEvent(name, lesson, detail = {}) {
+    window.dispatchEvent(new CustomEvent(name, {
+      detail: {
+        level: getLessonLevelKey(lesson),
+        lesson: Number(lesson?.lessonId || lesson?.id || 1) || 1,
+        ...detail
+      }
+    }));
+  }
+
   function chunkArray(items = [], size = 8) {
     const result = [];
     for (let i = 0; i < items.length; i += size) {
@@ -167,7 +177,14 @@
     };
 
     if (firebase?.completeLesson) {
+      const before = firebase.getCurrentStats?.() || {};
+      const completedKey = `${payload.level}-${payload.lessonId}`;
+      const alreadyCompleted = Boolean(before.completedLessonIds?.[completedKey]);
       await firebase.completeLesson(payload);
+      dispatchLearningEvent('cc:learning-reward', lesson, {
+        xp: alreadyCompleted ? 0 : payload.xp,
+        reason: 'lesson-complete'
+      });
       return;
     }
 
@@ -185,6 +202,10 @@
         completedLessons: Object.keys(completedLessonIds).length,
         completedLessonIds
       }));
+      dispatchLearningEvent('cc:learning-reward', lesson, {
+        xp: alreadyCompleted ? 0 : payload.xp,
+        reason: 'lesson-complete'
+      });
     } catch (error) {
       console.warn('[lesson-render] Không lưu được XP local', error);
     }
@@ -890,6 +911,12 @@
     const titlePinyin = basicPinyin ? getExercisePinyin(lesson.chineseTitle, lesson) : '';
 
     window.__currentLessonData = lesson;
+    const sections = getSections(lesson);
+    const done = getDoneMap(state);
+    dispatchLearningEvent('cc:learning-progress', lesson, {
+      current: sections.filter((section) => done[section]).length,
+      total: sections.length
+    });
 
     return `
       <div class="lesson-detail-wrap gt-detail-wrap${basicPinyin ? ' gt-basic-pinyin' : ''}${basicPinyin && !pinyinVisible ? ' gt-pinyin-hidden' : ''}"${basicPinyin ? ' data-basic-pinyin' : ''}>
@@ -1107,9 +1134,11 @@
           btn.classList.add('wrong');
           showCourseWrongAnswer();
           playCourseFeedbackSound('sad');
+          dispatchLearningEvent('cc:learning-answer', lesson, { correct: false, source: 'multiple-choice' });
         } else {
           launchCourseFireworks();
           playCourseFeedbackSound('success');
+          dispatchLearningEvent('cc:learning-answer', lesson, { correct: true, source: 'multiple-choice' });
         }
       }
 
@@ -1134,11 +1163,13 @@
           launchCourseFireworks();
           playCourseFeedbackSound('success');
           feedback.textContent = 'Chính xác!';
+          dispatchLearningEvent('cc:learning-answer', lesson, { correct: true, source: 'text-answer' });
         } else {
           feedback.classList.add('wrong');
           showCourseWrongAnswer();
           playCourseFeedbackSound('sad');
           feedback.innerHTML = `Chưa đúng. Đáp án gợi ý: <b>${escapeHtml(input.dataset.answer)}</b>${input.dataset.answerPinyin ? `<span class="gt-exercise-pinyin">${escapeHtml(input.dataset.answerPinyin)}</span>` : ''}`;
+          dispatchLearningEvent('cc:learning-answer', lesson, { correct: false, source: 'text-answer' });
         }
       }
     });

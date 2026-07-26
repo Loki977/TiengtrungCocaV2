@@ -274,6 +274,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=4" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -294,6 +295,7 @@
     <section class="lesson-grid" id="lessonGrid" aria-label="Danh sách bài học HSK"></section>
   </main>
 
+  <script src="assets/js/site-shell.js?v=3"></script>
   <script src="assets/js/hsk-learning-access.js"></script>
   <script type="module">
     import { getLessonConfig } from "./lesson-config.js";
@@ -306,7 +308,7 @@
 
     async function loadWritingRemoteState() {
       try {
-        await import("./assets/js/firebase-auth.js");
+        await import("./assets/js/firebase-auth.js?v=auth-ui-20260726");
         const shared = window.CCFirebase;
         if (!shared?.db) return { overrides:new Map(), settings:{}, shared:null };
         await shared.authReady;

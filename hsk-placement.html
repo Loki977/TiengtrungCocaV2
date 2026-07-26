@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ff7a00" />
+  <script>document.documentElement.classList.add('placement-auth-pending');</script>
   <title>Kiểm tra trình độ HSK – Tiếng Trung Cam &amp; Coca</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,6 +12,7 @@
   <link rel="icon" href="assets/images/hsk-placement/seal.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=4" />
   <link rel="stylesheet" href="assets/css/hsk-placement.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -38,7 +40,7 @@
         <div class="placement-meta">
           <span>24–32 câu</span>
           <span>Khoảng 12–18 phút</span>
-          <span>Không cần đăng nhập lại</span>
+          <span>Phiên đăng nhập được ghi nhớ</span>
         </div>
         <div class="placement-actions">
           <button id="startButton" class="placement-primary-button" type="button">Bắt đầu kiểm tra</button>
@@ -110,7 +112,9 @@
   </main>
 
   <div id="placementToast" class="placement-toast placement-hidden" role="status" aria-live="polite"></div>
+  <script src="assets/js/site-shell.js?v=3"></script>
   <script type="module" src="assets/js/home-fabs.js"></script>
-  <script type="module" src="assets/js/hsk-placement.js"></script>
+  <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
+  <script type="module" src="assets/js/hsk-placement-auth-guard.js?v=1"></script>
 </body>
 </html>
