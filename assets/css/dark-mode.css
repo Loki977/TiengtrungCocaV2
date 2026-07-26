@@ -587,3 +587,149 @@ html.dark-mode .hsk-section :is(.gt-quiz-option.wrong, .gt-practice-feedback.wro
   color: #fda4af !important;
   background: rgba(225, 29, 72, .18) !important;
 }
+
+/* Flashcard keeps the same calm navy surfaces and readable contrast as Writing. */
+html.dark-mode .fc-page {
+  color: var(--text);
+  background:
+    radial-gradient(circle at 16% 8%, rgba(52, 84, 145, .24), transparent 29%),
+    radial-gradient(circle at 84% 18%, rgba(255, 138, 42, .10), transparent 27%),
+    linear-gradient(145deg, #080e1b 0%, #0d1729 54%, #101827 100%) !important;
+}
+
+html.dark-mode .deck-banner {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(255, 177, 95, .11), transparent 30%),
+    linear-gradient(145deg, rgba(13, 24, 43, .98), rgba(10, 18, 33, .98)) !important;
+  border-bottom: 1px solid rgba(164, 183, 216, .14);
+}
+
+html.dark-mode .deck-banner::after {
+  background: #0d1729 !important;
+}
+
+html.dark-mode .deck-banner__title {
+  color: #edf4ff !important;
+}
+
+html.dark-mode :is(.deck-progress__bar, .fc-nav, .fc-stats) {
+  border-color: rgba(164, 183, 216, .18) !important;
+  background: rgba(164, 183, 216, .12) !important;
+}
+
+html.dark-mode .deck-progress__info,
+html.dark-mode :is(.fc-flip-badge, .fc-front__hint, .fc-stat__lbl, .fc-saved-empty, .kbd-hint) {
+  color: #a7b4c9 !important;
+}
+
+html.dark-mode :is(.fc-mode-btn, .fc-mastered-counter) {
+  color: #d7e2f2 !important;
+  background: rgba(18, 28, 47, .94) !important;
+  border-color: rgba(164, 183, 216, .22) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .18);
+}
+
+html.dark-mode .fc-mode-btn:hover {
+  color: #ffc08c !important;
+  background: rgba(255, 138, 42, .12) !important;
+  border-color: rgba(255, 177, 95, .38) !important;
+}
+
+html.dark-mode .fc-mode-btn.is-active {
+  color: #fff !important;
+  background: linear-gradient(135deg, #d96516, #b94a0b) !important;
+  border-color: #f28a3a !important;
+}
+
+html.dark-mode .fc-mastered-counter {
+  color: #86efac !important;
+}
+
+html.dark-mode .deck-btn.active {
+  color: #08111f !important;
+  background: var(--hsk-color) !important;
+  border-color: color-mix(in srgb, var(--hsk-color) 70%, #fff) !important;
+}
+
+html.dark-mode .deck-btn-count {
+  color: #d7e2f2 !important;
+  background: rgba(164, 183, 216, .16) !important;
+  border: 1px solid rgba(164, 183, 216, .16);
+}
+
+html.dark-mode .deck-btn.active .deck-btn-count {
+  color: #08111f !important;
+  background: rgba(8, 17, 31, .14) !important;
+  border-color: rgba(8, 17, 31, .10);
+}
+
+html.dark-mode .fc-card__front {
+  color: #d7e2f2 !important;
+  background: linear-gradient(145deg, rgba(24, 37, 61, .98), rgba(11, 21, 38, .98)) !important;
+  border-color: rgba(255, 177, 95, .26) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, .28) !important;
+}
+
+html.dark-mode .fc-front__hanzi {
+  color: #f4f7ff !important;
+  text-shadow: 0 5px 20px rgba(0, 0, 0, .34);
+}
+
+html.dark-mode .fc-front__pinyin {
+  color: #ffb56f !important;
+}
+
+html.dark-mode .fc-front__type,
+html.dark-mode .fc-lesson-label {
+  color: #ffc08c !important;
+  background: rgba(255, 138, 42, .14) !important;
+  border: 1px solid rgba(255, 177, 95, .22);
+}
+
+html.dark-mode :is(.fc-btn-learning, .fc-btn-mastered) {
+  color: #edf4ff !important;
+  border-color: rgba(164, 183, 216, .22) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .20);
+}
+
+html.dark-mode .fc-btn-learning {
+  background: linear-gradient(135deg, rgba(180, 83, 9, .36), rgba(124, 45, 18, .32)) !important;
+}
+
+html.dark-mode .fc-btn-learning:hover {
+  background: linear-gradient(135deg, rgba(217, 101, 22, .46), rgba(154, 52, 18, .42)) !important;
+}
+
+html.dark-mode .fc-btn-mastered {
+  background: linear-gradient(135deg, rgba(21, 128, 61, .34), rgba(6, 95, 70, .30)) !important;
+}
+
+html.dark-mode .fc-btn-mastered:hover {
+  background: linear-gradient(135deg, rgba(22, 163, 74, .44), rgba(5, 120, 87, .40)) !important;
+}
+
+html.dark-mode :is(
+  .fc-nav__btn,
+  .fc-stat,
+  .fc-saved-panel,
+  .fc-saved-item,
+  .fc-saved-panel__close,
+  .kbd,
+  .fc-complete
+) {
+  color: #d7e2f2 !important;
+  background: rgba(18, 28, 47, .92) !important;
+  border-color: rgba(164, 183, 216, .20) !important;
+}
+
+html.dark-mode :is(.fc-nav__counter, .fc-stat__val, .fc-saved-panel__head h3, .fc-saved-item__hanzi, .kbd) {
+  color: #edf4ff !important;
+}
+
+html.dark-mode .fc-saved-item__pinyin {
+  color: #ffb56f !important;
+}
+
+html.dark-mode :is(.fc-saved-panel__head p, .fc-saved-item__meaning, .fc-nav__counter small) {
+  color: #a7b4c9 !important;
+}

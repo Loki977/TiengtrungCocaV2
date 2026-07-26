@@ -80,6 +80,7 @@ assert.doesNotMatch(rememberedBlock, /accessToken|refreshToken|credential|passwo
 assert.doesNotMatch(auth.slice(auth.indexOf('async function logout'), auth.indexOf('async function reauthenticateForAccountDeletion')), /REMEMBERED_ACCOUNTS_KEY/);
 
 const hud = read('assets/js/learning-hud.js');
+const hudCss = read('assets/css/learning-hud.css');
 assert.match(hud, /visibilitychange/);
 assert.match(hud, /pagehide/);
 assert.match(hud, /cc:learning-answer/);
@@ -88,6 +89,10 @@ assert.match(hud, /cc:learning-progress/);
 assert.match(hud, /formatDuration/);
 assert.match(hud, /function setValue/, 'HUD updates must avoid self-triggering MutationObserver loops');
 assert.doesNotMatch(hud, /querySelector\('\[data-hud-value="(?:time|xp|combo|account|lesson|progress)"\]'\)\.textContent\s*=/);
+assert.match(hudCss, /width:\s*min\(196px/, 'desktop learning controls must be about 15% narrower');
+assert.match(hudCss, /min-height:\s*43px/, 'desktop learning control buttons must be about 15% shorter');
+assert.match(hudCss, /html\.dark-mode[\s\S]*--cc-hud-surface:\s*rgba\(10,\s*18,\s*33/, 'learning controls must use a true dark surface');
+assert.match(hudCss, /body:has\(> header\[data-cc-legacy-shell-header\]\) \.cc-learning-hud\s*\{[^}]*top:\s*146px/s, 'mobile learning controls must clear the fixed website brand');
 
 assert.doesNotMatch(read('package.json'), /theme-preferences\.js/);
 assert.ok(fs.existsSync(path.join(root, 'assets/css/responsive.css')), 'referenced responsive.css must exist');
@@ -97,6 +102,9 @@ assert.match(read('assets/js/lesson-render.js'), /class="detail-back-btn"[\s\S]*
 assert.doesNotMatch(read('flashcard.html'), /class="cc-page-brand"/, 'Flashcard branding must stay in the shared page header');
 assert.doesNotMatch(read('vocabulary.html'), /class="cc-page-brand"/, 'Tàng Thư Các branding must stay in the shared page header');
 assert.match(read('hsk-writing.html'), /cc-site-brand__logo/, 'Writing must use the shared website logo');
+assert.match(shellCss, /main\.page > header\.topbar\[data-cc-legacy-shell-header\][\s\S]*position:\s*sticky\s*!important/, 'Writing website branding must stay visible while scrolling');
+assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.fc-page[\s\S]*linear-gradient\(145deg,\s*#080e1b/, 'Flashcard must use the shared dark canvas');
+assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.fc-card__front[\s\S]*rgba\(24,\s*37,\s*61/, 'Flashcard faces must stay readable in dark mode');
 assert.match(read('assets/css/hsk-hero-scene.css'), /padding-top:\s*calc\(var\(--header-h/, 'course hero characters must start below the website brand');
 assert.match(read('assets/css/quick-menu.css'), /\.quick-menu\s*\{[\s\S]*padding-top:\s*clamp\(118px/, 'Home quick cards must sit lower below the header');
 assert.match(read('assets/css/quick-menu.css'), /@media \(max-width:\s*768px\)[\s\S]*\.quick-menu\s*\{[\s\S]*padding-top:\s*96px/, 'Home quick cards must also clear the mobile brand header');

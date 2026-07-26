@@ -8,22 +8,22 @@
 }
 
 html.dark-mode {
-  --cc-hud-surface: rgba(18, 28, 47, .96);
-  --cc-hud-surface-soft: rgba(27, 41, 65, .96);
+  --cc-hud-surface: rgba(10, 18, 33, .97);
+  --cc-hud-surface-soft: rgba(21, 34, 56, .96);
   --cc-hud-text: #edf4ff;
   --cc-hud-muted: #a7b4c9;
-  --cc-hud-border: rgba(255, 177, 95, .24);
-  --cc-hud-shadow: 0 20px 54px rgba(0, 0, 0, .34);
+  --cc-hud-border: rgba(164, 183, 216, .22);
+  --cc-hud-shadow: 0 18px 46px rgba(0, 0, 0, .38);
 }
 
 .cc-learning-hud {
   z-index: 1800;
-  width: min(230px, calc(100vw - 32px));
-  padding: 13px;
+  width: min(196px, calc(100vw - 32px));
+  padding: 11px;
   color: var(--cc-hud-text);
   background: var(--cc-hud-surface);
   border: 1px solid var(--cc-hud-border);
-  border-radius: 22px;
+  border-radius: 19px;
   box-shadow: var(--cc-hud-shadow);
   backdrop-filter: blur(16px) saturate(120%);
   box-sizing: border-box;
@@ -33,8 +33,8 @@ html.dark-mode {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 9px;
+  gap: 7px;
+  margin-bottom: 7px;
 }
 
 .cc-learning-hud__title {
@@ -44,12 +44,12 @@ html.dark-mode {
 
 .cc-learning-hud__title strong {
   color: var(--cc-hud-text);
-  font: 800 .85rem/1.2 "Baloo 2", Poppins, sans-serif;
+  font: 800 .76rem/1.2 "Baloo 2", Poppins, sans-serif;
 }
 
 .cc-learning-hud__title small {
   color: var(--cc-hud-muted);
-  font: 600 .61rem/1.2 Poppins, sans-serif;
+  font: 600 .55rem/1.2 Poppins, sans-serif;
 }
 
 .cc-learning-hud__toggle {
@@ -67,34 +67,34 @@ html.dark-mode {
 
 .cc-learning-hud__grid {
   display: grid;
-  gap: 7px;
+  gap: 6px;
 }
 
 .cc-learning-hud__item {
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
+  grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
-  min-height: 50px;
-  padding: 6px 8px;
-  gap: 8px;
+  min-height: 43px;
+  padding: 5px 7px;
+  gap: 7px;
   background: var(--cc-hud-surface-soft);
   border: 1px solid color-mix(in srgb, var(--cc-hud-border) 70%, transparent);
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .cc-learning-hud__icon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 31px;
+  height: 31px;
   color: var(--hud-accent, #ef7c18);
   background: color-mix(in srgb, var(--hud-accent, #ef7c18) 13%, transparent);
-  border-radius: 11px;
+  border-radius: 10px;
 }
 
 .cc-learning-hud__icon svg {
-  width: 21px;
-  height: 21px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -113,13 +113,13 @@ html.dark-mode {
 
 .cc-learning-hud__copy small {
   color: var(--cc-hud-muted);
-  font: 650 .59rem/1.25 Poppins, sans-serif;
+  font: 650 .53rem/1.25 Poppins, sans-serif;
 }
 
 .cc-learning-hud__copy strong {
   overflow: hidden;
   color: var(--hud-accent, var(--cc-hud-text));
-  font: 800 1rem/1.2 "Baloo 2", Poppins, sans-serif;
+  font: 800 .88rem/1.2 "Baloo 2", Poppins, sans-serif;
   font-variant-numeric: tabular-nums;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -151,14 +151,14 @@ html.dark-mode {
 
 @media (min-width: 1280px) {
   body.cc-learning-active {
-    padding-right: 250px;
+    padding-right: 214px;
     box-sizing: border-box;
   }
 
   .cc-learning-hud {
     position: fixed;
     top: max(92px, calc(env(safe-area-inset-top) + 20px));
-    right: 18px;
+    right: 16px;
     max-height: calc(100dvh - 116px);
     overflow: hidden auto;
   }
@@ -168,7 +168,7 @@ html.dark-mode {
   .cc-learning-hud {
     position: sticky;
     top: 10px;
-    width: min(920px, calc(100% - 28px));
+    width: min(782px, calc(100% - 28px));
     margin: 10px auto 18px;
   }
 
@@ -182,30 +182,34 @@ html.dark-mode {
   }
 
   .cc-learning-hud__item {
-    grid-template-columns: 30px minmax(0, 1fr);
-    min-height: 46px;
-    padding: 5px 6px;
+    grid-template-columns: 26px minmax(0, 1fr);
+    min-height: 40px;
+    padding: 4px 5px;
     gap: 5px;
   }
 
   .cc-learning-hud__icon {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
   }
 
   .cc-learning-hud__copy strong {
-    font-size: .83rem;
+    font-size: .74rem;
+  }
+
+  body:has(> header[data-cc-legacy-shell-header]) .cc-learning-hud {
+    top: 96px;
   }
 }
 
 @media (max-width: 767px) {
   .cc-learning-hud {
     position: sticky;
-    top: 6px;
-    width: calc(100% - 20px);
+    top: 68px;
+    width: 85%;
     margin: 8px auto 14px;
-    padding: 9px;
-    border-radius: 18px;
+    padding: 8px;
+    border-radius: 16px;
   }
 
   .cc-learning-hud__head {
@@ -224,8 +228,8 @@ html.dark-mode {
   .cc-learning-hud__item {
     grid-template-columns: 1fr;
     justify-items: center;
-    min-height: 58px;
-    padding: 5px 3px;
+    min-height: 50px;
+    padding: 4px 3px;
     gap: 2px;
     text-align: center;
   }
@@ -235,11 +239,11 @@ html.dark-mode {
   }
 
   .cc-learning-hud__copy strong {
-    font-size: .86rem;
+    font-size: .76rem;
   }
 
   .cc-learning-hud__copy small {
-    font-size: .54rem;
+    font-size: .5rem;
   }
 
   .cc-learning-hud__item.is-secondary {
@@ -252,6 +256,10 @@ html.dark-mode {
 
   .cc-learning-hud.is-expanded .cc-learning-hud__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body:has(> header[data-cc-legacy-shell-header]) .cc-learning-hud {
+    top: 146px;
   }
 }
 

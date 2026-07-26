@@ -42,6 +42,11 @@ body.cc-shell-ready > [data-cc-legacy-shell-header] {
   display: none !important;
 }
 
+body.cc-shell-ready > header[data-cc-legacy-shell-header] {
+  position: fixed !important;
+  z-index: 1200 !important;
+}
+
 body.cc-shell-ready > header[data-cc-legacy-shell-header] :is(
   .nav,
   .header__actions,
@@ -50,6 +55,17 @@ body.cc-shell-ready > header[data-cc-legacy-shell-header] :is(
 ),
 body.cc-shell-ready main.page > header.topbar > .nav {
   display: none !important;
+}
+
+body.cc-shell-ready main.page > header.topbar[data-cc-legacy-shell-header] {
+  position: sticky !important;
+  z-index: 1200;
+  top: 12px;
+  pointer-events: none;
+}
+
+body.cc-shell-ready main.page > header.topbar[data-cc-legacy-shell-header] .cc-site-brand {
+  pointer-events: auto;
 }
 
 body.cc-shell-ready main {
@@ -287,6 +303,28 @@ a.logo .logo__icon::before {
   font: inherit !important;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+html.dark-mode .cc-site-brand,
+html.dark-mode .cc-site-brand .cc-site-brand__name {
+  color: #edf4ff !important;
+}
+
+body.cc-shell-ready main.page > header.topbar[data-cc-legacy-shell-header] .cc-site-brand {
+  align-self: flex-start;
+  width: max-content;
+  max-width: 100%;
+  padding: 6px 12px 6px 6px !important;
+  background: rgba(255, 253, 249, .90) !important;
+  border: 1px solid var(--cc-shell-border) !important;
+  border-radius: 19px !important;
+  box-shadow: 0 10px 28px rgba(39, 62, 92, .13) !important;
+  backdrop-filter: blur(16px) saturate(120%);
+}
+
+html.dark-mode body.cc-shell-ready main.page > header.topbar[data-cc-legacy-shell-header] .cc-site-brand {
+  background: rgba(10, 18, 33, .92) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .34) !important;
 }
 
 .logo--white.cc-site-brand,
@@ -920,6 +958,10 @@ html.dark-mode .cc-auth-required-note {
 
   body.cc-shell-ready > header.placement-header[data-cc-legacy-shell-header] {
     top: 0 !important;
+  }
+
+  body.cc-shell-ready main.page > header.topbar[data-cc-legacy-shell-header] {
+    top: 76px;
   }
 
   body.cc-shell-ready > header[data-cc-legacy-shell-header] .cc-site-brand__name {

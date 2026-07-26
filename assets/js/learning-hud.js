@@ -4,7 +4,7 @@
   if (window.CCLearningHUD) return;
 
   const scriptUrl = document.currentScript?.src || new URL('assets/js/learning-hud.js', document.baseURI).href;
-  const styleUrl = new URL('../css/learning-hud.css?v=3', scriptUrl).href;
+  const styleUrl = new URL('../css/learning-hud.css?v=4', scriptUrl).href;
   const params = new URLSearchParams(location.search);
 
   function normalizeLevel(value) {
