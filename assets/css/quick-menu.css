@@ -238,8 +238,8 @@
     width: min-content;
     min-width: 5ch;
     max-width: 8ch;
-    font-size: clamp(.66rem, 2.6vw, .82rem);
-    line-height: 1.02;
+    font-size: clamp(.82rem, 3.6vw, 1rem);
+    line-height: 1.08;
     text-align: center;
   }
 
@@ -266,7 +266,7 @@
   .quick-card.is-active .quick-card__text {
     width: auto;
     max-width: 100%;
-    font-size: clamp(.92rem, 4.2vw, 1.12rem);
+    font-size: clamp(1.02rem, 4.6vw, 1.22rem);
     text-align: left;
   }
 
@@ -275,7 +275,7 @@
     max-width: 170px;
     max-height: 34px;
     overflow: hidden;
-    font-size: clamp(.58rem, 2.25vw, .7rem);
+    font-size: clamp(.65rem, 2.55vw, .78rem);
     line-height: 1.25;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -285,7 +285,7 @@
     min-height: 32px;
     padding-inline: 11px;
     border-radius: 9px;
-    font-size: .64rem;
+    font-size: .7rem;
   }
 }
 
@@ -310,7 +310,7 @@
   }
 
   .quick-card.is-active .quick-card__description {
-    font-size: .57rem;
+    font-size: .62rem;
   }
 }
 

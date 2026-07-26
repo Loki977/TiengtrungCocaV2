@@ -4,7 +4,7 @@
   if (window.CCLearningHUD) return;
 
   const scriptUrl = document.currentScript?.src || new URL('assets/js/learning-hud.js', document.baseURI).href;
-  const styleUrl = new URL('../css/learning-hud.css?v=4', scriptUrl).href;
+  const styleUrl = new URL('../css/learning-hud.css?v=6', scriptUrl).href;
   const params = new URLSearchParams(location.search);
 
   function normalizeLevel(value) {
@@ -76,7 +76,13 @@
           <strong>Phiên học hiện tại</strong>
           <small>Cập nhật theo hoạt động thật</small>
         </span>
-        <button class="cc-learning-hud__toggle" type="button" aria-expanded="false" aria-label="Mở rộng thông tin phiên học">+</button>
+        <button class="cc-learning-hud__toggle" type="button" aria-expanded="false" aria-label="Mở rộng thông tin phiên học">
+          <span class="cc-learning-hud__toggle-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">${iconMarkup.time}</svg>
+          </span>
+          <strong class="cc-learning-hud__toggle-time" data-hud-toggle-time>00:00:00</strong>
+          <span class="cc-learning-hud__toggle-chevron" aria-hidden="true">⌄</span>
+        </button>
       </div>
       <div class="cc-learning-hud__grid">
         ${item('time', 'Thời gian', '00:00:00')}
@@ -91,7 +97,6 @@
       const expanded = hud.classList.toggle('is-expanded');
       event.currentTarget.setAttribute('aria-expanded', String(expanded));
       event.currentTarget.setAttribute('aria-label', expanded ? 'Thu gọn thông tin phiên học' : 'Mở rộng thông tin phiên học');
-      event.currentTarget.textContent = expanded ? '−' : '+';
     });
   }
 
@@ -134,7 +139,10 @@
   function render() {
     if (!hud) return;
     const progress = state.total ? Math.min(100, Math.round((state.current / state.total) * 100)) : 0;
-    setValue('time', formatDuration(activeElapsed()));
+    const elapsed = formatDuration(activeElapsed());
+    setValue('time', elapsed);
+    const compactTime = hud.querySelector('[data-hud-toggle-time]');
+    if (compactTime && compactTime.textContent !== elapsed) compactTime.textContent = elapsed;
     setValue('xp', `+${Math.max(0, Math.round(state.sessionXp))}`);
     setValue('combo', state.combo);
     setValue('account', state.accountLevel);

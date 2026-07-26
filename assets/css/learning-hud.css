@@ -54,7 +54,8 @@ html.dark-mode {
 
 .cc-learning-hud__toggle {
   display: none;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   min-width: 44px;
   min-height: 44px;
   padding: 0;
@@ -63,6 +64,22 @@ html.dark-mode {
   border: 1px solid var(--cc-hud-border);
   border-radius: 13px;
   cursor: pointer;
+}
+
+.cc-learning-hud__toggle-icon,
+.cc-learning-hud__toggle-chevron,
+.cc-learning-hud__toggle-time {
+  display: none;
+}
+
+.cc-learning-hud__toggle-icon svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .cc-learning-hud__grid {
@@ -206,21 +223,62 @@ html.dark-mode {
   .cc-learning-hud {
     position: sticky;
     top: 68px;
-    width: 85%;
-    margin: 8px auto 14px;
-    padding: 8px;
-    border-radius: 16px;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    margin: 8px 12px 14px auto;
+    padding: 4px;
+    border-radius: 999px;
+    transition:
+      width 220ms cubic-bezier(.22, 1, .36, 1),
+      padding 220ms cubic-bezier(.22, 1, .36, 1),
+      border-radius 220ms cubic-bezier(.22, 1, .36, 1);
   }
 
   .cc-learning-hud__head {
-    margin-bottom: 6px;
+    justify-content: flex-end;
+    margin-bottom: 0;
+  }
+
+  .cc-learning-hud__title {
+    display: none;
   }
 
   .cc-learning-hud__toggle {
-    display: grid;
+    display: inline-flex;
+    min-width: 132px;
+    padding: 0 10px;
+    gap: 7px;
+    border-radius: 999px;
+  }
+
+  .cc-learning-hud__toggle-icon,
+  .cc-learning-hud__toggle-chevron,
+  .cc-learning-hud__toggle-time {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cc-learning-hud__toggle-icon {
+    color: #e97815;
+  }
+
+  .cc-learning-hud__toggle-time {
+    color: var(--cc-hud-text);
+    font: 800 .8rem/1 "Baloo 2", Poppins, sans-serif;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .02em;
+  }
+
+  .cc-learning-hud__toggle-chevron {
+    margin-left: 1px;
+    color: var(--cc-hud-muted);
+    font: 800 1rem/1 Poppins, sans-serif;
+    transition: transform 180ms ease;
   }
 
   .cc-learning-hud__grid {
+    display: none;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 5px;
   }
@@ -246,16 +304,41 @@ html.dark-mode {
     font-size: .5rem;
   }
 
-  .cc-learning-hud__item.is-secondary {
-    display: none;
+  .cc-learning-hud.is-expanded {
+    width: 85%;
+    max-width: calc(100% - 24px);
+    margin-inline: auto;
+    padding: 8px;
+    border-radius: 16px;
   }
 
-  .cc-learning-hud.is-expanded .cc-learning-hud__item.is-secondary {
+  .cc-learning-hud.is-expanded .cc-learning-hud__head {
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .cc-learning-hud.is-expanded .cc-learning-hud__title {
     display: grid;
   }
 
   .cc-learning-hud.is-expanded .cc-learning-hud__grid {
+    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cc-learning-hud.is-expanded .cc-learning-hud__toggle {
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+  }
+
+  .cc-learning-hud.is-expanded .cc-learning-hud__toggle-icon,
+  .cc-learning-hud.is-expanded .cc-learning-hud__toggle-time {
+    display: none;
+  }
+
+  .cc-learning-hud.is-expanded .cc-learning-hud__toggle-chevron {
+    transform: rotate(180deg);
   }
 
   body:has(> header[data-cc-legacy-shell-header]) .cc-learning-hud {
@@ -269,6 +352,8 @@ html.dark-mode {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cc-learning-hud,
+  .cc-learning-hud__toggle-chevron,
   .cc-learning-hud__progress span {
     transition: none;
   }

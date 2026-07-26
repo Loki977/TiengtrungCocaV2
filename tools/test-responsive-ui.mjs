@@ -88,11 +88,17 @@ assert.match(hud, /cc:learning-reward/);
 assert.match(hud, /cc:learning-progress/);
 assert.match(hud, /formatDuration/);
 assert.match(hud, /function setValue/, 'HUD updates must avoid self-triggering MutationObserver loops');
+assert.match(hud, /data-hud-toggle-time/, 'mobile HUD must expose its live time in the compact clock control');
+assert.match(hud, /cc-learning-hud__toggle-icon[\s\S]*iconMarkup\.time/, 'mobile HUD must use a clock icon');
 assert.doesNotMatch(hud, /querySelector\('\[data-hud-value="(?:time|xp|combo|account|lesson|progress)"\]'\)\.textContent\s*=/);
 assert.match(hudCss, /width:\s*min\(196px/, 'desktop learning controls must be about 15% narrower');
 assert.match(hudCss, /min-height:\s*43px/, 'desktop learning control buttons must be about 15% shorter');
 assert.match(hudCss, /html\.dark-mode[\s\S]*--cc-hud-surface:\s*rgba\(10,\s*18,\s*33/, 'learning controls must use a true dark surface');
 assert.match(hudCss, /body:has\(> header\[data-cc-legacy-shell-header\]\) \.cc-learning-hud\s*\{[^}]*top:\s*146px/s, 'mobile learning controls must clear the fixed website brand');
+assert.match(hudCss, /@media \(max-width:\s*767px\)[\s\S]*\.cc-learning-hud__grid\s*\{[^}]*display:\s*none/s, 'mobile HUD must start collapsed');
+assert.match(hudCss, /\.cc-learning-hud\.is-expanded \.cc-learning-hud__grid\s*\{[^}]*display:\s*grid/s, 'expanded mobile HUD must show all session information');
+assert.match(hudCss, /\.cc-learning-hud\.is-expanded \.cc-learning-hud__toggle\s*\{[^}]*width:\s*44px/s, 'expanded mobile HUD must keep a compact close control');
+assert.match(quickMenuCss, /@media \(max-width:\s*768px\)[\s\S]*font-size:\s*clamp\(\.82rem,\s*3\.6vw,\s*1rem\)/, 'Home quick-card titles must be larger on mobile');
 
 assert.doesNotMatch(read('package.json'), /theme-preferences\.js/);
 assert.ok(fs.existsSync(path.join(root, 'assets/css/responsive.css')), 'referenced responsive.css must exist');
