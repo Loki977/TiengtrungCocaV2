@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Khóa học HSK – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="icon" href="assets/images/brand/favicon-orange.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -128,6 +129,38 @@
     .detail-back-row {
       display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
       flex-wrap: wrap;
+    }
+    .detail-back-btn {
+      display: grid;
+      flex: 0 0 58px;
+      width: 58px;
+      height: 58px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid rgba(247, 180, 0, .26);
+      border-radius: 20px;
+      color: #fff;
+      background: linear-gradient(135deg, #f7b400, #ff8a2a);
+      box-shadow: 0 12px 24px rgba(255, 138, 42, .22);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .detail-back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(255, 138, 42, .28);
+    }
+    .detail-back-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .detail-back-btn:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, .55);
+      outline-offset: 3px;
     }
     .detail-breadcrumb {
       font-size: .85rem; color: var(--text-muted); font-weight: 500;
@@ -296,6 +329,12 @@
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
+      .detail-back-btn {
+        flex-basis: 50px;
+        width: 50px;
+        height: 50px;
+        border-radius: 17px;
+      }
       .lesson-list { grid-template-columns: 1fr; }
       .lesson-item { grid-template-columns: 52px minmax(0, 1fr) 24px; gap: 12px; min-height: 150px; padding: 19px 18px; }
       .lesson-item__action { justify-self: end; }
@@ -313,8 +352,8 @@
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
-  <link rel="stylesheet" href="assets/css/app-shell.css?v=4" />
-  <link rel="stylesheet" href="assets/css/hsk-hero-scene.css" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=7" />
+  <link rel="stylesheet" href="assets/css/hsk-hero-scene.css?v=2" />
   <link rel="stylesheet" href="assets/css/hero-slogan.css" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -495,7 +534,7 @@
   </div>
 
   <!-- Scripts: data first, then page logic, then shared app -->
-<script src="assets/js/site-shell.js?v=3"></script>
+<script src="assets/js/site-shell.js?v=5"></script>
 <script src="assets/js/learning-hud.js?v=4"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/speech-service.js?v=5"></script>

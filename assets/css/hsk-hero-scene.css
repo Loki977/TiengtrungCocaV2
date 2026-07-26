@@ -1,5 +1,5 @@
 .page-hero {
-  padding-top: 10px !important;
+  padding-top: calc(var(--header-h, 88px) + 10px) !important;
   padding-bottom: 34px !important;
 }
 
@@ -251,7 +251,7 @@ html[data-motion="off"] .hsk-hero-cat { transform: none; }
 }
 
 @media (max-width: 640px) {
-  .page-hero { padding-top: 6px !important; padding-bottom: 26px !important; }
+  .page-hero { padding-top: calc(var(--header-h, 64px) + 8px) !important; padding-bottom: 26px !important; }
   .page-hero .hsk-hero-scene { height: 108px; margin-bottom: 8px; }
   .hsk-hero-mouse { left: 0; width: 72px; }
   .hsk-hero-cat { right: -2px; width: 82px; }

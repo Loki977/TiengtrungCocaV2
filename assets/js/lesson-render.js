@@ -921,7 +921,12 @@
     return `
       <div class="lesson-detail-wrap gt-detail-wrap${basicPinyin ? ' gt-basic-pinyin' : ''}${basicPinyin && !pinyinVisible ? ' gt-pinyin-hidden' : ''}"${basicPinyin ? ' data-basic-pinyin' : ''}>
         <div class="detail-back-row">
-          <button class="btn btn--outline btn--sm detail-back-btn" onclick="backToLessonList()">← Danh sách bài</button>
+          <button class="detail-back-btn" type="button" onclick="backToLessonList()" aria-label="Quay lại danh sách bài học" title="Quay lại danh sách bài học">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 12H5"></path>
+              <path d="m11 6-6 6 6 6"></path>
+            </svg>
+          </button>
           <span class="detail-breadcrumb">HSK ${lesson.level || 1} › Bài ${lesson.lessonId}</span>
           ${basicPinyin ? `
             <button type="button" class="gt-pinyin-toggle" data-pinyin-toggle aria-pressed="${pinyinVisible}" title="Bật hoặc tắt pinyin">

@@ -28,6 +28,10 @@ for (const file of primaryPages) {
   assert.match(html, /app-shell\.css/, `${file} must load the shared account shell styles`);
 }
 
+for (const file of fs.readdirSync(root).filter((name) => name.endsWith('.html'))) {
+  assert.match(read(file), /assets\/images\/brand\/favicon-orange\.png/, `${file} must use the orange favicon`);
+}
+
 const indexHtml = read('index.html');
 assert.equal((indexHtml.match(/class="quick-card /g) || []).length, 4, 'Home must keep four quick cards');
 assert.equal((indexHtml.match(/quick-card__description/g) || []).length, 4, 'every quick card needs a short description');
@@ -35,9 +39,11 @@ assert.equal((indexHtml.match(/quick-card__cta/g) || []).length, 4, 'every quick
 assert.doesNotMatch(indexHtml, /assets\/images\/home\/h1\.png/, 'Home must not request the removed video poster');
 
 const quickMenu = read('assets/js/quick-menu.js');
+const quickMenuCss = read('assets/css/quick-menu.css');
 assert.match(quickMenu, /aria-expanded/);
 assert.match(quickMenu, /event\.key (?:===|!==) ' '/, 'Space must operate a focused card');
 assert.match(quickMenu, /event\.key === 'Escape'/, 'Escape must collapse the cards');
+assert.match(quickMenuCss, /white-space:\s*nowrap/, 'expanded Home card titles must remain visually stable');
 
 const shell = read('assets/js/site-shell.js');
 const shellCss = read('assets/css/app-shell.css');
@@ -45,6 +51,15 @@ assert.match(shell, /data-cc-auth-required/);
 assert.match(shell, /cc-shell-mobile-open/);
 assert.match(shell, /toggleAttribute\('inert'/, 'the hidden mobile drawer must leave the focus order');
 assert.match(shell, /removeDuplicateProfileSettings/, 'Profile settings must move into the shared shell');
+assert.match(shell, /pointerenter/, 'desktop shell must expand when hovered');
+assert.match(shell, /pointerleave/, 'desktop shell must collapse after hover');
+assert.match(shellCss, /\.cc-shell:hover/, 'desktop hover must have a CSS fallback');
+assert.match(shellCss, /body\.cc-shell-ready > \[data-cc-legacy-shell-header\][\s\S]*display:\s*block\s*!important/, 'desktop page headers must remain visible beside the shell');
+assert.match(shell, /site-logo\.webp/, 'shared shell must use the website logo');
+assert.match(shell, /favicon-orange\.png/, 'shared shell must install the orange favicon');
+assert.match(shell, /cc-site-brand/, 'legacy page branding must be normalized by the shared shell');
+assert.match(shellCss, /\.cc-site-brand__mark/, 'all page headers must share one brand mark style');
+assert.match(shellCss, /header\[data-cc-legacy-shell-header\][\s\S]*\.header__actions[\s\S]*display:\s*none\s*!important/, 'legacy header navigation and account actions must stay hidden');
 assert.doesNotMatch(read('profile.html'), /discoverProfileBackgrounds\(\)\.then/, 'the removed Profile settings panel must not scan legacy backgrounds');
 assert.match(shell, /new URL\(sheet\.href\)\.pathname === expectedPath/, 'the shell must not inject a duplicate versioned stylesheet');
 assert.match(shellCss, /\.cc-shell \[hidden\]\s*\{[^}]*display:\s*none\s*!important/s, 'permission-gated shell items must stay hidden');
@@ -76,5 +91,17 @@ assert.doesNotMatch(hud, /querySelector\('\[data-hud-value="(?:time|xp|combo|acc
 
 assert.doesNotMatch(read('package.json'), /theme-preferences\.js/);
 assert.ok(fs.existsSync(path.join(root, 'assets/css/responsive.css')), 'referenced responsive.css must exist');
+assert.ok(fs.existsSync(path.join(root, 'assets/images/brand/site-logo.webp')), 'website logo asset must exist');
+assert.ok(fs.existsSync(path.join(root, 'assets/images/brand/favicon-orange.png')), 'orange favicon asset must exist');
+assert.match(read('assets/js/lesson-render.js'), /class="detail-back-btn"[\s\S]*<svg/, 'course lesson back control must use the large writing-style arrow');
+assert.doesNotMatch(read('flashcard.html'), /class="cc-page-brand"/, 'Flashcard branding must stay in the shared page header');
+assert.doesNotMatch(read('vocabulary.html'), /class="cc-page-brand"/, 'Tàng Thư Các branding must stay in the shared page header');
+assert.match(read('hsk-writing.html'), /cc-site-brand__logo/, 'Writing must use the shared website logo');
+assert.match(read('assets/css/hsk-hero-scene.css'), /padding-top:\s*calc\(var\(--header-h/, 'course hero characters must start below the website brand');
+assert.match(read('assets/css/quick-menu.css'), /\.quick-menu\s*\{[\s\S]*padding-top:\s*clamp\(118px/, 'Home quick cards must sit lower below the header');
+assert.match(read('assets/css/quick-menu.css'), /@media \(max-width:\s*768px\)[\s\S]*\.quick-menu\s*\{[\s\S]*padding-top:\s*96px/, 'Home quick cards must also clear the mobile brand header');
+assert.match(read('challenge.html'), /challenge-brand cc-site-brand/, 'Challenge must use the shared website brand');
+assert.match(read('ThiThu.html'), /cc-site-brand__logo/, 'Placement test entry must use the shared website logo');
+assert.match(read('profile.html'), /background-attachment:\s*fixed\s*!important/, 'Profile desktop background must size against the viewport');
 
 console.log('responsive UI integration tests passed');

@@ -1,10 +1,14 @@
 /* Expandable Home destinations. The row height stays fixed so the video below never jumps. */
+.quick-menu {
+  padding-top: clamp(118px, 14vh, 142px);
+}
+
 .quick-menu__inner {
   --quick-expanded: 56fr;
   --quick-collapsed: 15fr;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   min-height: 178px;
-  transition: grid-template-columns 410ms cubic-bezier(.22, 1.18, .36, 1);
+  transition: grid-template-columns 360ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .quick-menu__inner.has-active {
@@ -27,12 +31,12 @@
   cursor: pointer;
   touch-action: manipulation;
   transition:
-    transform 410ms cubic-bezier(.22, 1.18, .36, 1),
+    transform 300ms cubic-bezier(.22, 1, .36, 1),
     box-shadow 260ms ease,
     border-color 260ms ease,
     filter 260ms ease,
-    padding 410ms cubic-bezier(.22, 1.18, .36, 1),
-    gap 410ms cubic-bezier(.22, 1.18, .36, 1);
+    padding 360ms cubic-bezier(.22, 1, .36, 1),
+    gap 360ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .quick-card__content {
@@ -51,6 +55,11 @@
   min-width: 0;
   justify-items: center;
   gap: 4px;
+  transition: width 300ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.quick-card__text {
+  transition: font-size 220ms ease, line-height 220ms ease;
 }
 
 .quick-card__description,
@@ -61,12 +70,12 @@
   opacity: 0;
   overflow: hidden;
   visibility: hidden;
-  transform: translateX(-8px);
+  transform: translate3d(-6px, 4px, 0);
   transition:
-    opacity 180ms ease 70ms,
-    transform 260ms ease 70ms,
-    max-width 360ms ease,
-    max-height 280ms ease;
+    opacity 150ms ease,
+    transform 220ms ease,
+    max-width 280ms cubic-bezier(.22, 1, .36, 1),
+    max-height 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .quick-card__description {
@@ -102,6 +111,7 @@
 
 .quick-card.is-active .quick-card__body {
   justify-items: start;
+  width: min(100%, 360px);
 }
 
 .quick-card.is-active .quick-card__description,
@@ -110,11 +120,15 @@
   max-height: 80px;
   opacity: 1;
   visibility: visible;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
+  transition-delay: 120ms;
 }
 
 .quick-card.is-active .quick-card__text {
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  max-width: 100%;
+  font-size: clamp(1.3rem, 1.8vw, 1.65rem);
+  line-height: 1.08;
+  white-space: nowrap;
 }
 
 .quick-menu__inner.has-active .quick-card:not(.is-active) {
@@ -168,7 +182,7 @@
 
 @media (max-width: 768px) {
   .quick-menu {
-    padding-top: 14px;
+    padding-top: 96px;
     padding-bottom: 20px;
   }
 
@@ -301,7 +315,7 @@
 }
 
 @media (hover: hover) {
-  .quick-card:hover {
+  .quick-card:hover:not(.is-active) {
     transform: translateY(-5px);
   }
 }

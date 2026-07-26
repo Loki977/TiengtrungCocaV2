@@ -4,7 +4,9 @@
   if (window.CCSiteShell) return;
 
   const scriptUrl = document.currentScript?.src || new URL('assets/js/site-shell.js', document.baseURI).href;
-  const stylesheetUrl = new URL('../css/app-shell.css?v=4', scriptUrl).href;
+  const stylesheetUrl = new URL('../css/app-shell.css?v=5', scriptUrl).href;
+  const brandLogoUrl = new URL('../images/brand/site-logo.webp', scriptUrl).href;
+  const faviconUrl = new URL('../images/brand/favicon-orange.png', scriptUrl).href;
   const AUTH_RETURN_KEY = 'cc_auth_return_url';
   const SETTINGS_KEY = 'cc_device_settings_v1';
   const PROFILE_BACKGROUNDS = Array.from({ length: 15 }, (_, index) => `p${index + 1}`);
@@ -47,6 +49,7 @@
   let authResolved = false;
   let currentUser = null;
   let currentStats = {};
+  let hoverCloseTimer = 0;
 
   function svg(name) {
     return `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name] || icons.home}</svg>`;
@@ -62,6 +65,59 @@
     link.href = stylesheetUrl;
     link.dataset.ccAppShell = 'true';
     document.head.appendChild(link);
+  }
+
+  function ensureBrandAssets() {
+    let favicon = document.head.querySelector('link[data-cc-brand-favicon]');
+    if (!favicon) {
+      favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      favicon.type = 'image/png';
+      favicon.dataset.ccBrandFavicon = 'true';
+      document.head.appendChild(favicon);
+    }
+    favicon.href = faviconUrl;
+
+    let touchIcon = document.head.querySelector('link[data-cc-brand-touch-icon]');
+    if (!touchIcon) {
+      touchIcon = document.createElement('link');
+      touchIcon.rel = 'apple-touch-icon';
+      touchIcon.dataset.ccBrandTouchIcon = 'true';
+      document.head.appendChild(touchIcon);
+    }
+    touchIcon.href = faviconUrl;
+  }
+
+  function enhanceLegacyBranding() {
+    document.querySelectorAll(
+      'a.logo, a.brand[href="index.html"], a.brand[href="./index.html"], a.challenge-brand'
+    ).forEach((brand) => {
+      const icon = brand.querySelector('.logo__icon, .brand__mark, .brand-mark, .cc-site-brand__mark');
+      const text = brand.querySelector(
+        '.logo__text, .cc-site-brand__name, strong, :scope > span:last-child'
+      );
+      brand.classList.add('cc-site-brand');
+
+      if (icon) {
+        icon.classList.add('logo__icon--image', 'cc-site-brand__mark');
+        let image = icon.querySelector('img');
+        if (!image) {
+          icon.textContent = '';
+          image = document.createElement('img');
+          icon.appendChild(image);
+        }
+        image.className = 'logo__brand-image cc-site-brand__logo';
+        image.src = brandLogoUrl;
+        image.alt = '';
+        image.width = 46;
+        image.height = 46;
+      }
+
+      if (text) {
+        text.classList.add('cc-site-brand__name');
+        text.textContent = 'Tiếng Trung Cam & Coca';
+      }
+    });
   }
 
   function currentPageKey() {
@@ -202,8 +258,10 @@
         <div class="cc-shell__top">
           <button class="cc-shell__menu" type="button" aria-label="Mở rộng menu" aria-expanded="false" aria-controls="ccAccountShell">${svg('menu')}</button>
           <a class="cc-shell__brand" href="index.html">
-            <span class="cc-shell__brand-mark" aria-hidden="true">中</span>
-            <span class="cc-shell__brand-text">Cam &amp; Coca</span>
+            <span class="cc-shell__brand-mark" aria-hidden="true">
+              <img class="cc-shell__brand-logo" src="${brandLogoUrl}" alt="" width="40" height="40" />
+            </span>
+            <span class="cc-shell__brand-text">Tiếng Trung Cam &amp; Coca</span>
           </a>
         </div>
 
@@ -690,6 +748,21 @@
     mobileToggle.addEventListener('click', () => setExpanded(!shell.classList.contains('is-expanded'), { focusOrigin: mobileToggle, focusFirst: true }));
     scrim.addEventListener('click', () => setExpanded(false));
 
+    shell.addEventListener('pointerenter', (event) => {
+      if (isMobile() || event.pointerType === 'touch') return;
+      window.clearTimeout(hoverCloseTimer);
+      setExpanded(true, { restoreFocus: false });
+    });
+
+    shell.addEventListener('pointerleave', (event) => {
+      if (isMobile() || event.pointerType === 'touch') return;
+      window.clearTimeout(hoverCloseTimer);
+      hoverCloseTimer = window.setTimeout(() => {
+        if (settingsPanel?.classList.contains('is-open') || shell.contains(document.activeElement)) return;
+        setExpanded(false, { restoreFocus: false });
+      }, 140);
+    });
+
     shell.addEventListener('click', (event) => {
       if (!shell.classList.contains('is-expanded') && !event.target.closest('a, button')) {
         setExpanded(true, { focusOrigin: document.activeElement });
@@ -784,6 +857,8 @@
 
   function initialize() {
     ensureStylesheet();
+    ensureBrandAssets();
+    enhanceLegacyBranding();
     markLegacyHeader();
     removeDuplicateProfileSettings();
     createShell();

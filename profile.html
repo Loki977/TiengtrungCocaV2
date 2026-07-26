@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hồ sơ – Tiếng Trung Cam &amp; Coca</title>
+  <link rel="icon" href="assets/images/brand/favicon-orange.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -909,7 +910,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/dark-mode.css" />
-  <link rel="stylesheet" href="assets/css/app-shell.css?v=4" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=7" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
 <body>
@@ -1766,11 +1767,18 @@
       .spirit-pet--lv10 { --video-pet-size: min(235px, 76vw); }
     }
 
-    /* Keep scrolling composited: large backdrop blurs and fixed backgrounds
-       otherwise force expensive repaints across the full Profile page. */
+    /* On desktop the background is sized against the viewport, so a landscape
+       image stays proportional at 100% zoom instead of covering the full page height. */
     body.profile-bg-enabled .profile-page,
     body.profile-bg-enabled .footer {
-      background-attachment: scroll !important;
+      background-attachment: fixed !important;
+    }
+    @media (max-width: 768px) {
+      body.profile-bg-enabled .profile-page,
+      body.profile-bg-enabled .footer {
+        background-attachment: scroll !important;
+        background-size: 100% auto !important;
+      }
     }
     .profile-page :is(
       .profile-hero__info,
@@ -2119,7 +2127,7 @@
   })();
   </script>
 
-  <script src="assets/js/site-shell.js?v=3"></script>
+  <script src="assets/js/site-shell.js?v=5"></script>
   <script src="assets/js/spirit-pet.js?v=pet2"></script>
   <script src="assets/js/hsk-learning-access.js"></script>
   <script src="assets/js/profile-hsk-level.js"></script>
