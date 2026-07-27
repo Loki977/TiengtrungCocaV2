@@ -29,6 +29,12 @@ for (const file of primaryPages) {
   assert.match(html, /app-shell\.css/, `${file} must load the shared account shell styles`);
 }
 
+assert.match(
+  read('hsk.html'),
+  /assets\/js\/hsk\.js\?v=(?:[4-9]|\d{2,})/,
+  'HSK must invalidate the pre-radicals course script cache'
+);
+
 for (const file of fs.readdirSync(root).filter((name) => name.endsWith('.html'))) {
   assert.match(read(file), /assets\/images\/brand\/favicon-orange\.png/, `${file} must use the orange favicon`);
 }
