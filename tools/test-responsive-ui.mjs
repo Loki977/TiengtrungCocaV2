@@ -14,6 +14,7 @@ const primaryPages = [
   'hsk1-writing-lessons.html',
   'lesson.html',
   'hsk1-pinyin-intro.html',
+  'hsk1-radicals-intro.html',
   'flashcard.html',
   'vocabulary.html',
   'challenge.html',
@@ -107,8 +108,34 @@ assert.ok(fs.existsSync(path.join(root, 'assets/css/responsive.css')), 'referenc
 assert.ok(fs.existsSync(path.join(root, 'assets/images/brand/site-logo.webp')), 'website logo asset must exist');
 assert.ok(fs.existsSync(path.join(root, 'assets/images/brand/favicon-orange.png')), 'orange favicon asset must exist');
 assert.match(read('assets/js/lesson-render.js'), /class="detail-back-btn"[\s\S]*<svg/, 'course lesson back control must use the large writing-style arrow');
+const radicalsHtml = read('hsk1-radicals-intro.html');
+const radicalsJs = read('assets/js/radicals-intro.js');
+assert.match(radicalsHtml, /data-foundation-lesson-label="Bộ thủ"/, 'radicals lesson must identify itself to the shared learning HUD');
+assert.match(read('hsk1-pinyin-intro.html'), /data-foundation-lesson-label="Pinyin"/, 'Pinyin must keep its shared learning HUD integration');
+assert.match(radicalsHtml, /Nét → bộ kiện → chữ Hán → bộ thủ/, 'radicals lesson must teach the core construction hierarchy');
+assert.match(radicalsHtml, /id="writingCanvas"/, 'radicals lesson must include a touch-friendly writing pad');
+assert.equal((radicalsHtml.match(/class="radical-practice-question"/g) || []).length, 6, 'radicals lesson must include six final checks');
+assert.match(radicalsJs, /hsk1-radicals-intro/, 'radicals completion must use a dedicated foundation progress key');
+assert.match(radicalsJs, /pointerdown/, 'radicals writing pad must support pointer input');
+assert.match(radicalsJs, /cc:learning-progress/, 'radicals lesson must report section progress to the shared HUD');
 assert.doesNotMatch(read('flashcard.html'), /class="cc-page-brand"/, 'Flashcard branding must stay in the shared page header');
 assert.doesNotMatch(read('vocabulary.html'), /class="cc-page-brand"/, 'Tàng Thư Các branding must stay in the shared page header');
+const archiveHtml = read('vocabulary.html');
+const archiveJs = read('assets/js/tang-thu-cac.js');
+const archiveCss = read('assets/css/tang-thu-cac.css');
+assert.equal((archiveHtml.match(/data-archive-tab=/g) || []).length, 4, 'Tàng Thư Các must expose four primary cards');
+assert.match(archiveHtml, /data-archive-tab="idioms"[\s\S]*data-archive-tab="radicals"/, 'the Radicals card must sit beside Idioms');
+assert.match(archiveHtml, /data-radicals-category="common"[\s\S]*?60 bộ thường gặp/, 'radicals must open with a 60-item common group');
+assert.match(archiveHtml, /data-radicals-category="other"[\s\S]*?154 bộ còn lại/, 'radicals must expose the remaining 154 items');
+assert.match(archiveHtml, /id="radicalsPagination"/, 'radicals must expose responsive pagination');
+assert.match(archiveJs, /radicals:\s*"assets\/data\/tang-thu-cac\/radicals\.json(?:\?v=\d+)?"/, 'radicals must load from the dedicated library data file');
+assert.match(archiveJs, /item\.variants[\s\S]*item\.examples/, 'radical search must include variants and example characters');
+assert.match(archiveJs, /updateRadicalPageSize/, 'radical page size must adapt to the rendered width');
+assert.match(archiveJs, /\$\{escapeHtml\(item\.number\)\}\. Bộ/, 'radical cards must use a plain numbered Vietnamese title');
+assert.doesNotMatch(archiveJs, /radical-library-card__number/, 'radical cards must not render hash-prefixed identifiers');
+assert.match(archiveCss, /\.radicals-library-grid\s*\{[\s\S]*grid-template-columns:/, 'radicals must use a responsive card grid');
+assert.match(archiveCss, /repeat\(var\(--radical-columns/, 'radical columns must come from the responsive page-size calculation');
+assert.match(archiveCss, /html\.dark-mode \.radicals-library-section/, 'radicals must include an explicit dark theme');
 assert.match(read('hsk-writing.html'), /cc-site-brand__logo/, 'Writing must use the shared website logo');
 assert.match(shellCss, /main\.page > header\.topbar\[data-cc-legacy-shell-header\][\s\S]*position:\s*sticky\s*!important/, 'Writing website branding must stay visible while scrolling');
 assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.fc-page[\s\S]*linear-gradient\(145deg,\s*#080e1b/, 'Flashcard must use the shared dark canvas');

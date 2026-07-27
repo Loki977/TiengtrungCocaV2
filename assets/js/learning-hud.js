@@ -127,7 +127,8 @@
       ? (level.startsWith('HSK') ? level.replace(/HSK(\d)/, 'HSK $1') : level)
       : 'HSK';
     const lesson = state.lesson || live?.lessonId || live?.id || '';
-    return lesson ? `${normalized} · Bài ${lesson}` : normalized;
+    const lessonLabel = /^\d+(?:\.\d+)?$/.test(String(lesson)) ? `Bài ${lesson}` : String(lesson);
+    return lesson ? `${normalized} · ${lessonLabel}` : normalized;
   }
 
   function setValue(kind, value) {
@@ -154,8 +155,8 @@
   function findHost() {
     const writingShell = document.querySelector('.lesson-shell');
     if (writingShell?.parentElement) return { host: writingShell.parentElement, before: writingShell };
-    const pinyinLesson = document.querySelector('.pinyin-intro-lesson');
-    if (pinyinLesson?.parentElement) return { host: pinyinLesson.parentElement, before: pinyinLesson };
+    const foundationLesson = document.querySelector('[data-foundation-lesson]');
+    if (foundationLesson?.parentElement) return { host: foundationLesson.parentElement, before: foundationLesson };
     const courseDetail = document.querySelector('#lessonDetail .lesson-detail-wrap');
     if (courseDetail) return { host: courseDetail, before: courseDetail.firstChild === hud ? hud.nextSibling : courseDetail.firstChild };
     return null;
@@ -186,12 +187,13 @@
       state.level = normalizeLevel(live.level || live.hskLevel || state.level);
       state.lesson = String(live.lessonId || live.id || state.lesson || '');
     }
-    const pinyinProgress = document.getElementById('lessonProgressLabel')?.textContent?.match(/(\d+)\s*\/\s*(\d+)/);
-    if (pinyinProgress) {
+    const foundationProgress = document.getElementById('lessonProgressLabel')?.textContent?.match(/(\d+)\s*\/\s*(\d+)/);
+    const foundationRoot = document.querySelector('[data-foundation-lesson]');
+    if (foundationProgress && foundationRoot) {
       state.level = 'HSK1';
-      state.lesson = 'Pinyin';
-      state.current = Number(pinyinProgress[1]);
-      state.total = Number(pinyinProgress[2]);
+      state.lesson = foundationRoot.dataset.foundationLessonLabel || 'Nền tảng';
+      state.current = Number(foundationProgress[1]);
+      state.total = Number(foundationProgress[2]);
     }
     document.body.classList.add('cc-learning-active');
     state.mounted = true;

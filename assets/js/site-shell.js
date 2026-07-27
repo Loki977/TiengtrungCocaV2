@@ -123,7 +123,7 @@
   function currentPageKey() {
     const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (file === 'index.html' || !file) return 'home';
-    if (file === 'hsk.html' || file === 'hsk1-pinyin-intro.html') return 'course';
+    if (file === 'hsk.html' || file === 'hsk1-pinyin-intro.html' || file === 'hsk1-radicals-intro.html') return 'course';
     if (file === 'hsk-writing.html' || file === 'hsk1-writing-lessons.html' || file === 'lesson.html') return 'writing';
     if (file === 'flashcard.html') return 'cards';
     if (file === 'vocabulary.html' || file === 'grammar.html') return 'library';

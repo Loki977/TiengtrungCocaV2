@@ -317,7 +317,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css" />
-  <link rel="stylesheet" href="assets/css/tang-thu-cac.css?v=4" />
+  <link rel="stylesheet" href="assets/css/tang-thu-cac.css?v=5" />
   <link rel="stylesheet" href="assets/css/dark-mode.css?v=2" />
   <link rel="stylesheet" href="assets/css/app-shell.css?v=8" />
   <script src="assets/js/dark-mode.js"></script>
@@ -369,7 +369,7 @@
           Kho tri thức Hán ngữ
         </span>
         <h1 id="archiveTitle">Tàng Thư Các</h1>
-        <p class="archive-masthead__desc">Tra cứu từ điển, khám phá ngữ pháp và tìm hiểu thành ngữ tiếng Trung.</p>
+        <p class="archive-masthead__desc">Tra cứu từ điển, khám phá ngữ pháp, thành ngữ và hệ thống 214 bộ thủ tiếng Trung.</p>
 
         <div class="archive-tabs" role="tablist" aria-label="Chọn nội dung Tàng Thư Các">
           <button type="button" class="archive-tab" data-archive-tab="dictionary" role="tab" aria-selected="false">
@@ -392,6 +392,13 @@
             <span class="archive-tab__copy"><strong>Thành ngữ</strong><small>Tìm hiểu thành ngữ và cách sử dụng</small></span>
             <span class="archive-tab__art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5V4Zm4 4h6m-6 4h6m-6 4h4" /></svg></span>
             <span class="archive-tab__footer"><span>Khám phá thành ngữ</span><span class="archive-tab__arrow" aria-hidden="true">→</span></span>
+          </button>
+          <button type="button" class="archive-tab" data-archive-tab="radicals" role="tab" aria-selected="false" tabindex="-1">
+            <span class="archive-tab__orb" aria-hidden="true"></span>
+            <span class="archive-tab__label">Hán tự</span>
+            <span class="archive-tab__copy"><strong>Bộ thủ</strong><small>Tra cứu 214 bộ Khang Hy, biến thể và chữ mẫu</small></span>
+            <span class="archive-tab__art" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7ZM7.5 5.5v4m-2-2h4m5.5-2h3m-3 2h3m-3 2h3M5.5 15h4m-2-1.5v5m7-3.5h4m-2-1.5v5" /></svg></span>
+            <span class="archive-tab__footer"><span>Khám phá bộ thủ</span><span class="archive-tab__arrow" aria-hidden="true">→</span></span>
           </button>
         </div>
 
@@ -644,6 +651,103 @@
               <div class="library-detail-empty"><div><div class="library-detail-empty__icon">🀄</div><h3>Chọn một thành ngữ</h3><p>Đại ý và cách dùng sẽ hiển thị tại đây.</p></div></div>
             </article>
           </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="archive-panel radicals-library-panel" data-archive-panel="radicals" hidden>
+      <section class="library-section radicals-library-section" aria-labelledby="radicalsLibraryTitle">
+        <div class="container">
+          <section class="radicals-overview-card">
+            <div class="radicals-overview-card__copy">
+              <span class="library-kicker">Bộ thủ &amp; bộ kiện</span>
+              <h2 id="radicalsLibraryTitle">214 bộ thủ — nhìn là nhận ra, gặp là nhớ</h2>
+              <p>Học theo từng thẻ ngắn gọn: dạng giản thể, Pinyin, Hán Việt, số nét và chữ mẫu. Chọn một thẻ để mở phần giải thích ngay bên dưới danh sách.</p>
+            </div>
+            <div class="radicals-overview-card__stats" aria-label="Thống kê thư viện bộ thủ">
+              <span><strong>214</strong><small>bộ thủ</small></span>
+              <span><strong>2</strong><small>lộ trình</small></span>
+              <span><strong id="radicalsLibraryCount">0</strong><small>kết quả</small></span>
+            </div>
+          </section>
+
+          <div class="radicals-group-grid" role="group" aria-label="Chọn lộ trình bộ thủ">
+            <button type="button" class="radicals-group-card is-active" data-radicals-category="common" aria-pressed="true">
+              <span class="radicals-group-card__icon" aria-hidden="true">人</span>
+              <span class="radicals-group-card__copy">
+                <small>Lộ trình 1 · Nên học trước</small>
+                <strong>60 bộ thường gặp</strong>
+                <span>Những bộ xuất hiện nhiều, hữu ích nhất khi bắt đầu đọc và đoán nghĩa chữ Hán.</span>
+              </span>
+              <span class="radicals-group-card__action">Đang chọn <b aria-hidden="true">→</b></span>
+            </button>
+            <button type="button" class="radicals-group-card" data-radicals-category="other" aria-pressed="false">
+              <span class="radicals-group-card__icon" aria-hidden="true">龠</span>
+              <span class="radicals-group-card__copy">
+                <small>Lộ trình 2 · Học mở rộng</small>
+                <strong>154 bộ còn lại</strong>
+                <span>Hoàn thiện hệ thống 214 bộ Khang Hy và nhận diện các chữ ít gặp, nhiều nét hơn.</span>
+              </span>
+              <span class="radicals-group-card__action">Chọn lộ trình <b aria-hidden="true">→</b></span>
+            </button>
+          </div>
+
+          <div class="radicals-tools-grid">
+            <div class="radicals-tool-card radicals-search-card">
+              <div class="radicals-tool-card__heading">
+                <span aria-hidden="true">⌕</span>
+                <div><strong>Tìm nhanh</strong><small>Chữ Hán, Pinyin, Hán Việt hoặc nghĩa</small></div>
+              </div>
+              <div class="library-search">
+                <span aria-hidden="true">⌕</span>
+                <input id="radicalsLibrarySearch" type="search" placeholder="Ví dụ: 人, rén, nhân, người..." autocomplete="off" />
+                <button id="radicalsSearchClear" type="button" aria-label="Xóa tìm kiếm">✕</button>
+              </div>
+            </div>
+            <div class="radicals-tool-card radicals-stroke-card">
+              <div class="radicals-tool-card__heading">
+                <span aria-hidden="true">画</span>
+                <div><strong>Lọc theo số nét</strong><small>Thu hẹp danh sách để dễ ghi nhớ</small></div>
+              </div>
+              <div class="library-filter-row" aria-label="Lọc bộ thủ theo số nét">
+                <button type="button" class="library-filter-btn is-active" data-radicals-strokes="all">Tất cả</button>
+                <button type="button" class="library-filter-btn" data-radicals-strokes="1-4">1–4 nét</button>
+                <button type="button" class="library-filter-btn" data-radicals-strokes="5-8">5–8 nét</button>
+                <button type="button" class="library-filter-btn" data-radicals-strokes="9-17">9–17 nét</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="radicals-primer" aria-label="Ghi chú về bộ thủ và bộ kiện">
+            <div class="radicals-primer__icon" aria-hidden="true">氵</div>
+            <div>
+              <strong>Học cả bộ thủ lẫn hình bộ kiện</strong>
+              <p>Khi đi vào một chữ, bộ thủ có thể đổi thành dạng gọn hơn: 水 → 氵, 人 → 亻, 心 → 忄. Thư viện ưu tiên dạng giản thể để đồng bộ với nội dung học.</p>
+            </div>
+          </aside>
+
+          <section class="radicals-collection" aria-label="Danh sách bộ thủ">
+            <div class="radicals-collection__head">
+              <div>
+                <span>Danh sách đang hiển thị</span>
+                <strong id="radicalsListCount">0 bộ</strong>
+              </div>
+              <small id="radicalsPageSummary">Tự động sắp xếp theo kích thước màn hình</small>
+            </div>
+            <div class="radicals-library-grid" id="radicalsLibraryList">
+              <div class="library-loading">Đang tải dữ liệu…</div>
+            </div>
+            <nav class="radicals-pagination" id="radicalsPagination" aria-label="Phân trang bộ thủ"></nav>
+          </section>
+
+          <article class="library-detail-card radical-library-detail" id="radicalsLibraryDetail" hidden></article>
+
+          <p class="radicals-source-note">
+            Hệ thống 214 bộ theo chuẩn Khang Hy. Dữ liệu đối chiếu với
+            <a href="https://www.unicode.org/charts/nameslist/n_2F00.html" target="_blank" rel="noopener noreferrer">Unicode Kangxi Radicals</a>
+            và bảng <a href="https://en.wikipedia.org/wiki/Kangxi_radicals" target="_blank" rel="noopener noreferrer">Kangxi radicals</a>
+            (Wikipedia contributors, CC BY-SA 4.0).
+          </p>
         </div>
       </section>
     </div>
@@ -1197,7 +1301,7 @@ loadDictionary();
   })();
   </script>
   <script src="assets/js/speech-service.js?v=5"></script>
-  <script src="assets/js/tang-thu-cac.js?v=3"></script>
+  <script src="assets/js/tang-thu-cac.js?v=5"></script>
   <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
   <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>

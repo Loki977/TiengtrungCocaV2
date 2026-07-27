@@ -13,7 +13,28 @@
 
   const COURSE = window.HSK_COURSE_DATA || {};
   const DISABLE_LESSON_LOCKS = false;
-  const FOUNDATION_LESSON_ID = 'hsk1-pinyin-intro';
+  const FOUNDATION_LESSONS = [
+    {
+      id: 'hsk1-pinyin-intro',
+      href: 'hsk1-pinyin-intro.html',
+      icon: 'ā',
+      title: 'Pinyin và thanh điệu',
+      desc: 'Làm quen với cách phát âm tiếng Trung',
+      meta: '🔊 ā · á · ǎ · à',
+      aria: 'bài vỡ lòng Pinyin và thanh điệu',
+      className: ''
+    },
+    {
+      id: 'hsk1-radicals-intro',
+      href: 'hsk1-radicals-intro.html',
+      icon: '亻',
+      title: 'Bộ thủ và nét chữ',
+      desc: 'Hiểu cấu tạo chữ Hán và quy tắc viết',
+      meta: '✍️ nét · bộ kiện · bộ thủ',
+      aria: 'bài vỡ lòng Bộ thủ và nét chữ',
+      className: 'foundation-lesson--radicals'
+    }
+  ];
   const ACCESS_TYPES = new Set(['free', 'guided', 'vip', 'coins']);
 
   const panelsWrap = document.getElementById('tabPanels');
@@ -289,32 +310,38 @@
     }
   }
 
-  function isFoundationLessonCompleted() {
-    return Boolean(getCompletedMap()[FOUNDATION_LESSON_ID] || getLocalCompletedMap()[FOUNDATION_LESSON_ID]);
+  function isFoundationLessonCompleted(id) {
+    return Boolean(getCompletedMap()[id] || getLocalCompletedMap()[id]);
   }
 
-  function renderFoundationLessonCard() {
+  function getFoundationLesson(id) {
+    return FOUNDATION_LESSONS.find((lesson) => lesson.id === id) || null;
+  }
+
+  function renderFoundationLessonCards() {
     if (currentLevel !== 'hsk1') return '';
-    const completed = isFoundationLessonCompleted();
-    return `
-      <div class="lesson-item foundation-lesson ${completed ? 'completed' : ''} clickable-lesson active-lesson"
-           data-foundation-id="${FOUNDATION_LESSON_ID}"
+    return FOUNDATION_LESSONS.map((lesson) => {
+      const completed = isFoundationLessonCompleted(lesson.id);
+      return `
+      <div class="lesson-item foundation-lesson ${lesson.className} ${completed ? 'completed' : ''} clickable-lesson active-lesson"
+           data-foundation-id="${lesson.id}"
            role="button"
            tabindex="0"
-           aria-label="${completed ? 'Mở lại' : 'Bắt đầu'} bài vỡ lòng Pinyin và thanh điệu">
+           aria-label="${completed ? 'Mở lại' : 'Bắt đầu'} ${lesson.aria}">
         <span class="lesson-status ${completed ? 'lesson-status--done' : 'lesson-status--active'}">${completed ? 'Đã hoàn thành' : 'Khuyên học trước'}</span>
-        <div class="lesson-item__icon" aria-hidden="true">ā</div>
+        <div class="lesson-item__icon" aria-hidden="true">${lesson.icon}</div>
         <div class="lesson-item__info">
           <div class="lesson-item__num">BÀI VỠ LÒNG</div>
-          <div class="lesson-item__title">Pinyin và thanh điệu</div>
-          <div class="lesson-item__desc">Làm quen với cách phát âm tiếng Trung</div>
+          <div class="lesson-item__title">${lesson.title}</div>
+          <div class="lesson-item__desc">${lesson.desc}</div>
           <div class="lesson-item__bar-row">
-            <span class="lesson-item__xp">🔊 ā · á · ǎ · à</span>
+            <span class="lesson-item__xp">${lesson.meta}</span>
             <span class="lesson-item__bar-pct">${completed ? 'Đã hoàn thành' : 'Bắt đầu'}</span>
           </div>
         </div>
         <div class="lesson-item__action"><div class="lesson-item__chevron" aria-hidden="true">›</div></div>
       </div>`;
+    }).join('');
   }
 
   async function loadLessonIndex(level) {
@@ -435,7 +462,7 @@
 
       <div class="lesson-list">
         <div class="lesson-chapter">Giáo trình ${currentLevel.toUpperCase()}</div>
-        ${renderFoundationLessonCard()}
+        ${renderFoundationLessonCards()}
         ${lessonRows}
       </div>
     `;
@@ -445,8 +472,9 @@
     panelsWrap.querySelectorAll('.clickable-lesson').forEach(row => {
       row.addEventListener('click', function (e) {
         if (e.target.closest('button')) return;
-        if (this.dataset.foundationId === FOUNDATION_LESSON_ID) {
-          location.href = 'hsk1-pinyin-intro.html';
+        const foundationLesson = getFoundationLesson(this.dataset.foundationId);
+        if (foundationLesson) {
+          location.href = foundationLesson.href;
           return;
         }
         const id = parseInt(this.dataset.detail, 10);
@@ -456,8 +484,9 @@
       row.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          if (this.dataset.foundationId === FOUNDATION_LESSON_ID) {
-            location.href = 'hsk1-pinyin-intro.html';
+          const foundationLesson = getFoundationLesson(this.dataset.foundationId);
+          if (foundationLesson) {
+            location.href = foundationLesson.href;
             return;
           }
           const id = parseInt(this.dataset.detail, 10);

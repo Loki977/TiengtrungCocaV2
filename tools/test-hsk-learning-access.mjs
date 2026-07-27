@@ -54,6 +54,10 @@ for (const accessType of ['free', 'guided', 'vip', 'coins']) {
 }
 assert.match(hskSource, /unlockLessonWithCoins\(\{ level, lessonId, coinCost:cost, scope:'course' \}\)/);
 assert.match(hskSource, /getFreshVipAccess/);
+assert.match(hskSource, /hsk1-pinyin-intro/);
+assert.match(hskSource, /hsk1-radicals-intro/);
+assert.match(hskSource, /renderFoundationLessonCards/, 'HSK1 must render both foundation lessons before the numbered curriculum');
+assert.match(hskSource, /getFoundationLesson\(this\.dataset\.foundationId\)/, 'each foundation lesson must route through its own definition');
 assert.match(adminSource, /data-course-guided/);
 assert.match(adminHtml, /id="writingLessonLockGrid"/);
 assert.match(adminHtml, /id="saveWritingAccessSettings"/);

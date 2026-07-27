@@ -4,12 +4,17 @@
   const DATA_FILES = {
     grammar: "assets/data/tang-thu-cac/grammar.json",
     idioms: "assets/data/tang-thu-cac/idioms.json",
+    radicals: "assets/data/tang-thu-cac/radicals.json?v=2",
   };
+  const ARCHIVE_TABS = ["dictionary", "grammar", "idioms", "radicals"];
+  let radicalsResizeObserver = null;
+  let radicalsResizeFrame = 0;
 
   const state = {
     activeTab: "",
     grammar: createCollectionState(),
     idioms: createCollectionState(),
+    radicals: { ...createCollectionState(), category: "common" },
   };
 
   function createCollectionState() {
@@ -23,6 +28,10 @@
       level: "all",
       category: "all",
       initial: "all",
+      strokeGroup: "all",
+      page: 1,
+      pageSize: 12,
+      columns: 4,
     };
   }
 
@@ -52,15 +61,40 @@
     bindTabs();
     bindGrammarControls();
     bindIdiomControls();
+    bindRadicalControls();
 
     const requested = location.hash.replace("#", "").toLowerCase();
-    if (["dictionary", "grammar", "idioms"].includes(requested)) activateTab(requested, false);
+    if (ARCHIVE_TABS.includes(requested)) activateTab(requested, false);
   }
 
   function bindTabs() {
     const tabs = $$("[data-archive-tab]");
+    const tabList = $(".archive-tabs");
+    let previewTab = null;
+
+    const setPreview = (button) => {
+      if (tabList?.classList.contains("is-compact")) return;
+      previewTab = button || null;
+      tabs.forEach((item) => {
+        const active = item === previewTab;
+        item.classList.toggle("is-preview", active);
+        item.setAttribute("aria-expanded", active ? "true" : "false");
+      });
+      tabList?.classList.toggle("has-preview", Boolean(previewTab));
+      if (previewTab) tabList.dataset.activeIndex = String(tabs.indexOf(previewTab));
+      else delete tabList?.dataset.activeIndex;
+    };
+
     tabs.forEach((button) => {
-      button.addEventListener("click", () => activateTab(button.dataset.archiveTab));
+      button.setAttribute("aria-expanded", "false");
+      button.addEventListener("click", (event) => {
+        if (tabList?.classList.contains("is-compact") || button === previewTab) {
+          activateTab(button.dataset.archiveTab);
+          return;
+        }
+        event.preventDefault();
+        setPreview(button);
+      });
       button.addEventListener("keydown", (event) => {
         if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
         event.preventDefault();
@@ -71,12 +105,26 @@
             ? tabs.length - 1
             : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
         tabs[nextIndex].focus();
-        activateTab(tabs[nextIndex].dataset.archiveTab);
+        setPreview(tabs[nextIndex]);
       });
+    });
+    document.addEventListener("pointerdown", (event) => {
+      if (!previewTab || event.target.closest(".archive-tabs")) return;
+      setPreview(null);
+    });
+    document.addEventListener("focusin", (event) => {
+      if (!previewTab || event.target.closest(".archive-tabs")) return;
+      setPreview(null);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !previewTab) return;
+      const previous = previewTab;
+      setPreview(null);
+      previous.focus();
     });
     window.addEventListener("hashchange", () => {
       const requested = location.hash.replace("#", "").toLowerCase();
-      if (["dictionary", "grammar", "idioms"].includes(requested)) activateTab(requested, false);
+      if (ARCHIVE_TABS.includes(requested)) activateTab(requested, false);
     });
   }
 
@@ -86,9 +134,13 @@
     const tabList = $(".archive-tabs");
     masthead?.classList.add("is-browsing");
     tabList?.classList.add("is-compact");
+    tabList?.classList.remove("has-preview");
+    if (tabList) delete tabList.dataset.activeIndex;
     $$("[data-archive-tab]").forEach((button) => {
       const active = button.dataset.archiveTab === tab;
+      button.classList.remove("is-preview");
       button.classList.toggle("is-active", active);
+      button.setAttribute("aria-expanded", "false");
       button.setAttribute("aria-selected", active ? "true" : "false");
       button.tabIndex = active ? 0 : -1;
     });
@@ -107,6 +159,7 @@
     }
     if (tab === "grammar") await ensureLoaded("grammar");
     if (tab === "idioms") await ensureLoaded("idioms");
+    if (tab === "radicals") await ensureLoaded("radicals");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -126,9 +179,12 @@
       collection.items = Array.isArray(payload.items) ? payload.items : [];
       collection.loaded = true;
       const requestedId = type === "idioms" ? new URLSearchParams(location.search).get("idiom") : "";
-      collection.selectedId = requestedId || localStorage.getItem(`ttc_${type}_selected`) || collection.items[0]?.id || "";
+      collection.selectedId = type === "radicals"
+        ? ""
+        : requestedId || localStorage.getItem(`ttc_${type}_selected`) || collection.items[0]?.id || "";
       renderAlphabet(type, payload.meta?.initials || []);
       applyFilters(type);
+      if (type === "radicals") observeRadicalGrid();
     } catch (error) {
       console.error(`[Tàng Thư Các] Không tải được ${type}:`, error);
       const message = '<div class="library-error">Không thể tải dữ liệu. Hãy chạy lại bằng Live Server/Vercel thay vì mở file HTML trực tiếp.</div>';
@@ -176,6 +232,74 @@
     });
   }
 
+  function bindRadicalControls() {
+    bindSearch("radicals", "radicalsLibrarySearch", "radicalsSearchClear");
+    $$("[data-radicals-category]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.radicals.category = button.dataset.radicalsCategory;
+        $$("[data-radicals-category]").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+          const action = $(".radicals-group-card__action", item);
+          if (action) action.innerHTML = active ? 'Đang chọn <b aria-hidden="true">→</b>' : 'Chọn lộ trình <b aria-hidden="true">→</b>';
+        });
+        resetRadicalSelection();
+        applyFilters("radicals");
+      });
+    });
+    $$("[data-radicals-strokes]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.radicals.strokeGroup = button.dataset.radicalsStrokes;
+        $$("[data-radicals-strokes]").forEach((item) => item.classList.toggle("is-active", item === button));
+        resetRadicalSelection();
+        applyFilters("radicals");
+      });
+    });
+  }
+
+  function resetRadicalSelection() {
+    state.radicals.selectedId = "";
+    state.radicals.page = 1;
+    const detail = $("#radicalsLibraryDetail");
+    if (detail) {
+      detail.hidden = true;
+      detail.innerHTML = "";
+    }
+  }
+
+  function observeRadicalGrid() {
+    const list = $("#radicalsLibraryList");
+    if (!list || typeof ResizeObserver !== "function") return;
+    radicalsResizeObserver?.disconnect();
+    radicalsResizeObserver = new ResizeObserver(() => {
+      cancelAnimationFrame(radicalsResizeFrame);
+      radicalsResizeFrame = requestAnimationFrame(updateRadicalPageSize);
+    });
+    radicalsResizeObserver.observe(list);
+    updateRadicalPageSize();
+  }
+
+  function updateRadicalPageSize() {
+    const list = $("#radicalsLibraryList");
+    if (!list || !state.radicals.loaded) return;
+    const width = list.clientWidth;
+    if (!width) return;
+    const minimumCardWidth = width <= 520 ? 250 : width <= 900 ? 255 : 270;
+    const gap = width <= 680 ? 10 : 14;
+    const columns = Math.max(1, Math.min(4, Math.floor((width + gap) / (minimumCardWidth + gap))));
+    const rows = width <= 520 ? 4 : 3;
+    const pageSize = Math.max(1, columns * rows);
+    const collection = state.radicals;
+    if (collection.columns === columns && collection.pageSize === pageSize) return;
+    const firstVisibleIndex = (collection.page - 1) * collection.pageSize;
+    collection.columns = columns;
+    collection.pageSize = pageSize;
+    collection.page = Math.floor(firstVisibleIndex / pageSize) + 1;
+    list.style.setProperty("--radical-columns", String(columns));
+    renderList("radicals");
+  }
+
   function bindSearch(type, inputId, clearId) {
     const input = $(`#${inputId}`);
     const clear = $(`#${clearId}`);
@@ -186,6 +310,7 @@
       clear.classList.toggle("is-visible", Boolean(input.value));
       timer = window.setTimeout(() => {
         state[type].query = input.value;
+        if (type === "radicals") resetRadicalSelection();
         applyFilters(type);
       }, 120);
     });
@@ -194,6 +319,7 @@
       state[type].query = "";
       clear.classList.remove("is-visible");
       input.focus();
+      if (type === "radicals") resetRadicalSelection();
       applyFilters(type);
     });
   }
@@ -217,6 +343,21 @@
         return searchable.includes(query);
       }
 
+      if (type === "radicals") {
+        const matchesCategory = item.category === collection.category;
+        if (!matchesCategory) return false;
+        const [minimum, maximum] = collection.strokeGroup === "all"
+          ? [1, Number.POSITIVE_INFINITY]
+          : collection.strokeGroup.split("-").map(Number);
+        if (item.strokes < minimum || item.strokes > maximum) return false;
+        if (!query) return true;
+        const searchable = normalize([
+          item.number, item.radical, ...(item.variants || []), item.pinyin, item.hanViet,
+          item.meaningVi, item.meaningEn, ...(item.examples || []),
+        ].join(" "));
+        return searchable.includes(query);
+      }
+
       const matchesCategory = collection.category === "all" || item.category === collection.category;
       if (!matchesCategory) return false;
       if (!query) return true;
@@ -227,8 +368,17 @@
       return searchable.includes(query);
     });
 
+    if (type === "radicals") {
+      collection.filtered.sort((left, right) => collection.category === "common"
+        ? (left.commonRank || 999) - (right.commonRank || 999)
+        : left.number - right.number);
+    }
     if (!collection.filtered.some((item) => item.id === collection.selectedId)) {
-      collection.selectedId = collection.filtered[0]?.id || "";
+      collection.selectedId = type === "radicals" ? "" : collection.filtered[0]?.id || "";
+    }
+    if (type === "radicals") {
+      const totalPages = Math.max(1, Math.ceil(collection.filtered.length / collection.pageSize));
+      collection.page = Math.min(Math.max(1, collection.page), totalPages);
     }
     renderList(type);
     renderDetail(type);
@@ -240,11 +390,22 @@
     const count = $(`#${type}LibraryCount`);
     const listCount = $(`#${type}ListCount`);
     if (count) count.textContent = collection.filtered.length.toLocaleString("vi-VN");
-    if (listCount) listCount.textContent = `${collection.filtered.length.toLocaleString("vi-VN")} mục`;
+    if (listCount) listCount.textContent = `${collection.filtered.length.toLocaleString("vi-VN")} ${type === "radicals" ? "bộ" : "mục"}`;
     if (!list) return;
 
     if (!collection.filtered.length) {
       list.innerHTML = '<div class="library-empty-list">Không tìm thấy nội dung phù hợp với bộ lọc.</div>';
+      if (type === "radicals") {
+        const pagination = $("#radicalsPagination");
+        if (pagination) pagination.hidden = true;
+        const summary = $("#radicalsPageSummary");
+        if (summary) summary.textContent = "Không có kết quả phù hợp";
+      }
+      return;
+    }
+
+    if (type === "radicals") {
+      renderRadicalGrid(collection, list);
       return;
     }
 
@@ -281,12 +442,105 @@
     };
   }
 
+  function renderRadicalGrid(collection, list) {
+    const totalPages = Math.max(1, Math.ceil(collection.filtered.length / collection.pageSize));
+    collection.page = Math.min(Math.max(1, collection.page), totalPages);
+    const start = (collection.page - 1) * collection.pageSize;
+    const pageItems = collection.filtered.slice(start, start + collection.pageSize);
+    list.style.setProperty("--radical-columns", String(collection.columns));
+    list.innerHTML = pageItems.map((item) => {
+      const active = item.id === collection.selectedId;
+      const variants = (item.variants || []).slice(0, 3);
+      return `
+        <button type="button" class="radical-library-card${active ? " is-active" : ""}" data-library-id="${escapeHtml(item.id)}" aria-pressed="${active ? "true" : "false"}">
+          <span class="radical-library-card__glyph">${escapeHtml(item.radical)}</span>
+          <span class="radical-library-card__copy">
+            <strong>${escapeHtml(item.number)}. Bộ ${escapeHtml(item.hanViet)}</strong>
+            <span class="radical-library-card__reading">${escapeHtml(item.pinyin)} · ${escapeHtml(item.meaningVi)}</span>
+            <span class="radical-library-card__variants">${variants.length ? `Bộ kiện: ${variants.map(escapeHtml).join(" · ")}` : "Dùng nguyên dạng"}</span>
+          </span>
+          <span class="radical-library-card__meta">
+            <small>${escapeHtml(item.strokes)} nét</small>
+            <b aria-hidden="true">→</b>
+          </span>
+        </button>`;
+    }).join("");
+    list.onclick = (event) => {
+      const button = event.target.closest("[data-library-id]");
+      if (!button) return;
+      selectItem("radicals", button.dataset.libraryId);
+    };
+    renderRadicalPagination(collection, totalPages, start, pageItems.length);
+  }
+
+  function renderRadicalPagination(collection, totalPages, start, shownCount) {
+    const pagination = $("#radicalsPagination");
+    const summary = $("#radicalsPageSummary");
+    if (summary) {
+      const from = collection.filtered.length ? start + 1 : 0;
+      const to = start + shownCount;
+      summary.textContent = `${from}–${to} / ${collection.filtered.length} bộ · ${collection.pageSize} bộ mỗi trang`;
+    }
+    if (!pagination) return;
+    if (totalPages <= 1) {
+      pagination.innerHTML = "";
+      pagination.hidden = true;
+      return;
+    }
+    pagination.hidden = false;
+    const pages = new Set([1, totalPages, collection.page - 1, collection.page, collection.page + 1]);
+    const visiblePages = [...pages].filter((page) => page >= 1 && page <= totalPages).sort((a, b) => a - b);
+    const pageButtons = [];
+    let previous = 0;
+    for (const page of visiblePages) {
+      if (previous && page - previous > 1) pageButtons.push('<span class="radicals-pagination__ellipsis" aria-hidden="true">…</span>');
+      pageButtons.push(`<button type="button" data-radicals-page="${page}"${page === collection.page ? ' class="is-active" aria-current="page"' : ""}>${page}</button>`);
+      previous = page;
+    }
+    pagination.innerHTML = `
+      <button type="button" class="radicals-pagination__edge" data-radicals-page="${collection.page - 1}" ${collection.page === 1 ? "disabled" : ""} aria-label="Trang trước">←</button>
+      <div class="radicals-pagination__pages">${pageButtons.join("")}</div>
+      <span class="radicals-pagination__status">Trang ${collection.page}/${totalPages}</span>
+      <button type="button" class="radicals-pagination__edge" data-radicals-page="${collection.page + 1}" ${collection.page === totalPages ? "disabled" : ""} aria-label="Trang sau">→</button>`;
+    pagination.onclick = (event) => {
+      const button = event.target.closest("[data-radicals-page]");
+      if (!button || button.disabled) return;
+      const page = Number(button.dataset.radicalsPage);
+      if (!Number.isInteger(page) || page < 1 || page > totalPages || page === collection.page) return;
+      collection.page = page;
+      collection.selectedId = "";
+      const detail = $("#radicalsLibraryDetail");
+      if (detail) {
+        detail.hidden = true;
+        detail.innerHTML = "";
+      }
+      renderList("radicals");
+      $(".radicals-collection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+  }
+
   function selectItem(type, id) {
     state[type].selectedId = id;
     localStorage.setItem(`ttc_${type}_selected`, id);
-    $$(`#${type}LibraryList [data-library-id]`).forEach((button) => button.classList.toggle("is-active", button.dataset.libraryId === id));
+    if (type === "radicals") {
+      const index = state.radicals.filtered.findIndex((item) => item.id === id);
+      const targetPage = index >= 0 ? Math.floor(index / state.radicals.pageSize) + 1 : state.radicals.page;
+      if (targetPage !== state.radicals.page) {
+        state.radicals.page = targetPage;
+        renderList("radicals");
+      }
+    }
+    $$(`#${type}LibraryList [data-library-id]`).forEach((button) => {
+      const active = button.dataset.libraryId === id;
+      button.classList.toggle("is-active", active);
+      if (type === "radicals") button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
     renderDetail(type);
-    if (window.innerWidth <= 900) $(`#${type}LibraryDetail`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (type === "radicals") {
+      requestAnimationFrame(() => $(`#${type}LibraryDetail`)?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    } else if (window.innerWidth <= 900) {
+      $(`#${type}LibraryDetail`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function renderDetail(type) {
@@ -295,11 +549,21 @@
     if (!detail) return;
     const item = collection.filtered.find((entry) => entry.id === collection.selectedId);
     if (!item) {
+      if (type === "radicals") {
+        detail.hidden = true;
+        detail.innerHTML = "";
+        return;
+      }
       detail.innerHTML = '<div class="library-detail-empty"><div><div class="library-detail-empty__icon">📚</div><h3>Chưa có nội dung được chọn</h3><p>Hãy thay đổi từ khóa hoặc bộ lọc.</p></div></div>';
       return;
     }
 
-    detail.innerHTML = type === "grammar" ? grammarDetailTemplate(item) : idiomDetailTemplate(item);
+    detail.hidden = false;
+    detail.innerHTML = type === "grammar"
+      ? grammarDetailTemplate(item)
+      : type === "radicals"
+        ? radicalDetailTemplate(item)
+        : idiomDetailTemplate(item);
     bindDetailNavigation(type, item);
   }
 
@@ -367,6 +631,47 @@
       </div>`;
   }
 
+  function radicalDetailTemplate(item) {
+    const variants = (item.variants || []).length
+      ? `<div class="radical-variant-row">${item.variants.map((variant) => `<span>${escapeHtml(variant)}</span>`).join("")}</div>`
+      : '<span class="radical-no-variant">Bộ này thường giữ nguyên hình gốc.</span>';
+    const examples = (item.examples || []).length
+      ? `<div class="radical-example-row">${item.examples.map((example) => `<span>${escapeHtml(example)}</span>`).join("")}</div>`
+      : "Chưa có chữ mẫu.";
+    const groupLabel = item.category === "common"
+      ? `Bộ thường gặp · hạng ${escapeHtml(item.commonRank)}`
+      : "Nhóm mở rộng";
+    return `
+      <div class="library-detail-header radical-detail-header">
+        <div class="library-detail-header__top">
+          <div class="radical-detail-identity">
+            <div class="radical-detail-glyph" aria-hidden="true">${escapeHtml(item.radical)}</div>
+            <div>
+              <div class="radical-detail-overline">${escapeHtml(item.number)}. Bộ ${escapeHtml(item.hanViet)}</div>
+              <h3>${escapeHtml(item.radical)} · ${escapeHtml(item.meaningVi)}</h3>
+              <div class="library-detail-header__sub">${escapeHtml(item.pinyin)}</div>
+              <div class="library-detail-header__badges">
+                <span class="library-badge">${escapeHtml(item.strokes)} nét</span>
+                <span class="library-badge">${groupLabel}</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="library-speak-btn" data-library-speak="${escapeHtml(item.radical)}">🔊 Phát âm</button>
+        </div>
+      </div>
+      <div class="library-detail-body radical-detail-body">
+        ${detailNavigationTemplate()}
+        <div class="library-info-grid">
+          ${infoBox("Dạng giản thể", `<span class="radical-inline-glyph">${escapeHtml(item.radical)}</span>`, false, true)}
+          ${infoBox("Pinyin · Hán Việt", `<strong>${escapeHtml(item.pinyin)}</strong><br>${escapeHtml(item.hanViet)}`, false, true)}
+          ${infoBox("Bộ kiện / biến thể", variants, true, true)}
+          ${infoBox("Gợi nghĩa", `${escapeHtml(item.meaningVi)} <span class="radical-english">· ${escapeHtml(item.meaningEn)}</span>`, true, true)}
+          ${infoBox("Chữ mẫu có bộ này", examples, true, true)}
+        </div>
+        <div class="radical-study-tip"><strong>Mẹo ghi nhớ</strong><span>Nhìn hình bộ → đọc nghĩa gợi ý → tìm lại bộ trong từng chữ mẫu. Bộ thủ giúp tra cứu và đoán trường nghĩa, nhưng không quyết định toàn bộ nghĩa của chữ.</span></div>
+      </div>`;
+  }
+
   function infoBox(label, value, wide = false, raw = false) {
     return `<div class="library-info-box${wide ? " is-wide" : ""}"><div class="library-info-box__label">${escapeHtml(label)}</div><div class="library-info-box__value">${raw ? value : escapeHtml(value || "—")}</div></div>`;
   }
@@ -395,7 +700,7 @@
       if (window.CCAudio?.speak) {
         window.CCAudio.speak({
           text,
-          mode: type === "idioms" ? "vocabulary" : "sentence",
+          mode: type === "idioms" || type === "radicals" ? "vocabulary" : "sentence",
           lang: "zh-CN",
           browserOnly: type === "grammar"
         }).catch(() => {});

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bài vỡ lòng HSK1: hiểu nét, bộ kiện, bộ thủ, cấu trúc chữ Hán và các quy tắc viết cơ bản." />
+  <title>Bộ thủ và nét chữ | HSK1</title>
+  <link rel="icon" href="assets/images/brand/favicon-orange.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/css/radicals-intro.css?v=1" />
+  <link rel="stylesheet" href="assets/css/dark-mode.css?v=2" />
+  <link rel="stylesheet" href="assets/css/app-shell.css?v=8" />
+  <script src="assets/js/dark-mode.js"></script>
+</head>
+<body class="radicals-intro-page">
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo"><span class="logo__icon">HSK</span><span class="logo__text">Tiếng Trung Cam &amp; Coca</span></a>
+      <nav class="nav" id="mainNav">
+        <a href="hsk.html" class="nav__link active">Khóa học</a>
+        <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
+        <a href="flashcard.html" class="nav__link">Flashcard</a>
+        <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
+      </nav>
+      <div class="header__actions">
+        <div class="streak-badge"><span class="streak-badge__icon">🔥</span><span class="streak-badge__count" data-progress="streak">0</span></div>
+        <button class="btn btn--outline" id="loginBtn">Đăng nhập</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Mở menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__inner">
+      <a href="hsk.html" class="nav__link active">Khóa học</a>
+      <a href="hsk-writing.html" class="nav__link">Luyện viết</a>
+      <a href="flashcard.html" class="nav__link">Flashcard</a>
+      <a href="vocabulary.html" class="nav__link">Tàng Thư Các</a>
+      <div class="mobile-nav__divider"></div>
+      <button class="btn btn--outline btn--full" id="loginBtnMobile">Đăng nhập</button>
+    </div>
+  </div>
+
+  <main class="radicals-intro-lesson" data-foundation-lesson data-foundation-lesson-label="Bộ thủ">
+    <div class="radicals-progress" aria-label="Tiến độ bài vỡ lòng">
+      <div class="radicals-progress__inner">
+        <a href="hsk.html" class="radicals-back" aria-label="Quay lại danh sách HSK1">← HSK1</a>
+        <div class="radicals-progress__track"><span id="lessonProgressBar"></span></div>
+        <span class="radicals-progress__label" id="lessonProgressLabel">Phần 1/8</span>
+      </div>
+    </div>
+
+    <section class="radicals-hero lesson-step" data-step="1" aria-labelledby="radicalsTitle">
+      <div class="radicals-shell radicals-hero__grid">
+        <div>
+          <span class="radicals-eyebrow">Bài vỡ lòng · Khuyên học trước</span>
+          <h1 id="radicalsTitle">Từ nét nhỏ đến<br /><span>một chữ Hán đẹp</span></h1>
+          <p>Chữ Hán không phải một bức tranh phải học thuộc nguyên khối. Khi biết tách chữ thành nét và bộ kiện, bạn sẽ nhìn rõ cấu trúc, nhớ lâu hơn và viết đúng thứ tự.</p>
+          <a class="radicals-primary-btn" href="#ban-do-chu-han">Bắt đầu khám phá <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="radicals-hero__visual" aria-label="Minh họa chữ Hán được ghép từ các bộ kiện">
+          <div class="character-build">
+            <span><b>亻</b><small>người</small></span>
+            <i>+</i>
+            <span><b>尔</b><small>thành phần</small></span>
+            <i>=</i>
+            <strong>你<small>nǐ · bạn</small></strong>
+          </div>
+          <div class="hero-grid-paper" aria-hidden="true"><span>一</span><span>丨</span><span>丿</span><span>㇏</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="radicals-shell radicals-content">
+      <section class="radicals-section lesson-step" data-step="2" id="ban-do-chu-han" aria-labelledby="mapTitle">
+        <div class="radical-section-heading"><span>01</span><div><p>Bản đồ dễ nhớ</p><h2 id="mapTitle">Nét → bộ kiện → chữ Hán → bộ thủ</h2></div></div>
+        <div class="concept-flow" aria-label="Các tầng cấu tạo chữ Hán">
+          <article><span class="concept-flow__icon">一</span><small>笔画 · bǐhuà</small><h3>Nét</h3><p>Đơn vị nhỏ nhất tạo nên chữ, như ngang, sổ, phẩy, mác.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span class="concept-flow__icon">亻</span><small>部件 · bùjiàn</small><h3>Bộ kiện</h3><p>Một nét hoặc nhóm nét có vị trí và chức năng trong chữ.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span class="concept-flow__icon">你</span><small>汉字 · Hànzì</small><h3>Chữ Hán</h3><p>Một khối vuông hoàn chỉnh, thường gồm một hay nhiều bộ kiện.</p></article>
+          <i aria-hidden="true">→</i>
+          <article><span class="concept-flow__icon">亻</span><small>部首 · bùshǒu</small><h3>Bộ thủ</h3><p>Bộ kiện được chọn làm mục phân loại để tra chữ trong từ điển.</p></article>
+        </div>
+        <div class="truth-card">
+          <span aria-hidden="true">💡</span>
+          <div>
+            <h3>Điểm quan trọng: bộ kiện không đồng nghĩa với bộ thủ</h3>
+            <p>Một chữ có thể có nhiều bộ kiện nhưng thường được xếp dưới một bộ thủ. Ví dụ <b>你</b> gồm <b>亻</b> và <b>尔</b>; khi tra theo bộ thủ, chữ này được xếp dưới bộ <b>亻</b> (nhân đứng).</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="radicals-section lesson-step" data-step="3" aria-labelledby="strokeTitle">
+        <div class="radical-section-heading"><span>02</span><div><p>Tám nét nền tảng</p><h2 id="strokeTitle">Nhận mặt và nhớ hướng đi của nét</h2></div></div>
+        <p class="section-lead">Các tiêu chuẩn có thể chia nét thành nhiều dạng nhỏ hơn. Với người mới học, tám họ nét dưới đây là một bản đồ khởi đầu đủ gọn để quan sát và luyện tay.</p>
+        <div class="stroke-grid">
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét ngang héng">
+            <span class="stroke-card__name"><b>横</b><small>héng · ngang</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M24 60 L176 60" /></svg><span class="stroke-card__glyph">一</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét sổ shù">
+            <span class="stroke-card__name"><b>竖</b><small>shù · sổ</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M100 16 L100 105" /></svg><span class="stroke-card__glyph">丨</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét phẩy piě">
+            <span class="stroke-card__name"><b>撇</b><small>piě · phẩy</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M145 18 Q112 73 38 104" /></svg><span class="stroke-card__glyph">丿</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét mác nà">
+            <span class="stroke-card__name"><b>捺</b><small>nà · mác</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M62 18 Q105 65 166 104" /></svg><span class="stroke-card__glyph">㇏</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét chấm diǎn">
+            <span class="stroke-card__name"><b>点</b><small>diǎn · chấm</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M78 26 Q98 40 120 78" /></svg><span class="stroke-card__glyph">丶</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét hất tí">
+            <span class="stroke-card__name"><b>提</b><small>tí · hất</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M36 92 L158 34" /></svg><span class="stroke-card__glyph">㇀</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét gập zhé">
+            <span class="stroke-card__name"><b>折</b><small>zhé · gập</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M34 30 L158 30 L158 104" /></svg><span class="stroke-card__glyph">𠃍</span>
+          </button>
+          <button class="stroke-card" type="button" data-stroke aria-label="Chạy lại nét móc gōu">
+            <span class="stroke-card__name"><b>钩</b><small>gōu · móc</small></span>
+            <svg viewBox="0 0 200 120" aria-hidden="true"><path d="M108 15 L108 91 Q108 108 82 96" /></svg><span class="stroke-card__glyph">亅</span>
+          </button>
+        </div>
+        <p class="tap-hint">Chạm vào từng thẻ để xem lại hướng đi của nét.</p>
+      </section>
+
+      <section class="radicals-section lesson-step" data-step="4" aria-labelledby="structureTitle">
+        <div class="radical-section-heading"><span>03</span><div><p>Nhìn chữ theo từng khối</p><h2 id="structureTitle">Bộ kiện và năm cấu trúc thường gặp</h2></div></div>
+        <div class="structure-grid">
+          <article><div class="structure-box structure-box--single"><span>人</span></div><h3>Độc thể</h3><p>Một khối chính</p><small>人 · 日 · 木</small></article>
+          <article><div class="structure-box structure-box--lr"><span>亻</span><span>尔</span></div><h3>Trái – phải</h3><p>Trái thường hẹp hơn</p><small>你 · 好 · 明</small></article>
+          <article><div class="structure-box structure-box--tb"><span>宀</span><span>子</span></div><h3>Trên – dưới</h3><p>Trên gọn, dưới vững</p><small>字 · 名 · 学</small></article>
+          <article><div class="structure-box structure-box--enclose"><span>囗</span><b>玉</b></div><h3>Bao quanh</h3><p>Khung ôm phần trong</p><small>国 · 园 · 回</small></article>
+          <article><div class="structure-box structure-box--half"><span>门</span><b>口</b></div><h3>Bán bao quanh</h3><p>Khung mở một phía</p><small>问 · 间 · 还</small></article>
+        </div>
+        <div class="component-demo">
+          <div class="component-demo__character">好</div>
+          <div class="component-demo__copy">
+            <span>好 · hǎo · tốt</span>
+            <h3>Đừng nhớ “好” như một bức hình rối</h3>
+            <p>Hãy nhìn hai bộ kiện <b>女</b> và <b>子</b>, nhận cấu trúc trái–phải, sau đó viết trọn bộ kiện bên trái rồi mới chuyển sang bên phải.</p>
+            <div><b>女</b><i>+</i><b>子</b><i>→</i><strong>好</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="radicals-section lesson-step" data-step="5" aria-labelledby="radicalTitle">
+        <div class="radical-section-heading"><span>04</span><div><p>Những “biển chỉ đường” đầu tiên</p><h2 id="radicalTitle">14 bộ thủ rất hữu ích ở HSK1</h2></div></div>
+        <p class="section-lead">Bộ thủ thường gợi cho bạn một vùng nghĩa, không phải bản dịch cố định. Hãy học bộ thủ cùng một chữ thật để trí nhớ có điểm bám.</p>
+        <div class="radical-grid">
+          <article><b>亻</b><span>nhân đứng</span><small>người</small><strong>你 · 他 · 们</strong></article>
+          <article><b>口</b><span>khẩu</span><small>miệng, lời nói</small><strong>吃 · 喝 · 吗</strong></article>
+          <article><b>女</b><span>nữ</span><small>nữ giới</small><strong>妈 · 姐 · 好</strong></article>
+          <article><b>子</b><span>tử</span><small>con, trẻ nhỏ</small><strong>字 · 孩 · 好</strong></article>
+          <article><b>木</b><span>mộc</span><small>cây, gỗ</small><strong>本 · 杯 · 校</strong></article>
+          <article><b>氵</b><span>tam điểm thủy</span><small>nước, chất lỏng</small><strong>汉 · 河 · 洗</strong></article>
+          <article><b>日</b><span>nhật</span><small>mặt trời, ngày</small><strong>明 · 时 · 晚</strong></article>
+          <article><b>月</b><span>nguyệt</span><small>trăng, tháng</small><strong>朋 · 期 · 服</strong></article>
+          <article><b>宀</b><span>miên</span><small>mái nhà</small><strong>家 · 字 · 安</strong></article>
+          <article><b>扌</b><span>thủ đứng</span><small>tay, động tác</small><strong>打 · 找 · 拿</strong></article>
+          <article><b>忄</b><span>tâm đứng</span><small>tâm trạng</small><strong>快 · 忙 · 情</strong></article>
+          <article><b>讠</b><span>ngôn</span><small>lời nói</small><strong>说 · 话 · 请</strong></article>
+          <article><b>艹</b><span>thảo</span><small>cỏ, cây</small><strong>茶 · 菜 · 花</strong></article>
+          <article><b>辶</b><span>sước</span><small>đi, chuyển động</small><strong>这 · 还 · 进</strong></article>
+        </div>
+        <div class="variant-note"><b>Một bộ có thể đổi dáng khi vào chữ:</b> 人 → 亻, 水 → 氵, 手 → 扌, 心 → 忄, 言 → 讠. Hình thức gọn hơn giúp các bộ kiện cùng nằm cân đối trong một ô vuông.</div>
+      </section>
+
+      <section class="radicals-section lesson-step" data-step="6" aria-labelledby="functionTitle">
+        <div class="radical-section-heading"><span>05</span><div><p>Đoán có cơ sở</p><h2 id="functionTitle">Bộ gợi nghĩa và bộ gợi âm</h2></div></div>
+        <div class="function-intro"><p>Nhiều chữ Hán được tạo từ một thành phần <b>gợi vùng nghĩa</b> và một thành phần <b>gợi âm đọc</b>. Đây là gợi ý để nhớ, không phải công thức luôn đúng tuyệt đối trong tiếng Trung hiện đại.</p></div>
+        <div class="function-grid">
+          <article>
+            <span class="function-char">妈</span>
+            <div><small>mā · mẹ</small><h3><b>女</b> gợi nghĩa + <b>马</b> gợi âm</h3><p>Liên quan đến nữ giới; thành phần 马 có âm mǎ gần với mā.</p></div>
+          </article>
+          <article>
+            <span class="function-char">河</span>
+            <div><small>hé · sông</small><h3><b>氵</b> gợi nghĩa + <b>可</b> gợi âm</h3><p>Liên quan đến nước; 可 kě giúp gợi phần âm.</p></div>
+          </article>
+          <article>
+            <span class="function-char">情</span>
+            <div><small>qíng · tình cảm</small><h3><b>忄</b> gợi nghĩa + <b>青</b> gợi âm</h3><p>Liên quan đến tâm trạng; 青 qīng giúp gợi cách đọc.</p></div>
+          </article>
+        </div>
+        <div class="memory-formula"><span>Nhìn bộ kiện</span><i>→</i><span>đoán vùng nghĩa</span><i>→</i><span>đọc Pinyin</span><i>→</i><span>kiểm tra bằng từ thật</span></div>
+      </section>
+
+      <section class="radicals-section lesson-step" data-step="7" aria-labelledby="orderTitle">
+        <div class="radical-section-heading"><span>06</span><div><p>Viết có đường đi</p><h2 id="orderTitle">Bảy quy tắc thứ tự nét cốt lõi</h2></div></div>
+        <div class="order-grid">
+          <article><span>1</span><div class="order-demo"><b>三</b><small>1 → 2 → 3</small></div><h3>Trên trước, dưới sau</h3><p>先上后下 · xiān shàng hòu xià</p></article>
+          <article><span>2</span><div class="order-demo"><b>你</b><small>亻 → 尔</small></div><h3>Trái trước, phải sau</h3><p>先左后右 · xiān zuǒ hòu yòu</p></article>
+          <article><span>3</span><div class="order-demo"><b>十</b><small>一 → 丨</small></div><h3>Ngang trước, sổ sau</h3><p>先横后竖 · xiān héng hòu shù</p></article>
+          <article><span>4</span><div class="order-demo"><b>人</b><small>丿 → ㇏</small></div><h3>Phẩy trước, mác sau</h3><p>先撇后捺 · xiān piě hòu nà</p></article>
+          <article><span>5</span><div class="order-demo"><b>问</b><small>门 → 口</small></div><h3>Ngoài trước, trong sau</h3><p>先外后内 · xiān wài hòu nèi</p></article>
+          <article><span>6</span><div class="order-demo"><b>国</b><small>囗 mở → 玉 → 一 đóng</small></div><h3>Khép khung sau cùng</h3><p>先外后内再封口</p></article>
+          <article><span>7</span><div class="order-demo"><b>小</b><small>丨 → 丿 → 丶</small></div><h3>Giữa trước, hai bên sau</h3><p>先中间后两边</p></article>
+        </div>
+        <div class="order-note"><span aria-hidden="true">⚠️</span><p>Đây là các quy tắc nền tảng, không phải “luật không ngoại lệ”. Một số chữ có cách viết riêng; với bộ <b>辶</b> trong 这, 还, 进, phần sước thường được viết sau.</p></div>
+
+        <div class="order-lab">
+          <div class="order-lab__head"><div><small>Thử ngay</small><h3>Chạm theo đúng thứ tự</h3></div><button type="button" id="resetOrders">↻ Làm lại</button></div>
+          <div class="order-challenges">
+            <article class="order-challenge" data-order="一|丨"><h4>Viết chữ 十</h4><div class="order-target" aria-live="polite"></div><div class="order-choices"><button data-order-part="丨">丨</button><button data-order-part="一">一</button></div><p></p></article>
+            <article class="order-challenge" data-order="丿|㇏"><h4>Viết chữ 人</h4><div class="order-target" aria-live="polite"></div><div class="order-choices"><button data-order-part="㇏">㇏</button><button data-order-part="丿">丿</button></div><p></p></article>
+            <article class="order-challenge" data-order="囗 mở|玉|一 đóng"><h4>Ghép chữ 国</h4><div class="order-target" aria-live="polite"></div><div class="order-choices"><button data-order-part="玉">玉</button><button data-order-part="一 đóng">一 đóng</button><button data-order-part="囗 mở">囗 mở</button></div><p></p></article>
+          </div>
+        </div>
+
+        <div class="writing-lab">
+          <div class="writing-lab__copy">
+            <small>Luyện tay tự do</small>
+            <h3>Giữ chữ trong một ô vuông tưởng tượng</h3>
+            <p>Chọn chữ mẫu, nhìn điểm giữa và bốn khoảng trống, rồi viết từ nét đầu tiên. Bảng này dùng để luyện chuyển động tay, không tự chấm đẹp/xấu.</p>
+            <div class="model-choices" aria-label="Chọn chữ mẫu">
+              <button type="button" class="is-active" data-model-char="永">永</button>
+              <button type="button" data-model-char="人">人</button>
+              <button type="button" data-model-char="十">十</button>
+              <button type="button" data-model-char="木">木</button>
+            </div>
+          </div>
+          <div class="writing-board">
+            <span class="writing-board__model" id="writingModel" aria-hidden="true">永</span>
+            <canvas id="writingCanvas" width="560" height="560" aria-label="Bảng luyện viết chữ Hán bằng chuột hoặc cảm ứng"></canvas>
+            <button type="button" id="clearCanvas">Xóa bảng</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="radicals-section radicals-practice lesson-step" data-step="8" id="radicalsPractice" aria-labelledby="practiceTitle">
+        <div class="radical-section-heading"><span>07</span><div><p>Kiểm tra nền tảng</p><h2 id="practiceTitle">Luyện tập cuối bài</h2></div></div>
+        <p class="section-lead">Chọn đáp án phù hợp. Khi đúng cả sáu câu, bạn có thể đánh dấu hoàn thành bài vỡ lòng này.</p>
+        <div class="radical-practice-score" aria-live="polite"><span id="practiceScore">0/6 câu đúng</span><button type="button" id="resetPractice">↻ Làm lại</button></div>
+        <div class="radical-practice-list">
+          <article class="radical-practice-question" data-question="smallest" data-answer="nét"><h3><span>1</span> Đơn vị nhỏ nhất tạo nên chữ Hán là gì?</h3><div class="radical-practice-options"><button data-choice="bộ thủ">Bộ thủ</button><button data-choice="nét">Nét</button><button data-choice="âm tiết">Âm tiết</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+          <article class="radical-practice-question" data-question="component" data-answer="không"><h3><span>2</span> Mọi bộ kiện trong một chữ đều là bộ thủ của chữ đó?</h3><div class="radical-practice-options"><button data-choice="có">Đúng</button><button data-choice="không">Không đúng</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+          <article class="radical-practice-question" data-question="meaning" data-answer="女"><h3><span>3</span> Trong chữ 妈, thành phần nào gợi vùng nghĩa?</h3><div class="radical-practice-options"><button data-choice="马">马</button><button data-choice="女">女</button><button data-choice="妈">妈</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+          <article class="radical-practice-question" data-question="ten" data-answer="一 trước"><h3><span>4</span> Chữ 十 bắt đầu bằng nét nào?</h3><div class="radical-practice-options"><button data-choice="丨 trước">丨 sổ</button><button data-choice="一 trước">一 ngang</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+          <article class="radical-practice-question" data-question="close" data-answer="đóng cuối"><h3><span>5</span> Với chữ 国, nét ngang đóng khung phía dưới được viết khi nào?</h3><div class="radical-practice-options"><button data-choice="đầu tiên">Đầu tiên</button><button data-choice="đóng cuối">Sau phần bên trong</button><button data-choice="tùy ý">Tùy ý</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+          <article class="radical-practice-question" data-question="structure" data-answer="trái-phải"><h3><span>6</span> Chữ 你 có cấu trúc nào?</h3><div class="radical-practice-options"><button data-choice="trên-dưới">Trên – dưới</button><button data-choice="trái-phải">Trái – phải</button><button data-choice="bao quanh">Bao quanh</button></div><p class="radical-practice-feedback" aria-live="polite"></p></article>
+        </div>
+        <div class="radical-practice-complete">
+          <button class="radicals-primary-btn" type="button" id="completeFoundation" disabled>Hoàn thành bài vỡ lòng</button>
+          <div class="radical-completion-message" id="completionMessage" hidden aria-live="polite"><span aria-hidden="true">🎉</span><h3>Bạn đã có bản đồ để đọc một chữ Hán!</h3><p>Từ giờ, mỗi khi gặp chữ mới: nhìn cấu trúc, tách bộ kiện, kiểm tra bộ thủ rồi viết theo đúng thứ tự nét.</p><a href="lesson.html?level=hsk1&amp;lesson=1">Bắt đầu Bài 1 →</a></div>
+        </div>
+
+        <details class="lesson-sources">
+          <summary>Nguồn tham khảo biên soạn <span aria-hidden="true">＋</span></summary>
+          <ul>
+            <li><a href="https://stroke-order.learningweb.moe.edu.tw/page.jsp?ID=23&amp;la=0" target="_blank" rel="noopener noreferrer">Bộ Giáo dục Đài Loan — nguyên tắc thứ tự nét chữ Hán</a></li>
+            <li><a href="https://unicode.org/versions/Unicode17.0.0/core-spec/chapter-18/" target="_blank" rel="noopener noreferrer">Unicode Standard, Chương 18 — bộ thủ và chỉ mục bộ–nét</a></li>
+            <li><a href="https://commons.princeton.edu/chinesecharacters/radicals/" target="_blank" rel="noopener noreferrer">Princeton University — bộ thủ, bộ kiện và cấu trúc chữ</a></li>
+          </ul>
+        </details>
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/site-shell.js?v=5"></script>
+  <script src="assets/js/learning-hud.js?v=8"></script>
+  <script src="assets/js/speech-service.js?v=5"></script>
+  <script src="assets/js/app.js?v=auth-modal-20260726"></script>
+  <script src="assets/js/radicals-intro.js?v=1"></script>
+  <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
+  <script type="module" src="assets/js/access-logger.js"></script>
+</body>
+</html>
