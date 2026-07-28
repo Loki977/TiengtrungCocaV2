@@ -205,8 +205,8 @@ def normalize_audio(source: Path, target: Path, post_tempo: float = 1.0) -> None
     subprocess.run(command, check=True)
 
 
-def join_segments_seamlessly(segment_files: list[Path], temp_dir: Path) -> Path:
-    """Trim TTS padding and join voice changes with a very short crossfade."""
+def join_segments_seamlessly(segment_files: list[Path], segments: list[dict], temp_dir: Path) -> Path:
+    """Trim TTS padding, preserving an explicit pause before spoken questions."""
     prepared = []
     for index, source in enumerate(segment_files):
         target = temp_dir / f"prepared-{index:02d}.wav"
@@ -221,6 +221,34 @@ def join_segments_seamlessly(segment_files: list[Path], temp_dir: Path) -> Path:
 
     if len(prepared) == 1:
         return prepared[0]
+
+    if any(int(segment.get("pauseBeforeMs", 0)) > 0 for segment in segments[1:]):
+        sequence = [prepared[0]]
+        for index, source in enumerate(prepared[1:], start=1):
+            pause_ms = int(segments[index].get("pauseBeforeMs", 0))
+            if pause_ms > 0:
+                silence = temp_dir / f"silence-{index:02d}.wav"
+                subprocess.run([
+                    "ffmpeg", "-y", "-v", "error",
+                    "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                    "-t", f"{pause_ms / 1000:.3f}",
+                    "-ac", "1", "-ar", "24000", "-codec:a", "pcm_s16le", str(silence),
+                ], check=True)
+                sequence.append(silence)
+            sequence.append(source)
+
+        command = ["ffmpeg", "-y", "-v", "error"]
+        for source in sequence:
+            command.extend(["-i", str(source)])
+        inputs = "".join(f"[{index}:a]" for index in range(len(sequence)))
+        target = temp_dir / "joined.wav"
+        command.extend([
+            "-filter_complex", f"{inputs}concat=n={len(sequence)}:v=0:a=1[joined]",
+            "-map", "[joined]",
+            "-ac", "1", "-ar", "24000", "-codec:a", "pcm_s16le", str(target),
+        ])
+        subprocess.run(command, check=True)
+        return target
 
     command = ["ffmpeg", "-y", "-v", "error"]
     for source in prepared:
@@ -261,7 +289,7 @@ async def generate_task(task: dict, semaphore: asyncio.Semaphore, verify_only: b
                         raise RuntimeError("Edge TTS tạo file rỗng.")
                     segment_files.append(segment_file)
 
-                source = join_segments_seamlessly(segment_files, temp_dir)
+                source = join_segments_seamlessly(segment_files, task["segments"], temp_dir)
                 post_tempos = {float(segment.get("postTempo", 1.0)) for segment in task["segments"]}
                 if len(post_tempos) != 1:
                     raise RuntimeError("Các đoạn trong cùng audio phải dùng chung postTempo.")
@@ -289,6 +317,8 @@ def manifest_entry(task: dict, target: Path, status: str) -> dict:
             "volume": segment.get("volume", "+0%"),
             "pitch": segment.get("pitch", "+0Hz"),
             "postTempo": float(segment.get("postTempo", 1.0)),
+            **({"role": segment["role"]} if segment.get("role") else {}),
+            **({"pauseBeforeMs": int(segment["pauseBeforeMs"])} if segment.get("pauseBeforeMs") else {}),
         }
         for segment in task["segments"]
     ]

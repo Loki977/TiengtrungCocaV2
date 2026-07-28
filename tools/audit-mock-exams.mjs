@@ -20,6 +20,14 @@ const expectedListeningRates = new Map([
   [5, '-5%'],
   [6, '-5%'],
 ]);
+const expectedListeningQuestionRates = new Map([
+  [2, '-28%'],
+  [3, '-22%'],
+  [4, '-15%'],
+  [5, '-15%'],
+  [6, '-15%'],
+]);
+const expectedListeningQuestionPauseMs = 450;
 const expectedListeningPostTempos = new Map([
   [1, 0.78],
   [2, 0.84],
@@ -226,9 +234,22 @@ for (const meta of index) {
         if (question.repeatCount !== expectedSection.repeatCount) fail(questionScope, `repeatCount sai: ${question.repeatCount}/${expectedSection.repeatCount}.`);
         if (!question.audioPath || !question.transcript || !question.audioText) fail(questionScope, 'Câu nghe thiếu audioPath/transcript/audioText.');
         const expectedRate = expectedListeningRates.get(exam.levelNumber);
-        for (const segment of question.audioSegments || []) {
-          if (segment.rate !== expectedRate) {
-            fail(questionScope, `Listening audio rate mismatch: ${segment.rate}/${expectedRate}.`);
+        const audioSegments = question.audioSegments || [];
+        for (const [segmentIndex, segment] of audioSegments.entries()) {
+          const isSpokenQuestion = audioSegments.length > 1 && segmentIndex === audioSegments.length - 1;
+          const expectedSegmentRate = isSpokenQuestion
+            ? expectedListeningQuestionRates.get(exam.levelNumber)
+            : expectedRate;
+          if (segment.rate !== expectedSegmentRate) {
+            fail(questionScope, `Listening audio rate mismatch: ${segment.rate}/${expectedSegmentRate}.`);
+          }
+          if (isSpokenQuestion) {
+            if (segment.role !== 'question') fail(questionScope, 'Đoạn câu hỏi cuối phải có role=question.');
+            if (Number(segment.pauseBeforeMs) !== expectedListeningQuestionPauseMs) {
+              fail(questionScope, `Khoảng nghỉ trước câu hỏi sai: ${segment.pauseBeforeMs}/${expectedListeningQuestionPauseMs} ms.`);
+            }
+          } else if (audioSegments.length > 1 && segment.role !== 'content') {
+            fail(questionScope, 'Đoạn nội dung nghe phải có role=content.');
           }
           const expectedPostTempo = expectedListeningPostTempos.get(exam.levelNumber);
           if (expectedPostTempo && Math.abs(Number(segment.postTempo) - expectedPostTempo) > 0.001) {

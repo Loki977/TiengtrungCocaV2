@@ -91,7 +91,9 @@ PLACE_ACTIVITIES = [
     ("博物馆", "参加活动"),
 ]
 LISTENING_RATES = {1: "-22%", 2: "-18%", 3: "-12%", 4: "-5%", 5: "-5%", 6: "-5%"}
+LISTENING_QUESTION_RATES = {2: "-28%", 3: "-22%", 4: "-15%", 5: "-15%", 6: "-15%"}
 LISTENING_POST_TEMPOS = {1: 0.78, 2: 0.84, 3: 0.90}
+LISTENING_QUESTION_PAUSE_MS = 450
 TRANSPORTS = ["公共汽车", "地铁", "出租车", "自行车", "火车", "步行"]
 WEEKDAYS = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
 ITEMS = ["雨伞", "手机", "钥匙", "词典", "杯子", "眼镜", "书包", "笔记本", "车票", "文件"]
@@ -773,12 +775,15 @@ def build_listening_questions(level: int, count: int, repeat_count: int, variant
                 "voice": statement_speaker["voice"],
                 "text": statement,
                 "rate": rate,
+                "role": "content",
             },
             {
                 "speaker": question_speaker["speaker"],
                 "voice": question_speaker["voice"],
                 "text": asked,
-                "rate": rate,
+                "rate": LISTENING_QUESTION_RATES[level],
+                "role": "question",
+                "pauseBeforeMs": LISTENING_QUESTION_PAUSE_MS,
             },
         ]
         if level in LISTENING_POST_TEMPOS:
