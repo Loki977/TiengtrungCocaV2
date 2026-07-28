@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -11,6 +11,7 @@ const standardPath = path.join(dataRoot, 'standards', 'hsk-2.0-current.json');
 const reportPath = path.join(dataRoot, 'mock-exam-report.json');
 const docsPath = path.join(root, 'docs', 'mock-exam-audit.md');
 const manifestPath = path.join(root, 'assets', 'audio', 'mock-tests', 'audio-manifest.json');
+const hasFfprobe = !spawnSync('ffprobe', ['-version'], { stdio: 'ignore' }).error;
 
 const readJson = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const fromWebPath = value => path.join(root, value.replace(/^\.\//u, '').replaceAll('/', path.sep));
@@ -45,6 +46,10 @@ function checkAudio(file, scope) {
   if (!fs.existsSync(file)) return fail(scope, `Không tồn tại audio: ${path.relative(root, file)}`);
   const size = fs.statSync(file).size;
   if (size <= 1024) return fail(scope, 'Audio rỗng hoặc quá nhỏ.');
+  if (!hasFfprobe) {
+    audioChecks.set(file, '');
+    return;
+  }
   try {
     const probe = JSON.parse(execFileSync('ffprobe', [
       '-v', 'error', '-show_entries', 'format=duration:stream=sample_rate,channels,bit_rate', '-of', 'json', file,
@@ -274,6 +279,10 @@ if (fs.existsSync(manifestPath)) {
   }
 } else {
   fail('manifest', 'Thiếu audio-manifest.json. Chạy npm run build:mock-exam-audio.');
+}
+
+if (!hasFfprobe) {
+  warn('audio', 'FFprobe is unavailable; codec, sample rate, channel and bitrate checks were skipped.');
 }
 
 const report = {
