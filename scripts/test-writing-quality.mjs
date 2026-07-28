@@ -13,6 +13,8 @@ const {
   annotateWritingLesson,
   areAnswersEquivalent,
   areAnswersExactlyEquivalent,
+  areVocabularyVietnameseAnswersEquivalent,
+  formatVocabularyVietnamesePrompt,
   generateLessons,
   loadWritingAnnotations
 } = await import("../lesson-engine.js");
@@ -102,6 +104,23 @@ function verifyAnnotations(level, lessons) {
   }
 }
 
+function verifyVocabularyVietnamese(level, lessonId, word) {
+  const prompt = formatVocabularyVietnamesePrompt(word.vietnamese);
+  assert.ok(prompt, `${level} bài ${lessonId} có câu hỏi Từ đơn rỗng: ${word.chinese}`);
+  assert.ok(
+    areVocabularyVietnameseAnswersEquivalent(word.vietnamese, word.vietnamese),
+    `${level} bài ${lessonId} không chấp nhận chính nghĩa Việt của từ ${word.chinese}`
+  );
+  assert.doesNotMatch(prompt, /\s{2,}/u, `${level} bài ${lessonId} có khoảng trắng lỗi: ${word.chinese}`);
+
+  for (const gloss of prompt.split(" / ").map((item) => item.trim()).filter(Boolean)) {
+    assert.ok(
+      areVocabularyVietnameseAnswersEquivalent(gloss, word.vietnamese),
+      `${level} bài ${lessonId} không chấp nhận nghĩa đồng đẳng "${gloss}" của từ ${word.chinese}`
+    );
+  }
+}
+
 const hsk1Lessons = await generateLessons("hsk1", getLessonConfig("hsk1"));
 verifyAnnotations("hsk1", hsk1Lessons);
 assert.equal(hsk1Lessons.length, expectedLessonCounts.hsk1, "HSK1 thiếu bài luyện viết");
@@ -113,6 +132,7 @@ for (const lesson of hsk1Lessons) {
   assert.equal(new Set(lesson.vocabularies.map((word) => word.chinese)).size, lesson.vocabularies.length, `HSK1 bài ${lesson.lessonId} lặp từ`);
   for (const word of lesson.vocabularies) {
     assert.ok(word.chinese && word.pinyin && word.vietnamese, `HSK1 bài ${lesson.lessonId} thiếu dữ liệu từ`);
+    verifyVocabularyVietnamese("hsk1", lesson.lessonId, word);
   }
 }
 
@@ -161,6 +181,7 @@ for (const level of ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"]) {
     for (const word of lesson.vocabularies) {
       assert.ok(word.chinese, `${level} bài ${lesson.lessonId} có từ thiếu Hanzi`);
       assert.ok(word.pinyin && word.vietnamese, `${level} bài ${lesson.lessonId} có từ thiếu pinyin hoặc nghĩa`);
+      verifyVocabularyVietnamese(level, lesson.lessonId, word);
     }
 
     assert.equal(
@@ -237,6 +258,36 @@ assert.equal(
   "Không được bỏ qua khác biệt phủ định"
 );
 assert.equal(
+  areAnswersEquivalent("to lớn", "lớn, to", "vi"),
+  true,
+  "Nghĩa từ đơn đảo trật tự tự nhiên phải được chấp nhận"
+);
+assert.equal(
+  areVocabularyVietnameseAnswersEquivalent("to", "lớn, to"),
+  true,
+  "Từ đơn phải chấp nhận một nghĩa đồng đẳng trong đáp án"
+);
+assert.equal(
+  areVocabularyVietnameseAnswersEquivalent("không có gì", "không có gì (đáp lại lời cảm ơn)"),
+  true,
+  "Từ đơn không được bắt nhập phần chú thích cách dùng"
+);
+assert.equal(
+  formatVocabularyVietnamesePrompt("to lớn, lớn, to"),
+  "to lớn / lớn / to",
+  "Câu hỏi Từ đơn phải trình bày các nghĩa Việt đồng đẳng rõ ràng"
+);
+assert.equal(
+  formatVocabularyVietnamesePrompt("thành lập (tổ chức, trường học), thiết lập (quan hệ)"),
+  "thành lập (tổ chức, trường học) / thiết lập (quan hệ)",
+  "Dấu phẩy trong chú thích không được tách thành một đáp án riêng"
+);
+assert.equal(
+  areVocabularyVietnameseAnswersEquivalent("thành lập", "thành lập (tổ chức, trường học), thiết lập (quan hệ)"),
+  true,
+  "Từ đơn phải chấp nhận nghĩa chính mà không bắt nhập chú thích"
+);
+assert.equal(
   areAnswersEquivalent("Wo dasuan qu lvyou", "Wǒ dǎsuàn qù lǚyóu.", "pinyin"),
   true,
   "Pinyin không dấu nhưng đúng phải được chấp nhận"
@@ -250,6 +301,11 @@ assert.equal(areAnswersExactlyEquivalent("Tôi thích học tiếng Trung", "Tô
 assert.equal(areAnswersExactlyEquivalent("Tôi thích tiếng Trung", "Tôi thích học tiếng Trung.", "vi"), false, "Nghĩa Việt thiếu từ phải sai");
 
 const lessonPageSource = await fs.readFile("lesson-page.js", "utf8");
+assert.match(
+  lessonPageSource,
+  /areVocabularyVietnameseAnswersEquivalent\(value, item\.vietnamese\)/,
+  "Chấm nghĩa từ đơn phải chấp nhận cách diễn đạt tương đương"
+);
 const inputHandlerStart = lessonPageSource.indexOf("function handleAnswerInput");
 const inputHandlerEnd = lessonPageSource.indexOf("\nfunction submitCurrentAnswer", inputHandlerStart);
 const inputHandlerSource = lessonPageSource.slice(inputHandlerStart, inputHandlerEnd);

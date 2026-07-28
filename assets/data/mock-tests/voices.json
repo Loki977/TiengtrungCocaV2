@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "voices": {
+    "viFemale": "vi-VN-HoaiMyNeural",
+    "zhFemale": "zh-CN-XiaoxiaoNeural",
+    "zhMale": "zh-CN-YunxiNeural",
+    "enFemale": "en-US-JennyNeural"
+  },
+  "aliases": {
+    "xiaoxiaonature": "zh-CN-XiaoxiaoNeural",
+    "XiaoxiaoNatural": "zh-CN-XiaoxiaoNeural",
+    "zh-CN-XiaoxiaoNatural": "zh-CN-XiaoxiaoNeural"
+  },
+  "encoding": {
+    "format": "mp3",
+    "sampleRate": 24000,
+    "channels": 1,
+    "bitrateKbps": 56
+  },
+  "generation": {
+    "concurrency": 4,
+    "retries": 4,
+    "resume": true,
+    "hash": "sha256"
+  }
+}

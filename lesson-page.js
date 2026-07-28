@@ -3,12 +3,14 @@ import { doc, getDocFromServer } from "https://www.gstatic.com/firebasejs/12.0.0
 import {
   annotateWritingLesson,
   areAnswersExactlyEquivalent,
+  areVocabularyVietnameseAnswersEquivalent,
+  formatVocabularyVietnamesePrompt,
   getLessonContent,
   loadWritingAnnotations,
   normalizeAnswer,
   normalizePinyin,
   normalizeWritingLessonContent
-} from "./lesson-engine.js";
+} from "./lesson-engine.js?v=2";
 import { getLessonConfig } from "./lesson-config.js";
 import { SentenceStructure } from "./assets/js/sentence-structure.js";
 
@@ -739,12 +741,22 @@ function getPrompt(item) {
     return state.currentPhase === "sentence" ? "Nghe và viết lại câu" : "Nghe và viết lại";
   }
 
-  return state.mode === "vi-to-cn" ? item.vietnamese : item.chinese;
+  if (state.mode !== "vi-to-cn") {
+    return item.chinese;
+  }
+
+  return state.currentPhase === "vocabulary"
+    ? formatVocabularyVietnamesePrompt(item.vietnamese)
+    : item.vietnamese;
 }
 
 function isCorrectAnswer(value, item) {
   if (state.mode === "cn-to-vi") {
-    return areAnswersExactlyEquivalent(value, item.vietnamese, "vi");
+    // Từ đơn may use a natural word order such as "to lớn" instead of
+    // "lớn, to". Keep sentence, Chinese and pinyin answers exact.
+    return state.currentPhase === "vocabulary"
+      ? areVocabularyVietnameseAnswersEquivalent(value, item.vietnamese)
+      : areAnswersExactlyEquivalent(value, item.vietnamese, "vi");
   }
 
   return areAnswersExactlyEquivalent(value, item.chinese, "zh")

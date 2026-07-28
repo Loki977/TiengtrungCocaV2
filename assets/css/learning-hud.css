@@ -220,12 +220,22 @@ html.dark-mode {
 }
 
 @media (max-width: 767px) {
+  body.cc-learning-active :is(.pinyin-intro-lesson, .radicals-intro-lesson) {
+    padding-top: 0 !important;
+  }
+
+  body.cc-learning-active :is(.pinyin-progress, .radicals-progress) {
+    top: 0;
+  }
+
   .cc-learning-hud {
-    position: sticky;
-    top: 68px;
+    position: fixed;
+    top: max(80px, calc(env(safe-area-inset-top) + 68px));
+    right: 12px;
+    left: auto;
     width: max-content;
     max-width: calc(100% - 24px);
-    margin: 8px 12px 14px auto;
+    margin: 0;
     padding: 4px;
     border-radius: 999px;
     transition:
@@ -237,6 +247,17 @@ html.dark-mode {
   .cc-learning-hud__head {
     justify-content: flex-end;
     margin-bottom: 0;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .cc-learning-hud.is-dragging {
+    transition: none;
+  }
+
+  .cc-learning-hud.is-dragging .cc-learning-hud__head {
+    cursor: grabbing;
   }
 
   .cc-learning-hud__title {
@@ -307,7 +328,6 @@ html.dark-mode {
   .cc-learning-hud.is-expanded {
     width: 85%;
     max-width: calc(100% - 24px);
-    margin-inline: auto;
     padding: 8px;
     border-radius: 16px;
   }
@@ -342,7 +362,7 @@ html.dark-mode {
   }
 
   body:has(> header[data-cc-legacy-shell-header]) .cc-learning-hud {
-    top: 146px;
+    top: max(166px, calc(env(safe-area-inset-top) + 154px));
   }
 }
 

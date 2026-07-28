@@ -1,0 +1,1328 @@
+{
+  "schemaVersion": 2,
+  "id": "hsk1-h11003",
+  "level": "HSK 1",
+  "levelNumber": 1,
+  "standardVersion": "HSK_2_0_CURRENT",
+  "title": "Đề thi thử HSK 1 — Số 03",
+  "description": "Đề thi thử HSK 1 chủ đề ăn uống và mua sắm, chỉ sử dụng âm thanh và văn bản.",
+  "status": "published",
+  "contentSource": "original_project_content",
+  "officialTotalDurationMinutes": 40,
+  "timedDurationMinutes": 32,
+  "personalInfoMinutesOmitted": 5,
+  "totalQuestionCount": 40,
+  "totalPoints": 200,
+  "passPoints": 120,
+  "answerKeyPath": "./assets/data/mock-tests/answer-keys/hsk1-h11003.answers.json",
+  "introAudio": {
+    "vi": "./assets/audio/mock-tests/intros/hsk1/intro-vi.mp3",
+    "zh": "./assets/audio/mock-tests/intros/hsk1/intro-zh.mp3",
+    "soundTest": "./assets/audio/mock-tests/shared/sound-test.mp3"
+  },
+  "modeSettings": {
+    "defaultMode": "official",
+    "official": {
+      "sectionTimers": true,
+      "lockPreviousSections": true,
+      "lockFutureSections": true,
+      "allowAudioReplay": false,
+      "allowAudioSeeking": false,
+      "showExplanationsDuringExam": false
+    },
+    "practice": {
+      "sectionTimers": false,
+      "lockPreviousSections": false,
+      "lockFutureSections": false,
+      "allowAudioReplay": true,
+      "allowAudioSeeking": true,
+      "showExplanationsDuringExam": true
+    }
+  },
+  "sections": [
+    {
+      "id": "listening",
+      "title": "Nghe",
+      "durationMinutes": 15,
+      "questionCount": 20,
+      "repeatCount": 2,
+      "parts": [
+        {
+          "id": "listening-part-1",
+          "title": "Phần 1",
+          "instruction": "Nghe nội dung và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q01",
+              "questionType": "true_false",
+              "instruction": "Câu 1: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 1: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "她在商店买菜。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她在商店买菜。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/927c96f7b5715b4a3c70ad19fb6a2931c1e615d503f2cd5d776b858f7ccf1c2a.mp3",
+              "transcript": "她在商店买菜。",
+              "transcriptPinyin": "tā zài shāng diàn mǎi cài。",
+              "hanzi": "她在买菜。",
+              "pinyin": "tā zài mǎi cài。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q02",
+              "questionType": "true_false",
+              "instruction": "Câu 2: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 2: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "他在吃面条。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "他在吃面条。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ce79f31192b8facc57746286f4aac2d9231a1f769db8454234c1d0dc56ef56af.mp3",
+              "transcript": "他在吃面条。",
+              "transcriptPinyin": "tā zài chī miàn tiáo。",
+              "hanzi": "他在喝茶。",
+              "pinyin": "tā zài hē chá。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q03",
+              "questionType": "true_false",
+              "instruction": "Câu 3: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 3: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "她有两杯茶。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她有两杯茶。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/9686295db1d6c750ffdcdc55b8af87f28035071debb57c9510ff629a3d5d8385.mp3",
+              "transcript": "她有两杯茶。",
+              "transcriptPinyin": "tā yǒu liǎng bēi chá。",
+              "hanzi": "她有两杯茶。",
+              "pinyin": "tā yǒu liǎng bēi chá。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q04",
+              "questionType": "true_false",
+              "instruction": "Câu 4: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 4: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "这件衣服是白色的。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "这件衣服是白色的。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/a3415b254d0f96f88d1d502700d79588aaaebeae24d62fac32ca679403ea3591.mp3",
+              "transcript": "这件衣服是白色的。",
+              "transcriptPinyin": "zhè jiàn yī fú shì bái sè de。",
+              "hanzi": "这件衣服是蓝色的。",
+              "pinyin": "zhè jiàn yī fú shì lán sè de。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q05",
+              "questionType": "true_false",
+              "instruction": "Câu 5: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 5: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "冰箱里没有水果。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "冰箱里没有水果。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/2a0f6ff9cba14c2108fd1404890b4f27a22e855955310d9bb707f00a469a2ce6.mp3",
+              "transcript": "冰箱里没有水果。",
+              "transcriptPinyin": "bīng xiāng lǐ méi yǒu shuǐ guǒ。",
+              "hanzi": "冰箱里没有水果。",
+              "pinyin": "bīng xiāng lǐ méi yǒu shuǐ guǒ。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-2",
+          "title": "Phần 2",
+          "instruction": "Nghe đoạn hội thoại, sau đó trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "q06",
+              "questionType": "single_choice",
+              "instruction": "Câu 6: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 6: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "这个苹果五块钱。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "这个苹果五块钱。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/badd6f369aea9c37f3e07e1d13dbc0089707e14b948b9dbb5d307c217a2fa403.mp3",
+              "transcript": "这个苹果五块钱。",
+              "transcriptPinyin": "zhè ge píng guǒ wǔ kuài qián。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "米饭已经做好了。",
+                  "pinyin": "mǐ fàn yǐ jīng zuò hǎo le。"
+                },
+                {
+                  "id": "B",
+                  "text": "这个苹果五块钱。",
+                  "pinyin": "zhè ge píng guǒ wǔ kuài qián。"
+                },
+                {
+                  "id": "C",
+                  "text": "我想买一杯咖啡。",
+                  "pinyin": "wǒ xiǎng mǎi yī bēi kā fēi。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q07",
+              "questionType": "single_choice",
+              "instruction": "Câu 7: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 7: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "我想买一杯咖啡。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "我想买一杯咖啡。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/01f2f71c76afc87102597ee4f044eff5a2a8b99cc14c608cbc0d03f393272184.mp3",
+              "transcript": "我想买一杯咖啡。",
+              "transcriptPinyin": "wǒ xiǎng mǎi yī bēi kā fēi。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我想买一杯咖啡。",
+                  "pinyin": "wǒ xiǎng mǎi yī bēi kā fēi。"
+                },
+                {
+                  "id": "B",
+                  "text": "米饭已经做好了。",
+                  "pinyin": "mǐ fàn yǐ jīng zuò hǎo le。"
+                },
+                {
+                  "id": "C",
+                  "text": "商店里有很多衣服。",
+                  "pinyin": "shāng diàn lǐ yǒu hěn duō yī fú。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q08",
+              "questionType": "single_choice",
+              "instruction": "Câu 8: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 8: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "米饭已经做好了。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "米饭已经做好了。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/b19928e63563888a7b30a2def541169065b1fc0147981a39ad989f3fb8f4ff69.mp3",
+              "transcript": "米饭已经做好了。",
+              "transcriptPinyin": "mǐ fàn yǐ jīng zuò hǎo le。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "商店里有很多衣服。",
+                  "pinyin": "shāng diàn lǐ yǒu hěn duō yī fú。"
+                },
+                {
+                  "id": "B",
+                  "text": "她不吃羊肉。",
+                  "pinyin": "tā bù chī yáng ròu。"
+                },
+                {
+                  "id": "C",
+                  "text": "米饭已经做好了。",
+                  "pinyin": "mǐ fàn yǐ jīng zuò hǎo le。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q09",
+              "questionType": "single_choice",
+              "instruction": "Câu 9: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 9: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "商店里有很多衣服。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "商店里有很多衣服。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/92b790cdccab08a533d456dcaecd6589cb4cadbf9612e524015a968ff410db43.mp3",
+              "transcript": "商店里有很多衣服。",
+              "transcriptPinyin": "shāng diàn lǐ yǒu hěn duō yī fú。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "这个苹果五块钱。",
+                  "pinyin": "zhè ge píng guǒ wǔ kuài qián。"
+                },
+                {
+                  "id": "B",
+                  "text": "商店里有很多衣服。",
+                  "pinyin": "shāng diàn lǐ yǒu hěn duō yī fú。"
+                },
+                {
+                  "id": "C",
+                  "text": "她不吃羊肉。",
+                  "pinyin": "tā bù chī yáng ròu。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q10",
+              "questionType": "single_choice",
+              "instruction": "Câu 10: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 10: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "她不吃羊肉。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她不吃羊肉。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/95acdc5e46c63d8206368893740111380a38a3f12ce27445c4336b669b903388.mp3",
+              "transcript": "她不吃羊肉。",
+              "transcriptPinyin": "tā bù chī yáng ròu。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "她不吃羊肉。",
+                  "pinyin": "tā bù chī yáng ròu。"
+                },
+                {
+                  "id": "B",
+                  "text": "这个苹果五块钱。",
+                  "pinyin": "zhè ge píng guǒ wǔ kuài qián。"
+                },
+                {
+                  "id": "C",
+                  "text": "我想买一杯咖啡。",
+                  "pinyin": "wǒ xiǎng mǎi yī bēi kā fēi。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-3",
+          "title": "Phần 3",
+          "instruction": "Nghe đoạn hội thoại và chọn thông tin đúng.",
+          "questions": [
+            {
+              "id": "q11",
+              "questionType": "single_choice",
+              "instruction": "Câu 11: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 11: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你想吃什么？\n小李说，我想吃米饭。\n小李想吃什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你想吃什么？\n小李说，我想吃米饭。\n小李想吃什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/09708a00fc4c5ca89bfcd8cb0b0a0b97eac53a14b6b2f110c21105bb94d98e52.mp3",
+              "transcript": "小月说，你想吃什么？\n小李说，我想吃米饭。\n小李想吃什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ xiǎng chī shén me？   xiǎo lǐ shuō， wǒ xiǎng chī mǐ fàn。   xiǎo lǐ xiǎng chī shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "面条",
+                  "pinyin": "miàn tiáo"
+                },
+                {
+                  "id": "B",
+                  "text": "米饭",
+                  "pinyin": "mǐ fàn"
+                },
+                {
+                  "id": "C",
+                  "text": "苹果",
+                  "pinyin": "píng guǒ"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q12",
+              "questionType": "single_choice",
+              "instruction": "Câu 12: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 12: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，这个杯子多少钱？\n小月说，十八块。\n杯子多少钱？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，这个杯子多少钱？\n小月说，十八块。\n杯子多少钱？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/844c67cf26f4fc0269b6f23a63e691d36b288a7b9cb51c0385d19ff1eb20c99d.mp3",
+              "transcript": "小李说，这个杯子多少钱？\n小月说，十八块。\n杯子多少钱？",
+              "transcriptPinyin": "xiǎo lǐ shuō， zhè ge bēi zi duō shǎo qián？   xiǎo yuè shuō， shí bā kuài。   bēi zi duō shǎo qián？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "八块",
+                  "pinyin": "bā kuài"
+                },
+                {
+                  "id": "B",
+                  "text": "十块",
+                  "pinyin": "shí kuài"
+                },
+                {
+                  "id": "C",
+                  "text": "十八块",
+                  "pinyin": "shí bā kuài"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q13",
+              "questionType": "single_choice",
+              "instruction": "Câu 13: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 13: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你买什么了？\n小李说，我买了三个苹果。\n小李买了几个苹果？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你买什么了？\n小李说，我买了三个苹果。\n小李买了几个苹果？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/fcf71ba816774fb21261a6131d89e4e0d102a783c0d2bbb10fa8f7074f317b4e.mp3",
+              "transcript": "小月说，你买什么了？\n小李说，我买了三个苹果。\n小李买了几个苹果？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ mǎi shén me le？   xiǎo lǐ shuō， wǒ mǎi le sān gè píng guǒ。   xiǎo lǐ mǎi le jǐ gè píng guǒ？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "一个",
+                  "pinyin": "yí gè"
+                },
+                {
+                  "id": "B",
+                  "text": "两个",
+                  "pinyin": "liǎng gè"
+                },
+                {
+                  "id": "C",
+                  "text": "三个",
+                  "pinyin": "sān gè"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q14",
+              "questionType": "single_choice",
+              "instruction": "Câu 14: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 14: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，你喜欢这件衣服吗？\n小月说，喜欢，但是太大了。\n衣服怎么样？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，你喜欢这件衣服吗？\n小月说，喜欢，但是太大了。\n衣服怎么样？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/872e31860cb0e0dfae293b3405202cdfaa38d4ae103fff5f48014516b1522a9e.mp3",
+              "transcript": "小李说，你喜欢这件衣服吗？\n小月说，喜欢，但是太大了。\n衣服怎么样？",
+              "transcriptPinyin": "xiǎo lǐ shuō， nǐ xǐ huān zhè jiàn yī fú ma？   xiǎo yuè shuō， xǐ huān， dàn shì tài dà le。   yī fú zěn me yàng？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "太小了",
+                  "pinyin": "tài xiǎo le"
+                },
+                {
+                  "id": "B",
+                  "text": "太大了",
+                  "pinyin": "tài dà le"
+                },
+                {
+                  "id": "C",
+                  "text": "太贵了",
+                  "pinyin": "tài guì le"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q15",
+              "questionType": "single_choice",
+              "instruction": "Câu 15: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 15: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你喝咖啡吗？\n小李说，不喝，我喜欢喝茶。\n小李喜欢喝什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你喝咖啡吗？\n小李说，不喝，我喜欢喝茶。\n小李喜欢喝什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/d089047cb710c59410ea7f4943ec9897e763875ca670f3eccc2b011efc54cb0a.mp3",
+              "transcript": "小月说，你喝咖啡吗？\n小李说，不喝，我喜欢喝茶。\n小李喜欢喝什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ hē kā fēi ma？   xiǎo lǐ shuō， bù hē， wǒ xǐ huān hē chá。   xiǎo lǐ xǐ huān hē shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "水",
+                  "pinyin": "shuǐ"
+                },
+                {
+                  "id": "B",
+                  "text": "咖啡",
+                  "pinyin": "kā fēi"
+                },
+                {
+                  "id": "C",
+                  "text": "茶",
+                  "pinyin": "chá"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-4",
+          "title": "Phần 4",
+          "instruction": "Nghe đoạn nói ngắn và chọn kết luận phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q16",
+              "questionType": "single_choice",
+              "instruction": "Câu 16: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 16: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你买的西瓜大吗？\n小李说，很大，也很甜。\n西瓜怎么样？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你买的西瓜大吗？\n小李说，很大，也很甜。\n西瓜怎么样？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/5f43e0ef5fa1e27847dbccdd58b2bf306b515334e46c732b6dd2d43aa36a158b.mp3",
+              "transcript": "小月说，你买的西瓜大吗？\n小李说，很大，也很甜。\n西瓜怎么样？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ mǎi de xī guā dà ma？   xiǎo lǐ shuō， hěn dà， yě hěn tián。   xī guā zěn me yàng？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "又大又甜",
+                  "pinyin": "yòu dà yòu tián"
+                },
+                {
+                  "id": "B",
+                  "text": "很小",
+                  "pinyin": "hěn xiǎo"
+                },
+                {
+                  "id": "C",
+                  "text": "不甜",
+                  "pinyin": "bù tián"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q17",
+              "questionType": "single_choice",
+              "instruction": "Câu 17: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 17: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，我们去饭店吃饭吧。\n小月说，好，我想吃中国菜。\n小月想吃什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，我们去饭店吃饭吧。\n小月说，好，我想吃中国菜。\n小月想吃什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/8534eb07d800692b87c4035ed81b6d6a76751c734084d965a0d135f8ea6d80ca.mp3",
+              "transcript": "小李说，我们去饭店吃饭吧。\n小月说，好，我想吃中国菜。\n小月想吃什么？",
+              "transcriptPinyin": "xiǎo lǐ shuō， wǒ men qù fàn diàn chī fàn ba。   xiǎo yuè shuō， hǎo， wǒ xiǎng chī zhōng guó cài。   xiǎo yuè xiǎng chī shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "米饭",
+                  "pinyin": "mǐ fàn"
+                },
+                {
+                  "id": "B",
+                  "text": "中国菜",
+                  "pinyin": "zhōng guó cài"
+                },
+                {
+                  "id": "C",
+                  "text": "水果",
+                  "pinyin": "shuǐ guǒ"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q18",
+              "questionType": "single_choice",
+              "instruction": "Câu 18: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 18: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，这件衣服一百块，那件五十块。\n小李说，我要便宜的。\n小李要多少钱的衣服？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，这件衣服一百块，那件五十块。\n小李说，我要便宜的。\n小李要多少钱的衣服？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/78633b49d9001ced6308c699d7c3200689c9ed0fce7634578977272e8d70fd7f.mp3",
+              "transcript": "小月说，这件衣服一百块，那件五十块。\n小李说，我要便宜的。\n小李要多少钱的衣服？",
+              "transcriptPinyin": "xiǎo yuè shuō， zhè jiàn yī fú yì bǎi kuài， nà jiàn wǔ shí kuài。   xiǎo lǐ shuō， wǒ yào pián yi de。   xiǎo lǐ yào duō shǎo qián de yī fú？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "五十块",
+                  "pinyin": "wǔ shí kuài"
+                },
+                {
+                  "id": "B",
+                  "text": "八十块",
+                  "pinyin": "bā shí kuài"
+                },
+                {
+                  "id": "C",
+                  "text": "一百块",
+                  "pinyin": "yì bǎi kuài"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q19",
+              "questionType": "single_choice",
+              "instruction": "Câu 19: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 19: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，冰箱里有鸡蛋吗？\n小月说，没有，只有牛奶。\n冰箱里有什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，冰箱里有鸡蛋吗？\n小月说，没有，只有牛奶。\n冰箱里有什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/3f4158b0c65ec13e0875e69b4a95784cdd667aa7323361b811dd28c234cfbf23.mp3",
+              "transcript": "小李说，冰箱里有鸡蛋吗？\n小月说，没有，只有牛奶。\n冰箱里有什么？",
+              "transcriptPinyin": "xiǎo lǐ shuō， bīng xiāng lǐ yǒu jī dàn ma？   xiǎo yuè shuō， méi yǒu， zhǐ yǒu niú nǎi。   bīng xiāng lǐ yǒu shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "鸡蛋",
+                  "pinyin": "jī dàn"
+                },
+                {
+                  "id": "B",
+                  "text": "牛奶",
+                  "pinyin": "niú nǎi"
+                },
+                {
+                  "id": "C",
+                  "text": "水果",
+                  "pinyin": "shuǐ guǒ"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q20",
+              "questionType": "single_choice",
+              "instruction": "Câu 20: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 20: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，服务员，请给我一杯热茶。\n小李说，好的，请等一下。\n小月要什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，服务员，请给我一杯热茶。\n小李说，好的，请等一下。\n小月要什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/75cc80f6e4af89034bcd8afab807a7c117ef3cd23534d5540bf2d84e30480e76.mp3",
+              "transcript": "小月说，服务员，请给我一杯热茶。\n小李说，好的，请等一下。\n小月要什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， fú wù yuán， qǐng gěi wǒ yī bēi rè chá。   xiǎo lǐ shuō， hǎo de， qǐng děng yí xià。   xiǎo yuè yào shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "冷水",
+                  "pinyin": "lěng shuǐ"
+                },
+                {
+                  "id": "B",
+                  "text": "热茶",
+                  "pinyin": "rè chá"
+                },
+                {
+                  "id": "C",
+                  "text": "咖啡",
+                  "pinyin": "kā fēi"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Đọc",
+      "durationMinutes": 17,
+      "questionCount": 20,
+      "repeatCount": 0,
+      "parts": [
+        {
+          "id": "reading-part-1",
+          "title": "Phần 1",
+          "instruction": "Đọc câu và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q21",
+              "questionType": "true_false",
+              "instruction": "Câu 21: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 21: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "两个苹果六块钱。",
+              "pinyin": "liǎng gè píng guǒ liù kuài qián。",
+              "context": "苹果三块钱一个。",
+              "contextPinyin": "píng guǒ sān kuài qián yí gè。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q22",
+              "questionType": "true_false",
+              "instruction": "Câu 22: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 22: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "杯子是空的。",
+              "pinyin": "bēi zi shì kōng de。",
+              "context": "杯子里没有水。",
+              "contextPinyin": "bēi zi lǐ méi yǒu shuǐ。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q23",
+              "questionType": "true_false",
+              "instruction": "Câu 23: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 23: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "他想吃面条。",
+              "pinyin": "tā xiǎng chī miàn tiáo。",
+              "context": "他想吃米饭，不想吃面条。",
+              "contextPinyin": "tā xiǎng chī mǐ fàn， bù xiǎng chī miàn tiáo。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q24",
+              "questionType": "true_false",
+              "instruction": "Câu 24: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 24: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "这件衣服很大。",
+              "pinyin": "zhè jiàn yī fú hěn dà。",
+              "context": "这件衣服太小了。",
+              "contextPinyin": "zhè jiàn yī fú tài xiǎo le。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q25",
+              "questionType": "true_false",
+              "instruction": "Câu 25: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 25: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "桌子上有东西。",
+              "pinyin": "zhuō zi shàng yǒu dōng xī。",
+              "context": "桌子上有茶和水果。",
+              "contextPinyin": "zhuō zi shàng yǒu chá hé shuǐ guǒ。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-2",
+          "title": "Phần 2",
+          "instruction": "Chọn từ hoặc cụm từ thích hợp để hoàn thành câu.",
+          "questions": [
+            {
+              "id": "q26",
+              "questionType": "single_choice",
+              "instruction": "Câu 26: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 26: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我想___一个苹果。",
+              "pinyin": "wǒ xiǎng _ _ _ yí gè píng guǒ。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "买",
+                  "pinyin": "mǎi"
+                },
+                {
+                  "id": "B",
+                  "text": "看",
+                  "pinyin": "kàn"
+                },
+                {
+                  "id": "C",
+                  "text": "听",
+                  "pinyin": "tīng"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q27",
+              "questionType": "single_choice",
+              "instruction": "Câu 27: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 27: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "请给我一___茶。",
+              "pinyin": "qǐng gěi wǒ yī _ _ _ chá。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "本",
+                  "pinyin": "běn"
+                },
+                {
+                  "id": "B",
+                  "text": "杯",
+                  "pinyin": "bēi"
+                },
+                {
+                  "id": "C",
+                  "text": "块",
+                  "pinyin": "kuài"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q28",
+              "questionType": "single_choice",
+              "instruction": "Câu 28: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 28: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "这个西瓜很___。",
+              "pinyin": "zhè ge xī guā hěn _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "大",
+                  "pinyin": "dà"
+                },
+                {
+                  "id": "B",
+                  "text": "多",
+                  "pinyin": "duō"
+                },
+                {
+                  "id": "C",
+                  "text": "高兴",
+                  "pinyin": "gāo xìng"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q29",
+              "questionType": "single_choice",
+              "instruction": "Câu 29: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 29: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "你想吃米饭___面条？",
+              "pinyin": "nǐ xiǎng chī mǐ fàn _ _ _ miàn tiáo？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "吗",
+                  "pinyin": "ma"
+                },
+                {
+                  "id": "B",
+                  "text": "还是",
+                  "pinyin": "hái shì"
+                },
+                {
+                  "id": "C",
+                  "text": "呢",
+                  "pinyin": "ne"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q30",
+              "questionType": "single_choice",
+              "instruction": "Câu 30: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 30: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "商店里有很多___。",
+              "pinyin": "shāng diàn lǐ yǒu hěn duō _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "衣服",
+                  "pinyin": "yī fú"
+                },
+                {
+                  "id": "B",
+                  "text": "天气",
+                  "pinyin": "tiān qì"
+                },
+                {
+                  "id": "C",
+                  "text": "名字",
+                  "pinyin": "míng zì"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-3",
+          "title": "Phần 3",
+          "instruction": "Đọc đoạn văn ngắn và trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "q31",
+              "questionType": "single_choice",
+              "instruction": "Câu 31: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 31: Chọn câu trả lời phù hợp.",
+              "hanzi": "这个苹果多少钱？",
+              "pinyin": "zhè ge píng guǒ duō shǎo qián？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "三个苹果。",
+                  "pinyin": "sān gè píng guǒ。"
+                },
+                {
+                  "id": "B",
+                  "text": "三块钱。",
+                  "pinyin": "sān kuài qián。"
+                },
+                {
+                  "id": "C",
+                  "text": "苹果很大。",
+                  "pinyin": "píng guǒ hěn dà。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q32",
+              "questionType": "single_choice",
+              "instruction": "Câu 32: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 32: Chọn câu trả lời phù hợp.",
+              "hanzi": "你想吃什么？",
+              "pinyin": "nǐ xiǎng chī shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我想吃面条。",
+                  "pinyin": "wǒ xiǎng chī miàn tiáo。"
+                },
+                {
+                  "id": "B",
+                  "text": "我会做饭。",
+                  "pinyin": "wǒ huì zuò fàn。"
+                },
+                {
+                  "id": "C",
+                  "text": "我吃了。",
+                  "pinyin": "wǒ chī le。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q33",
+              "questionType": "single_choice",
+              "instruction": "Câu 33: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 33: Chọn câu trả lời phù hợp.",
+              "hanzi": "杯子里有什么？",
+              "pinyin": "bēi zi lǐ yǒu shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "杯子很小。",
+                  "pinyin": "bēi zi hěn xiǎo。"
+                },
+                {
+                  "id": "B",
+                  "text": "有一些水。",
+                  "pinyin": "yǒu yī xiē shuǐ。"
+                },
+                {
+                  "id": "C",
+                  "text": "我喝水。",
+                  "pinyin": "wǒ hē shuǐ。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q34",
+              "questionType": "single_choice",
+              "instruction": "Câu 34: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 34: Chọn câu trả lời phù hợp.",
+              "hanzi": "这件衣服怎么样？",
+              "pinyin": "zhè jiàn yī fú zěn me yàng？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "五十块。",
+                  "pinyin": "wǔ shí kuài。"
+                },
+                {
+                  "id": "B",
+                  "text": "在商店。",
+                  "pinyin": "zài shāng diàn。"
+                },
+                {
+                  "id": "C",
+                  "text": "很好看。",
+                  "pinyin": "hěn hǎo kàn。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q35",
+              "questionType": "single_choice",
+              "instruction": "Câu 35: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 35: Chọn câu trả lời phù hợp.",
+              "hanzi": "你要买多少个？",
+              "pinyin": "nǐ yào mǎi duō shǎo gè？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我要买两个。",
+                  "pinyin": "wǒ yào mǎi liǎng gè。"
+                },
+                {
+                  "id": "B",
+                  "text": "我买苹果。",
+                  "pinyin": "wǒ mǎi píng guǒ。"
+                },
+                {
+                  "id": "C",
+                  "text": "一共十块。",
+                  "pinyin": "yī gòng shí kuài。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-4",
+          "title": "Phần 4",
+          "instruction": "Đọc nội dung và chọn kết luận đúng.",
+          "questions": [
+            {
+              "id": "q36",
+              "questionType": "single_choice",
+              "instruction": "Câu 36: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 36: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我想吃___，不想吃苹果。",
+              "pinyin": "wǒ xiǎng chī _ _ _， bù xiǎng chī píng guǒ。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "西瓜",
+                  "pinyin": "xī guā"
+                },
+                {
+                  "id": "B",
+                  "text": "茶",
+                  "pinyin": "chá"
+                },
+                {
+                  "id": "C",
+                  "text": "杯子",
+                  "pinyin": "bēi zi"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q37",
+              "questionType": "single_choice",
+              "instruction": "Câu 37: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 37: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "请给我一___米饭。",
+              "pinyin": "qǐng gěi wǒ yī _ _ _ mǐ fàn。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "碗",
+                  "pinyin": "wǎn"
+                },
+                {
+                  "id": "B",
+                  "text": "本",
+                  "pinyin": "běn"
+                },
+                {
+                  "id": "C",
+                  "text": "件",
+                  "pinyin": "jiàn"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q38",
+              "questionType": "single_choice",
+              "instruction": "Câu 38: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 38: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "这个菜不太___。",
+              "pinyin": "zhè ge cài bù tài _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "热",
+                  "pinyin": "rè"
+                },
+                {
+                  "id": "B",
+                  "text": "远",
+                  "pinyin": "yuǎn"
+                },
+                {
+                  "id": "C",
+                  "text": "大夫",
+                  "pinyin": "dà fū"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q39",
+              "questionType": "single_choice",
+              "instruction": "Câu 39: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 39: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "这些水果___新鲜。",
+              "pinyin": "zhè xiē shuǐ guǒ _ _ _ xīn xiān。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "很",
+                  "pinyin": "hěn"
+                },
+                {
+                  "id": "B",
+                  "text": "在",
+                  "pinyin": "zài"
+                },
+                {
+                  "id": "C",
+                  "text": "叫",
+                  "pinyin": "jiào"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q40",
+              "questionType": "single_choice",
+              "instruction": "Câu 40: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 40: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我没有钱，不能___。",
+              "pinyin": "wǒ méi yǒu qián， bù néng _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "买",
+                  "pinyin": "mǎi"
+                },
+                {
+                  "id": "B",
+                  "text": "看",
+                  "pinyin": "kàn"
+                },
+                {
+                  "id": "C",
+                  "text": "来",
+                  "pinyin": "lái"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

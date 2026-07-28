@@ -35,7 +35,11 @@ const state = {
   cmsEditorBaseline: {},
   writingCmsData: null,
   writingCmsStatic: null,
-  writingCmsSaving: false
+  writingCmsSaving: false,
+  essaySubmissions: [],
+  selectedEssay: null,
+  mockExamIndex: [],
+  mockExamSettings: { version:1, exams:{} }
 };
 const WRITING_VOCAB_TARGETS = { hsk1: 10, hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
 const ACCESS_TYPES = Object.freeze(['free', 'guided', 'vip', 'coins']);
@@ -74,6 +78,9 @@ const callSetUserRole = data => callAdminApi('adminSetUserRole', data);
 const callUpdateUserData = data => callAdminApi('adminUpdateUserData', data);
 const callListAccessLogs = data => callAdminApi('adminListAccessLogs', data);
 const callMigrateVisitCounters = data => callAdminApi('adminMigrateVisitCounters', data);
+const callListWritingSubmissions = data => callAdminApi('adminListWritingSubmissions', data);
+const callGetWritingSubmission = data => callAdminApi('adminGetWritingSubmission', data);
+const callGradeWritingSubmission = data => callAdminApi('adminGradeWritingSubmission', data);
 
 function toast(msg, type=''){ const el=$('#toast'); el.textContent=msg; el.classList.toggle('error', type === 'error'); el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2600); }
 function fmt(t){ try{ return t?.toDate ? t.toDate().toLocaleString('vi-VN') : (t ? new Date(t).toLocaleString('vi-VN') : ''); }catch{return '';} }
@@ -241,6 +248,7 @@ function bootOnce(){
     loadLearningSettings();
     initCms();
     initWritingCms();
+    loadMockExamSettings();
   }
 }
 function applyRoleUI(){
@@ -263,6 +271,8 @@ function bindUI(){
   $('#refreshAll').onclick = () => {
     if (hasCapability('viewUsers')) loadUsers({ reset:true });
     if (hasCapability('viewAnalytics')) { loadDashboard(); loadLogs({ reset:true }); }
+    if (hasCapability('cms')) loadMockExamSettings();
+    if (!$(`#tab-essay`)?.classList.contains('hidden')) loadEssaySubmissions();
     toast('Đã làm mới');
   };
   $('#feedbackSearch').oninput = renderFeedbacks; $('#feedbackStatus').onchange = renderFeedbacks;
@@ -283,6 +293,8 @@ function bindUI(){
   bindLearningControls();
   bindCmsControls();
   bindWritingCmsControls();
+  bindEssayControls();
+  bindMockExamControls();
 }
 function switchTab(tab){
   const target = $(`.nav-item[data-tab="${tab}"]`);
@@ -290,9 +302,92 @@ function switchTab(tab){
   $$('.nav-item').forEach(x => x.classList.toggle('active', x.dataset.tab === tab));
   $$('.tab-panel').forEach(x => x.classList.add('hidden'));
   $(`#tab-${tab}`)?.classList.remove('hidden');
-  $('#pageTitle').textContent = {dashboard:'Tổng quan',feedback:'Góp ý người dùng',users:'Quản lý người dùng',auth:'Phân quyền',learning:'Quản lý khóa học',writing:'CMS Luyện viết',content:'Quản lý nội dung',logs:'Thống kê truy cập',database:'Cài đặt dữ liệu'}[tab] || 'Admin';
+  $('#pageTitle').textContent = {dashboard:'Tổng quan',feedback:'Góp ý người dùng',users:'Quản lý người dùng',auth:'Phân quyền',learning:'Quản lý khóa học',writing:'CMS Luyện viết',essay:'Đáp án tự luận','mock-exams':'Đề thi thử',content:'Quản lý nội dung',logs:'Thống kê truy cập',database:'Cài đặt dữ liệu'}[tab] || 'Admin';
+  if (tab === 'essay' && !state.essaySubmissions.length) loadEssaySubmissions();
 }
 function renderLessonTotals(){ $('#lessonTotals').innerHTML = Object.entries(COURSE_TOTALS).map(([k,v]) => `<div><b>${k.toUpperCase()}</b><p>${v} bài học</p></div>`).join(''); }
+
+function bindMockExamControls(){
+  $('#mockExamLevel').onchange = renderMockExamAccess;
+  $('#mockExamSetFree').onclick = () => setMockExamLevelAccess('free');
+  $('#mockExamSetVip').onclick = () => setMockExamLevelAccess('vip');
+  $('#mockExamSave').onclick = saveMockExamSettings;
+}
+async function loadMockExamSettings(){
+  const status = $('#mockExamStatus');
+  status.textContent = 'Đang tải…';
+  try {
+    const [indexResponse, settingsSnapshot] = await Promise.all([
+      fetch('./assets/data/mock-tests/exams/index.json', { cache:'no-store' }),
+      getDoc(doc(db, 'adminSettings', 'mockExams'))
+    ]);
+    if (!indexResponse.ok) throw new Error(`Không tải được danh sách đề (${indexResponse.status}).`);
+    state.mockExamIndex = await indexResponse.json();
+    const saved = settingsSnapshot.exists() ? settingsSnapshot.data() : {};
+    state.mockExamSettings = { version:1, exams:{ ...(saved.exams || {}) } };
+    state.mockExamIndex.forEach(item => {
+      if (!state.mockExamSettings.exams[item.id]) {
+        state.mockExamSettings.exams[item.id] = { accessType:item.accessType === 'vip' ? 'vip' : 'free' };
+      }
+    });
+    renderMockExamAccess();
+    status.textContent = `${state.mockExamIndex.length} đề · chưa có thay đổi`;
+  } catch(error) {
+    status.textContent = error.message;
+    $('#mockExamAccessGrid').innerHTML = `<div class="table-state error">${safeText(error.message)}</div>`;
+  }
+}
+function renderMockExamAccess(){
+  const level = Number($('#mockExamLevel').value || 1);
+  const exams = state.mockExamIndex.filter(item => Number(item.levelNumber) === level);
+  $('#mockExamAccessGrid').innerHTML = exams.map(item => {
+    const accessType = state.mockExamSettings.exams[item.id]?.accessType === 'vip' ? 'vip' : 'free';
+    return `<article class="mock-exam-access-card">
+      <h3>${safeText(item.title)}</h3>
+      <small>${safeText(item.id)} · ${n(item.questionCount)} câu</small>
+      <label>Quyền truy cập
+        <select class="input" data-mock-exam-id="${safeText(item.id)}">
+          <option value="free"${accessType === 'free' ? ' selected' : ''}>Miễn phí</option>
+          <option value="vip"${accessType === 'vip' ? ' selected' : ''}>VIP</option>
+        </select>
+      </label>
+    </article>`;
+  }).join('') || '<div class="table-state">Không có đề ở cấp này.</div>';
+  $$('[data-mock-exam-id]').forEach(select => {
+    select.onchange = () => {
+      state.mockExamSettings.exams[select.dataset.mockExamId] = { accessType:select.value === 'vip' ? 'vip' : 'free' };
+      $('#mockExamStatus').textContent = 'Có thay đổi chưa lưu';
+    };
+  });
+}
+function setMockExamLevelAccess(accessType){
+  const level = Number($('#mockExamLevel').value || 1);
+  state.mockExamIndex.filter(item => Number(item.levelNumber) === level).forEach(item => {
+    state.mockExamSettings.exams[item.id] = { accessType };
+  });
+  renderMockExamAccess();
+  $('#mockExamStatus').textContent = 'Có thay đổi chưa lưu';
+}
+async function saveMockExamSettings(){
+  requireAdmin();
+  const button = $('#mockExamSave');
+  setButtonBusy(button, true, 'Đang lưu…');
+  try {
+    await setDoc(doc(db, 'adminSettings', 'mockExams'), {
+      version:1,
+      exams:state.mockExamSettings.exams,
+      updatedAt:serverTimestamp(),
+      updatedBy:auth.currentUser.uid
+    }, { merge:false });
+    $('#mockExamStatus').textContent = `Đã lưu ${state.mockExamIndex.length} đề`;
+    toast('Đã lưu quyền Free/VIP của đề thi thử');
+  } catch(error) {
+    $('#mockExamStatus').textContent = 'Lưu thất bại';
+    toast(error.message || 'Không lưu được quyền đề thi', 'error');
+  } finally {
+    setButtonBusy(button, false, 'Đang lưu…');
+  }
+}
 async function checkBackend(){
   try {
     const session = await callGetSession({});
@@ -300,6 +395,133 @@ async function checkBackend(){
     backendMessage(`✅ Vercel Admin API đang hoạt động. Quyền hiện tại: <b>${safeText(state.session.role)}</b>.`, true);
   } catch(e) {
     backendMessage(`⚠️ Không gọi được Vercel Admin API: ${safeText(e?.message || 'unknown error')}`);
+  }
+}
+
+const ESSAY_STATUS_LABELS = Object.freeze({
+  pending_manual:'Chờ giáo viên',
+  ai_grading:'AI đang chấm',
+  graded_manual:'Đã chấm tay',
+  graded_ai:'AI đã chấm'
+});
+const ESSAY_TYPE_LABELS = Object.freeze({
+  short_writing:'Đặt câu bằng từ cho sẵn',
+  long_writing:'Viết đoạn văn',
+  summary_writing:'Viết bài tóm tắt'
+});
+
+function essayDateMillis(selector, endOfDay = false){
+  const value = $(selector)?.value;
+  if (!value) return 0;
+  const date = new Date(`${value}T${endOfDay ? '23:59:59.999' : '00:00:00.000'}`);
+  return Number.isFinite(date.getTime()) ? date.getTime() : 0;
+}
+function bindEssayControls(){
+  $('#essayLoad').onclick = loadEssaySubmissions;
+  $('#essayCloseDetail').onclick = () => $('#essayDetail').classList.add('hidden');
+  $('#essaySaveGrade').onclick = saveEssayGrade;
+}
+async function loadEssaySubmissions(){
+  if (!hasCapability('cms')) return;
+  const button = $('#essayLoad');
+  setButtonBusy(button, true, 'Đang tải…');
+  $('#essayStatusText').textContent = 'Đang tải…';
+  try {
+    const response = await callListWritingSubmissions({
+      status:$('#essayStatus').value,
+      hskLevel:$('#essayLevel').value,
+      questionType:$('#essayType').value,
+      testId:$('#essayTestId').value.trim(),
+      userId:$('#essayUserId').value.trim(),
+      fromMillis:essayDateMillis('#essayFrom'),
+      toMillis:essayDateMillis('#essayTo', true),
+      pageSize:200
+    });
+    state.essaySubmissions = response.data.submissions || [];
+    renderEssaySubmissions();
+    $('#essayStatusText').textContent = `${state.essaySubmissions.length} bài · quét ${response.data.scanned || 0}`;
+  } catch(error) {
+    $('#essaySubmissionList').innerHTML = `<div class="table-state error">${safeText(error.message)}</div>`;
+    $('#essayStatusText').textContent = 'Tải thất bại';
+  } finally {
+    setButtonBusy(button, false, 'Đang tải…');
+  }
+}
+function renderEssaySubmissions(){
+  const container = $('#essaySubmissionList');
+  if (!state.essaySubmissions.length) {
+    container.innerHTML = '<div class="table-state">Không có bài phù hợp bộ lọc.</div>';
+    return;
+  }
+  container.innerHTML = state.essaySubmissions.map(item => `
+    <button class="essay-list-item" type="button" data-submission-id="${safeText(item.id)}">
+      <span class="essay-list-item__top"><b>${safeText(item.hskLevel)} · ${safeText(ESSAY_TYPE_LABELS[item.questionType] || item.questionType)}</b><span class="pill">${safeText(ESSAY_STATUS_LABELS[item.status] || item.status)}</span></span>
+      <span>${safeText(item.testId)} · ${safeText(item.userId)}</span>
+      <small>${safeText(fmt(item.submittedAt))}${item.finalScore != null ? ` · ${n(item.finalScore)}/${n(item.maxScore)} điểm` : ` · tối đa ${n(item.maxScore)} điểm`}</small>
+    </button>`).join('');
+  container.querySelectorAll('[data-submission-id]').forEach(button => {
+    button.onclick = () => openEssayDetail(button.dataset.submissionId);
+  });
+}
+async function openEssayDetail(submissionId){
+  $('#essayDetail').classList.remove('hidden');
+  $('#essayDetailTitle').textContent = 'Đang tải bài…';
+  try {
+    const response = await callGetWritingSubmission({ submissionId });
+    const item = response.data.submission;
+    state.selectedEssay = item;
+    $('#essayDetailMeta').textContent = `${item.hskLevel} · ${ESSAY_STATUS_LABELS[item.status] || item.status}`;
+    $('#essayDetailTitle').textContent = ESSAY_TYPE_LABELS[item.questionType] || item.questionType;
+    $('#essayDetailTest').textContent = item.testId;
+    $('#essayDetailUser').textContent = item.userId;
+    $('#essayDetailTime').textContent = fmt(item.submittedAt);
+    $('#essayDetailSource').textContent = item.scoreSource === 'manual' ? 'Giáo viên' : item.scoreSource === 'ai' ? 'AI dự phòng' : 'Chưa có';
+    $('#essayDetailPrompt').textContent = item.prompt || '—';
+    $('#essayDetailWords').textContent = item.requiredWords?.length ? item.requiredWords.join('、') : 'Không có từ bắt buộc';
+    $('#essayDetailAnswer').textContent = item.answer || 'Bỏ trống';
+    const criteria = item.rubric?.criteria || {};
+    $('#essayDetailRubric').innerHTML = Object.entries(criteria).map(([name, weight]) =>
+      `<div><span>${safeText(name)}</span><b>${n(weight)}%</b></div>`).join('')
+      + `<p>${safeText(item.rubric?.instructions || '')}</p>`;
+    const history = Array.isArray(item.gradingHistory) ? item.gradingHistory : [];
+    $('#essayDetailHistory').innerHTML = history.length
+      ? history.slice().reverse().map(entry => `<p><b>${safeText(entry.source)}</b> · ${safeText(fmt(entry.atMillis))}${entry.score != null ? ` · ${n(entry.score)} điểm` : ''}${entry.feedback ? `<br>${safeText(entry.feedback)}` : ''}</p>`).join('')
+      : '<p class="muted">Chưa có lịch sử.</p>';
+    $('#essayScore').max = String(item.maxScore);
+    $('#essayScore').value = item.finalScore ?? '';
+    $('#essayFeedback').value = item.feedback || '';
+    $('#essayGradeStatus').textContent = `Thang điểm 0–${n(item.maxScore)}`;
+  } catch(error) {
+    $('#essayDetailTitle').textContent = 'Không tải được bài';
+    $('#essayGradeStatus').textContent = error.message;
+  }
+}
+async function saveEssayGrade(){
+  const item = state.selectedEssay;
+  if (!item) return;
+  const score = Number($('#essayScore').value);
+  if (!Number.isFinite(score) || score < 0 || score > Number(item.maxScore)) {
+    $('#essayGradeStatus').textContent = `Điểm phải từ 0 đến ${n(item.maxScore)}.`;
+    return;
+  }
+  const button = $('#essaySaveGrade');
+  setButtonBusy(button, true, 'Đang lưu…');
+  try {
+    const response = await callGradeWritingSubmission({
+      submissionId:item.id,
+      score,
+      feedback:$('#essayFeedback').value
+    });
+    state.selectedEssay = response.data.submission;
+    $('#essayGradeStatus').textContent = 'Đã lưu điểm chấm tay.';
+    toast('Đã chấm bài và cập nhật kết quả người học.');
+    await loadEssaySubmissions();
+    await openEssayDetail(item.id);
+  } catch(error) {
+    $('#essayGradeStatus').textContent = error.message;
+    toast(error.message, 'error');
+  } finally {
+    setButtonBusy(button, false, 'Đang lưu…');
   }
 }
 

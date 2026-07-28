@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Super · Tiếng Trung Coca</title>
   <link rel="icon" href="assets/images/brand/favicon-orange.png" type="image/png" />
-  <link rel="stylesheet" href="assets/css/admin-super.css" />
+  <link rel="stylesheet" href="assets/css/admin-super.css?v=4" />
   <link rel="stylesheet" href="assets/css/dark-mode.css?v=2" />
   <script src="assets/js/dark-mode.js"></script>
 </head>
@@ -33,6 +33,8 @@
         <button class="nav-item" data-tab="auth" title="Phân quyền và tài khoản Auth">🔐 Phân quyền</button>
         <button class="nav-item" data-tab="learning" title="Quản lý khóa học">🎓 Khóa học</button>
         <button class="nav-item" data-tab="writing" title="CMS Luyện viết">✍️ Luyện viết</button>
+        <button class="nav-item" data-tab="essay" title="Chấm câu và bài tự luận">Đáp án tự luận</button>
+        <button class="nav-item" data-tab="mock-exams" title="Quản lý quyền đề thi thử">🧪 Đề thi thử</button>
         <button class="nav-item" data-tab="content" title="Quản lý nội dung">📝 Nội dung</button>
         <button class="nav-item" data-tab="logs" title="Thống kê truy cập">📈 Thống kê</button>
         <button class="nav-item" data-tab="database" title="Cài đặt dữ liệu">🧩 Cài đặt</button>
@@ -148,6 +150,82 @@
         </div>
       </section>
 
+      <section id="tab-essay" class="tab-panel hidden">
+        <div class="panel">
+          <h2>Đáp án tự luận</h2>
+          <p class="muted">Giáo viên chấm trực tiếp tại đây. Điểm chấm tay luôn được ưu tiên, kể cả khi AI đang xử lý hoặc đã chấm trước đó.</p>
+          <div class="toolbar essay-filters">
+            <select id="essayStatus" class="input">
+              <option value="pending">Đang chờ chấm</option>
+              <option value="due_soon">Sắp đến hạn 4 giờ</option>
+              <option value="graded_manual">Đã chấm tay</option>
+              <option value="graded_ai">Đã chấm bằng AI</option>
+              <option value="">Tất cả trạng thái</option>
+            </select>
+            <select id="essayLevel" class="input">
+              <option value="">Tất cả cấp HSK</option>
+              <option>HSK 4</option><option>HSK 5</option><option>HSK 6</option>
+            </select>
+            <select id="essayType" class="input">
+              <option value="">Tất cả dạng bài</option>
+              <option value="short_writing">Đặt câu bằng từ cho sẵn</option>
+              <option value="long_writing">Viết đoạn văn</option>
+              <option value="summary_writing">Viết bài tóm tắt</option>
+            </select>
+            <input id="essayTestId" class="input" placeholder="Mã đề">
+            <input id="essayUserId" class="input" placeholder="UID người học">
+            <label class="essay-date">Từ ngày<input id="essayFrom" class="input" type="date"></label>
+            <label class="essay-date">Đến ngày<input id="essayTo" class="input" type="date"></label>
+            <button id="essayLoad" class="btn primary">Tải danh sách</button>
+            <span id="essayStatusText" class="save-status">Chưa tải</span>
+          </div>
+          <div class="essay-workspace">
+            <div id="essaySubmissionList" class="essay-list"><div class="table-state">Bấm “Tải danh sách” để xem bài chờ chấm.</div></div>
+            <article id="essayDetail" class="essay-detail hidden" aria-live="polite">
+              <div class="essay-detail__header">
+                <div><span id="essayDetailMeta" class="pill"></span><h3 id="essayDetailTitle">Bài tự luận</h3></div>
+                <button id="essayCloseDetail" class="btn small" type="button">Đóng</button>
+              </div>
+              <dl class="essay-facts">
+                <div><dt>Mã đề</dt><dd id="essayDetailTest"></dd></div>
+                <div><dt>Người học</dt><dd id="essayDetailUser"></dd></div>
+                <div><dt>Thời điểm gửi</dt><dd id="essayDetailTime"></dd></div>
+                <div><dt>Nguồn điểm</dt><dd id="essayDetailSource"></dd></div>
+              </dl>
+              <section><h4>Đề bài</h4><p id="essayDetailPrompt" class="essay-text"></p></section>
+              <section><h4>Từ bắt buộc</h4><p id="essayDetailWords" class="essay-text"></p></section>
+              <section><h4>Bài làm</h4><p id="essayDetailAnswer" class="essay-answer" lang="zh-CN"></p></section>
+              <section><h4>Rubric</h4><div id="essayDetailRubric" class="essay-rubric"></div></section>
+              <section><h4>Lịch sử chấm</h4><div id="essayDetailHistory" class="essay-history"></div></section>
+              <div class="essay-grade-form">
+                <label>Điểm<input id="essayScore" class="input" type="number" min="0" step="0.01"></label>
+                <label>Nhận xét<textarea id="essayFeedback" class="input full smallarea" maxlength="2000"></textarea></label>
+                <button id="essaySaveGrade" class="btn primary" type="button">Lưu điểm chấm tay</button>
+                <span id="essayGradeStatus" class="save-status"></span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-mock-exams" class="tab-panel hidden">
+        <div class="panel">
+          <h2>🧪 Quyền truy cập đề thi thử</h2>
+          <p class="muted">Mỗi cấp có 5 đề. Chọn “Miễn phí” hoặc “VIP”; cấu hình được lưu tại <b>adminSettings/mockExams</b> và áp dụng ngay trên trang Thi thử.</p>
+          <div class="toolbar sticky-actions">
+            <select id="mockExamLevel" class="input">
+              <option value="1">HSK 1</option><option value="2">HSK 2</option><option value="3">HSK 3</option>
+              <option value="4">HSK 4</option><option value="5">HSK 5</option><option value="6">HSK 6</option>
+            </select>
+            <button id="mockExamSetFree" class="btn ok" type="button">Đặt cả cấp miễn phí</button>
+            <button id="mockExamSetVip" class="btn warn" type="button">Đặt cả cấp VIP</button>
+            <button id="mockExamSave" class="btn primary" type="button">Lưu quyền truy cập</button>
+            <span id="mockExamStatus" class="save-status">Đang tải danh sách đề…</span>
+          </div>
+          <div id="mockExamAccessGrid" class="mock-exam-access-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
       <section id="tab-content" class="tab-panel hidden">
         <div class="panel">
           <h2>📝 CMS nội dung bài học</h2>
@@ -204,6 +282,6 @@
   </main>
   <div id="toast" class="toast"></div>
   <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
-  <script type="module" src="assets/js/admin-super.js"></script>
+  <script type="module" src="assets/js/admin-super.js?v=4"></script>
 </body>
 </html>

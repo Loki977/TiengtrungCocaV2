@@ -103,6 +103,22 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /writingSubmissions/{submissionId} {
+      // Bài tự luận chỉ được tạo/chấm qua backend đã xác thực và có rate limit.
+      // Người học chỉ đọc được bài của chính mình; CMS dùng custom claim.
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create, update, delete: if false;
+    }
+
+    match /writingGradingCache/{hash} {
+      allow read, write: if false;
+    }
+
+    match /writingRateLimits/{bucketId} {
+      allow read, write: if false;
+    }
+
     match /users/{uid} {
       allow create: if isOwner(uid) && validPublicUserCreate(uid);
       allow read: if isAdmin() || isOwner(uid);
@@ -133,6 +149,16 @@ service cloud.firestore {
       match /hskPlacementAttempts/{attemptId} {
         // Attempt chứa posterior, câu đã dùng và kết quả chấm riêng tư.
         allow read, write: if false;
+      }
+
+      match /mockExamAttempts/{attemptId} {
+        // Đề không có tự luận giữ luồng lưu kết quả hiện tại; kết quả đã tạo
+        // không thể bị client sửa. Đề có tự luận được backend tạo và cập nhật.
+        allow read: if isAdmin() || isOwner(uid);
+        allow create: if isOwner(uid)
+          && request.resource.data.attemptId == attemptId
+          && request.resource.data.examId is string;
+        allow update, delete: if false;
       }
     }
 

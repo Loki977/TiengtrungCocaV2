@@ -73,6 +73,16 @@ assert.doesNotMatch(read('profile.html'), /discoverProfileBackgrounds\(\)\.then/
 assert.match(shell, /new URL\(sheet\.href\)\.pathname === expectedPath/, 'the shell must not inject a duplicate versioned stylesheet');
 assert.match(shellCss, /\.cc-shell \[hidden\]\s*\{[^}]*display:\s*none\s*!important/s, 'permission-gated shell items must stay hidden');
 assert.match(shellCss, /\.cc-shell-mobile-toggle svg/, 'the mobile menu icon must inherit the shared SVG sizing');
+assert.match(
+  shellCss,
+  /@media \(max-width:\s*899px\)[\s\S]*body\.cc-shell-ready > header\[data-cc-legacy-shell-header\]\s*\{[^}]*position:\s*relative\s*!important/s,
+  'mobile website brand headers must scroll with the document'
+);
+assert.match(
+  shellCss,
+  /\.cc-shell-mobile-toggle\s*\{[^}]*position:\s*fixed/s,
+  'only the mobile hamburger menu control must stay fixed'
+);
 
 const auth = read('assets/js/firebase-auth.js');
 const rememberedBlock = auth.slice(
@@ -99,11 +109,15 @@ assert.match(hud, /formatDuration/);
 assert.match(hud, /function setValue/, 'HUD updates must avoid self-triggering MutationObserver loops');
 assert.match(hud, /data-hud-toggle-time/, 'mobile HUD must expose its live time in the compact clock control');
 assert.match(hud, /cc-learning-hud__toggle-icon[\s\S]*iconMarkup\.time/, 'mobile HUD must use a clock icon');
+assert.match(hud, /pointerdown/, 'mobile HUD must support drag positioning');
+assert.match(hud, /cc_learning_hud_position_v1/, 'mobile HUD must remember the chosen position');
+assert.match(hud, /clampHudPosition/, 'mobile HUD must stay inside the visible viewport');
 assert.doesNotMatch(hud, /querySelector\('\[data-hud-value="(?:time|xp|combo|account|lesson|progress)"\]'\)\.textContent\s*=/);
 assert.match(hudCss, /width:\s*min\(196px/, 'desktop learning controls must be about 15% narrower');
 assert.match(hudCss, /min-height:\s*43px/, 'desktop learning control buttons must be about 15% shorter');
 assert.match(hudCss, /html\.dark-mode[\s\S]*--cc-hud-surface:\s*rgba\(10,\s*18,\s*33/, 'learning controls must use a true dark surface');
-assert.match(hudCss, /body:has\(> header\[data-cc-legacy-shell-header\]\) \.cc-learning-hud\s*\{[^}]*top:\s*146px/s, 'mobile learning controls must clear the fixed website brand');
+assert.match(hudCss, /@media \(max-width:\s*767px\)[\s\S]*\.cc-learning-hud\s*\{[^}]*position:\s*fixed/s, 'mobile learning controls must follow the viewport while scrolling');
+assert.match(hudCss, /\.cc-learning-hud__head\s*\{[^}]*touch-action:\s*none/s, 'mobile HUD drag handle must own touch movement');
 assert.match(hudCss, /@media \(max-width:\s*767px\)[\s\S]*\.cc-learning-hud__grid\s*\{[^}]*display:\s*none/s, 'mobile HUD must start collapsed');
 assert.match(hudCss, /\.cc-learning-hud\.is-expanded \.cc-learning-hud__grid\s*\{[^}]*display:\s*grid/s, 'expanded mobile HUD must show all session information');
 assert.match(hudCss, /\.cc-learning-hud\.is-expanded \.cc-learning-hud__toggle\s*\{[^}]*width:\s*44px/s, 'expanded mobile HUD must keep a compact close control');
@@ -151,6 +165,9 @@ assert.match(read('assets/css/quick-menu.css'), /\.quick-menu\s*\{[\s\S]*padding
 assert.match(read('assets/css/quick-menu.css'), /@media \(max-width:\s*768px\)[\s\S]*\.quick-menu\s*\{[\s\S]*padding-top:\s*96px/, 'Home quick cards must also clear the mobile brand header');
 assert.match(read('challenge.html'), /challenge-brand cc-site-brand/, 'Challenge must use the shared website brand');
 assert.match(read('ThiThu.html'), /cc-site-brand__logo/, 'Placement test entry must use the shared website logo');
+assert.match(read('ThiThu.html'), /id="levelCards"[\s\S]*role="group"/, 'Mock exam entry must expose the six-level card selector as an accessible group');
+assert.match(read('assets/js/thi-thu/app.js'), /for \(let levelNumber = 1; levelNumber <= 6;/, 'Mock exam level selector must render HSK 1 through HSK 6');
+assert.match(read('assets/css/thi-thu.css'), /@media \(max-width:\s*480px\)[\s\S]*\.level-card-grid\s*\{[\s\S]*repeat\(2, minmax\(0, 1fr\)\)/, 'Mock exam level cards must remain readable without horizontal overflow on mobile');
 assert.match(read('profile.html'), /background-attachment:\s*fixed\s*!important/, 'Profile desktop background must size against the viewport');
 
 console.log('responsive UI integration tests passed');

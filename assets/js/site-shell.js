@@ -4,7 +4,7 @@
   if (window.CCSiteShell) return;
 
   const scriptUrl = document.currentScript?.src || new URL('assets/js/site-shell.js', document.baseURI).href;
-  const stylesheetUrl = new URL('../css/app-shell.css?v=5', scriptUrl).href;
+  const stylesheetUrl = new URL('../css/app-shell.css?v=9', scriptUrl).href;
   const brandLogoUrl = new URL('../images/brand/site-logo.webp', scriptUrl).href;
   const faviconUrl = new URL('../images/brand/favicon-orange.png', scriptUrl).href;
   const AUTH_RETURN_KEY = 'cc_auth_return_url';

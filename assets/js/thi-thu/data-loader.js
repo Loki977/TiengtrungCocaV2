@@ -1,83 +1,90 @@
 const memoryCache = new Map();
 
-async function fetchJson(url, cacheKey) {
+async function fetchJson(url, cacheKey, { allowOffline = true } = {}) {
   if (memoryCache.has(url)) return structuredClone(memoryCache.get(url));
-
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${url}`);
     const data = await response.json();
     memoryCache.set(url, data);
-    localStorage.setItem(cacheKey, JSON.stringify(data));
+    if (allowOffline) localStorage.setItem(cacheKey, JSON.stringify(data));
     return structuredClone(data);
   } catch (error) {
-    const cached = localStorage.getItem(cacheKey);
+    const cached = allowOffline ? localStorage.getItem(cacheKey) : null;
     if (cached) return JSON.parse(cached);
     throw error;
   }
 }
 
+export function flattenQuestions(exam) {
+  return (exam.sections || []).flatMap((section, sectionIndex) =>
+    (section.parts || []).flatMap((part, partIndex) =>
+      (part.questions || []).map((question, questionIndex) => ({
+        ...question,
+        sectionId: section.id,
+        sectionTitle: section.title,
+        sectionIndex,
+        sectionDurationMinutes: section.durationMinutes,
+        partId: part.id,
+        partTitle: part.title,
+        partIndex,
+        questionIndex,
+      }))
+    )
+  );
+}
+
 export function validateExam(exam) {
   const errors = [];
-  if (!exam || typeof exam !== 'object') errors.push('Dữ liệu đề thi phải là một object.');
-  if (!exam.id) errors.push('Thiếu exam.id.');
-  if (!exam.title) errors.push('Thiếu exam.title.');
-  if (!Number.isFinite(exam.durationMinutes) || exam.durationMinutes <= 0) {
-    errors.push('durationMinutes phải là số lớn hơn 0.');
+  if (!exam || typeof exam !== 'object') return ['Dữ liệu đề thi không hợp lệ.'];
+  for (const field of ['id', 'title', 'standardVersion', 'answerKeyPath']) {
+    if (!exam[field]) errors.push(`Thiếu exam.${field}.`);
   }
-  if (!Array.isArray(exam.sections) || !exam.sections.length) {
-    errors.push('sections phải là mảng có ít nhất 1 phần thi.');
-  }
+  if (exam.schemaVersion !== 2) errors.push('Engine chỉ nhận schemaVersion 2.');
+  if (!/^HSK_[A-Z0-9_]+$/u.test(exam.standardVersion || '')) errors.push('standardVersion không hợp lệ.');
+  if (!Array.isArray(exam.sections) || exam.sections.length < 2) errors.push('Đề phải có ít nhất hai phần.');
 
-  const supported = new Set(['single_choice', 'true_false', 'fill_blank']);
   const ids = new Set();
-
   for (const section of exam.sections || []) {
-    if (!section.id) errors.push('Có section thiếu id.');
-    if (!section.title) errors.push(`Section ${section.id || '?'} thiếu title.`);
-    if (!Array.isArray(section.questions)) {
-      errors.push(`Section ${section.id || '?'} thiếu questions.`);
-      continue;
+    if (!section.id || !Number.isFinite(section.durationMinutes)) errors.push(`Section ${section.id || '?'} thiếu cấu hình.`);
+    const questions = (section.parts || []).flatMap(part => part.questions || []);
+    if (questions.length !== section.questionCount) {
+      errors.push(`${section.title || section.id}: khai báo ${section.questionCount} câu nhưng có ${questions.length}.`);
     }
-
-    for (const question of section.questions) {
-      if (!question.id) errors.push(`Section ${section.id}: có câu thiếu id.`);
+    for (const question of questions) {
+      if (!question.id) errors.push(`${section.id}: có câu thiếu id.`);
       if (ids.has(question.id)) errors.push(`Trùng question.id: ${question.id}.`);
       ids.add(question.id);
-
-      if (!supported.has(question.type)) {
-        errors.push(`Câu ${question.id || '?'} dùng type chưa hỗ trợ: ${question.type}.`);
-      }
-      if (!question.prompt) errors.push(`Câu ${question.id || '?'} thiếu prompt.`);
-      if (question.type === 'single_choice') {
-        if (!Array.isArray(question.options) || question.options.length < 2) {
-          errors.push(`Câu ${question.id || '?'} phải có ít nhất 2 options.`);
-        }
-        if (!question.answer) errors.push(`Câu ${question.id || '?'} thiếu answer.`);
-      }
-      if (question.type === 'true_false' && !['true', 'false'].includes(String(question.answer))) {
-        errors.push(`Câu ${question.id || '?'} có answer true_false không hợp lệ.`);
-      }
-      if (question.type === 'fill_blank' && typeof question.answer !== 'string') {
-        errors.push(`Câu ${question.id || '?'} phải có answer dạng chuỗi.`);
+      if (!question.questionType) errors.push(`Câu ${question.id || '?'} thiếu questionType.`);
+      if (!Number.isFinite(question.scoreWeight) || question.scoreWeight <= 0) errors.push(`Câu ${question.id || '?'} thiếu scoreWeight.`);
+      if (section.id === 'listening' && (!question.audioPath || !question.transcript)) {
+        errors.push(`Câu nghe ${question.id || '?'} thiếu audio hoặc transcript.`);
       }
     }
   }
-
+  if (ids.size !== exam.totalQuestionCount) errors.push(`Tổng số câu không khớp: ${ids.size}/${exam.totalQuestionCount}.`);
   return errors;
 }
 
 export async function loadConfig() {
-  return fetchJson('./assets/data/thi-thu/config.json', 'thi-thu:config');
+  return fetchJson('./assets/data/thi-thu/config.json', 'thi-thu:config:v2');
 }
 
 export async function loadExamIndex(config) {
-  return fetchJson(config.examIndexPath, 'thi-thu:index');
+  return fetchJson(config.examIndexPath, 'thi-thu:index:v2');
 }
 
 export async function loadExam(path) {
-  const exam = await fetchJson(path, `thi-thu:exam:${path}`);
+  const exam = await fetchJson(path, `thi-thu:exam:v2:${path}`);
   const errors = validateExam(exam);
   if (errors.length) throw new Error(`Đề thi không hợp lệ:\n- ${errors.join('\n- ')}`);
   return exam;
+}
+
+export async function loadAnswerKey(exam) {
+  const key = await fetchJson(exam.answerKeyPath, `thi-thu:key:${exam.id}`, { allowOffline: false });
+  if (key.examId !== exam.id || key.standardVersion !== exam.standardVersion) {
+    throw new Error('Answer key không khớp đề thi hoặc phiên bản tiêu chuẩn.');
+  }
+  return key;
 }

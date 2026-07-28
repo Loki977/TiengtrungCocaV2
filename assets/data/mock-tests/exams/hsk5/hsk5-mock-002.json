@@ -1,0 +1,3932 @@
+{
+  "schemaVersion": 2,
+  "id": "hsk5-mock-002",
+  "level": "HSK 5",
+  "levelNumber": 5,
+  "standardVersion": "HSK_2_0_CURRENT",
+  "title": "Đề thi thử HSK 5 — Số 02",
+  "description": "Đề luyện HSK 5 số 02 do Tiếng Trung Cô Ca biên soạn riêng theo cấu trúc HSK 2.0 hiện hành.",
+  "status": "published",
+  "contentSource": "original_project_content",
+  "officialTotalDurationMinutes": 125,
+  "timedDurationMinutes": 115,
+  "personalInfoMinutesOmitted": 5,
+  "totalQuestionCount": 100,
+  "totalPoints": 300,
+  "passPoints": 180,
+  "answerKeyPath": "./assets/data/mock-tests/answer-keys/hsk5-mock-002.answers.json",
+  "introAudio": {
+    "vi": "./assets/audio/mock-tests/intros/hsk5/intro-vi.mp3",
+    "zh": "./assets/audio/mock-tests/intros/hsk5/intro-zh.mp3",
+    "soundTest": "./assets/audio/mock-tests/shared/sound-test.mp3"
+  },
+  "modeSettings": {
+    "defaultMode": "official",
+    "official": {
+      "sectionTimers": true,
+      "lockPreviousSections": true,
+      "lockFutureSections": true,
+      "allowAudioReplay": false,
+      "allowAudioSeeking": false,
+      "showExplanationsDuringExam": false
+    },
+    "practice": {
+      "sectionTimers": false,
+      "lockPreviousSections": false,
+      "lockFutureSections": false,
+      "allowAudioReplay": true,
+      "allowAudioSeeking": true,
+      "showExplanationsDuringExam": true
+    }
+  },
+  "sections": [
+    {
+      "id": "listening",
+      "title": "Nghe",
+      "durationMinutes": 30,
+      "questionCount": 45,
+      "repeatCount": 1,
+      "parts": [
+        {
+          "id": "listening-part-1",
+          "title": "Phần 1",
+          "instruction": "Nghe nội dung và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "l001",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "困难带来了什么影响？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "推动团队重新审视方案"
+                },
+                {
+                  "id": "B",
+                  "text": "学校"
+                },
+                {
+                  "id": "C",
+                  "text": "下午两点"
+                },
+                {
+                  "id": "D",
+                  "text": "接朋友"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，张老师提到：项目遇到的困难并没有打乱团队的节奏，反而促使大家重新审视原来的方案。\n男：困难带来了什么影响？",
+              "audioText": "在一次电话交流中，张老师提到：项目遇到的困难并没有打乱团队的节奏，反而促使大家重新审视原来的方案。 困难带来了什么影响？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，张老师提到：项目遇到的困难并没有打乱团队的节奏，反而促使大家重新审视原来的方案。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "困难带来了什么影响？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/7c9de0b5ed87b17f47e30656c292fa23466170014706f528ba2ce576e5af05f4.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l002",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "她为什么没有马上答应？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公司"
+                },
+                {
+                  "id": "B",
+                  "text": "下午四点"
+                },
+                {
+                  "id": "C",
+                  "text": "锻炼身体"
+                },
+                {
+                  "id": "D",
+                  "text": "需要确认活动是否合适"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，刘阿姨提到：她没有立即接受邀请，而是先了解活动目标是否与自己的研究方向一致。\n男：她为什么没有马上答应？",
+              "audioText": "在一次电话交流中，刘阿姨提到：她没有立即接受邀请，而是先了解活动目标是否与自己的研究方向一致。 她为什么没有马上答应？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，刘阿姨提到：她没有立即接受邀请，而是先了解活动目标是否与自己的研究方向一致。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "她为什么没有马上答应？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/26eee9f9fc58c435e99343f93d2ef25c2efb617b958076272a417cb5fbe87d4e.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l003",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "增加班次的主要目的是什么？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "晚上七点"
+                },
+                {
+                  "id": "B",
+                  "text": "准备报告"
+                },
+                {
+                  "id": "C",
+                  "text": "方便夜间出行"
+                },
+                {
+                  "id": "D",
+                  "text": "医院"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，周同学提到：城市增加夜间公交班次，主要是为了满足晚班职工和游客的出行需求。\n男：增加班次的主要目的是什么？",
+              "audioText": "在一次电话交流中，周同学提到：城市增加夜间公交班次，主要是为了满足晚班职工和游客的出行需求。 增加班次的主要目的是什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，周同学提到：城市增加夜间公交班次，主要是为了满足晚班职工和游客的出行需求。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "增加班次的主要目的是什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/2d7856c460f12989ab537776f0803a95be6aa8129e4dabcb90c0996971ebc5d6.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l004",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "企业如何重新获得信任？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "参加活动"
+                },
+                {
+                  "id": "B",
+                  "text": "根据批评改善服务"
+                },
+                {
+                  "id": "C",
+                  "text": "超市"
+                },
+                {
+                  "id": "D",
+                  "text": "星期一"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，王芳提到：这家企业把顾客的批评整理成清单，逐项改善服务，因此重新赢得了信任。\n男：企业如何重新获得信任？",
+              "audioText": "在一次电话交流中，王芳提到：这家企业把顾客的批评整理成清单，逐项改善服务，因此重新赢得了信任。 企业如何重新获得信任？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，王芳提到：这家企业把顾客的批评整理成清单，逐项改善服务，因此重新赢得了信任。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "企业如何重新获得信任？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/0596b61ae7b596b6df7f9bf2d59d13b0c8c1bdbb80f2fa038535d00cc2ea1581.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l005",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "研究支持什么观点？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "合理休息有助于集中注意力"
+                },
+                {
+                  "id": "B",
+                  "text": "火车站"
+                },
+                {
+                  "id": "C",
+                  "text": "星期三"
+                },
+                {
+                  "id": "D",
+                  "text": "还书"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，陈先生提到：研究发现，短暂休息并不会降低效率，合理安排反而能让注意力更集中。\n男：研究支持什么观点？",
+              "audioText": "在一次电话交流中，陈先生提到：研究发现，短暂休息并不会降低效率，合理安排反而能让注意力更集中。 研究支持什么观点？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，陈先生提到：研究发现，短暂休息并不会降低效率，合理安排反而能让注意力更集中。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "研究支持什么观点？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/f522ca33ebccbff65a41d81e17404d5602680218f25e9872bc7e9a3f3a093776.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l006",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "他用了什么方法？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公园"
+                },
+                {
+                  "id": "B",
+                  "text": "星期六"
+                },
+                {
+                  "id": "C",
+                  "text": "吃晚饭"
+                },
+                {
+                  "id": "D",
+                  "text": "分解任务并及时检查"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，林医生提到：他把复杂任务分成几个小目标，每完成一个就检查结果，错误明显减少了。\n男：他用了什么方法？",
+              "audioText": "在一次电话交流中，林医生提到：他把复杂任务分成几个小目标，每完成一个就检查结果，错误明显减少了。 他用了什么方法？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，林医生提到：他把复杂任务分成几个小目标，每完成一个就检查结果，错误明显减少了。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "他用了什么方法？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/bb3798f822bab71e7958cf96a3c7500dcb60cfbfee79a23a01080164e59d9d89.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l007",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "市场改造有什么特点？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "明天早上"
+                },
+                {
+                  "id": "B",
+                  "text": "开会"
+                },
+                {
+                  "id": "C",
+                  "text": "兼顾传统与便利"
+                },
+                {
+                  "id": "D",
+                  "text": "银行"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，李明提到：传统市场保留了原有建筑，同时引入电子支付，让老顾客和年轻人都感到方便。\n男：市场改造有什么特点？",
+              "audioText": "在一次电话交流中，李明提到：传统市场保留了原有建筑，同时引入电子支付，让老顾客和年轻人都感到方便。 市场改造有什么特点？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，李明提到：传统市场保留了原有建筑，同时引入电子支付，让老顾客和年轻人都感到方便。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "市场改造有什么特点？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/c98863952e9f9daf0c6d873ffd7a12f8123aaa4c192868502676f4a2c02468c0.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l008",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "她处理分歧的方式是什么？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "上课"
+                },
+                {
+                  "id": "B",
+                  "text": "先倾听再协调"
+                },
+                {
+                  "id": "C",
+                  "text": "饭店"
+                },
+                {
+                  "id": "D",
+                  "text": "上午八点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，小雨提到：与其急着给出答案，她更愿意先听清每个人的理由，再寻找共同点。\n男：她处理分歧的方式是什么？",
+              "audioText": "在一次电话交流中，小雨提到：与其急着给出答案，她更愿意先听清每个人的理由，再寻找共同点。 她处理分歧的方式是什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，小雨提到：与其急着给出答案，她更愿意先听清每个人的理由，再寻找共同点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "她处理分歧的方式是什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/bca2e7e1c9dd85c49da12648b197d5298e3c7f8d6bc85bd0eaa3e5bc75a7e1fd.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l009",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "展览更重视什么？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "主题和理解"
+                },
+                {
+                  "id": "B",
+                  "text": "博物馆"
+                },
+                {
+                  "id": "C",
+                  "text": "上午十点"
+                },
+                {
+                  "id": "D",
+                  "text": "看医生"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，赵经理提到：这次展览没有追求作品数量，而是通过清楚的主题帮助观众理解创作背景。\n男：展览更重视什么？",
+              "audioText": "在一次电话交流中，赵经理提到：这次展览没有追求作品数量，而是通过清楚的主题帮助观众理解创作背景。 展览更重视什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，赵经理提到：这次展览没有追求作品数量，而是通过清楚的主题帮助观众理解创作背景。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "展览更重视什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/07dcec5a2c05b27fc6b3893f1d4b0c1e6d3e2eb8dd7f9fb2b4697af275145c80.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l010",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "公司提出了什么要求？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "图书馆"
+                },
+                {
+                  "id": "B",
+                  "text": "中午十二点"
+                },
+                {
+                  "id": "C",
+                  "text": "买东西"
+                },
+                {
+                  "id": "D",
+                  "text": "提前安排线下讨论"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，孙师傅提到：公司允许员工选择办公地点，但要求团队提前安排面对面讨论的时间。\n男：公司提出了什么要求？",
+              "audioText": "在一次电话交流中，孙师傅提到：公司允许员工选择办公地点，但要求团队提前安排面对面讨论的时间。 公司提出了什么要求？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，孙师傅提到：公司允许员工选择办公地点，但要求团队提前安排面对面讨论的时间。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "公司提出了什么要求？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/11bb9bc28a037684311d2011c8a8e277c3898521c7f9279d7cd549cb52c2c9e8.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l011",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "张老师为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "下午两点"
+                },
+                {
+                  "id": "B",
+                  "text": "接朋友"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "学校"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，张老师提到：这周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。\n男：张老师为什么改变了安排？",
+              "audioText": "在一次电话交流中，张老师提到：这周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。 张老师为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，张老师提到：这周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "张老师为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/2d0b10d650e57bcee2f1db396e3b64bdc7e4d80219cf36944a53c51dfdfc4fa8.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l012",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "刘阿姨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "锻炼身体"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "公司"
+                },
+                {
+                  "id": "D",
+                  "text": "下午四点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。\n男：刘阿姨为什么改变了安排？",
+              "audioText": "在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。 刘阿姨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "刘阿姨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/5b1b9263f6612822634a1a215dd72aaa67ca5ea39919faf0111388fcd7204e33.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l013",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "周同学为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "医院"
+                },
+                {
+                  "id": "C",
+                  "text": "晚上七点"
+                },
+                {
+                  "id": "D",
+                  "text": "准备报告"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，周同学提到：这周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。\n男：周同学为什么改变了安排？",
+              "audioText": "在一次电话交流中，周同学提到：这周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。 周同学为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，周同学提到：这周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "周同学为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/626b0664fcf99e822a0688721112c331c0ceebaa717d8bf15aa531b60ee55943.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l014",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "超市"
+                },
+                {
+                  "id": "B",
+                  "text": "星期一"
+                },
+                {
+                  "id": "C",
+                  "text": "参加活动"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，王芳提到：这周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。\n男：王芳为什么改变了安排？",
+              "audioText": "在一次电话交流中，王芳提到：这周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。 王芳为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，王芳提到：这周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/fb28a9623b7ba0bd535a148a3c15ed4822c71d2dd2e8086f5864ad819350582a.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l015",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "陈先生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "星期三"
+                },
+                {
+                  "id": "B",
+                  "text": "还书"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "火车站"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，陈先生提到：这周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。\n男：陈先生为什么改变了安排？",
+              "audioText": "在一次电话交流中，陈先生提到：这周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。 陈先生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，陈先生提到：这周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "陈先生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/857ef8e1e963ef65afdb22a9025d5ae62f79192a5714372da782bddb86e80e19.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l016",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "林医生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "吃晚饭"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "公园"
+                },
+                {
+                  "id": "D",
+                  "text": "星期六"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，林医生提到：这周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。\n男：林医生为什么改变了安排？",
+              "audioText": "在一次电话交流中，林医生提到：这周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。 林医生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，林医生提到：这周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "林医生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/49134888ff0967efb37df5f3836904bf1366af2d3d0a67bba74dcba521db778b.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l017",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "李明为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "银行"
+                },
+                {
+                  "id": "C",
+                  "text": "明天早上"
+                },
+                {
+                  "id": "D",
+                  "text": "开会"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，李明提到：这周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。\n男：李明为什么改变了安排？",
+              "audioText": "在一次电话交流中，李明提到：这周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。 李明为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，李明提到：这周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "李明为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/1b6fa59e8b09e6f667a1c5471b77e45694ccefca1493a1d807fbc4a9e6453be8.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l018",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "小雨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "饭店"
+                },
+                {
+                  "id": "B",
+                  "text": "上午八点"
+                },
+                {
+                  "id": "C",
+                  "text": "上课"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，小雨提到：这周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。\n男：小雨为什么改变了安排？",
+              "audioText": "在一次电话交流中，小雨提到：这周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。 小雨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，小雨提到：这周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "小雨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/35bb88edc356f5720afde0d80e68253c999d5365c2c2dffab6355c08ccbfda20.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l019",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "赵经理为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "上午十点"
+                },
+                {
+                  "id": "B",
+                  "text": "看医生"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "博物馆"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，赵经理提到：这周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。\n男：赵经理为什么改变了安排？",
+              "audioText": "在一次电话交流中，赵经理提到：这周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。 赵经理为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，赵经理提到：这周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "赵经理为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/66c5340b18203cf99b03d2949ace699e4338e0ecc30957f02c53bbd386d09cbb.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l020",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "孙师傅为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "买东西"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "图书馆"
+                },
+                {
+                  "id": "D",
+                  "text": "中午十二点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，孙师傅提到：这周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。\n男：孙师傅为什么改变了安排？",
+              "audioText": "在一次电话交流中，孙师傅提到：这周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。 孙师傅为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，孙师傅提到：这周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "孙师傅为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/beda383ec33d5378d12eb1024eb958f9cca20af8bc3f5c6ca752fd1a47c54be0.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-1"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-2",
+          "title": "Phần 2",
+          "instruction": "Nghe đoạn hội thoại, sau đó trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "l021",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "张老师为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "学校"
+                },
+                {
+                  "id": "C",
+                  "text": "下午两点"
+                },
+                {
+                  "id": "D",
+                  "text": "接朋友"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，张老师提到：下周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。\n男：张老师为什么改变了安排？",
+              "audioText": "在一次电话交流中，张老师提到：下周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。 张老师为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，张老师提到：下周，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "张老师为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/53588f9e6b180e4c63a0dca262408126ff30ed96b0daba54cacf3df8e6d1f457.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l022",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "刘阿姨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公司"
+                },
+                {
+                  "id": "B",
+                  "text": "下午四点"
+                },
+                {
+                  "id": "C",
+                  "text": "锻炼身体"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。\n男：刘阿姨为什么改变了安排？",
+              "audioText": "在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。 刘阿姨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "刘阿姨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/b80ea105ab165a86de43d95787f06b4e8ae50631236b9dbb3eac73eba06a70a5.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l023",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "周同学为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "晚上七点"
+                },
+                {
+                  "id": "B",
+                  "text": "准备报告"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "医院"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，周同学提到：下周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。\n男：周同学为什么改变了安排？",
+              "audioText": "在一次电话交流中，周同学提到：下周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。 周同学为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，周同学提到：下周，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "周同学为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/57325a70b2ae3eefd848e9073025160529b972484bab34e3ae1ca64bdcd4ba08.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l024",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "参加活动"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "超市"
+                },
+                {
+                  "id": "D",
+                  "text": "星期一"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，王芳提到：下周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。\n男：王芳为什么改变了安排？",
+              "audioText": "在一次电话交流中，王芳提到：下周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。 王芳为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，王芳提到：下周，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/c5ad0ad9b9747700d1ee36eb4ebe4dbf4c3ec4ac87dea9a4c8ba56a7086b765d.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l025",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "陈先生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "火车站"
+                },
+                {
+                  "id": "C",
+                  "text": "星期三"
+                },
+                {
+                  "id": "D",
+                  "text": "还书"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，陈先生提到：下周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。\n男：陈先生为什么改变了安排？",
+              "audioText": "在一次电话交流中，陈先生提到：下周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。 陈先生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，陈先生提到：下周，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "陈先生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/a00b6fd346dafc5d43f8c3b32794c33484c6b40e9e9792beae8810356cd6f98f.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l026",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "林医生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公园"
+                },
+                {
+                  "id": "B",
+                  "text": "星期六"
+                },
+                {
+                  "id": "C",
+                  "text": "吃晚饭"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，林医生提到：下周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。\n男：林医生为什么改变了安排？",
+              "audioText": "在一次电话交流中，林医生提到：下周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。 林医生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，林医生提到：下周，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "林医生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/1e0a3cb76c1241a0b517ec8bdb3e59302f6f5d10eeda598c745d6efd26a5e87c.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l027",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "李明为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "明天早上"
+                },
+                {
+                  "id": "B",
+                  "text": "开会"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "银行"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，李明提到：下周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。\n男：李明为什么改变了安排？",
+              "audioText": "在一次电话交流中，李明提到：下周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。 李明为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，李明提到：下周，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "李明为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ee5cb4efcc6c609fb8eaf25ea391851ea00f0bd3221cafd6bdb01caf78a0708a.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l028",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "小雨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "上课"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "饭店"
+                },
+                {
+                  "id": "D",
+                  "text": "上午八点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，小雨提到：下周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。\n男：小雨为什么改变了安排？",
+              "audioText": "在一次电话交流中，小雨提到：下周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。 小雨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，小雨提到：下周，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "小雨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/fa7c10d7af61c4746880f86f926f6d8600be13096c28e6e7f3e7ddbaf2ea0e06.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l029",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "赵经理为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "博物馆"
+                },
+                {
+                  "id": "C",
+                  "text": "上午十点"
+                },
+                {
+                  "id": "D",
+                  "text": "看医生"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，赵经理提到：下周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。\n男：赵经理为什么改变了安排？",
+              "audioText": "在一次电话交流中，赵经理提到：下周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。 赵经理为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，赵经理提到：下周，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "赵经理为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/2d575f1224e391be2f11e0fa2276096581e0f87397720f8f09b3c19dbc1f4b94.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l030",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "孙师傅为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "图书馆"
+                },
+                {
+                  "id": "B",
+                  "text": "中午十二点"
+                },
+                {
+                  "id": "C",
+                  "text": "买东西"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，孙师傅提到：下周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。\n男：孙师傅为什么改变了安排？",
+              "audioText": "在一次电话交流中，孙师傅提到：下周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。 孙师傅为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，孙师傅提到：下周，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "孙师傅为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/b5004f3ecc88e8c74488efa2488a2304b03eb0898dd84d8943371c317d1b3c12.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l031",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "张老师为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "下午两点"
+                },
+                {
+                  "id": "B",
+                  "text": "接朋友"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "学校"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，张老师提到：这个月，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。\n男：张老师为什么改变了安排？",
+              "audioText": "在一次电话交流中，张老师提到：这个月，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。 张老师为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，张老师提到：这个月，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "张老师为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ed16f5411115a84f3f6b1ee4fb967d65864c7f5998ec3d0c48f61bce830d1daa.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l032",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "刘阿姨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "锻炼身体"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "公司"
+                },
+                {
+                  "id": "D",
+                  "text": "下午四点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。\n男：刘阿姨为什么改变了安排？",
+              "audioText": "在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。 刘阿姨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "刘阿姨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ca160eac64c4d0eebb8d6db3ea6693719781cf77f3656754e8140579e5bc9ce9.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l033",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "周同学为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "医院"
+                },
+                {
+                  "id": "C",
+                  "text": "晚上七点"
+                },
+                {
+                  "id": "D",
+                  "text": "准备报告"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，周同学提到：这个月，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。\n男：周同学为什么改变了安排？",
+              "audioText": "在一次电话交流中，周同学提到：这个月，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。 周同学为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，周同学提到：这个月，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "周同学为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/eb03322eb91070422b3469f41672da78ff4258c30e9e62e31ab45216216d95e3.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l034",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "超市"
+                },
+                {
+                  "id": "B",
+                  "text": "星期一"
+                },
+                {
+                  "id": "C",
+                  "text": "参加活动"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，王芳提到：这个月，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。\n男：王芳为什么改变了安排？",
+              "audioText": "在一次电话交流中，王芳提到：这个月，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。 王芳为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，王芳提到：这个月，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/b04ad8ba209c1ccd3cdd27e16ca318d966d69231cf4c917239d98fcef71026a8.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l035",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "陈先生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "星期三"
+                },
+                {
+                  "id": "B",
+                  "text": "还书"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "火车站"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，陈先生提到：这个月，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。\n男：陈先生为什么改变了安排？",
+              "audioText": "在一次电话交流中，陈先生提到：这个月，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。 陈先生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，陈先生提到：这个月，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "陈先生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/0c791064a4d35857d642ba3116b8f160373ee83f67acd43ed0b10385ebbf854a.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l036",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "林医生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "吃晚饭"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "公园"
+                },
+                {
+                  "id": "D",
+                  "text": "星期六"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，林医生提到：这个月，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。\n男：林医生为什么改变了安排？",
+              "audioText": "在一次电话交流中，林医生提到：这个月，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。 林医生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，林医生提到：这个月，林医生原来准备中午十二点去公司参加活动，后来因为临时有事，改到了星期三。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "林医生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/3735113eba214c2482fc843371a72125056e29cafc97b30ede24ec9cc3d9a385.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l037",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "李明为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "银行"
+                },
+                {
+                  "id": "C",
+                  "text": "明天早上"
+                },
+                {
+                  "id": "D",
+                  "text": "开会"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，李明提到：这个月，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。\n男：李明为什么改变了安排？",
+              "audioText": "在一次电话交流中，李明提到：这个月，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。 李明为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，李明提到：这个月，李明原来准备星期一去超市看医生，后来因为临时有事，改到了星期六。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "李明为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/57226dcc8d20eb7f86babf0480b8e097582aa6a8e013968eaf2bec48842f11f4.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l038",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "小雨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "饭店"
+                },
+                {
+                  "id": "B",
+                  "text": "上午八点"
+                },
+                {
+                  "id": "C",
+                  "text": "上课"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，小雨提到：这个月，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。\n男：小雨为什么改变了安排？",
+              "audioText": "在一次电话交流中，小雨提到：这个月，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。 小雨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，小雨提到：这个月，小雨原来准备上午八点去公园参加活动，后来因为临时有事，改到了明天早上。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "小雨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/758c543cb25357b4c625e9643b3bdd40c821475f4820180721307727ef108e37.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l039",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "赵经理为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "上午十点"
+                },
+                {
+                  "id": "B",
+                  "text": "看医生"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "博物馆"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，赵经理提到：这个月，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。\n男：赵经理为什么改变了安排？",
+              "audioText": "在一次电话交流中，赵经理提到：这个月，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。 赵经理为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，赵经理提到：这个月，赵经理原来准备下午四点去饭店看医生，后来因为临时有事，改到了上午八点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "赵经理为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/caf1786c5bd8197a8924d3ee54749367f843d6a2752787562de8f6e28dc2f457.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l040",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "孙师傅为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "买东西"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "图书馆"
+                },
+                {
+                  "id": "D",
+                  "text": "中午十二点"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。\n男：孙师傅为什么改变了安排？",
+              "audioText": "在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。 孙师傅为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备星期六去图书馆参加活动，后来因为临时有事，改到了上午十点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "孙师傅为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/eee1473a2ca4cb280170403a047f637b566cd8e53f6c4e440bab9e3557dbdb63.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "图书馆",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l041",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "张老师为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "学校"
+                },
+                {
+                  "id": "C",
+                  "text": "下午两点"
+                },
+                {
+                  "id": "D",
+                  "text": "接朋友"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，张老师提到：假期里，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。\n男：张老师为什么改变了安排？",
+              "audioText": "在一次电话交流中，张老师提到：假期里，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。 张老师为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，张老师提到：假期里，张老师原来准备中午十二点去公司看医生，后来因为临时有事，改到了中午十二点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "张老师为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/be4010a0570f902eb95988683fd22a1a9c5bdb8a2e75c87a09345c449620b17d.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公司",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l042",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "刘阿姨为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公司"
+                },
+                {
+                  "id": "B",
+                  "text": "下午四点"
+                },
+                {
+                  "id": "C",
+                  "text": "锻炼身体"
+                },
+                {
+                  "id": "D",
+                  "text": "临时有事"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，刘阿姨提到：假期里，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。\n男：刘阿姨为什么改变了安排？",
+              "audioText": "在一次电话交流中，刘阿姨提到：假期里，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。 刘阿姨为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，刘阿姨提到：假期里，刘阿姨原来准备星期一去超市参加活动，后来因为临时有事，改到了下午两点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "刘阿姨为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/97924a94a923216a2db8334130e1fe54c99d79ba6791ceb5110b11a7f5d63e0a.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "超市",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l043",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "周同学为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "晚上七点"
+                },
+                {
+                  "id": "B",
+                  "text": "准备报告"
+                },
+                {
+                  "id": "C",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "D",
+                  "text": "医院"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，周同学提到：假期里，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。\n男：周同学为什么改变了安排？",
+              "audioText": "在一次电话交流中，周同学提到：假期里，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。 周同学为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，周同学提到：假期里，周同学原来准备上午八点去公园看医生，后来因为临时有事，改到了下午四点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "周同学为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/490e84ede54f4df0191e4abd6bf4b8e7370f5902fc841afa15638518937ada24.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "公园",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l044",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "参加活动"
+                },
+                {
+                  "id": "B",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "C",
+                  "text": "超市"
+                },
+                {
+                  "id": "D",
+                  "text": "星期一"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，王芳提到：假期里，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。\n男：王芳为什么改变了安排？",
+              "audioText": "在一次电话交流中，王芳提到：假期里，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。 王芳为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，王芳提到：假期里，王芳原来准备下午四点去饭店参加活动，后来因为临时有事，改到了晚上七点。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/584caff4784af117271bf70128f124aafd95e8af644fcf363c8e7dcaec484fc7.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "饭店",
+                "参加活动"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l045",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "陈先生为什么改变了安排？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "临时有事"
+                },
+                {
+                  "id": "B",
+                  "text": "火车站"
+                },
+                {
+                  "id": "C",
+                  "text": "星期三"
+                },
+                {
+                  "id": "D",
+                  "text": "还书"
+                }
+              ],
+              "transcript": "女：在一次电话交流中，陈先生提到：假期里，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。\n男：陈先生为什么改变了安排？",
+              "audioText": "在一次电话交流中，陈先生提到：假期里，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。 陈先生为什么改变了安排？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "在一次电话交流中，陈先生提到：假期里，陈先生原来准备星期六去图书馆看医生，后来因为临时有事，改到了星期一。",
+                  "rate": "-5%"
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "陈先生为什么改变了安排？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/db4b2569b2245e1e5f31fb92d24cf687d78458952d3146949201d9a6cb08a005.mp3",
+              "repeatCount": 1,
+              "scoreWeight": 2.2232,
+              "vocabularyTags": [
+                "图书馆",
+                "看医生"
+              ],
+              "difficulty": "HSK5",
+              "partId": "listening-part-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Đọc",
+      "durationMinutes": 45,
+      "questionCount": 45,
+      "repeatCount": 0,
+      "parts": [
+        {
+          "id": "reading-part-1",
+          "title": "Phần 1",
+          "instruction": "Đọc câu và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "r001",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，孙师傅写下了这句话：“团队及时调整了计划，___了风险进一步扩大。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "拒绝"
+                },
+                {
+                  "id": "B",
+                  "text": "否认"
+                },
+                {
+                  "id": "C",
+                  "text": "取消"
+                },
+                {
+                  "id": "D",
+                  "text": "避免"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "避免"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r002",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，李明写下了这句话：“事实证明，这项措施对提高效率具有___作用。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "主动"
+                },
+                {
+                  "id": "B",
+                  "text": "热烈"
+                },
+                {
+                  "id": "C",
+                  "text": "积极"
+                },
+                {
+                  "id": "D",
+                  "text": "活泼"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "积极"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r003",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，王芳写下了这句话：“面对复杂情况，我们不能只看表面，应该分析其___原因。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "根基"
+                },
+                {
+                  "id": "B",
+                  "text": "根本"
+                },
+                {
+                  "id": "C",
+                  "text": "基本"
+                },
+                {
+                  "id": "D",
+                  "text": "基础"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "根本"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r004",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，张老师写下了这句话：“双方经过充分沟通，最终___了一致意见。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "达成"
+                },
+                {
+                  "id": "B",
+                  "text": "到达"
+                },
+                {
+                  "id": "C",
+                  "text": "完成"
+                },
+                {
+                  "id": "D",
+                  "text": "造成"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "达成"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r005",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，小雨写下了这句话：“新规定的目的不是增加负担，而是___工作流程。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "规律"
+                },
+                {
+                  "id": "B",
+                  "text": "规格"
+                },
+                {
+                  "id": "C",
+                  "text": "规则"
+                },
+                {
+                  "id": "D",
+                  "text": "规范"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "规范"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r006",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，陈先生写下了这句话：“这篇报道没有夸大事实，态度比较___。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "乐观"
+                },
+                {
+                  "id": "B",
+                  "text": "直观"
+                },
+                {
+                  "id": "C",
+                  "text": "客观"
+                },
+                {
+                  "id": "D",
+                  "text": "主动"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "客观"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r007",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，刘阿姨写下了这句话：“他善于从失败中总结经验，___同样的错误再次发生。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "阻止"
+                },
+                {
+                  "id": "B",
+                  "text": "防止"
+                },
+                {
+                  "id": "C",
+                  "text": "停止"
+                },
+                {
+                  "id": "D",
+                  "text": "禁止"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "防止"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r008",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，赵经理写下了这句话：“这种变化并非偶然，而是多种因素共同作用的___。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "结果"
+                },
+                {
+                  "id": "B",
+                  "text": "成果"
+                },
+                {
+                  "id": "C",
+                  "text": "后果"
+                },
+                {
+                  "id": "D",
+                  "text": "效果"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "结果"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r009",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，林医生写下了这句话：“企业应当在追求利润的同时___社会责任。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "承认"
+                },
+                {
+                  "id": "B",
+                  "text": "承受"
+                },
+                {
+                  "id": "C",
+                  "text": "承包"
+                },
+                {
+                  "id": "D",
+                  "text": "承担"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "承担"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r010",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，周同学写下了这句话：“只有建立稳定的信任，合作关系才能___发展。”",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "陆续"
+                },
+                {
+                  "id": "B",
+                  "text": "继续"
+                },
+                {
+                  "id": "C",
+                  "text": "持续"
+                },
+                {
+                  "id": "D",
+                  "text": "连续"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "持续"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r011",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，孙师傅写下了这句话：“周一开会时，刘阿姨说：“团队及时调整了计划，___了风险进一步扩大。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "取消"
+                },
+                {
+                  "id": "B",
+                  "text": "避免"
+                },
+                {
+                  "id": "C",
+                  "text": "拒绝"
+                },
+                {
+                  "id": "D",
+                  "text": "否认"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "避免"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r012",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，李明写下了这句话：“周一开会时，赵经理说：“事实证明，这项措施对提高效率具有___作用。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "积极"
+                },
+                {
+                  "id": "B",
+                  "text": "活泼"
+                },
+                {
+                  "id": "C",
+                  "text": "主动"
+                },
+                {
+                  "id": "D",
+                  "text": "热烈"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "积极"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r013",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，王芳写下了这句话：“周一开会时，林医生说：“面对复杂情况，我们不能只看表面，应该分析其___原因。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "基本"
+                },
+                {
+                  "id": "B",
+                  "text": "基础"
+                },
+                {
+                  "id": "C",
+                  "text": "根基"
+                },
+                {
+                  "id": "D",
+                  "text": "根本"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "根本"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r014",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，张老师写下了这句话：“周一开会时，周同学说：“双方经过充分沟通，最终___了一致意见。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "完成"
+                },
+                {
+                  "id": "B",
+                  "text": "造成"
+                },
+                {
+                  "id": "C",
+                  "text": "达成"
+                },
+                {
+                  "id": "D",
+                  "text": "到达"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "达成"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "r015",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，小雨写下了这句话：“周一开会时，孙师傅说：“新规定的目的不是增加负担，而是___工作流程。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "规则"
+                },
+                {
+                  "id": "B",
+                  "text": "规范"
+                },
+                {
+                  "id": "C",
+                  "text": "规律"
+                },
+                {
+                  "id": "D",
+                  "text": "规格"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "规范"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-1"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-2",
+          "title": "Phần 2",
+          "instruction": "Chọn từ hoặc cụm từ thích hợp để hoàn thành câu.",
+          "questions": [
+            {
+              "id": "r016",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，陈先生写下了这句话：“周一开会时，李明说：“这篇报道没有夸大事实，态度比较___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "客观"
+                },
+                {
+                  "id": "B",
+                  "text": "主动"
+                },
+                {
+                  "id": "C",
+                  "text": "乐观"
+                },
+                {
+                  "id": "D",
+                  "text": "直观"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "客观"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r017",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，刘阿姨写下了这句话：“周一开会时，王芳说：“他善于从失败中总结经验，___同样的错误再次发生。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "停止"
+                },
+                {
+                  "id": "B",
+                  "text": "禁止"
+                },
+                {
+                  "id": "C",
+                  "text": "阻止"
+                },
+                {
+                  "id": "D",
+                  "text": "防止"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "防止"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r018",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，赵经理写下了这句话：“周一开会时，张老师说：“这种变化并非偶然，而是多种因素共同作用的___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "后果"
+                },
+                {
+                  "id": "B",
+                  "text": "效果"
+                },
+                {
+                  "id": "C",
+                  "text": "结果"
+                },
+                {
+                  "id": "D",
+                  "text": "成果"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "结果"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r019",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，林医生写下了这句话：“周一开会时，小雨说：“企业应当在追求利润的同时___社会责任。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "承包"
+                },
+                {
+                  "id": "B",
+                  "text": "承担"
+                },
+                {
+                  "id": "C",
+                  "text": "承认"
+                },
+                {
+                  "id": "D",
+                  "text": "承受"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "承担"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r020",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，周同学写下了这句话：“周一开会时，陈先生说：“只有建立稳定的信任，合作关系才能___发展。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "持续"
+                },
+                {
+                  "id": "B",
+                  "text": "连续"
+                },
+                {
+                  "id": "C",
+                  "text": "陆续"
+                },
+                {
+                  "id": "D",
+                  "text": "继续"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "持续"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r021",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，孙师傅写下了这句话：“周三上课时，刘阿姨说：“团队及时调整了计划，___了风险进一步扩大。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "拒绝"
+                },
+                {
+                  "id": "B",
+                  "text": "否认"
+                },
+                {
+                  "id": "C",
+                  "text": "取消"
+                },
+                {
+                  "id": "D",
+                  "text": "避免"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "避免"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r022",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，李明写下了这句话：“周三上课时，赵经理说：“事实证明，这项措施对提高效率具有___作用。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "主动"
+                },
+                {
+                  "id": "B",
+                  "text": "热烈"
+                },
+                {
+                  "id": "C",
+                  "text": "积极"
+                },
+                {
+                  "id": "D",
+                  "text": "活泼"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "积极"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r023",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，王芳写下了这句话：“周三上课时，林医生说：“面对复杂情况，我们不能只看表面，应该分析其___原因。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "根基"
+                },
+                {
+                  "id": "B",
+                  "text": "根本"
+                },
+                {
+                  "id": "C",
+                  "text": "基本"
+                },
+                {
+                  "id": "D",
+                  "text": "基础"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "根本"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r024",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，张老师写下了这句话：“周三上课时，周同学说：“双方经过充分沟通，最终___了一致意见。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "达成"
+                },
+                {
+                  "id": "B",
+                  "text": "到达"
+                },
+                {
+                  "id": "C",
+                  "text": "完成"
+                },
+                {
+                  "id": "D",
+                  "text": "造成"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "达成"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "r025",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，小雨写下了这句话：“周三上课时，孙师傅说：“新规定的目的不是增加负担，而是___工作流程。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "规律"
+                },
+                {
+                  "id": "B",
+                  "text": "规格"
+                },
+                {
+                  "id": "C",
+                  "text": "规则"
+                },
+                {
+                  "id": "D",
+                  "text": "规范"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "规范"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-2"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-3",
+          "title": "Phần 3",
+          "instruction": "Đọc đoạn văn ngắn và trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "r026",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，陈先生写下了这句话：“周三上课时，李明说：“这篇报道没有夸大事实，态度比较___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "乐观"
+                },
+                {
+                  "id": "B",
+                  "text": "直观"
+                },
+                {
+                  "id": "C",
+                  "text": "客观"
+                },
+                {
+                  "id": "D",
+                  "text": "主动"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "客观"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r027",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，刘阿姨写下了这句话：“周三上课时，王芳说：“他善于从失败中总结经验，___同样的错误再次发生。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "阻止"
+                },
+                {
+                  "id": "B",
+                  "text": "防止"
+                },
+                {
+                  "id": "C",
+                  "text": "停止"
+                },
+                {
+                  "id": "D",
+                  "text": "禁止"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "防止"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r028",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，赵经理写下了这句话：“周三上课时，张老师说：“这种变化并非偶然，而是多种因素共同作用的___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "结果"
+                },
+                {
+                  "id": "B",
+                  "text": "成果"
+                },
+                {
+                  "id": "C",
+                  "text": "后果"
+                },
+                {
+                  "id": "D",
+                  "text": "效果"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "结果"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r029",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，林医生写下了这句话：“周三上课时，小雨说：“企业应当在追求利润的同时___社会责任。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "承认"
+                },
+                {
+                  "id": "B",
+                  "text": "承受"
+                },
+                {
+                  "id": "C",
+                  "text": "承包"
+                },
+                {
+                  "id": "D",
+                  "text": "承担"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "承担"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r030",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，周同学写下了这句话：“周三上课时，陈先生说：“只有建立稳定的信任，合作关系才能___发展。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "陆续"
+                },
+                {
+                  "id": "B",
+                  "text": "继续"
+                },
+                {
+                  "id": "C",
+                  "text": "持续"
+                },
+                {
+                  "id": "D",
+                  "text": "连续"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "持续"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r031",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，孙师傅写下了这句话：“周末活动中，刘阿姨说：“团队及时调整了计划，___了风险进一步扩大。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "取消"
+                },
+                {
+                  "id": "B",
+                  "text": "避免"
+                },
+                {
+                  "id": "C",
+                  "text": "拒绝"
+                },
+                {
+                  "id": "D",
+                  "text": "否认"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "避免"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r032",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，李明写下了这句话：“周末活动中，赵经理说：“事实证明，这项措施对提高效率具有___作用。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "积极"
+                },
+                {
+                  "id": "B",
+                  "text": "活泼"
+                },
+                {
+                  "id": "C",
+                  "text": "主动"
+                },
+                {
+                  "id": "D",
+                  "text": "热烈"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "积极"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r033",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，王芳写下了这句话：“周末活动中，林医生说：“面对复杂情况，我们不能只看表面，应该分析其___原因。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "基本"
+                },
+                {
+                  "id": "B",
+                  "text": "基础"
+                },
+                {
+                  "id": "C",
+                  "text": "根基"
+                },
+                {
+                  "id": "D",
+                  "text": "根本"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "根本"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r034",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，张老师写下了这句话：“周末活动中，周同学说：“双方经过充分沟通，最终___了一致意见。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "完成"
+                },
+                {
+                  "id": "B",
+                  "text": "造成"
+                },
+                {
+                  "id": "C",
+                  "text": "达成"
+                },
+                {
+                  "id": "D",
+                  "text": "到达"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "达成"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r035",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，小雨写下了这句话：“周末活动中，孙师傅说：“新规定的目的不是增加负担，而是___工作流程。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "规则"
+                },
+                {
+                  "id": "B",
+                  "text": "规范"
+                },
+                {
+                  "id": "C",
+                  "text": "规律"
+                },
+                {
+                  "id": "D",
+                  "text": "规格"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "规范"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r036",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，陈先生写下了这句话：“周末活动中，李明说：“这篇报道没有夸大事实，态度比较___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "客观"
+                },
+                {
+                  "id": "B",
+                  "text": "主动"
+                },
+                {
+                  "id": "C",
+                  "text": "乐观"
+                },
+                {
+                  "id": "D",
+                  "text": "直观"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "客观"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r037",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，刘阿姨写下了这句话：“周末活动中，王芳说：“他善于从失败中总结经验，___同样的错误再次发生。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "停止"
+                },
+                {
+                  "id": "B",
+                  "text": "禁止"
+                },
+                {
+                  "id": "C",
+                  "text": "阻止"
+                },
+                {
+                  "id": "D",
+                  "text": "防止"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "防止"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r038",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，赵经理写下了这句话：“周末活动中，张老师说：“这种变化并非偶然，而是多种因素共同作用的___。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "后果"
+                },
+                {
+                  "id": "B",
+                  "text": "效果"
+                },
+                {
+                  "id": "C",
+                  "text": "结果"
+                },
+                {
+                  "id": "D",
+                  "text": "成果"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "结果"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r039",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，林医生写下了这句话：“周末活动中，小雨说：“企业应当在追求利润的同时___社会责任。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "承包"
+                },
+                {
+                  "id": "B",
+                  "text": "承担"
+                },
+                {
+                  "id": "C",
+                  "text": "承认"
+                },
+                {
+                  "id": "D",
+                  "text": "承受"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "承担"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r040",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，周同学写下了这句话：“周末活动中，陈先生说：“只有建立稳定的信任，合作关系才能___发展。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "持续"
+                },
+                {
+                  "id": "B",
+                  "text": "连续"
+                },
+                {
+                  "id": "C",
+                  "text": "陆续"
+                },
+                {
+                  "id": "D",
+                  "text": "继续"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "持续"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r041",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，孙师傅写下了这句话：“月底总结时，刘阿姨说：“团队及时调整了计划，___了风险进一步扩大。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "拒绝"
+                },
+                {
+                  "id": "B",
+                  "text": "否认"
+                },
+                {
+                  "id": "C",
+                  "text": "取消"
+                },
+                {
+                  "id": "D",
+                  "text": "避免"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "避免"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r042",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，李明写下了这句话：“月底总结时，赵经理说：“事实证明，这项措施对提高效率具有___作用。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "主动"
+                },
+                {
+                  "id": "B",
+                  "text": "热烈"
+                },
+                {
+                  "id": "C",
+                  "text": "积极"
+                },
+                {
+                  "id": "D",
+                  "text": "活泼"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "积极"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r043",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，王芳写下了这句话：“月底总结时，林医生说：“面对复杂情况，我们不能只看表面，应该分析其___原因。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "根基"
+                },
+                {
+                  "id": "B",
+                  "text": "根本"
+                },
+                {
+                  "id": "C",
+                  "text": "基本"
+                },
+                {
+                  "id": "D",
+                  "text": "基础"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "根本"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r044",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，张老师写下了这句话：“月底总结时，周同学说：“双方经过充分沟通，最终___了一致意见。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "达成"
+                },
+                {
+                  "id": "B",
+                  "text": "到达"
+                },
+                {
+                  "id": "C",
+                  "text": "完成"
+                },
+                {
+                  "id": "D",
+                  "text": "造成"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2222,
+              "vocabularyTags": [
+                "达成"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "r045",
+              "questionType": "single_choice",
+              "instruction": "Chọn từ hoặc cụm từ thích hợp nhất.",
+              "prompt": "在一次电话交流中，小雨写下了这句话：“月底总结时，孙师傅说：“新规定的目的不是增加负担，而是___工作流程。””",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "规律"
+                },
+                {
+                  "id": "B",
+                  "text": "规格"
+                },
+                {
+                  "id": "C",
+                  "text": "规则"
+                },
+                {
+                  "id": "D",
+                  "text": "规范"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 2.2232,
+              "vocabularyTags": [
+                "规范"
+              ],
+              "difficulty": "HSK5",
+              "partId": "reading-part-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "title": "Viết",
+      "durationMinutes": 40,
+      "questionCount": 10,
+      "repeatCount": 0,
+      "parts": [
+        {
+          "id": "writing-part-1",
+          "title": "Phần 1",
+          "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+          "questions": [
+            {
+              "id": "w001",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "丰富的实践经验 / 为李明 / 解决这个问题 / 提供了帮助 / 在实践中，",
+              "tokens": [
+                "丰富的实践经验",
+                "为李明",
+                "解决这个问题",
+                "提供了帮助",
+                "在实践中，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "在实践中，",
+                "丰富的实践经验"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w002",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "进一步提高服务质量 / 如何 / 正在考虑 / 公司 / 最近，",
+              "tokens": [
+                "进一步提高服务质量",
+                "如何",
+                "正在考虑",
+                "公司",
+                "最近，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "最近，",
+                "公司"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w003",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "保持好奇心 / 有助于 / 同学们 / 发现新的可能 / 面对未知时，",
+              "tokens": [
+                "保持好奇心",
+                "有助于",
+                "同学们",
+                "发现新的可能",
+                "面对未知时，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "面对未知时，",
+                "保持好奇心"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w004",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "广泛关注 / 社会各界的 / 引起了 / 这项研究结果 / 发表以后，",
+              "tokens": [
+                "广泛关注",
+                "社会各界的",
+                "引起了",
+                "这项研究结果",
+                "发表以后，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "发表以后，",
+                "这项研究结果"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w005",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "合理安排时间 / 是 / 提高工作效率的 / 重要条件 / 对职场新人来说，",
+              "tokens": [
+                "合理安排时间",
+                "是",
+                "提高工作效率的",
+                "重要条件",
+                "对职场新人来说，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "对职场新人来说，",
+                "合理安排时间"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w006",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "达成了一致意见 / 最终 / 经过讨论 / 双方 / 经过充分沟通，",
+              "tokens": [
+                "达成了一致意见",
+                "最终",
+                "经过讨论",
+                "双方",
+                "经过充分沟通，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "经过充分沟通，",
+                "双方"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w007",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "面对变化 / 同学们需要 / 及时调整 / 原来的计划 / 遇到新情况时，",
+              "tokens": [
+                "面对变化",
+                "同学们需要",
+                "及时调整",
+                "原来的计划",
+                "遇到新情况时，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "遇到新情况时，",
+                "面对变化"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            },
+            {
+              "id": "w008",
+              "questionType": "reorder",
+              "instruction": "Sắp xếp các từ thành một câu hoàn chỉnh.",
+              "prompt": "实际价值 / 很强的 / 具有 / 李明提出的建议 / 从长远看，",
+              "tokens": [
+                "实际价值",
+                "很强的",
+                "具有",
+                "李明提出的建议",
+                "从长远看，"
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "从长远看，",
+                "李明提出的建议"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-1"
+            }
+          ]
+        },
+        {
+          "id": "writing-part-2",
+          "title": "Phần 2",
+          "instruction": "Viết đoạn văn theo yêu cầu; hệ thống chỉ kiểm tra điều kiện cơ bản, không giả lập điểm chính xác.",
+          "questions": [
+            {
+              "id": "w009",
+              "questionType": "long_writing",
+              "instruction": "Viết đoạn văn theo yêu cầu; hệ thống chỉ kiểm tra điều kiện cơ bản, không giả lập điểm chính xác.",
+              "prompt": "Viết một đoạn khoảng 80 chữ, bắt buộc dùng đủ các từ: 计划、困难、帮助、完成、感谢。",
+              "requiredWords": [
+                "计划",
+                "困难",
+                "帮助",
+                "完成",
+                "感谢"
+              ],
+              "minCharacters": 70,
+              "targetCharacters": 80,
+              "placeholder": "Viết đoạn văn tiếng Trung tại đây",
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [
+                "计划",
+                "困难",
+                "帮助",
+                "完成",
+                "感谢"
+              ],
+              "difficulty": "HSK5",
+              "partId": "writing-part-2"
+            },
+            {
+              "id": "w010",
+              "questionType": "long_writing",
+              "instruction": "Viết đoạn văn theo yêu cầu; hệ thống chỉ kiểm tra điều kiện cơ bản, không giả lập điểm chính xác.",
+              "prompt": "Quan sát hình cuộc họp và viết một đoạn khoảng 80 chữ về sự hợp tác trong công việc.",
+              "requiredWords": [],
+              "minCharacters": 70,
+              "targetCharacters": 80,
+              "placeholder": "Viết đoạn văn tiếng Trung tại đây",
+              "repeatCount": 0,
+              "scoreWeight": 10.0,
+              "vocabularyTags": [],
+              "difficulty": "HSK5",
+              "imagePath": "./assets/images/mock-tests/meeting.svg",
+              "imageAlt": "Hình minh họa cho đề viết HSK 5",
+              "partId": "writing-part-2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

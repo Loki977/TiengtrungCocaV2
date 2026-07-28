@@ -4,6 +4,23 @@ const dataCache = new Map();
 const lessonCache = new Map();
 let writingAnnotationsPromise = null;
 
+// Corrections are scoped to Luyện viết. They make the Vietnamese prompt natural
+// and keep common equivalent meanings available for offline grading.
+const WRITING_VIETNAMESE_GLOSS_CORRECTIONS = new Map([
+  ["大", "to lớn, lớn, to"],
+  ["汉语", "tiếng Hán, tiếng Trung"],
+  ["件", "lượng từ cho áo quần và sự việc"],
+  ["了", "trợ từ chỉ sự hoàn thành hoặc thay đổi"],
+  ["下", "xuống, dưới"],
+  ["老板", "ông chủ, bà chủ, chủ"],
+  ["麻烦", "phiền phức, làm phiền"],
+  ["演出", "biểu diễn, buổi biểu diễn"],
+  ["怪", "lạ, kỳ lạ, trách"],
+  ["棒", "cây gậy, giỏi, tốt, tuyệt"],
+  ["配偶", "bạn đời, vợ, chồng"],
+  ["百分之", "phần trăm"]
+]);
+
 export function loadWritingAnnotations() {
   if (!writingAnnotationsPromise) {
     writingAnnotationsPromise = fetch("assets/data/writing/annotations.json")
@@ -200,6 +217,31 @@ export function areAnswersEquivalent(value, expected, language = "vi") {
   return expectedCoverage >= requiredCoverage && actualCoverage >= 0.6;
 }
 
+export function areVocabularyVietnameseAnswersEquivalent(value, expected) {
+  const source = String(expected || "").trim();
+  if (!source) {
+    return false;
+  }
+
+  const withoutNotes = source.replace(/\s*\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+  const candidates = new Set([source, withoutNotes]);
+
+  // Top-level glosses are alternatives, not a requirement to repeat every
+  // meaning. Punctuation inside usage notes remains part of that note.
+  splitVocabularyVietnameseGlosses(source).forEach((part) => {
+    candidates.add(part);
+    candidates.add(part.replace(/\s*\([^)]*\)/g, " ").replace(/\s+/g, " ").trim());
+  });
+
+  return [...candidates]
+    .filter(Boolean)
+    .some((candidate) => areAnswersEquivalent(value, candidate, "vi"));
+}
+
+export function formatVocabularyVietnamesePrompt(value) {
+  const glosses = splitVocabularyVietnameseGlosses(value);
+  return glosses.length > 1 ? glosses.join(" / ") : String(value || "").trim();
+}
 
 export function areAnswersExactlyEquivalent(value, expected, language = "vi") {
   const mode = String(language || "vi").toLowerCase();
@@ -252,6 +294,7 @@ function normalizeLevel(level) {
 }
 
 function normalizeVocabulary(item) {
+  const chinese = item.hanzi || item.chinese || item.word || "";
   const examples = Array.isArray(item.examples)
     ? item.examples.map((example, sourceIndex) => ({
       chinese: example.hanzi || example.chinese || "",
@@ -267,15 +310,46 @@ function normalizeVocabulary(item) {
   return {
     id: item.id,
     level: item.hsk ? `hsk${item.hsk}` : "",
-    chinese: item.hanzi || item.chinese || item.word || "",
+    chinese,
     pinyin: item.pinyin || "",
-    vietnamese: capitalizeVietnameseLines(item.meaning_vi || item.meaning || item.vietnamese || item.translation || ""),
+    vietnamese: capitalizeVietnameseLines(
+      WRITING_VIETNAMESE_GLOSS_CORRECTIONS.get(chinese)
+        || item.meaning_vi
+        || item.meaning
+        || item.vietnamese
+        || item.translation
+        || ""
+    ),
     audio: String(item.audio || item.audioPath || "").trim(),
     lesson: item.lesson,
     lessonId: item.lessonId || item.lesson,
     examples,
     wordTypes: Array.isArray(item.wordTypes) ? item.wordTypes : null
   };
+}
+
+function splitVocabularyVietnameseGlosses(value) {
+  const source = String(value || "").trim();
+  if (!source) return [];
+
+  const parts = [];
+  let current = "";
+  let parenthesisDepth = 0;
+
+  for (const character of source) {
+    if (character === "(") parenthesisDepth += 1;
+    if (character === ")") parenthesisDepth = Math.max(0, parenthesisDepth - 1);
+
+    if (parenthesisDepth === 0 && /[,;/]/u.test(character)) {
+      if (current.trim()) parts.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += character;
+  }
+
+  if (current.trim()) parts.push(current.trim());
+  return parts;
 }
 
 function capitalizeVietnameseLines(value) {

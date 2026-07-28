@@ -1,8 +1,14 @@
 'use strict';
 
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
+const { onSchedule } = require('firebase-functions/v2/scheduler');
+const { defineSecret } = require('firebase-functions/params');
 const { logger } = require('firebase-functions');
 const admin = require('firebase-admin');
+const {
+  DEFAULT_MODEL: DEFAULT_WRITING_MODEL,
+  processDueWritingSubmissions
+} = require('./writing-grading-core');
 const {
   ADMIN_ROLES,
   CMS_ROLES,
@@ -42,6 +48,23 @@ const CALLABLE_OPTIONS = {
     /https:\/\/.*\.vercel\.app$/
   ]
 };
+const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
+
+exports.gradePendingWriting = onSchedule({
+  region:'us-central1',
+  schedule:'every 15 minutes',
+  timeZone:'Asia/Ho_Chi_Minh',
+  secrets:[GEMINI_API_KEY]
+}, async () => {
+  const report = await processDueWritingSubmissions({
+    db,
+    Timestamp,
+    FieldValue,
+    apiKey:GEMINI_API_KEY.value(),
+    model:process.env.GEMINI_GRADING_MODEL || DEFAULT_WRITING_MODEL
+  });
+  logger.info('Writing grading scheduler completed', report);
+});
 
 function actorFromRequest(request) {
   if (!request.auth) throw new HttpsError('unauthenticated', 'Authentication is required.');

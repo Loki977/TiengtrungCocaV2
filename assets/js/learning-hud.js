@@ -4,8 +4,10 @@
   if (window.CCLearningHUD) return;
 
   const scriptUrl = document.currentScript?.src || new URL('assets/js/learning-hud.js', document.baseURI).href;
-  const styleUrl = new URL('../css/learning-hud.css?v=6', scriptUrl).href;
+  const styleUrl = new URL('../css/learning-hud.css?v=7', scriptUrl).href;
   const params = new URLSearchParams(location.search);
+  const mobileHudQuery = window.matchMedia('(max-width: 767px)');
+  const hudPositionKey = 'cc_learning_hud_position_v1';
 
   function normalizeLevel(value) {
     const raw = String(value || '').trim().toUpperCase().replace(/\s+/g, '');
@@ -33,6 +35,8 @@
   let intervalId = 0;
   let mutationObserver;
   let mountQueued = false;
+  let dragState = null;
+  let suppressToggleClick = false;
 
   const iconMarkup = {
     time: '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>',
@@ -93,11 +97,108 @@
         ${item('progress', 'Tiến độ', '0%', true)}
       </div>
     `;
-    hud.querySelector('.cc-learning-hud__toggle').addEventListener('click', (event) => {
+    const head = hud.querySelector('.cc-learning-hud__head');
+    const toggle = hud.querySelector('.cc-learning-hud__toggle');
+    toggle.addEventListener('click', (event) => {
+      if (suppressToggleClick) {
+        suppressToggleClick = false;
+        event.preventDefault();
+        return;
+      }
       const expanded = hud.classList.toggle('is-expanded');
       event.currentTarget.setAttribute('aria-expanded', String(expanded));
       event.currentTarget.setAttribute('aria-label', expanded ? 'Thu gọn thông tin phiên học' : 'Mở rộng thông tin phiên học');
+      window.requestAnimationFrame(clampSavedHudPosition);
     });
+    head.addEventListener('pointerdown', beginHudDrag);
+    window.addEventListener('pointermove', moveHud, { passive: false });
+    window.addEventListener('pointerup', endHudDrag);
+    window.addEventListener('pointercancel', endHudDrag);
+  }
+
+  function readSavedHudPosition() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(hudPositionKey) || 'null');
+      return Number.isFinite(saved?.left) && Number.isFinite(saved?.top) ? saved : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveHudPosition(left, top) {
+    try {
+      localStorage.setItem(hudPositionKey, JSON.stringify({ left: Math.round(left), top: Math.round(top) }));
+    } catch {
+      // Storage restrictions must not block the learning HUD.
+    }
+  }
+
+  function clampHudPosition(left, top) {
+    if (!hud) return { left, top };
+    const rect = hud.getBoundingClientRect();
+    const edge = 8;
+    return {
+      left: Math.min(Math.max(edge, left), Math.max(edge, window.innerWidth - rect.width - edge)),
+      top: Math.min(Math.max(edge, top), Math.max(edge, window.innerHeight - rect.height - edge))
+    };
+  }
+
+  function applyHudPosition(left, top, persist = false) {
+    if (!hud || !mobileHudQuery.matches) return;
+    const next = clampHudPosition(left, top);
+    hud.style.left = `${next.left}px`;
+    hud.style.top = `${next.top}px`;
+    hud.style.right = 'auto';
+    if (persist) saveHudPosition(next.left, next.top);
+  }
+
+  function clampSavedHudPosition() {
+    if (!hud || !mobileHudQuery.matches || !hud.style.left) return;
+    applyHudPosition(parseFloat(hud.style.left), parseFloat(hud.style.top), true);
+  }
+
+  function restoreHudPosition() {
+    if (!mobileHudQuery.matches) {
+      hud?.style.removeProperty('left');
+      hud?.style.removeProperty('top');
+      hud?.style.removeProperty('right');
+      return;
+    }
+    const saved = readSavedHudPosition();
+    if (saved) window.requestAnimationFrame(() => applyHudPosition(saved.left, saved.top));
+  }
+
+  function beginHudDrag(event) {
+    if (!mobileHudQuery.matches || !hud || event.button !== 0 || event.isPrimary === false) return;
+    const rect = hud.getBoundingClientRect();
+    dragState = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+      moved: false
+    };
+  }
+
+  function moveHud(event) {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    if (!dragState.moved && Math.hypot(event.clientX - dragState.startX, event.clientY - dragState.startY) < 6) return;
+    dragState.moved = true;
+    hud.classList.add('is-dragging');
+    event.preventDefault();
+    applyHudPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
+  }
+
+  function endHudDrag(event) {
+    if (!dragState || event.pointerId !== dragState.pointerId) return;
+    if (dragState.moved) {
+      const rect = hud.getBoundingClientRect();
+      applyHudPosition(rect.left, rect.top, true);
+      suppressToggleClick = true;
+    }
+    hud.classList.remove('is-dragging');
+    dragState = null;
   }
 
   function formatDuration(milliseconds) {
@@ -197,6 +298,7 @@
     }
     document.body.classList.add('cc-learning-active');
     state.mounted = true;
+    restoreHudPosition();
     render();
   }
 
@@ -239,6 +341,10 @@
     window.clearInterval(intervalId);
     mutationObserver?.disconnect();
     document.removeEventListener('visibilitychange', onVisibilityChange);
+    window.removeEventListener('resize', clampSavedHudPosition);
+    window.removeEventListener('pointermove', moveHud);
+    window.removeEventListener('pointerup', endHudDrag);
+    window.removeEventListener('pointercancel', endHudDrag);
     document.body.classList.remove('cc-learning-active');
     hud?.remove();
   }
@@ -249,6 +355,7 @@
     mountIfNeeded();
     intervalId = window.setInterval(render, 1000);
     document.addEventListener('visibilitychange', onVisibilityChange);
+    window.addEventListener('resize', clampSavedHudPosition);
     window.addEventListener('pagehide', destroy, { once: true });
 
     window.addEventListener('cc:learning-answer', (event) => {

@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import adminCore from '../../functions/admin-core.js';
+import writingGradingCore from '../../functions/writing-grading-core.js';
 
 const {
   ADMIN_ROLES,
@@ -15,6 +16,7 @@ const {
   visitTimeKeys,
   wouldRemoveLastSuperAdmin
 } = adminCore;
+const { manualGradePatch, refreshAttemptAggregate } = writingGradingCore;
 
 const ALLOWED_ORIGIN = /^https:\/\/.*\.vercel\.app$|^https:\/\/tiengtrungcoca\.firebaseapp\.com$|^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i;
 const BOOTSTRAP_EMAILS = new Set(
@@ -514,6 +516,132 @@ async function migrateVisits(actor) {
   return { ok:true, alreadyMigrated:false, ...(await visitSummary()) };
 }
 
+function writingStatusMatches(data, filter, nowMs) {
+  if (!filter) return true;
+  if (filter === 'pending') return ['pending_manual', 'ai_grading'].includes(data.status);
+  if (filter === 'due_soon') {
+    const eligibleAt = timestampMillis(data.aiEligibleAt);
+    return data.status === 'pending_manual' && eligibleAt > nowMs && eligibleAt <= nowMs + 60 * 60 * 1000;
+  }
+  if (filter === 'graded_ai') return data.status === 'graded_ai';
+  if (filter === 'graded_manual') return data.status === 'graded_manual';
+  return data.status === filter;
+}
+
+function writingAdminJson(document) {
+  return { id:document.id, ...jsonSafe(document.data()) };
+}
+
+async function listWritingSubmissions(actor, data) {
+  requireRole(actor, CMS_ROLES);
+  const { db } = services();
+  const nowMs = Date.now();
+  const status = safeText(data.status, 40);
+  const hskLevel = safeText(data.hskLevel, 20);
+  const questionType = safeText(data.questionType, 40);
+  const testId = safeText(data.testId, 180);
+  const userId = safeText(data.userId, 180);
+  const fromMillis = Number(data.fromMillis || 0);
+  const toMillis = Number(data.toMillis || 0);
+  const pageSize = Math.min(Math.max(Number(data.pageSize) || 100, 10), 200);
+  const snapshot = await db.collection('writingSubmissions').orderBy('submittedAt', 'desc').limit(500).get();
+  const submissions = snapshot.docs
+    .filter(document => {
+      const item = document.data();
+      const submittedAt = timestampMillis(item.submittedAt);
+      return writingStatusMatches(item, status, nowMs)
+        && (!hskLevel || item.hskLevel === hskLevel)
+        && (!questionType || item.questionType === questionType)
+        && (!testId || item.testId === testId)
+        && (!userId || item.userId === userId)
+        && (!fromMillis || submittedAt >= fromMillis)
+        && (!toMillis || submittedAt <= toMillis);
+    })
+    .slice(0, pageSize)
+    .map(writingAdminJson);
+  return { ok:true, submissions, scanned:snapshot.size, nowMillis:nowMs };
+}
+
+async function getWritingSubmission(actor, data) {
+  requireRole(actor, CMS_ROLES);
+  const { db } = services();
+  const id = safeText(data.submissionId, 128);
+  if (!/^[a-f0-9]{64}$/u.test(id)) throw new AdminApiError(400, 'invalid_submission_id', 'submissionId không hợp lệ.');
+  const document = await db.collection('writingSubmissions').doc(id).get();
+  if (!document.exists) throw new AdminApiError(404, 'submission_not_found', 'Không tìm thấy bài tự luận.');
+  return { ok:true, submission:writingAdminJson(document) };
+}
+
+async function gradeWritingSubmission(actor, data) {
+  requireRole(actor, CMS_ROLES);
+  const { db, Timestamp } = services();
+  const id = safeText(data.submissionId, 128);
+  if (!/^[a-f0-9]{64}$/u.test(id)) throw new AdminApiError(400, 'invalid_submission_id', 'submissionId không hợp lệ.');
+  const score = Number(data.score);
+  if (!Number.isFinite(score)) throw new AdminApiError(400, 'invalid_score', 'Điểm không hợp lệ.');
+  const feedback = safeText(data.feedback, 2000);
+  const ref = db.collection('writingSubmissions').doc(id);
+  const nowMs = Date.now();
+  const now = Timestamp.fromMillis(nowMs);
+  const result = await db.runTransaction(async transaction => {
+    const document = await transaction.get(ref);
+    if (!document.exists) throw new AdminApiError(404, 'submission_not_found', 'Không tìm thấy bài tự luận.');
+    const current = document.data();
+    const maxScore = Number(current.maxScore || 0);
+    if (score < 0 || score > maxScore) {
+      throw new AdminApiError(400, 'score_out_of_range', `Điểm phải nằm trong khoảng 0–${maxScore}.`);
+    }
+    const patch = manualGradePatch(current, {
+      score,
+      feedback,
+      gradedBy:actor.uid,
+      gradedAtMillis:nowMs
+    });
+    const history = Array.isArray(current.gradingHistory) ? current.gradingHistory.slice(-19) : [];
+    transaction.update(ref, {
+      ...patch,
+      gradedAt:now,
+      updatedAt:now,
+      gradingHistory:[...history, {
+        source:'manual',
+        score:patch.finalScore,
+        feedback,
+        actorUid:actor.uid,
+        actorRole:actor.role,
+        atMillis:nowMs,
+        previousStatus:current.status,
+        previousFinalScore:current.finalScore ?? null
+      }]
+    });
+    return {
+      previousStatus:current.status,
+      previousScore:current.finalScore ?? null,
+      finalScore:patch.finalScore,
+      userId:current.userId,
+      attemptId:current.attemptId
+    };
+  });
+  await refreshAttemptAggregate({
+    db,
+    Timestamp,
+    userId:result.userId,
+    attemptId:result.attemptId,
+    nowMs
+  });
+  await audit(actor, 'writing_submission.graded_manual', {
+    targetUid:result.userId,
+    details:{
+      submissionId:id,
+      attemptId:result.attemptId,
+      previousStatus:result.previousStatus,
+      previousScore:result.previousScore,
+      finalScore:result.finalScore
+    }
+  });
+  const updated = await ref.get();
+  return { ok:true, submission:writingAdminJson(updated) };
+}
+
 async function dispatch(action, actor, token, data) {
   const { auth, db } = services();
   if (action === 'adminBootstrap') return bootstrap(actor, token);
@@ -537,6 +665,9 @@ async function dispatch(action, actor, token, data) {
     return { ok:true, ...(await visitSummary()) };
   }
   if (action === 'adminMigrateVisitCounters') return migrateVisits(actor);
+  if (action === 'adminListWritingSubmissions') return listWritingSubmissions(actor, data);
+  if (action === 'adminGetWritingSubmission') return getWritingSubmission(actor, data);
+  if (action === 'adminGradeWritingSubmission') return gradeWritingSubmission(actor, data);
   throw new AdminApiError(404, 'unknown_action', 'Admin action không tồn tại.');
 }
 

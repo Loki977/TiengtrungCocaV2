@@ -1,0 +1,1328 @@
+{
+  "schemaVersion": 2,
+  "id": "hsk1-h11005",
+  "level": "HSK 1",
+  "levelNumber": 1,
+  "standardVersion": "HSK_2_0_CURRENT",
+  "title": "Đề thi thử HSK 1 — Số 05",
+  "description": "Đề thi thử HSK 1 chủ đề sở thích và nơi chốn, chỉ sử dụng âm thanh và văn bản.",
+  "status": "published",
+  "contentSource": "original_project_content",
+  "officialTotalDurationMinutes": 40,
+  "timedDurationMinutes": 32,
+  "personalInfoMinutesOmitted": 5,
+  "totalQuestionCount": 40,
+  "totalPoints": 200,
+  "passPoints": 120,
+  "answerKeyPath": "./assets/data/mock-tests/answer-keys/hsk1-h11005.answers.json",
+  "introAudio": {
+    "vi": "./assets/audio/mock-tests/intros/hsk1/intro-vi.mp3",
+    "zh": "./assets/audio/mock-tests/intros/hsk1/intro-zh.mp3",
+    "soundTest": "./assets/audio/mock-tests/shared/sound-test.mp3"
+  },
+  "modeSettings": {
+    "defaultMode": "official",
+    "official": {
+      "sectionTimers": true,
+      "lockPreviousSections": true,
+      "lockFutureSections": true,
+      "allowAudioReplay": false,
+      "allowAudioSeeking": false,
+      "showExplanationsDuringExam": false
+    },
+    "practice": {
+      "sectionTimers": false,
+      "lockPreviousSections": false,
+      "lockFutureSections": false,
+      "allowAudioReplay": true,
+      "allowAudioSeeking": true,
+      "showExplanationsDuringExam": true
+    }
+  },
+  "sections": [
+    {
+      "id": "listening",
+      "title": "Nghe",
+      "durationMinutes": 15,
+      "questionCount": 20,
+      "repeatCount": 2,
+      "parts": [
+        {
+          "id": "listening-part-1",
+          "title": "Phần 1",
+          "instruction": "Nghe nội dung và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q01",
+              "questionType": "true_false",
+              "instruction": "Câu 1: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 1: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "他喜欢打篮球。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "他喜欢打篮球。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/74c50e4e5b6c272fe31029610a54abbb8806d262ab20517d74b7c8745767cf36.mp3",
+              "transcript": "他喜欢打篮球。",
+              "transcriptPinyin": "tā xǐ huān dǎ lán qiú。",
+              "hanzi": "他喜欢打篮球。",
+              "pinyin": "tā xǐ huān dǎ lán qiú。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q02",
+              "questionType": "true_false",
+              "instruction": "Câu 2: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 2: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "她喜欢看书。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她喜欢看书。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/e2b8aec4a3b0cb01fd3844989f1216f3ac034ebcbbef72271ebd71768b946df6.mp3",
+              "transcript": "她喜欢看书。",
+              "transcriptPinyin": "tā xǐ huān kàn shū。",
+              "hanzi": "她在看电视。",
+              "pinyin": "tā zài kàn diàn shì。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q03",
+              "questionType": "true_false",
+              "instruction": "Câu 3: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 3: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "他会游泳。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "他会游泳。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/59a39079d9e0850a964f06c39cfb0a02ec8ff3bb39e9dd1317b5850cf787caea.mp3",
+              "transcript": "他会游泳。",
+              "transcriptPinyin": "tā huì yóu yǒng。",
+              "hanzi": "他会游泳。",
+              "pinyin": "tā huì yóu yǒng。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q04",
+              "questionType": "true_false",
+              "instruction": "Câu 4: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 4: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "她在商店。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她在商店。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/20b5fe8795ccd3c968ec2e4f1fbcf6a998dec6814ae6c7661d4e61c1609f3272.mp3",
+              "transcript": "她在商店。",
+              "transcriptPinyin": "tā zài shāng diàn。",
+              "hanzi": "她在图书馆。",
+              "pinyin": "tā zài tú shū guǎn。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "q05",
+              "questionType": "true_false",
+              "instruction": "Câu 5: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "prompt": "Câu 5: Nghe câu và chọn nội dung chữ Đúng hoặc Sai.",
+              "audioText": "他们在公园。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "他们在公园。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/44656febfc66168beeec74a5bff312f7a98387e30526a376afc84c561615f702.mp3",
+              "transcript": "他们在公园。",
+              "transcriptPinyin": "tā men zài gōng yuán。",
+              "hanzi": "他们在公园。",
+              "pinyin": "tā men zài gōng yuán。",
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-1"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-2",
+          "title": "Phần 2",
+          "instruction": "Nghe đoạn hội thoại, sau đó trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "q06",
+              "questionType": "single_choice",
+              "instruction": "Câu 6: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 6: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "我们一起去看电影。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "我们一起去看电影。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/e1fb4cd6b6c33b039dc89a8dc6b7078a20ad9a2fe61ae4a8ecdfdfc779bdf1a7.mp3",
+              "transcript": "我们一起去看电影。",
+              "transcriptPinyin": "wǒ men yì qǐ qù kàn diàn yǐng。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "小猫在椅子下面。",
+                  "pinyin": "xiǎo māo zài yǐ zi xià miàn。"
+                },
+                {
+                  "id": "B",
+                  "text": "她会说一点汉语。",
+                  "pinyin": "tā huì shuō yì diǎn hàn yǔ。"
+                },
+                {
+                  "id": "C",
+                  "text": "我们一起去看电影。",
+                  "pinyin": "wǒ men yì qǐ qù kàn diàn yǐng。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q07",
+              "questionType": "single_choice",
+              "instruction": "Câu 7: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 7: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "小猫在椅子下面。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小猫在椅子下面。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/d8a2ead7002fd7b50a7527ac57c11b04264f8ce3a3ede8bc3b4eb8375d076e95.mp3",
+              "transcript": "小猫在椅子下面。",
+              "transcriptPinyin": "xiǎo māo zài yǐ zi xià miàn。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "医院在学校后面。",
+                  "pinyin": "yī yuàn zài xué xiào hòu miàn。"
+                },
+                {
+                  "id": "B",
+                  "text": "小猫在椅子下面。",
+                  "pinyin": "xiǎo māo zài yǐ zi xià miàn。"
+                },
+                {
+                  "id": "C",
+                  "text": "她会说一点汉语。",
+                  "pinyin": "tā huì shuō yì diǎn hàn yǔ。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q08",
+              "questionType": "single_choice",
+              "instruction": "Câu 8: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 8: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "她会说一点汉语。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "她会说一点汉语。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/007ec29461b66f997f5517c5f003e99cef730b0f1cf6a7efa913541834386dd5.mp3",
+              "transcript": "她会说一点汉语。",
+              "transcriptPinyin": "tā huì shuō yì diǎn hàn yǔ。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "她会说一点汉语。",
+                  "pinyin": "tā huì shuō yì diǎn hàn yǔ。"
+                },
+                {
+                  "id": "B",
+                  "text": "医院在学校后面。",
+                  "pinyin": "yī yuàn zài xué xiào hòu miàn。"
+                },
+                {
+                  "id": "C",
+                  "text": "我星期天不工作。",
+                  "pinyin": "wǒ xīng qī tiān bù gōng zuò。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q09",
+              "questionType": "single_choice",
+              "instruction": "Câu 9: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 9: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "医院在学校后面。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "医院在学校后面。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ddd291540076e4bc51978b17cb49329f7e59429ba1a032a7b415d753cb3dd0d9.mp3",
+              "transcript": "医院在学校后面。",
+              "transcriptPinyin": "yī yuàn zài xué xiào hòu miàn。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我星期天不工作。",
+                  "pinyin": "wǒ xīng qī tiān bù gōng zuò。"
+                },
+                {
+                  "id": "B",
+                  "text": "我们一起去看电影。",
+                  "pinyin": "wǒ men yì qǐ qù kàn diàn yǐng。"
+                },
+                {
+                  "id": "C",
+                  "text": "医院在学校后面。",
+                  "pinyin": "yī yuàn zài xué xiào hòu miàn。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "q10",
+              "questionType": "single_choice",
+              "instruction": "Câu 10: Nghe câu và chọn câu chữ phù hợp.",
+              "prompt": "Câu 10: Nghe câu và chọn câu chữ phù hợp.",
+              "audioText": "我星期天不工作。",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "我星期天不工作。",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/dacfa0a68055e2cf4e0ac4c49aa36e8dc5a86a535d421f8f2f755d2bb7b9c4b6.mp3",
+              "transcript": "我星期天不工作。",
+              "transcriptPinyin": "wǒ xīng qī tiān bù gōng zuò。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "小猫在椅子下面。",
+                  "pinyin": "xiǎo māo zài yǐ zi xià miàn。"
+                },
+                {
+                  "id": "B",
+                  "text": "我星期天不工作。",
+                  "pinyin": "wǒ xīng qī tiān bù gōng zuò。"
+                },
+                {
+                  "id": "C",
+                  "text": "我们一起去看电影。",
+                  "pinyin": "wǒ men yì qǐ qù kàn diàn yǐng。"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-2"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-3",
+          "title": "Phần 3",
+          "instruction": "Nghe đoạn hội thoại và chọn thông tin đúng.",
+          "questions": [
+            {
+              "id": "q11",
+              "questionType": "single_choice",
+              "instruction": "Câu 11: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 11: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你会游泳吗？\n小李说，会，我星期天常去游泳。\n小李会做什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你会游泳吗？\n小李说，会，我星期天常去游泳。\n小李会做什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/8a2356049a6776e5f650a3f167b90ee82b6380b6cd17230261f1d18338af17df.mp3",
+              "transcript": "小月说，你会游泳吗？\n小李说，会，我星期天常去游泳。\n小李会做什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ huì yóu yǒng ma？   xiǎo lǐ shuō， huì， wǒ xīng qī tiān cháng qù yóu yǒng。   xiǎo lǐ huì zuò shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "开车",
+                  "pinyin": "kāi chē"
+                },
+                {
+                  "id": "B",
+                  "text": "游泳",
+                  "pinyin": "yóu yǒng"
+                },
+                {
+                  "id": "C",
+                  "text": "做饭",
+                  "pinyin": "zuò fàn"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q12",
+              "questionType": "single_choice",
+              "instruction": "Câu 12: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 12: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，你喜欢看电影吗？\n小月说，不，我喜欢看电视。\n小月喜欢做什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，你喜欢看电影吗？\n小月说，不，我喜欢看电视。\n小月喜欢做什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/fd61969d7d69b1e12764e19a306fc5e8337070b9ce524108ba3e3919c206f771.mp3",
+              "transcript": "小李说，你喜欢看电影吗？\n小月说，不，我喜欢看电视。\n小月喜欢做什么？",
+              "transcriptPinyin": "xiǎo lǐ shuō， nǐ xǐ huān kàn diàn yǐng ma？   xiǎo yuè shuō， bù， wǒ xǐ huān kàn diàn shì。   xiǎo yuè xǐ huān zuò shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "看电影",
+                  "pinyin": "kàn diàn yǐng"
+                },
+                {
+                  "id": "B",
+                  "text": "看电视",
+                  "pinyin": "kàn diàn shì"
+                },
+                {
+                  "id": "C",
+                  "text": "看书",
+                  "pinyin": "kàn shū"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q13",
+              "questionType": "single_choice",
+              "instruction": "Câu 13: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 13: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，小狗在哪儿？\n小李说，在桌子下面。\n小狗在哪儿？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，小狗在哪儿？\n小李说，在桌子下面。\n小狗在哪儿？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/801cf6262b9a7abd14d23f6a16d96072bc7b8ae347b193a8f9653dd5eaa4e594.mp3",
+              "transcript": "小月说，小狗在哪儿？\n小李说，在桌子下面。\n小狗在哪儿？",
+              "transcriptPinyin": "xiǎo yuè shuō， xiǎo gǒu zài nǎ ér？   xiǎo lǐ shuō， zài zhuō zi xià miàn。   xiǎo gǒu zài nǎ ér？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "桌子上面",
+                  "pinyin": "zhuō zi shàng miàn"
+                },
+                {
+                  "id": "B",
+                  "text": "椅子后面",
+                  "pinyin": "yǐ zi hòu miàn"
+                },
+                {
+                  "id": "C",
+                  "text": "桌子下面",
+                  "pinyin": "zhuō zi xià miàn"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q14",
+              "questionType": "single_choice",
+              "instruction": "Câu 14: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 14: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，你在医院工作吗？\n小月说，不，我在商店工作。\n小月在哪儿工作？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，你在医院工作吗？\n小月说，不，我在商店工作。\n小月在哪儿工作？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/562385fea644aac48d641a96c6c2c370e9aad47e46f1758439adbaecf34d9eaf.mp3",
+              "transcript": "小李说，你在医院工作吗？\n小月说，不，我在商店工作。\n小月在哪儿工作？",
+              "transcriptPinyin": "xiǎo lǐ shuō， nǐ zài yī yuàn gōng zuò ma？   xiǎo yuè shuō， bù， wǒ zài shāng diàn gōng zuò。   xiǎo yuè zài nǎ ér gōng zuò？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "医院",
+                  "pinyin": "yī yuàn"
+                },
+                {
+                  "id": "B",
+                  "text": "商店",
+                  "pinyin": "shāng diàn"
+                },
+                {
+                  "id": "C",
+                  "text": "学校",
+                  "pinyin": "xué xiào"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "q15",
+              "questionType": "single_choice",
+              "instruction": "Câu 15: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 15: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你星期天做什么？\n小李说，我和朋友去公园。\n小李星期天去哪儿？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你星期天做什么？\n小李说，我和朋友去公园。\n小李星期天去哪儿？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/330021b80cb2795cf3341e9e11e9e797191823c86237c2b86da9b28527e126f5.mp3",
+              "transcript": "小月说，你星期天做什么？\n小李说，我和朋友去公园。\n小李星期天去哪儿？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ xīng qī tiān zuò shén me？   xiǎo lǐ shuō， wǒ hé péng yǒu qù gōng yuán。   xiǎo lǐ xīng qī tiān qù nǎ ér？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "饭店",
+                  "pinyin": "fàn diàn"
+                },
+                {
+                  "id": "B",
+                  "text": "公园",
+                  "pinyin": "gōng yuán"
+                },
+                {
+                  "id": "C",
+                  "text": "学校",
+                  "pinyin": "xué xiào"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-3"
+            }
+          ]
+        },
+        {
+          "id": "listening-part-4",
+          "title": "Phần 4",
+          "instruction": "Nghe đoạn nói ngắn và chọn kết luận phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q16",
+              "questionType": "single_choice",
+              "instruction": "Câu 16: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 16: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你每天都跑步吗？\n小李说，不，我星期一和星期五跑步。\n小李什么时候跑步？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你每天都跑步吗？\n小李说，不，我星期一和星期五跑步。\n小李什么时候跑步？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/aa073ffe4db1a4817b5b83d031f1189c9a5455e5b3313befc306b4ce9787ca3e.mp3",
+              "transcript": "小月说，你每天都跑步吗？\n小李说，不，我星期一和星期五跑步。\n小李什么时候跑步？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ měi tiān dōu pǎo bù ma？   xiǎo lǐ shuō， bù， wǒ xīng qī yī hé xīng qī wǔ pǎo bù。   xiǎo lǐ shén me shí hòu pǎo bù？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "每天",
+                  "pinyin": "měi tiān"
+                },
+                {
+                  "id": "B",
+                  "text": "星期一和星期五",
+                  "pinyin": "xīng qī yī hé xīng qī wǔ"
+                },
+                {
+                  "id": "C",
+                  "text": "星期六和星期日",
+                  "pinyin": "xīng qī liù hé xīng qī rì"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q17",
+              "questionType": "single_choice",
+              "instruction": "Câu 17: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 17: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，这是谁的电脑？\n小月说，是李老师的，他在后面打电话。\n电脑是谁的？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，这是谁的电脑？\n小月说，是李老师的，他在后面打电话。\n电脑是谁的？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/01e919263e1c99ac667b9560326d91c7126eae5ca75b35c927986704acb73585.mp3",
+              "transcript": "小李说，这是谁的电脑？\n小月说，是李老师的，他在后面打电话。\n电脑是谁的？",
+              "transcriptPinyin": "xiǎo lǐ shuō， zhè shì shéi de diàn nǎo？   xiǎo yuè shuō， shì lǐ lǎo shī de， tā zài hòu miàn dǎ diàn huà。   diàn nǎo shì shéi de？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "小李的",
+                  "pinyin": "xiǎo lǐ de"
+                },
+                {
+                  "id": "B",
+                  "text": "小月的",
+                  "pinyin": "xiǎo yuè de"
+                },
+                {
+                  "id": "C",
+                  "text": "李老师的",
+                  "pinyin": "lǐ lǎo shī de"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q18",
+              "questionType": "single_choice",
+              "instruction": "Câu 18: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 18: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，你会写这个汉字吗？\n小李说，会写，但是我不会读。\n小李不会做什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，你会写这个汉字吗？\n小李说，会写，但是我不会读。\n小李不会做什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/b406747c277436b5ac4a9d16ca658fc2245cc9e8d57e1d7ce177e30a41776078.mp3",
+              "transcript": "小月说，你会写这个汉字吗？\n小李说，会写，但是我不会读。\n小李不会做什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， nǐ huì xiě zhè ge hàn zì ma？   xiǎo lǐ shuō， huì xiě， dàn shì wǒ bú huì dú。   xiǎo lǐ bú huì zuò shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "写这个汉字",
+                  "pinyin": "xiě zhè ge hàn zì"
+                },
+                {
+                  "id": "B",
+                  "text": "读这个汉字",
+                  "pinyin": "dú zhè ge hàn zì"
+                },
+                {
+                  "id": "C",
+                  "text": "看这个汉字",
+                  "pinyin": "kàn zhè ge hàn zì"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q19",
+              "questionType": "single_choice",
+              "instruction": "Câu 19: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 19: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小李说，医院在这儿吗？\n小月说，不在，医院在学校的东边。\n医院在哪儿？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小李说，医院在这儿吗？\n小月说，不在，医院在学校的东边。\n医院在哪儿？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/a8c2dcfd908f463d59e87f07952f8c1a5de2d8b02e327ae4cfe33df9259d3954.mp3",
+              "transcript": "小李说，医院在这儿吗？\n小月说，不在，医院在学校的东边。\n医院在哪儿？",
+              "transcriptPinyin": "xiǎo lǐ shuō， yī yuàn zài zhè ér ma？   xiǎo yuè shuō， bù zài， yī yuàn zài xué xiào de dōng biān。   yī yuàn zài nǎ ér？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "学校东边",
+                  "pinyin": "xué xiào dōng biān"
+                },
+                {
+                  "id": "B",
+                  "text": "学校西边",
+                  "pinyin": "xué xiào xī biān"
+                },
+                {
+                  "id": "C",
+                  "text": "学校里面",
+                  "pinyin": "xué xiào lǐ miàn"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            },
+            {
+              "id": "q20",
+              "questionType": "single_choice",
+              "instruction": "Câu 20: Nghe hội thoại và chọn đáp án đúng.",
+              "prompt": "Câu 20: Nghe hội thoại và chọn đáp án đúng.",
+              "audioText": "小月说，周末你想去哪儿？\n小李说，上午去公园，下午在家看书。\n小李下午做什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小月说，周末你想去哪儿？\n小李说，上午去公园，下午在家看书。\n小李下午做什么？",
+                  "rate": "-5%"
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/00c4669bc29507cb88c888da8c243c74c823188b8f0fabad0dfea524d44a7f41.mp3",
+              "transcript": "小月说，周末你想去哪儿？\n小李说，上午去公园，下午在家看书。\n小李下午做什么？",
+              "transcriptPinyin": "xiǎo yuè shuō， zhōu mò nǐ xiǎng qù nǎ ér？   xiǎo lǐ shuō， shàng wǔ qù gōng yuán， xià wǔ zài jiā kàn shū。   xiǎo lǐ xià wǔ zuò shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "去公园",
+                  "pinyin": "qù gōng yuán"
+                },
+                {
+                  "id": "B",
+                  "text": "在家看书",
+                  "pinyin": "zài jiā kàn shū"
+                },
+                {
+                  "id": "C",
+                  "text": "去商店",
+                  "pinyin": "qù shāng diàn"
+                }
+              ],
+              "repeatCount": 2,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "listening-part-4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Đọc",
+      "durationMinutes": 17,
+      "questionCount": 20,
+      "repeatCount": 0,
+      "parts": [
+        {
+          "id": "reading-part-1",
+          "title": "Phần 1",
+          "instruction": "Đọc câu và chọn đáp án phù hợp nhất.",
+          "questions": [
+            {
+              "id": "q21",
+              "questionType": "true_false",
+              "instruction": "Câu 21: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 21: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "妹妹不喜欢电影。",
+              "pinyin": "mèi mèi bù xǐ huān diàn yǐng。",
+              "context": "妹妹喜欢看电影。",
+              "contextPinyin": "mèi mèi xǐ huān kàn diàn yǐng。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q22",
+              "questionType": "true_false",
+              "instruction": "Câu 22: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 22: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "椅子下面有一只小狗。",
+              "pinyin": "yǐ zi xià miàn yǒu yī zhī xiǎo gǒu。",
+              "context": "小狗在椅子下面。",
+              "contextPinyin": "xiǎo gǒu zài yǐ zi xià miàn。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q23",
+              "questionType": "true_false",
+              "instruction": "Câu 23: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 23: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "她会做两件事。",
+              "pinyin": "tā huì zuò liǎng jiàn shì。",
+              "context": "她会游泳，也会开车。",
+              "contextPinyin": "tā huì yóu yǒng， yě huì kāi chē。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q24",
+              "questionType": "true_false",
+              "instruction": "Câu 24: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 24: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "今天可以买东西。",
+              "pinyin": "jīn tiān kě yǐ mǎi dōng xī。",
+              "context": "商店今天不开门。",
+              "contextPinyin": "shāng diàn jīn tiān bù kāi mén。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            },
+            {
+              "id": "q25",
+              "questionType": "true_false",
+              "instruction": "Câu 25: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "prompt": "Câu 25: Đọc hai câu và chọn Đúng hoặc Sai.",
+              "hanzi": "我们周末去公园。",
+              "pinyin": "wǒ men zhōu mò qù gōng yuán。",
+              "context": "我们星期天去公园。",
+              "contextPinyin": "wǒ men xīng qī tiān qù gōng yuán。",
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-1"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-2",
+          "title": "Phần 2",
+          "instruction": "Chọn từ hoặc cụm từ thích hợp để hoàn thành câu.",
+          "questions": [
+            {
+              "id": "q26",
+              "questionType": "single_choice",
+              "instruction": "Câu 26: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 26: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我喜欢___电影。",
+              "pinyin": "wǒ xǐ huān _ _ _ diàn yǐng。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "看",
+                  "pinyin": "kàn"
+                },
+                {
+                  "id": "B",
+                  "text": "听",
+                  "pinyin": "tīng"
+                },
+                {
+                  "id": "C",
+                  "text": "说",
+                  "pinyin": "shuō"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q27",
+              "questionType": "single_choice",
+              "instruction": "Câu 27: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 27: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "猫在桌子___。",
+              "pinyin": "māo zài zhuō zi _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "下面",
+                  "pinyin": "xià miàn"
+                },
+                {
+                  "id": "B",
+                  "text": "前面",
+                  "pinyin": "qián miàn"
+                },
+                {
+                  "id": "C",
+                  "text": "上个",
+                  "pinyin": "shàng gè"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q28",
+              "questionType": "single_choice",
+              "instruction": "Câu 28: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 28: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "她汉语说___很好。",
+              "pinyin": "tā hàn yǔ shuō _ _ _ hěn hǎo。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "的",
+                  "pinyin": "de"
+                },
+                {
+                  "id": "B",
+                  "text": "得",
+                  "pinyin": "dé"
+                },
+                {
+                  "id": "C",
+                  "text": "了",
+                  "pinyin": "le"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q29",
+              "questionType": "single_choice",
+              "instruction": "Câu 29: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 29: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "星期天我不___。",
+              "pinyin": "xīng qī tiān wǒ bù _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "工作",
+                  "pinyin": "gōng zuò"
+                },
+                {
+                  "id": "B",
+                  "text": "天气",
+                  "pinyin": "tiān qì"
+                },
+                {
+                  "id": "C",
+                  "text": "朋友",
+                  "pinyin": "péng yǒu"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            },
+            {
+              "id": "q30",
+              "questionType": "single_choice",
+              "instruction": "Câu 30: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 30: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我们一起去___吧。",
+              "pinyin": "wǒ men yì qǐ qù _ _ _ ba。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公园",
+                  "pinyin": "gōng yuán"
+                },
+                {
+                  "id": "B",
+                  "text": "医生",
+                  "pinyin": "yī shēng"
+                },
+                {
+                  "id": "C",
+                  "text": "苹果",
+                  "pinyin": "píng guǒ"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-2"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-3",
+          "title": "Phần 3",
+          "instruction": "Đọc đoạn văn ngắn và trả lời câu hỏi.",
+          "questions": [
+            {
+              "id": "q31",
+              "questionType": "single_choice",
+              "instruction": "Câu 31: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 31: Chọn câu trả lời phù hợp.",
+              "hanzi": "你喜欢做什么？",
+              "pinyin": "nǐ xǐ huān zuò shén me？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我喜欢看书。",
+                  "pinyin": "wǒ xǐ huān kàn shū。"
+                },
+                {
+                  "id": "B",
+                  "text": "这是我的书。",
+                  "pinyin": "zhè shì wǒ de shū。"
+                },
+                {
+                  "id": "C",
+                  "text": "我会写字。",
+                  "pinyin": "wǒ huì xiě zì。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q32",
+              "questionType": "single_choice",
+              "instruction": "Câu 32: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 32: Chọn câu trả lời phù hợp.",
+              "hanzi": "你的猫在哪儿？",
+              "pinyin": "nǐ de māo zài nǎ ér？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "猫很小。",
+                  "pinyin": "māo hěn xiǎo。"
+                },
+                {
+                  "id": "B",
+                  "text": "在椅子下面。",
+                  "pinyin": "zài yǐ zi xià miàn。"
+                },
+                {
+                  "id": "C",
+                  "text": "我喜欢猫。",
+                  "pinyin": "wǒ xǐ huān māo。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q33",
+              "questionType": "single_choice",
+              "instruction": "Câu 33: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 33: Chọn câu trả lời phù hợp.",
+              "hanzi": "你会不会游泳？",
+              "pinyin": "nǐ huì bú huì yóu yǒng？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我不去游泳。",
+                  "pinyin": "wǒ bù qù yóu yǒng。"
+                },
+                {
+                  "id": "B",
+                  "text": "我不会游泳。",
+                  "pinyin": "wǒ bú huì yóu yǒng。"
+                },
+                {
+                  "id": "C",
+                  "text": "我星期天游泳。",
+                  "pinyin": "wǒ xīng qī tiān yóu yǒng。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q34",
+              "questionType": "single_choice",
+              "instruction": "Câu 34: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 34: Chọn câu trả lời phù hợp.",
+              "hanzi": "你在哪儿工作？",
+              "pinyin": "nǐ zài nǎ ér gōng zuò？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "我是医生。",
+                  "pinyin": "wǒ shì yī shēng。"
+                },
+                {
+                  "id": "B",
+                  "text": "我今天工作。",
+                  "pinyin": "wǒ jīn tiān gōng zuò。"
+                },
+                {
+                  "id": "C",
+                  "text": "我在医院工作。",
+                  "pinyin": "wǒ zài yī yuàn gōng zuò。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            },
+            {
+              "id": "q35",
+              "questionType": "single_choice",
+              "instruction": "Câu 35: Chọn câu trả lời phù hợp.",
+              "prompt": "Câu 35: Chọn câu trả lời phù hợp.",
+              "hanzi": "星期天你去公园吗？",
+              "pinyin": "xīng qī tiān nǐ qù gōng yuán ma？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公园很大。",
+                  "pinyin": "gōng yuán hěn dà。"
+                },
+                {
+                  "id": "B",
+                  "text": "去，我和朋友一起去。",
+                  "pinyin": "qù， wǒ hé péng yǒu yì qǐ qù。"
+                },
+                {
+                  "id": "C",
+                  "text": "星期天很好。",
+                  "pinyin": "xīng qī tiān hěn hǎo。"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-3"
+            }
+          ]
+        },
+        {
+          "id": "reading-part-4",
+          "title": "Phần 4",
+          "instruction": "Đọc nội dung và chọn kết luận đúng.",
+          "questions": [
+            {
+              "id": "q36",
+              "questionType": "single_choice",
+              "instruction": "Câu 36: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 36: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "妹妹喜欢听___。",
+              "pinyin": "mèi mèi xǐ huān tīng _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "音乐",
+                  "pinyin": "yīn yuè"
+                },
+                {
+                  "id": "B",
+                  "text": "电影",
+                  "pinyin": "diàn yǐng"
+                },
+                {
+                  "id": "C",
+                  "text": "电视",
+                  "pinyin": "diàn shì"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q37",
+              "questionType": "single_choice",
+              "instruction": "Câu 37: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 37: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "我和朋友一起___篮球。",
+              "pinyin": "wǒ hé péng yǒu yì qǐ _ _ _ lán qiú。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "打",
+                  "pinyin": "dǎ"
+                },
+                {
+                  "id": "B",
+                  "text": "做",
+                  "pinyin": "zuò"
+                },
+                {
+                  "id": "C",
+                  "text": "写",
+                  "pinyin": "xiě"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q38",
+              "questionType": "single_choice",
+              "instruction": "Câu 38: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 38: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "小狗在门___。",
+              "pinyin": "xiǎo gǒu zài mén _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "后面",
+                  "pinyin": "hòu miàn"
+                },
+                {
+                  "id": "B",
+                  "text": "时候",
+                  "pinyin": "shí hòu"
+                },
+                {
+                  "id": "C",
+                  "text": "上面有",
+                  "pinyin": "shàng miàn yǒu"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q39",
+              "questionType": "single_choice",
+              "instruction": "Câu 39: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 39: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "她每天___电脑工作。",
+              "pinyin": "tā měi tiān _ _ _ diàn nǎo gōng zuò。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "用",
+                  "pinyin": "yòng"
+                },
+                {
+                  "id": "B",
+                  "text": "吃",
+                  "pinyin": "chī"
+                },
+                {
+                  "id": "C",
+                  "text": "开",
+                  "pinyin": "kāi"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            },
+            {
+              "id": "q40",
+              "questionType": "single_choice",
+              "instruction": "Câu 40: Chọn từ thích hợp điền vào chỗ trống.",
+              "prompt": "Câu 40: Chọn từ thích hợp điền vào chỗ trống.",
+              "hanzi": "公园里有很多___。",
+              "pinyin": "gōng yuán lǐ yǒu hěn duō _ _ _。",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "人",
+                  "pinyin": "rén"
+                },
+                {
+                  "id": "B",
+                  "text": "水",
+                  "pinyin": "shuǐ"
+                },
+                {
+                  "id": "C",
+                  "text": "字",
+                  "pinyin": "zì"
+                }
+              ],
+              "repeatCount": 0,
+              "scoreWeight": 5.0,
+              "difficulty": "HSK1",
+              "partId": "reading-part-4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

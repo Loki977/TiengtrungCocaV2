@@ -1,14 +1,22 @@
 {
-  "version": 1,
-  "examIndexPath": "./assets/data/thi-thu/exams/index.json",
+  "version": 2,
+  "defaultStandardVersion": "HSK_2_0_CURRENT",
+  "examIndexPath": "./assets/data/mock-tests/exams/index.json",
+  "standardPath": "./assets/data/mock-tests/standards/hsk-2.0-current.json",
   "auth": {
-    "required": true,
+    "required": false,
     "loginPage": "./profile.html",
     "returnParam": "return",
     "waitMs": 6000
   },
   "features": {
     "saveLocalProgress": true,
-    "showAnswersAfterSubmit": true
+    "showAnswersAfterSubmit": true,
+    "guestAttempts": true,
+    "practiceMode": true
+  },
+  "scoring": {
+    "writingGrader": "rubric",
+    "optionalRemoteAI": false
   }
 }

@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173f36">
-  <title>Thi thử HSK</title>
+  <title>Thi thử HSK | Tiếng Trung Cô Ca</title>
   <link rel="icon" href="./assets/images/brand/favicon-orange.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Serif+SC:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/thi-thu.css">
+  <link rel="stylesheet" href="./assets/css/thi-thu.css?v=4">
   <link rel="stylesheet" href="./assets/css/dark-mode.css?v=2">
-  <link rel="stylesheet" href="./assets/css/app-shell.css?v=8">
+  <link rel="stylesheet" href="./assets/css/app-shell.css?v=9">
   <script src="./assets/js/dark-mode.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#mainContent">Bỏ qua điều hướng</a>
   <div class="page-shell">
     <header class="topbar">
       <a class="brand cc-site-brand" href="./index.html" aria-label="Về trang chủ">
@@ -23,121 +24,145 @@
         </span>
         <strong class="cc-site-brand__name">Tiếng Trung Cam &amp; Coca</strong>
       </a>
-
       <nav class="topbar-nav" aria-label="Điều hướng chính">
         <a href="./hsk.html">Khóa học</a>
         <a href="./hsk-writing.html">Luyện viết</a>
         <a href="./flashcard.html">Flashcard</a>
         <a class="is-current" href="./ThiThu.html" aria-current="page">Thi thử</a>
       </nav>
-
       <div class="topbar-actions">
         <span id="userChip" class="user-chip" hidden></span>
+        <button id="loginBtn" class="btn btn-ghost" type="button" hidden>Đăng nhập</button>
         <button id="logoutBtn" class="btn btn-ghost" type="button" hidden>Đăng xuất</button>
       </div>
     </header>
 
-    <main class="main">
-      <section id="authGate" class="panel auth-panel" hidden>
-        <div>
-          <span class="eyebrow">Yêu cầu đăng nhập</span>
-          <h1>Đăng nhập để lưu tiến độ thi</h1>
-          <p>Trang này dùng lại phiên Firebase của website, không tạo thêm hệ thống tài khoản mới.</p>
-        </div>
-        <button id="loginBtn" class="btn btn-primary" type="button">Đăng nhập</button>
-      </section>
-
-      <section id="loadingView" class="panel loading-panel">
+    <main id="mainContent" class="main">
+      <section id="loadingView" class="panel loading-panel" aria-live="polite">
         <div class="spinner" aria-hidden="true"></div>
-        <p>Đang tải phòng thi…</p>
+        <p>Đang chuẩn bị phòng thi…</p>
       </section>
 
       <section id="homeView" hidden>
         <div class="hero panel">
           <div class="hero-copy">
-            <span class="hero-kicker"><span>贡院</span> Khoa cử HSK trực tuyến</span>
-            <h1>Thi thử HSK</h1>
-            <p>Chọn một đề, làm bài theo thời gian thật và xem lại đáp án sau khi nộp.</p>
+            <span class="hero-kicker"><span>试</span> HSK 2.0 hiện hành</span>
+            <h1>Phòng thi thử HSK</h1>
+            <p>Thi theo từng phần với thời gian thật, hoặc luyện tập tự do. Mỗi đề chỉ dùng một phiên bản tiêu chuẩn.</p>
             <div class="hero-features" aria-label="Tính năng phòng thi">
-              <span>卷 Đề chuẩn JSON</span>
-              <span>时 Bấm giờ thực tế</span>
-              <span>榜 Chấm điểm tức thì</span>
+              <span>Nghe · Đọc · Viết</span>
+              <span>Tự động lưu bài</span>
+              <span>PC &amp; mobile</span>
             </div>
           </div>
           <div class="hero-stat">
             <small>ĐANG MỞ</small>
             <strong id="examCount">0</strong>
-            <span>đề khả dụng</span>
+            <span>đề hoàn chỉnh</span>
           </div>
         </div>
 
         <div class="section-heading">
           <div class="section-heading__title">
-            <span class="section-seal" aria-hidden="true">试</span>
+            <span class="section-seal" aria-hidden="true">卷</span>
             <div>
-            <h2>Danh sách đề thi</h2>
-            <p>Chọn cấp độ phù hợp và bắt đầu thử sức.</p>
+              <h2>Chọn cấp độ HSK</h2>
+              <p>Chọn một bậc để xem các đề thi tương ứng ở bên dưới.</p>
             </div>
           </div>
-          <select id="levelFilter" class="select" aria-label="Lọc theo cấp độ">
-            <option value="all">Tất cả cấp độ</option>
-          </select>
         </div>
-
+        <div id="levelCards" class="level-card-grid" role="group" aria-label="Chọn cấp độ HSK"></div>
+        <div class="exam-list-heading" aria-live="polite">
+          <div>
+            <span class="eyebrow">Đề thi theo cấp độ</span>
+            <h2 id="examListTitle">Đề thi HSK 1</h2>
+          </div>
+          <span id="examListSummary" class="exam-list-summary"></span>
+        </div>
         <div id="examGrid" class="exam-grid"></div>
         <div id="emptyState" class="panel empty-state" hidden>Chưa có đề phù hợp.</div>
       </section>
 
-      <section id="introView" class="panel" hidden>
+      <section id="introView" class="panel intro-panel" hidden>
         <button id="backToListBtn" class="text-button" type="button">← Quay lại danh sách</button>
         <div class="intro-grid">
           <div>
-            <span id="introLevel" class="badge"></span>
+            <div class="card-meta">
+              <span id="introLevel" class="badge"></span>
+              <span id="introStandard" class="meta-pill"></span>
+            </div>
             <h1 id="introTitle"></h1>
             <p id="introDescription"></p>
           </div>
           <dl class="exam-facts">
-            <div><dt>Thời gian</dt><dd id="introDuration"></dd></div>
-            <div><dt>Số câu</dt><dd id="introQuestions"></dd></div>
+            <div><dt>Thời gian công bố</dt><dd id="introDuration"></dd></div>
+            <div><dt>Thời gian tính giờ</dt><dd id="introTimedDuration"></dd></div>
+            <div><dt>Tổng số câu</dt><dd id="introQuestions"></dd></div>
             <div><dt>Điểm đạt</dt><dd id="introPassScore"></dd></div>
           </dl>
         </div>
+        <div id="introSectionCards" class="intro-section-cards" aria-label="Cấu trúc đề"></div>
         <div class="notice">
-          <strong>Lưu ý</strong>
-          <p id="introInstructions"></p>
+          <strong>Quy tắc chế độ thi thật</strong>
+          <p>Mỗi phần tính giờ riêng. Sau khi kết thúc Nghe hoặc Đọc, bạn không thể quay lại phần trước. Khoảng 5 phút điền thông tin cá nhân của kỳ thi giấy được thay bằng trang hướng dẫn này và không tính giờ.</p>
+        </div>
+        <fieldset class="mode-picker">
+          <legend>Chọn chế độ</legend>
+          <label>
+            <input type="radio" name="examMode" value="official" checked>
+            <span><strong>Thi thật</strong><small>Khóa phần đã qua, audio theo số lần quy định, có đồng hồ từng phần.</small></span>
+          </label>
+          <label>
+            <input type="radio" name="examMode" value="practice">
+            <span><strong>Luyện tập</strong><small>Đi tự do giữa các phần, nghe lại audio, không giới hạn giờ.</small></span>
+          </label>
+        </fieldset>
+        <div class="intro-audio-actions" aria-label="Kiểm tra và nghe hướng dẫn">
+          <button id="soundTestBtn" class="btn btn-ghost" type="button">Kiểm tra âm thanh</button>
+          <button id="introViBtn" class="btn btn-ghost" type="button">Nghe hướng dẫn tiếng Việt</button>
+          <button id="introZhBtn" class="btn btn-ghost" type="button"><span lang="zh-CN">听中文说明</span></button>
+          <audio id="introAudio" preload="none" hidden></audio>
         </div>
         <div class="action-row">
-          <button id="resumeBtn" class="btn btn-ghost" type="button" hidden>Tiếp tục bài đang làm</button>
+          <button id="resumeBtn" class="btn btn-ghost" type="button" hidden>Tiếp tục lượt đang làm</button>
           <button id="startBtn" class="btn btn-primary" type="button">Bắt đầu làm bài</button>
         </div>
       </section>
 
       <section id="examView" hidden>
         <div class="exam-toolbar panel">
-          <div>
+          <div class="exam-toolbar__identity">
             <span id="examLevel" class="badge"></span>
-            <strong id="examTitle"></strong>
+            <div>
+              <strong id="examTitle"></strong>
+              <small id="sectionProgress"></small>
+            </div>
           </div>
           <div class="exam-toolbar-right">
             <span id="progressText">Câu 1/1</span>
-            <time id="timer" class="timer">00:00</time>
+            <time id="timer" class="timer" aria-label="Thời gian còn lại">00:00</time>
           </div>
         </div>
 
         <div class="exam-layout">
           <article class="panel question-panel">
             <div class="question-head">
-              <span id="sectionName" class="eyebrow"></span>
-              <span id="questionPoints" class="muted"></span>
+              <div>
+                <span id="sectionName" class="eyebrow"></span>
+                <span id="partName" class="muted"></span>
+              </div>
+              <button id="flagBtn" class="flag-btn" type="button" aria-pressed="false">Đánh dấu câu</button>
             </div>
+            <div id="hsk6SourceNotice" class="source-notice" hidden></div>
             <div id="examAudioPanel" class="exam-audio" hidden>
               <div>
                 <strong id="examAudioTitle">Audio câu hiện tại</strong>
-                <small>Mỗi câu nghe có một audio riêng.</small>
+                <small id="audioRule"></small>
               </div>
-              <button id="audioPlayBtn" class="audio-play-btn" type="button" aria-pressed="false">▶ Phát audio</button>
-              <audio id="examAudio" preload="none" hidden></audio>
+              <button id="audioPlayBtn" class="audio-play-btn" type="button" aria-pressed="false">Phát audio</button>
+              <audio id="examAudio" preload="metadata" hidden></audio>
             </div>
+            <p id="questionInstruction" class="question-instruction"></p>
             <h2 id="questionPrompt"></h2>
             <div id="questionContext" class="question-context" hidden>
               <span id="questionContextHanzi" class="chinese-line"></span>
@@ -147,7 +172,7 @@
               <span id="questionHanzi" class="chinese-line"></span>
               <span id="questionPinyin" class="pinyin-line"></span>
             </div>
-            <img id="questionImage" class="question-image" alt="" hidden>
+            <img id="questionImage" class="question-image" alt="" width="640" height="400" loading="lazy" hidden>
             <div id="answerArea" class="answer-area"></div>
             <div class="question-nav">
               <button id="prevBtn" class="btn btn-ghost" type="button">Câu trước</button>
@@ -155,49 +180,59 @@
             </div>
           </article>
 
-          <aside class="panel navigator-panel">
+          <aside id="answerSheet" class="panel navigator-panel" aria-label="Phiếu trả lời">
             <div class="navigator-head">
-              <h3>Phiếu trả lời</h3>
-              <span id="answeredCount">0/0</span>
+              <div><h3>Phiếu trả lời</h3><small id="attemptModeLabel"></small></div>
+              <button id="closeSheetBtn" class="sheet-close" type="button" aria-label="Đóng phiếu trả lời">×</button>
+            </div>
+            <div class="answer-legend">
+              <span><i class="legend-current"></i> Hiện tại</span>
+              <span><i class="legend-answered"></i> Đã làm</span>
+              <span><i class="legend-flagged"></i> Đánh dấu</span>
             </div>
             <div id="questionNavigator" class="question-navigator"></div>
+            <button id="finishSectionBtn" class="btn btn-primary btn-block" type="button">Kết thúc phần</button>
             <button id="submitBtn" class="btn btn-danger btn-block" type="button">Nộp bài</button>
           </aside>
         </div>
+        <button id="openSheetBtn" class="mobile-sheet-btn" type="button" aria-controls="answerSheet" aria-expanded="false">
+          Phiếu trả lời <span id="answeredCount">0/0</span>
+        </button>
+        <div id="sheetScrim" class="sheet-scrim" hidden></div>
       </section>
 
       <section id="resultView" hidden>
         <div class="result-card panel">
-          <span class="eyebrow">Kết quả</span>
+          <span class="eyebrow">Kết quả lượt thi</span>
           <h1 id="resultTitle"></h1>
           <div class="score-ring">
             <strong id="resultScore">0</strong>
             <span>/ <span id="resultMaxScore">0</span></span>
           </div>
           <p id="resultSummary"></p>
+          <p id="resultSaveStatus" class="result-save-status" aria-live="polite"></p>
+          <div id="writingStatus" class="writing-status" hidden></div>
           <div id="resultSections" class="result-sections"></div>
           <div class="result-stats">
             <div><strong id="correctCount">0</strong><span>Đúng</span></div>
             <div><strong id="wrongCount">0</strong><span>Sai</span></div>
+            <div><strong id="unansweredCount">0</strong><span>Bỏ trống</span></div>
             <div><strong id="resultTime">00:00</strong><span>Thời gian</span></div>
           </div>
+          <div id="weakTypes" class="weak-types" hidden></div>
           <div class="action-row center">
-            <button id="reviewBtn" class="btn btn-ghost" type="button">Xem đáp án</button>
-            <button id="retryBtn" class="btn btn-primary" type="button">Làm lại</button>
+            <button id="reviewBtn" class="btn btn-ghost" type="button">Xem đáp án &amp; transcript</button>
+            <button id="retryBtn" class="btn btn-primary" type="button">Tạo lượt mới</button>
             <button id="resultHomeBtn" class="btn btn-ghost" type="button">Danh sách đề</button>
           </div>
         </div>
-
         <div id="reviewList" class="review-list" hidden></div>
       </section>
     </main>
-
     <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   </div>
-
-  <!-- Tái sử dụng file Firebase của dự án hiện tại. Xóa dòng này nếu trang chính đã nạp sẵn. -->
   <script src="./assets/js/site-shell.js?v=5"></script>
   <script type="module" src="./assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
-  <script type="module" src="./assets/js/thi-thu/app.js"></script>
+  <script type="module" src="./assets/js/thi-thu/app.js?v=3"></script>
 </body>
 </html>
