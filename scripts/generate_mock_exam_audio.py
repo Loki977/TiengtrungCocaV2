@@ -194,12 +194,15 @@ async def synthesize_segment(segment: dict, output: Path) -> None:
     await asyncio.wait_for(communicate.save(str(output)), timeout=75)
 
 
-def normalize_audio(source: Path, target: Path) -> None:
+def normalize_audio(source: Path, target: Path, post_tempo: float = 1.0) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run([
-        "ffmpeg", "-y", "-v", "error", "-i", str(source),
+    command = ["ffmpeg", "-y", "-v", "error", "-i", str(source)]
+    if abs(post_tempo - 1.0) > 0.001:
+        command.extend(["-filter:a", f"atempo={post_tempo:.3f}"])
+    command.extend([
         "-ac", "1", "-ar", "24000", "-b:a", "56k", "-codec:a", "libmp3lame", str(target),
-    ], check=True)
+    ])
+    subprocess.run(command, check=True)
 
 
 def join_segments_seamlessly(segment_files: list[Path], temp_dir: Path) -> Path:
@@ -259,7 +262,10 @@ async def generate_task(task: dict, semaphore: asyncio.Semaphore, verify_only: b
                     segment_files.append(segment_file)
 
                 source = join_segments_seamlessly(segment_files, temp_dir)
-                normalize_audio(source, target)
+                post_tempos = {float(segment.get("postTempo", 1.0)) for segment in task["segments"]}
+                if len(post_tempos) != 1:
+                    raise RuntimeError("Các đoạn trong cùng audio phải dùng chung postTempo.")
+                normalize_audio(source, target, post_tempos.pop())
                 if not valid_audio(target):
                     raise RuntimeError("Audio sau chuẩn hóa không hợp lệ.")
                 return manifest_entry(task, target, f"generated_attempt_{attempt}")
@@ -282,6 +288,7 @@ def manifest_entry(task: dict, target: Path, status: str) -> dict:
             "rate": segment.get("rate", "-5%"),
             "volume": segment.get("volume", "+0%"),
             "pitch": segment.get("pitch", "+0Hz"),
+            "postTempo": float(segment.get("postTempo", 1.0)),
         }
         for segment in task["segments"]
     ]
@@ -294,6 +301,7 @@ def manifest_entry(task: dict, target: Path, status: str) -> dict:
         "rate": sorted({segment["rate"] for segment in segments}),
         "volume": sorted({segment["volume"] for segment in segments}),
         "pitch": sorted({segment["pitch"] for segment in segments}),
+        "postTempo": sorted({segment["postTempo"] for segment in segments}),
         "sha256": sha256_file(target),
         "bytes": target.stat().st_size,
         "duration": probe_duration(target),

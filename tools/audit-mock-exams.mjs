@@ -12,6 +12,20 @@ const reportPath = path.join(dataRoot, 'mock-exam-report.json');
 const docsPath = path.join(root, 'docs', 'mock-exam-audit.md');
 const manifestPath = path.join(root, 'assets', 'audio', 'mock-tests', 'audio-manifest.json');
 const hasFfprobe = !spawnSync('ffprobe', ['-version'], { stdio: 'ignore' }).error;
+const expectedListeningRates = new Map([
+  [1, '-22%'],
+  [2, '-18%'],
+  [3, '-12%'],
+  [4, '-5%'],
+  [5, '-5%'],
+  [6, '-5%'],
+]);
+const expectedListeningPostTempos = new Map([
+  [1, 0.78],
+  [2, 0.84],
+  [3, 0.90],
+]);
+const listeningNamesPattern = /李明|王芳|张老师|小雨|陈先生|刘阿姨|赵经理|林医生|周同学|孙师傅/gu;
 
 const readJson = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const fromWebPath = value => path.join(root, value.replace(/^\.\//u, '').replaceAll('/', path.sep));
@@ -35,6 +49,16 @@ function fail(scope, message) {
 
 function warn(scope, message) {
   warnings.push({ scope, message });
+}
+
+function normalizeListeningText(value) {
+  return String(value || '').replace(/\s+/gu, '').replace(/[，。？！：；、“”‘’]/gu, '');
+}
+
+function normalizeListeningPattern(value) {
+  return normalizeListeningText(value)
+    .replace(listeningNamesPattern, '某人')
+    .replace(/[一二三四五六七八九十百两\d]+(?=点|分钟|元|份|个|星期)/gu, '数');
 }
 
 function checkAudio(file, scope) {
@@ -133,6 +157,9 @@ for (const meta of index) {
       }
     });
     const weight = questions.reduce((sum, question) => sum + Number(question.scoreWeight || 0), 0);
+    const listeningPromptCounts = new Map();
+    const listeningPatternCounts = new Map();
+    const listeningOpeningCounts = new Map();
     if (Math.abs(weight - 100) > 0.02) fail(scope, `${section.id}: tổng scoreWeight là ${weight}, cần bằng 100.`);
 
     questions.forEach(question => {
@@ -190,8 +217,24 @@ for (const meta of index) {
       ].filter(Boolean).join(' ');
       if (/\blorem ipsum\b|câu mẫu|todo|tbd/iu.test(visibleText)) fail(questionScope, 'Phát hiện nội dung placeholder.');
       if (section.id === 'listening') {
+        const normalizedPrompt = normalizeListeningText(question.prompt);
+        const normalizedPattern = normalizeListeningPattern(question.prompt);
+        const normalizedOpening = normalizeListeningText(question.audioText).slice(0, 8);
+        listeningPromptCounts.set(normalizedPrompt, (listeningPromptCounts.get(normalizedPrompt) || 0) + 1);
+        listeningPatternCounts.set(normalizedPattern, (listeningPatternCounts.get(normalizedPattern) || 0) + 1);
+        listeningOpeningCounts.set(normalizedOpening, (listeningOpeningCounts.get(normalizedOpening) || 0) + 1);
         if (question.repeatCount !== expectedSection.repeatCount) fail(questionScope, `repeatCount sai: ${question.repeatCount}/${expectedSection.repeatCount}.`);
         if (!question.audioPath || !question.transcript || !question.audioText) fail(questionScope, 'Câu nghe thiếu audioPath/transcript/audioText.');
+        const expectedRate = expectedListeningRates.get(exam.levelNumber);
+        for (const segment of question.audioSegments || []) {
+          if (segment.rate !== expectedRate) {
+            fail(questionScope, `Listening audio rate mismatch: ${segment.rate}/${expectedRate}.`);
+          }
+          const expectedPostTempo = expectedListeningPostTempos.get(exam.levelNumber);
+          if (expectedPostTempo && Math.abs(Number(segment.postTempo) - expectedPostTempo) > 0.001) {
+            fail(questionScope, `Listening post-tempo mismatch: ${segment.postTempo}/${expectedPostTempo}.`);
+          }
+        }
         if (question.audioPath) {
           stats.audioReferences += 1;
           checkAudio(fromWebPath(question.audioPath), questionScope);
@@ -215,6 +258,21 @@ for (const meta of index) {
         if (!hasPinyin) warn(questionScope, 'Câu HSK1–2 chưa có pinyin hiển thị.');
       }
     });
+    const enforceListeningVariation = exam.levelNumber === 1 || !exam.id.endsWith('-mock-001');
+    if (section.id === 'listening' && enforceListeningVariation) {
+      const duplicatePrompts = [...listeningPromptCounts.values()].filter(count => count > 1);
+      if (duplicatePrompts.length) {
+        fail(scope, `Listening section has ${duplicatePrompts.reduce((sum, count) => sum + count - 1, 0)} repeated prompts.`);
+      }
+      const dominantPattern = Math.max(0, ...listeningPatternCounts.values());
+      if (dominantPattern > Math.max(4, Math.ceil(questions.length * 0.2))) {
+        fail(scope, `Listening prompt pattern repeats ${dominantPattern}/${questions.length} times.`);
+      }
+      const dominantOpening = Math.max(0, ...listeningOpeningCounts.values());
+      if (dominantOpening > Math.max(4, Math.ceil(questions.length * 0.2))) {
+        fail(scope, `Listening audio opening repeats ${dominantOpening}/${questions.length} times.`);
+      }
+    }
   });
 
   if (examQuestionCount !== exam.totalQuestionCount) fail(scope, `Tổng câu thực tế ${examQuestionCount}/${exam.totalQuestionCount}.`);

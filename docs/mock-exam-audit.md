@@ -5,7 +5,7 @@
 - Số đề: 30 (5 đề cho mỗi cấp HSK 1–6)
 - Tổng số câu: 2405
 - Phân bố: Nghe 1175, Đọc 1050, Viết 180
-- Audio: 1188 MP3, 83.13 MiB
+- Audio: 1182 MP3, 64.41 MiB
 - Tham chiếu hình tự tạo: 30
 - Lỗi: 0
 - Cảnh báo: 0

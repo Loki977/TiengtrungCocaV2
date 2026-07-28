@@ -56,17 +56,17 @@
               "id": "l001",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "他怎么去学校？",
+              "prompt": "张老师参加的展览现在什么时候开始？",
               "options": [
                 {
                   "id": "A",
-                  "text": "坐公共汽车",
-                  "pinyin": "zuò gōng gòng qì chē"
+                  "text": "星期一",
+                  "pinyin": "xīng qī yī"
                 },
                 {
                   "id": "B",
-                  "text": "学校",
-                  "pinyin": "xué xiào"
+                  "text": "星期三",
+                  "pinyin": "xīng qī sān"
                 },
                 {
                   "id": "C",
@@ -75,433 +75,50 @@
                 },
                 {
                   "id": "D",
-                  "text": "接朋友",
-                  "pinyin": "jiē péng yǒu"
+                  "text": "晚上七点",
+                  "pinyin": "wǎn shàng qī diǎn"
                 }
               ],
-              "transcript": "女：在一次电话交流中，孙师傅提到：因为今天下雨，所以他坐公共汽车去学校。\n男：他怎么去学校？",
-              "audioText": "在一次电话交流中，孙师傅提到：因为今天下雨，所以他坐公共汽车去学校。 他怎么去学校？",
+              "transcript": "男：张老师原来要下午四点去博物馆参加展览，现在改到下午两点。\n女：张老师参加的展览现在什么时候开始？",
+              "audioText": "张老师原来要下午四点去博物馆参加展览，现在改到下午两点。 张老师参加的展览现在什么时候开始？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，孙师傅提到：因为今天下雨，所以他坐公共汽车去学校。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "他怎么去学校？",
-                  "rate": "-5%"
+                  "text": "张老师原来要下午四点去博物馆参加展览，现在改到下午两点。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "张老师参加的展览现在什么时候开始？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/d8e35c382ec831ac9b4781e63d479e0ebce86ed795b99bbd5714f3eb00aa7e55.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/b82cf44b373f993c06cc4959afff2fd18544cc1a9ae156a2c598e3c7e60941e7.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "博物馆",
-                "吃晚饭"
+                "下午两点",
+                "医院"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "tā zěn me qù xué xiào？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， sūn shī fù tí dào： yīn wèi jīn tiān xià yǔ， suǒ yǐ tā zuò gōng gòng qì chē qù xué xiào。   tā zěn me qù xué xiào？",
+              "promptPinyin": "zhāng lǎo shī cān jiā de zhǎn lǎn xiàn zài shén me shí hòu kāi shǐ？",
+              "transcriptPinyin": "zhāng lǎo shī yuán lái yào xià wǔ sì diǎn qù bó wù guǎn cān jiā zhǎn lǎn， xiàn zài gǎi dào xià wǔ liǎng diǎn。   zhāng lǎo shī cān jiā de zhǎn lǎn xiàn zài shén me shí hòu kāi shǐ？",
               "partId": "listening-part-1"
             },
             {
               "id": "l002",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "她什么时候去买东西？",
+              "prompt": "刘阿姨最后去哪里？",
               "options": [
                 {
                   "id": "A",
-                  "text": "公司",
-                  "pinyin": "gōng sī"
-                },
-                {
-                  "id": "B",
-                  "text": "下午四点",
-                  "pinyin": "xià wǔ sì diǎn"
-                },
-                {
-                  "id": "C",
-                  "text": "锻炼身体",
-                  "pinyin": "duàn liàn shēn tǐ"
-                },
-                {
-                  "id": "D",
-                  "text": "下午",
-                  "pinyin": "xià wǔ"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，张老师提到：她上午要上课，下午才有时间去买东西。\n男：她什么时候去买东西？",
-              "audioText": "在一次电话交流中，张老师提到：她上午要上课，下午才有时间去买东西。 她什么时候去买东西？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，张老师提到：她上午要上课，下午才有时间去买东西。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "她什么时候去买东西？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/5093c1386db616f9bb22f8e61e943c17d568d19d63d5ff630b3314115ad8f1e7.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "学校",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "tā shén me shí hòu qù mǎi dōng xī？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhāng lǎo shī tí dào： tā shàng wǔ yào shàng kè， xià wǔ cái yǒu shí jiān qù mǎi dōng xī。   tā shén me shí hòu qù mǎi dōng xī？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l003",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "哪个杯子是妹妹的？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "晚上七点",
-                  "pinyin": "wǎn shàng qī diǎn"
-                },
-                {
-                  "id": "B",
-                  "text": "准备报告",
-                  "pinyin": "zhǔn bèi bào gào"
-                },
-                {
-                  "id": "C",
-                  "text": "蓝杯子",
-                  "pinyin": "lán bēi zi"
-                },
-                {
-                  "id": "D",
-                  "text": "医院",
-                  "pinyin": "yī yuàn"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，刘阿姨提到：桌子上的蓝杯子是妹妹的，红杯子是我的。\n男：哪个杯子是妹妹的？",
-              "audioText": "在一次电话交流中，刘阿姨提到：桌子上的蓝杯子是妹妹的，红杯子是我的。 哪个杯子是妹妹的？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，刘阿姨提到：桌子上的蓝杯子是妹妹的，红杯子是我的。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "哪个杯子是妹妹的？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/d4a87cee6e258947a3b2a79416402ea4eea197108343b9fa662849f5feb9c19a.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "医院",
-                "吃晚饭"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "nǎ ge bēi zi shì mèi mèi de？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， liú ā yí tí dào： zhuō zi shàng de lán bēi zi shì mèi mèi de， hóng bēi zi shì wǒ de。   nǎ ge bēi zi shì mèi mèi de？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l004",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "谁在做饭？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "参加活动",
-                  "pinyin": "cān jiā huó dòng"
-                },
-                {
-                  "id": "B",
-                  "text": "爸爸",
-                  "pinyin": "bà bà"
-                },
-                {
-                  "id": "C",
-                  "text": "超市",
-                  "pinyin": "chāo shì"
-                },
-                {
-                  "id": "D",
-                  "text": "星期一",
-                  "pinyin": "xīng qī yī"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，周同学提到：爸爸正在厨房做饭，妈妈在客厅看电视。\n男：谁在做饭？",
-              "audioText": "在一次电话交流中，周同学提到：爸爸正在厨房做饭，妈妈在客厅看电视。 谁在做饭？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，周同学提到：爸爸正在厨房做饭，妈妈在客厅看电视。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "谁在做饭？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/561a3fca65262a691b1bee9510b0be86a2789bfb96df06287b2ca50cad12692c.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "火车站",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "shuí zài zuò fàn？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhōu tóng xué tí dào： bà bà zhèng zài chú fáng zuò fàn， mā mā zài kè tīng kàn diàn shì。   shuí zài zuò fàn？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l005",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "哪件衣服便宜？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "那件",
-                  "pinyin": "nà jiàn"
-                },
-                {
-                  "id": "B",
                   "text": "火车站",
                   "pinyin": "huǒ chē zhàn"
-                },
-                {
-                  "id": "C",
-                  "text": "星期三",
-                  "pinyin": "xīng qī sān"
-                },
-                {
-                  "id": "D",
-                  "text": "还书",
-                  "pinyin": "huán shū"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，王芳提到：这件衣服一百块，那件便宜二十块。\n男：哪件衣服便宜？",
-              "audioText": "在一次电话交流中，王芳提到：这件衣服一百块，那件便宜二十块。 哪件衣服便宜？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，王芳提到：这件衣服一百块，那件便宜二十块。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "哪件衣服便宜？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/243c6370105ea819811f3fd8750f1494abc0d564c08d12b715a8cb797b992d4d.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "银行",
-                "吃晚饭"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "nǎ jiàn yī fú pián yi？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， wáng fāng tí dào： zhè jiàn yī fú yì bǎi kuài， nà jiàn pián yi èr shí kuài。   nǎ jiàn yī fú pián yi？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l006",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "他吃完早饭做什么？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "公园",
-                  "pinyin": "gōng yuán"
-                },
-                {
-                  "id": "B",
-                  "text": "星期六",
-                  "pinyin": "xīng qī liù"
-                },
-                {
-                  "id": "C",
-                  "text": "吃晚饭",
-                  "pinyin": "chī wǎn fàn"
-                },
-                {
-                  "id": "D",
-                  "text": "去跑步",
-                  "pinyin": "qù pǎo bù"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，陈先生提到：他每天六点起床，吃完早饭就去跑步。\n男：他吃完早饭做什么？",
-              "audioText": "在一次电话交流中，陈先生提到：他每天六点起床，吃完早饭就去跑步。 他吃完早饭做什么？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，陈先生提到：他每天六点起床，吃完早饭就去跑步。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "他吃完早饭做什么？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/daf440d3b633ae860b9dce880eb1ad0f5fadb648ff193121728f1424139b1150.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "博物馆",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "tā chī wán zǎo fàn zuò shén me？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， chén xiān shēng tí dào： tā měi tiān liù diǎn qǐ chuáng， chī wán zǎo fàn jiù qù pǎo bù。   tā chī wán zǎo fàn zuò shén me？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l007",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "妹妹喜欢什么？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "明天早上",
-                  "pinyin": "míng tiān zǎo shàng"
-                },
-                {
-                  "id": "B",
-                  "text": "开会",
-                  "pinyin": "kāi huì"
-                },
-                {
-                  "id": "C",
-                  "text": "苹果",
-                  "pinyin": "píng guǒ"
-                },
-                {
-                  "id": "D",
-                  "text": "银行",
-                  "pinyin": "yín háng"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，林医生提到：妹妹喜欢苹果，不喜欢西瓜。\n男：妹妹喜欢什么？",
-              "audioText": "在一次电话交流中，林医生提到：妹妹喜欢苹果，不喜欢西瓜。 妹妹喜欢什么？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，林医生提到：妹妹喜欢苹果，不喜欢西瓜。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "妹妹喜欢什么？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/b39a342e2df7ca211c0774e1033a2302c907c587a12b50e59f5cdb58b964fb4d.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "学校",
-                "吃晚饭"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "mèi mèi xǐ huān shén me？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lín yī shēng tí dào： mèi mèi xǐ huān píng guǒ， bù xǐ huān xī guā。   mèi mèi xǐ huān shén me？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l008",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "今天有没有考试？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "上课",
-                  "pinyin": "shàng kè"
-                },
-                {
-                  "id": "B",
-                  "text": "没有",
-                  "pinyin": "méi yǒu"
-                },
-                {
-                  "id": "C",
-                  "text": "饭店",
-                  "pinyin": "fàn diàn"
-                },
-                {
-                  "id": "D",
-                  "text": "上午八点",
-                  "pinyin": "shàng wǔ bā diǎn"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，李明提到：老师说今天没有考试，大家都很高兴。\n男：今天有没有考试？",
-              "audioText": "在一次电话交流中，李明提到：老师说今天没有考试，大家都很高兴。 今天有没有考试？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，李明提到：老师说今天没有考试，大家都很高兴。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "今天有没有考试？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/0b08a96391f86a2b943ce285c7d20d840ea758a51691e832b58120348efd89ff.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "医院",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "jīn tiān yǒu méi yǒu kǎo shì？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lǐ míng tí dào： lǎo shī shuō jīn tiān méi yǒu kǎo shì， dà jiā dōu hěn gāo xìng。   jīn tiān yǒu méi yǒu kǎo shì？",
-              "partId": "listening-part-1"
-            },
-            {
-              "id": "l009",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "去公司要多长时间？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "二十分钟",
-                  "pinyin": "èr shí fēn zhōng"
                 },
                 {
                   "id": "B",
@@ -510,96 +127,499 @@
                 },
                 {
                   "id": "C",
-                  "text": "上午十点",
-                  "pinyin": "shàng wǔ shí diǎn"
+                  "text": "医院",
+                  "pinyin": "yī yuàn"
                 },
                 {
                   "id": "D",
-                  "text": "看医生",
-                  "pinyin": "kàn yī shēng"
+                  "text": "超市",
+                  "pinyin": "chāo shì"
                 }
               ],
-              "transcript": "女：在一次电话交流中，小雨提到：从我家到公司坐地铁要二十分钟。\n男：去公司要多长时间？",
-              "audioText": "在一次电话交流中，小雨提到：从我家到公司坐地铁要二十分钟。 去公司要多长时间？",
+              "transcript": "女：刘阿姨先去超市买东西，然后到博物馆参加活动。\n男：刘阿姨最后去哪里？",
+              "audioText": "刘阿姨先去超市买东西，然后到博物馆参加活动。 刘阿姨最后去哪里？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，小雨提到：从我家到公司坐地铁要二十分钟。",
-                  "rate": "-5%"
+                  "text": "刘阿姨先去超市买东西，然后到博物馆参加活动。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "去公司要多长时间？",
-                  "rate": "-5%"
+                  "text": "刘阿姨最后去哪里？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/4b2fecf9cc41ec315b7e27b5f0eb14806fad138a922f3fcb6f2dc19b13295f6e.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/9ffde6c27e979fbab50a1193d0a92093fbfe8393e796188935dee931cc794411.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "吃晚饭"
+                "博物馆",
+                "图书馆"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "qù gōng sī yào duō zhǎng shí jiān？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， xiǎo yǔ tí dào： cóng wǒ jiā dào gōng sī zuò dì tiě yào èr shí fēn zhōng。   qù gōng sī yào duō zhǎng shí jiān？",
+              "promptPinyin": "liú ā yí zuì hòu qù nǎ lǐ？",
+              "transcriptPinyin": "liú ā yí xiān qù chāo shì mǎi dōng xī， rán hòu dào bó wù guǎn cān jiā huó dòng。   liú ā yí zuì hòu qù nǎ lǐ？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l003",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "周同学最后怎么去银行？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "火车",
+                  "pinyin": "huǒ chē"
+                },
+                {
+                  "id": "B",
+                  "text": "自行车",
+                  "pinyin": "zì xíng chē"
+                },
+                {
+                  "id": "C",
+                  "text": "步行",
+                  "pinyin": "bù xíng"
+                },
+                {
+                  "id": "D",
+                  "text": "公共汽车",
+                  "pinyin": "gōng gòng qì chē"
+                }
+              ],
+              "transcript": "男：因为身体不舒服，周同学不坐地铁了，改坐火车去银行。\n女：周同学最后怎么去银行？",
+              "audioText": "因为身体不舒服，周同学不坐地铁了，改坐火车去银行。 周同学最后怎么去银行？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "因为身体不舒服，周同学不坐地铁了，改坐火车去银行。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "周同学最后怎么去银行？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/56d70b14ae00d2fcd12c54b14b66d45ad115fab7e72a6d9ec0847589080a80be.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "火车",
+                "银行"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "zhōu tóng xué zuì hòu zěn me qù yín háng？",
+              "transcriptPinyin": "yīn wèi shēn tǐ bù shū fú， zhōu tóng xué bù zuò dì tiě le， gǎi zuò huǒ chē qù yín háng。   zhōu tóng xué zuì hòu zěn me qù yín háng？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l004",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳吃晚饭以后做什么？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "上课",
+                  "pinyin": "shàng kè"
+                },
+                {
+                  "id": "B",
+                  "text": "开会",
+                  "pinyin": "kāi huì"
+                },
+                {
+                  "id": "C",
+                  "text": "看医生",
+                  "pinyin": "kàn yī shēng"
+                },
+                {
+                  "id": "D",
+                  "text": "接朋友",
+                  "pinyin": "jiē péng yǒu"
+                }
+              ],
+              "transcript": "女：王芳在饭店吃晚饭以后，还要去火车站接朋友。\n男：王芳吃晚饭以后做什么？",
+              "audioText": "王芳在饭店吃晚饭以后，还要去火车站接朋友。 王芳吃晚饭以后做什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "王芳在饭店吃晚饭以后，还要去火车站接朋友。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳吃晚饭以后做什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/8d7936b2d1416079ebf16ef744bbc24c23341b3a7ab2f7c0005f09344264a16e.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "接朋友",
+                "超市"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "wáng fāng chī wǎn fàn yǐ hòu zuò shén me？",
+              "transcriptPinyin": "wáng fāng zài fàn diàn chī wǎn fàn yǐ hòu， hái yào qù huǒ chē zhàn jiē péng yǒu。   wáng fāng chī wǎn fàn yǐ hòu zuò shén me？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l005",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "谁负责向学校确认时间？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "王芳",
+                  "pinyin": "wáng fāng"
+                },
+                {
+                  "id": "B",
+                  "text": "张老师",
+                  "pinyin": "zhāng lǎo shī"
+                },
+                {
+                  "id": "C",
+                  "text": "刘阿姨",
+                  "pinyin": "liú ā yí"
+                },
+                {
+                  "id": "D",
+                  "text": "李明",
+                  "pinyin": "lǐ míng"
+                }
+              ],
+              "transcript": "男：陈先生整理东西，刘阿姨给学校打电话问时间。\n女：谁负责向学校确认时间？",
+              "audioText": "陈先生整理东西，刘阿姨给学校打电话问时间。 谁负责向学校确认时间？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "陈先生整理东西，刘阿姨给学校打电话问时间。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "谁负责向学校确认时间？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/378d8d0612de10240d8bba1dea8fddd11d2fe49f44d3685036ea943e3ee9aea1.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "刘阿姨",
+                "学校"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "shuí fù zé xiàng xué xiào què rèn shí jiān？",
+              "transcriptPinyin": "chén xiān shēng zhěng lǐ dōng xī， liú ā yí gěi xué xiào dǎ diàn huà wèn shí jiān。   shuí fù zé xiàng xué xiào què rèn shí jiān？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l006",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "王芳的文件是什么颜色？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "黄色",
+                  "pinyin": "huáng sè"
+                },
+                {
+                  "id": "B",
+                  "text": "蓝色",
+                  "pinyin": "lán sè"
+                },
+                {
+                  "id": "C",
+                  "text": "黑色",
+                  "pinyin": "hēi sè"
+                },
+                {
+                  "id": "D",
+                  "text": "绿色",
+                  "pinyin": "lǜ sè"
+                }
+              ],
+              "transcript": "女：绿色的文件是林医生的，蓝色的是王芳的。\n男：王芳的文件是什么颜色？",
+              "audioText": "绿色的文件是林医生的，蓝色的是王芳的。 王芳的文件是什么颜色？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "绿色的文件是林医生的，蓝色的是王芳的。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "王芳的文件是什么颜色？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/aeb1086d5dddef18a8aaf302180f38733787306fc879a81a72b4d369b599b745.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "蓝色",
+                "饭店"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "wáng fāng de wén jiàn shì shén me yán sè？",
+              "transcriptPinyin": "lǜ sè de wén jiàn shì lín yī shēng de， lán sè de shì wáng fāng de。   wáng fāng de wén jiàn shì shén me yán sè？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l007",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "李明买的书包多少钱？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "二十元",
+                  "pinyin": "èr shí yuán"
+                },
+                {
+                  "id": "B",
+                  "text": "三十五元",
+                  "pinyin": "sān shí wǔ yuán"
+                },
+                {
+                  "id": "C",
+                  "text": "四十八元",
+                  "pinyin": "sì shí bā yuán"
+                },
+                {
+                  "id": "D",
+                  "text": "六十元",
+                  "pinyin": "liù shí yuán"
+                }
+              ],
+              "transcript": "男：李明在商店买了一个书包，一共花了二十元。\n女：李明买的书包多少钱？",
+              "audioText": "李明在商店买了一个书包，一共花了二十元。 李明买的书包多少钱？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "李明在商店买了一个书包，一共花了二十元。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "李明买的书包多少钱？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/2c2337a3d4cd5bf4a09fe6afdd053280efc2d9023df3dea6ceea369fb6b4d6e1.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "二十元",
+                "火车站"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "lǐ míng mǎi de shū bāo duō shǎo qián？",
+              "transcriptPinyin": "lǐ míng zài shāng diàn mǎi le yí gè shū bāo， yī gòng huā le èr shí yuán。   lǐ míng mǎi de shū bāo duō shǎo qián？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l008",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "小雨选择了什么？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "饺子",
+                  "pinyin": "jiǎo zi"
+                },
+                {
+                  "id": "B",
+                  "text": "苹果",
+                  "pinyin": "píng guǒ"
+                },
+                {
+                  "id": "C",
+                  "text": "西瓜",
+                  "pinyin": "xī guā"
+                },
+                {
+                  "id": "D",
+                  "text": "米饭",
+                  "pinyin": "mǐ fàn"
+                }
+              ],
+              "transcript": "女：小雨喜欢吃米饭，不太喜欢饺子。\n男：小雨选择了什么？",
+              "audioText": "小雨喜欢吃米饭，不太喜欢饺子。 小雨选择了什么？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小雨喜欢吃米饭，不太喜欢饺子。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "小雨选择了什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/6ccc7c6c03e56908a8698d1094c9f6208679c3f0831ffe5d33ec88ec28dff562.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "米饭",
+                "公司"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "xiǎo yǔ xuǎn zé le shén me？",
+              "transcriptPinyin": "xiǎo yǔ xǐ huān chī mǐ fàn， bù tài xǐ huān jiǎo zi。   xiǎo yǔ xuǎn zé le shén me？",
+              "partId": "listening-part-1"
+            },
+            {
+              "id": "l009",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "平时从博物馆到学校要多久？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "半个小时",
+                  "pinyin": "bàn gè xiǎo shí"
+                },
+                {
+                  "id": "B",
+                  "text": "一个小时",
+                  "pinyin": "yí gè xiǎo shí"
+                },
+                {
+                  "id": "C",
+                  "text": "四十五分钟",
+                  "pinyin": "sì shí wǔ fēn zhōng"
+                },
+                {
+                  "id": "D",
+                  "text": "二十分钟",
+                  "pinyin": "èr shí fēn zhōng"
+                }
+              ],
+              "transcript": "男：赵经理从博物馆到学校要四十五分钟。\n女：平时从博物馆到学校要多久？",
+              "audioText": "赵经理从博物馆到学校要四十五分钟。 平时从博物馆到学校要多久？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "赵经理从博物馆到学校要四十五分钟。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "平时从博物馆到学校要多久？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/ccca5139fac829e347f2dc0581f01549dade5e9278be1db52794de2d71b8b7b3.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "四十五分钟",
+                "博物馆"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "píng shí cóng bó wù guǎn dào xué xiào yào duō jiǔ？",
+              "transcriptPinyin": "zhào jīng lǐ cóng bó wù guǎn dào xué xiào yào sì shí wǔ fēn zhōng。   píng shí cóng bó wù guǎn dào xué xiào yào duō jiǔ？",
               "partId": "listening-part-1"
             },
             {
               "id": "l010",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "她什么说得很好？",
+              "prompt": "孙师傅哪天去图书馆？",
               "options": [
                 {
                   "id": "A",
-                  "text": "图书馆",
-                  "pinyin": "tú shū guǎn"
+                  "text": "星期二",
+                  "pinyin": "xīng qī èr"
                 },
                 {
                   "id": "B",
-                  "text": "中午十二点",
-                  "pinyin": "zhōng wǔ shí èr diǎn"
+                  "text": "星期一",
+                  "pinyin": "xīng qī yī"
                 },
                 {
                   "id": "C",
-                  "text": "买东西",
-                  "pinyin": "mǎi dōng xī"
+                  "text": "星期六",
+                  "pinyin": "xīng qī liù"
                 },
                 {
                   "id": "D",
-                  "text": "汉语",
-                  "pinyin": "hàn yǔ"
+                  "text": "星期日",
+                  "pinyin": "xīng qī rì"
                 }
               ],
-              "transcript": "女：在一次电话交流中，赵经理提到：她汉语说得很好，也会写很多汉字。\n男：她什么说得很好？",
-              "audioText": "在一次电话交流中，赵经理提到：她汉语说得很好，也会写很多汉字。 她什么说得很好？",
+              "transcript": "女：图书馆星期三不开门，孙师傅改成星期一去还书。\n男：孙师傅哪天去图书馆？",
+              "audioText": "图书馆星期三不开门，孙师傅改成星期一去还书。 孙师傅哪天去图书馆？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，赵经理提到：她汉语说得很好，也会写很多汉字。",
-                  "rate": "-5%"
+                  "text": "图书馆星期三不开门，孙师傅改成星期一去还书。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "她什么说得很好？",
-                  "rate": "-5%"
+                  "text": "孙师傅哪天去图书馆？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/19dbec927fbb3d2e0038d66994ac906bb64692c3fd717163e5dc7a070da674fa.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/a2a44fabf3d4d296daa6880fb849ed39c81ab85a9dfd39b8fb6d8329716096cd.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "银行",
-                "接朋友"
+                "星期一",
+                "公园"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "tā shén me shuō dé hěn hǎo？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhào jīng lǐ tí dào： tā hàn yǔ shuō dé hěn hǎo， yě huì xiě hěn duō hàn zì。   tā shén me shuō dé hěn hǎo？",
+              "promptPinyin": "sūn shī fù nǎ tiān qù tú shū guǎn？",
+              "transcriptPinyin": "tú shū guǎn xīng qī sān bù kāi mén， sūn shī fù gǎi chéng xīng qī yī qù huán shū。   sūn shī fù nǎ tiān qù tú shū guǎn？",
               "partId": "listening-part-1"
             }
           ]
@@ -613,22 +633,136 @@
               "id": "l011",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "孙师傅为什么改变了安排？",
+              "prompt": "张老师为什么不能按原计划参加展览？",
               "options": [
                 {
                   "id": "A",
-                  "text": "下午两点",
-                  "pinyin": "xià wǔ liǎng diǎn"
+                  "text": "临时要开会",
+                  "pinyin": "lín shí yào kāi huì"
                 },
                 {
                   "id": "B",
-                  "text": "接朋友",
-                  "pinyin": "jiē péng yǒu"
+                  "text": "身体不舒服",
+                  "pinyin": "shēn tǐ bù shū fú"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "设备出了问题",
+                  "pinyin": "shè bèi chū le wèn tí"
+                },
+                {
+                  "id": "D",
+                  "text": "材料还没准备好",
+                  "pinyin": "cái liào hái méi zhǔn bèi hǎo"
+                }
+              ],
+              "transcript": "男：因为临时要开会，张老师今天不能去博物馆参加展览。\n女：张老师为什么不能按原计划参加展览？",
+              "audioText": "因为临时要开会，张老师今天不能去博物馆参加展览。 张老师为什么不能按原计划参加展览？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "因为临时要开会，张老师今天不能去博物馆参加展览。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "张老师为什么不能按原计划参加展览？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/5e8048d8734e78dbf8d9f62d3dc6c7b3cd504afc053ad2718a657746ce5398c6.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "临时要开会",
+                "医院"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "zhāng lǎo shī wèi shén me bù néng àn yuán jì huà cān jiā zhǎn lǎn？",
+              "transcriptPinyin": "yīn wèi lín shí yào kāi huì， zhāng lǎo shī jīn tiān bù néng qù bó wù guǎn cān jiā zhǎn lǎn。   zhāng lǎo shī wèi shén me bù néng àn yuán jì huà cān jiā zhǎn lǎn？",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l012",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "刘阿姨最后需要准备多少？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "三份",
+                  "pinyin": "sān fèn"
+                },
+                {
+                  "id": "B",
+                  "text": "四份",
+                  "pinyin": "sì fèn"
+                },
+                {
+                  "id": "C",
+                  "text": "五份",
+                  "pinyin": "wǔ fèn"
+                },
+                {
+                  "id": "D",
+                  "text": "两份",
+                  "pinyin": "liǎng fèn"
+                }
+              ],
+              "transcript": "女：刘阿姨要准备两份材料，不是一份。\n男：刘阿姨最后需要准备多少？",
+              "audioText": "刘阿姨要准备两份材料，不是一份。 刘阿姨最后需要准备多少？",
+              "audioSegments": [
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "刘阿姨要准备两份材料，不是一份。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "刘阿姨最后需要准备多少？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/0bd42894c51ee555c6be716dc089fb94d8eb32de61118a09ad31a90bdab98e6b.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "两份",
+                "图书馆"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "liú ā yí zuì hòu xū yào zhǔn bèi duō shǎo？",
+              "transcriptPinyin": "liú ā yí yào zhǔn bèi liǎng fèn cái liào， bú shì yī fèn。   liú ā yí zuì hòu xū yào zhǔn bèi duō shǎo？",
+              "partId": "listening-part-2"
+            },
+            {
+              "id": "l013",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "车票可能在哪里？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "公司",
+                  "pinyin": "gōng sī"
+                },
+                {
+                  "id": "B",
+                  "text": "超市",
+                  "pinyin": "chāo shì"
+                },
+                {
+                  "id": "C",
+                  "text": "医院",
+                  "pinyin": "yī yuàn"
                 },
                 {
                   "id": "D",
@@ -636,527 +770,433 @@
                   "pinyin": "xué xiào"
                 }
               ],
-              "transcript": "女：在一次电话交流中，孙师傅提到：这周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。\n男：孙师傅为什么改变了安排？",
-              "audioText": "在一次电话交流中，孙师傅提到：这周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。 孙师傅为什么改变了安排？",
+              "transcript": "男：周同学把车票忘在医院了，到了银行才发现。\n女：车票可能在哪里？",
+              "audioText": "周同学把车票忘在医院了，到了银行才发现。 车票可能在哪里？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，孙师傅提到：这周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "孙师傅为什么改变了安排？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/e19f27eb100f52388123f49c4d0ece34299f9f317c44121054699948db732677.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "博物馆",
-                "吃晚饭"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "sūn shī fù wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， sūn shī fù tí dào： zhè zhōu， sūn shī fù yuán lái zhǔn bèi míng tiān zǎo shàng qù bó wù guǎn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le zhōng wǔ shí èr diǎn。   sūn shī fù wèi shén me gǎi biàn le ān pái？",
-              "partId": "listening-part-2"
-            },
-            {
-              "id": "l012",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "张老师为什么改变了安排？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "锻炼身体",
-                  "pinyin": "duàn liàn shēn tǐ"
+                  "text": "周同学把车票忘在医院了，到了银行才发现。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
-                {
-                  "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
-                },
-                {
-                  "id": "C",
-                  "text": "公司",
-                  "pinyin": "gōng sī"
-                },
-                {
-                  "id": "D",
-                  "text": "下午四点",
-                  "pinyin": "xià wǔ sì diǎn"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，张老师提到：这周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。\n男：张老师为什么改变了安排？",
-              "audioText": "在一次电话交流中，张老师提到：这周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。 张老师为什么改变了安排？",
-              "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，张老师提到：这周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "张老师为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "车票可能在哪里？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/43ef627b11ee3732e39bce78e9a2afe016a02124f0f8f208d12d8d43aa0dfc23.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "学校",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhāng lǎo shī tí dào： zhè zhōu， zhāng lǎo shī yuán lái zhǔn bèi xià wǔ liǎng diǎn qù xué xiào jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ liǎng diǎn。   zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
-              "partId": "listening-part-2"
-            },
-            {
-              "id": "l013",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "刘阿姨为什么改变了安排？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
-                },
-                {
-                  "id": "B",
-                  "text": "医院",
-                  "pinyin": "yī yuàn"
-                },
-                {
-                  "id": "C",
-                  "text": "晚上七点",
-                  "pinyin": "wǎn shàng qī diǎn"
-                },
-                {
-                  "id": "D",
-                  "text": "准备报告",
-                  "pinyin": "zhǔn bèi bào gào"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。\n男：刘阿姨为什么改变了安排？",
-              "audioText": "在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。 刘阿姨为什么改变了安排？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，刘阿姨提到：这周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "刘阿姨为什么改变了安排？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/7451718dcad8dc71be3c0f6965b7351830590cc1e00d38a369fa02de8c933dd8.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/885994521b6f9d313b603ec1339b3e46dec1939f55142517b33e58159900fa2e.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
                 "医院",
-                "吃晚饭"
+                "银行"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "liú ā yí wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， liú ā yí tí dào： zhè zhōu， liú ā yí yuán lái zhǔn bèi xīng qī sān qù yī yuàn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ sì diǎn。   liú ā yí wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "chē piào kě néng zài nǎ lǐ？",
+              "transcriptPinyin": "zhōu tóng xué bǎ chē piào wàng zài yī yuàn le， dào le yín háng cái fā xiàn。   chē piào kě néng zài nǎ lǐ？",
               "partId": "listening-part-2"
             },
             {
               "id": "l014",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "周同学为什么改变了安排？",
+              "prompt": "别人给王芳什么建议？",
               "options": [
                 {
                   "id": "A",
-                  "text": "超市",
-                  "pinyin": "chāo shì"
+                  "text": "把重要的事写下来",
+                  "pinyin": "bǎ zhòng yào de shì xiě xià lái"
                 },
                 {
                   "id": "B",
-                  "text": "星期一",
-                  "pinyin": "xīng qī yī"
+                  "text": "早点儿出门",
+                  "pinyin": "zǎo diǎn ér chū mén"
                 },
                 {
                   "id": "C",
-                  "text": "参加活动",
-                  "pinyin": "cān jiā huó dòng"
+                  "text": "多休息多喝水",
+                  "pinyin": "duō xiū xī duō hē shuǐ"
                 },
                 {
                   "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "每天练习半个小时",
+                  "pinyin": "měi tiān liàn xí bàn gè xiǎo shí"
                 }
               ],
-              "transcript": "女：在一次电话交流中，周同学提到：这周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。\n男：周同学为什么改变了安排？",
-              "audioText": "在一次电话交流中，周同学提到：这周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。 周同学为什么改变了安排？",
+              "transcript": "女：王芳遇到了问题，朋友建议他早点儿出门。\n男：别人给王芳什么建议？",
+              "audioText": "王芳遇到了问题，朋友建议他早点儿出门。 别人给王芳什么建议？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，周同学提到：这周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。",
-                  "rate": "-5%"
+                  "text": "王芳遇到了问题，朋友建议他早点儿出门。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "周同学为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "别人给王芳什么建议？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/093652df947f7a704b3b24753676c1fd0381e9a96d7ce8413be84f0bf8b7e035.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/b85377c9229db7960d1726dbbe470982e778746d995b8cbf42895b299f6b7cb8.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "接朋友"
+                "早点儿出门",
+                "超市"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhōu tóng xué tí dào： zhè zhōu， zhōu tóng xué yuán lái zhǔn bèi shàng wǔ shí diǎn qù huǒ chē zhàn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le wǎn shàng qī diǎn。   zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "bié rén gěi wáng fāng shén me jiàn yì？",
+              "transcriptPinyin": "wáng fāng yù dào le wèn tí， péng yǒu jiàn yì tā zǎo diǎn ér chū mén。   bié rén gěi wáng fāng shén me jiàn yì？",
               "partId": "listening-part-2"
             },
             {
               "id": "l015",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "王芳为什么改变了安排？",
+              "prompt": "陈先生为什么每天去火车站？",
               "options": [
                 {
                   "id": "A",
-                  "text": "星期三",
-                  "pinyin": "xīng qī sān"
+                  "text": "接朋友",
+                  "pinyin": "jiē péng yǒu"
                 },
                 {
                   "id": "B",
-                  "text": "还书",
-                  "pinyin": "huán shū"
+                  "text": "锻炼身体",
+                  "pinyin": "duàn liàn shēn tǐ"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "去上课",
+                  "pinyin": "qù shàng kè"
                 },
                 {
                   "id": "D",
-                  "text": "火车站",
-                  "pinyin": "huǒ chē zhàn"
+                  "text": "买东西",
+                  "pinyin": "mǎi dōng xī"
                 }
               ],
-              "transcript": "女：在一次电话交流中，王芳提到：这周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。\n男：王芳为什么改变了安排？",
-              "audioText": "在一次电话交流中，王芳提到：这周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。 王芳为什么改变了安排？",
+              "transcript": "男：陈先生每天去火车站，是为了接朋友。\n女：陈先生为什么每天去火车站？",
+              "audioText": "陈先生每天去火车站，是为了接朋友。 陈先生为什么每天去火车站？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，王芳提到：这周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "王芳为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "陈先生每天去火车站，是为了接朋友。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "陈先生为什么每天去火车站？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/279f5a401af5c7fa5668c65b078a363c70a5fe6b23a4295b1d9b1d64c2625ab7.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/85efdc5850315eefc5fb700f480e9dd595c7b1c5895ee4157634d1b9069002b5.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "银行",
-                "吃晚饭"
+                "接朋友",
+                "学校"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "wáng fāng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， wáng fāng tí dào： zhè zhōu， wáng fāng yuán lái zhǔn bèi wǎn shàng qī diǎn qù yín háng chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī yī。   wáng fāng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "chén xiān shēng wèi shén me měi tiān qù huǒ chē zhàn？",
+              "transcriptPinyin": "chén xiān shēng měi tiān qù huǒ chē zhàn， shì wèi le jiē péng yǒu。   chén xiān shēng wèi shén me měi tiān qù huǒ chē zhàn？",
               "partId": "listening-part-2"
             },
             {
               "id": "l016",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "陈先生为什么改变了安排？",
+              "prompt": "林医生用了什么办法？",
               "options": [
                 {
                   "id": "A",
-                  "text": "吃晚饭",
-                  "pinyin": "chī wǎn fàn"
+                  "text": "每天练习半个小时",
+                  "pinyin": "měi tiān liàn xí bàn gè xiǎo shí"
                 },
                 {
                   "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "把重要的事写下来",
+                  "pinyin": "bǎ zhòng yào de shì xiě xià lái"
                 },
                 {
                   "id": "C",
-                  "text": "公园",
-                  "pinyin": "gōng yuán"
+                  "text": "请老师再讲一次",
+                  "pinyin": "qǐng lǎo shī zài jiǎng yī cì"
                 },
                 {
                   "id": "D",
-                  "text": "星期六",
-                  "pinyin": "xīng qī liù"
+                  "text": "多休息多喝水",
+                  "pinyin": "duō xiū xī duō hē shuǐ"
                 }
               ],
-              "transcript": "女：在一次电话交流中，陈先生提到：这周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。\n男：陈先生为什么改变了安排？",
-              "audioText": "在一次电话交流中，陈先生提到：这周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。 陈先生为什么改变了安排？",
+              "transcript": "女：为了做好这件事，林医生决定多休息多喝水。\n男：林医生用了什么办法？",
+              "audioText": "为了做好这件事，林医生决定多休息多喝水。 林医生用了什么办法？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，陈先生提到：这周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。",
-                  "rate": "-5%"
+                  "text": "为了做好这件事，林医生决定多休息多喝水。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "陈先生为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "林医生用了什么办法？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/4b06c867b5e33afe6c2707154832bd0386032f91f809c29d20b0760e557d6cbf.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/ac182ff3b6cc702c729a902251de6ac60512ac3fcc4c6c3714fe07f106fc0cce.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "博物馆",
-                "接朋友"
+                "多休息多喝水",
+                "饭店"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "chén xiān shēng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， chén xiān shēng tí dào： zhè zhōu， chén xiān shēng yuán lái zhǔn bèi míng tiān zǎo shàng qù bó wù guǎn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī sān。   chén xiān shēng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "lín yī shēng yòng le shén me bàn fǎ？",
+              "transcriptPinyin": "wèi le zuò hǎo zhè jiàn shì， lín yī shēng jué dìng duō xiū xī duō hē shuǐ。   lín yī shēng yòng le shén me bàn fǎ？",
               "partId": "listening-part-2"
             },
             {
               "id": "l017",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "林医生为什么改变了安排？",
+              "prompt": "李明这边最后的结果怎么样？",
               "options": [
                 {
                   "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "在家休息",
+                  "pinyin": "zài jiā xiū xī"
                 },
                 {
                   "id": "B",
-                  "text": "银行",
-                  "pinyin": "yín háng"
+                  "text": "买到了东西",
+                  "pinyin": "mǎi dào le dōng xī"
                 },
                 {
                   "id": "C",
-                  "text": "明天早上",
-                  "pinyin": "míng tiān zǎo shàng"
+                  "text": "完成了作业",
+                  "pinyin": "wán chéng le zuò yè"
                 },
                 {
                   "id": "D",
-                  "text": "开会",
-                  "pinyin": "kāi huì"
+                  "text": "按时到了",
+                  "pinyin": "àn shí dào le"
                 }
               ],
-              "transcript": "女：在一次电话交流中，林医生提到：这周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。\n男：林医生为什么改变了安排？",
-              "audioText": "在一次电话交流中，林医生提到：这周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。 林医生为什么改变了安排？",
+              "transcript": "男：李明照着计划做，最后完成了作业。\n女：李明这边最后的结果怎么样？",
+              "audioText": "李明照着计划做，最后完成了作业。 李明这边最后的结果怎么样？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，林医生提到：这周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "林医生为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "李明照着计划做，最后完成了作业。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "李明这边最后的结果怎么样？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/0defed5a63c1143132a5486e1d8779d6c6775cb04a3d14604ea48f24306c86e8.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/03bf03515fecd5ba703fcf5255219b1f6731f7ae52c259e474b2cfe69c2d8c19.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "学校",
-                "吃晚饭"
+                "完成了作业",
+                "火车站"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "lín yī shēng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lín yī shēng tí dào： zhè zhōu， lín yī shēng yuán lái zhǔn bèi xià wǔ liǎng diǎn qù xué xiào chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī liù。   lín yī shēng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "lǐ míng zhè biān zuì hòu de jié guǒ zěn me yàng？",
+              "transcriptPinyin": "lǐ míng zhào zhe jì huà zuò， zuì hòu wán chéng le zuò yè。   lǐ míng zhè biān zuì hòu de jié guǒ zěn me yàng？",
               "partId": "listening-part-2"
             },
             {
               "id": "l018",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "李明为什么改变了安排？",
+              "prompt": "小雨先做了什么？",
               "options": [
                 {
                   "id": "A",
-                  "text": "饭店",
-                  "pinyin": "fàn diàn"
+                  "text": "早点儿出门",
+                  "pinyin": "zǎo diǎn ér chū mén"
                 },
                 {
                   "id": "B",
-                  "text": "上午八点",
-                  "pinyin": "shàng wǔ bā diǎn"
+                  "text": "把重要的事写下来",
+                  "pinyin": "bǎ zhòng yào de shì xiě xià lái"
                 },
                 {
                   "id": "C",
-                  "text": "上课",
-                  "pinyin": "shàng kè"
+                  "text": "每天练习半个小时",
+                  "pinyin": "měi tiān liàn xí bàn gè xiǎo shí"
                 },
                 {
                   "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "请老师再讲一次",
+                  "pinyin": "qǐng lǎo shī zài jiǎng yī cì"
                 }
               ],
-              "transcript": "女：在一次电话交流中，李明提到：这周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。\n男：李明为什么改变了安排？",
-              "audioText": "在一次电话交流中，李明提到：这周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。 李明为什么改变了安排？",
+              "transcript": "女：小雨先把重要的事写下来，然后才去公司。\n男：小雨先做了什么？",
+              "audioText": "小雨先把重要的事写下来，然后才去公司。 小雨先做了什么？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，李明提到：这周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。",
-                  "rate": "-5%"
+                  "text": "小雨先把重要的事写下来，然后才去公司。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "李明为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "小雨先做了什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/e4019f042e1c046dc705f69d5e71695cf86487a634071362c04e8d653fa3cf9b.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/2ac2d31cb20e5bdd84004d40c2637982f9e4ad1d71673e80172e4fa6ab9e5ca8.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "医院",
-                "接朋友"
+                "把重要的事写下来",
+                "公司"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "lǐ míng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lǐ míng tí dào： zhè zhōu， lǐ míng yuán lái zhǔn bèi xīng qī sān qù yī yuàn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le míng tiān zǎo shàng。   lǐ míng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "xiǎo yǔ xiān zuò le shén me？",
+              "transcriptPinyin": "xiǎo yǔ xiān bǎ zhòng yào de shì xiě xià lái， rán hòu cái qù gōng sī。   xiǎo yǔ xiān zuò le shén me？",
               "partId": "listening-part-2"
             },
             {
               "id": "l019",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "小雨为什么改变了安排？",
+              "prompt": "赵经理怎么评价这里？",
               "options": [
                 {
                   "id": "A",
-                  "text": "上午十点",
-                  "pinyin": "shàng wǔ shí diǎn"
+                  "text": "味道不错",
+                  "pinyin": "wèi dào bù cuò"
                 },
                 {
                   "id": "B",
-                  "text": "看医生",
-                  "pinyin": "kàn yī shēng"
+                  "text": "有点儿贵",
+                  "pinyin": "yǒu diǎn ér guì"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "离家很近",
+                  "pinyin": "lí jiā hěn jìn"
                 },
                 {
                   "id": "D",
-                  "text": "博物馆",
-                  "pinyin": "bó wù guǎn"
+                  "text": "人太多了",
+                  "pinyin": "rén tài duō le"
                 }
               ],
-              "transcript": "女：在一次电话交流中，小雨提到：这周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。\n男：小雨为什么改变了安排？",
-              "audioText": "在一次电话交流中，小雨提到：这周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。 小雨为什么改变了安排？",
+              "transcript": "男：赵经理觉得这个地方味道不错。\n女：赵经理怎么评价这里？",
+              "audioText": "赵经理觉得这个地方味道不错。 赵经理怎么评价这里？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，小雨提到：这周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "小雨为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "赵经理觉得这个地方味道不错。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "赵经理怎么评价这里？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/dcf5ce319a1031ce76335506a4fd529c1da4ad63d83551b242fb53c2739b1982.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/bd4fb7ca3a3408055fa35f7cd1ca1e12475202735881e8fd7d1cf549b0056240.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "吃晚饭"
+                "味道不错",
+                "博物馆"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "xiǎo yǔ wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， xiǎo yǔ tí dào： zhè zhōu， xiǎo yǔ yuán lái zhǔn bèi shàng wǔ shí diǎn qù huǒ chē zhàn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le shàng wǔ bā diǎn。   xiǎo yǔ wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "zhào jīng lǐ zěn me píng jià zhè lǐ？",
+              "transcriptPinyin": "zhào jīng lǐ jué de zhè ge dì fāng wèi dào bù cuò。   zhào jīng lǐ zěn me píng jià zhè lǐ？",
               "partId": "listening-part-2"
             },
             {
               "id": "l020",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "赵经理为什么改变了安排？",
+              "prompt": "孙师傅最后决定先做什么？",
               "options": [
                 {
                   "id": "A",
-                  "text": "买东西",
-                  "pinyin": "mǎi dōng xī"
+                  "text": "接朋友",
+                  "pinyin": "jiē péng yǒu"
                 },
                 {
                   "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "锻炼身体",
+                  "pinyin": "duàn liàn shēn tǐ"
                 },
                 {
                   "id": "C",
-                  "text": "图书馆",
-                  "pinyin": "tú shū guǎn"
+                  "text": "准备报告",
+                  "pinyin": "zhǔn bèi bào gào"
                 },
                 {
                   "id": "D",
-                  "text": "中午十二点",
-                  "pinyin": "zhōng wǔ shí èr diǎn"
+                  "text": "买东西",
+                  "pinyin": "mǎi dōng xī"
                 }
               ],
-              "transcript": "女：在一次电话交流中，赵经理提到：这周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。\n男：赵经理为什么改变了安排？",
-              "audioText": "在一次电话交流中，赵经理提到：这周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。 赵经理为什么改变了安排？",
+              "transcript": "女：孙师傅本来要还书，后来决定先买东西。\n男：孙师傅最后决定先做什么？",
+              "audioText": "孙师傅本来要还书，后来决定先买东西。 孙师傅最后决定先做什么？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，赵经理提到：这周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。",
-                  "rate": "-5%"
+                  "text": "孙师傅本来要还书，后来决定先买东西。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "赵经理为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "孙师傅最后决定先做什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/b0f75f036882294eec4662074c753334b6f63c44ea039d0a43cd618060441f2b.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/4c50bab23d403b30b1a2a3b5d50b8205096c4614638412d2ff676806777f3c92.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "银行",
-                "接朋友"
+                "买东西",
+                "公园"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhào jīng lǐ wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhào jīng lǐ tí dào： zhè zhōu， zhào jīng lǐ yuán lái zhǔn bèi wǎn shàng qī diǎn qù yín háng jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le shàng wǔ shí diǎn。   zhào jīng lǐ wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "sūn shī fù zuì hòu jué dìng xiān zuò shén me？",
+              "transcriptPinyin": "sūn shī fù běn lái yào huán shū， hòu lái jué dìng xiān mǎi dōng xī。   sūn shī fù zuì hòu jué dìng xiān zuò shén me？",
               "partId": "listening-part-2"
             }
           ]
@@ -1170,117 +1210,7 @@
               "id": "l021",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "孙师傅为什么改变了安排？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
-                },
-                {
-                  "id": "B",
-                  "text": "学校",
-                  "pinyin": "xué xiào"
-                },
-                {
-                  "id": "C",
-                  "text": "下午两点",
-                  "pinyin": "xià wǔ liǎng diǎn"
-                },
-                {
-                  "id": "D",
-                  "text": "接朋友",
-                  "pinyin": "jiē péng yǒu"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，孙师傅提到：下周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。\n男：孙师傅为什么改变了安排？",
-              "audioText": "在一次电话交流中，孙师傅提到：下周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。 孙师傅为什么改变了安排？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，孙师傅提到：下周，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "孙师傅为什么改变了安排？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/d8091c67272ec040d0174c643b3fdb34ef7aef37e6e2d6f9aa92f724cdf2120b.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "博物馆",
-                "吃晚饭"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "sūn shī fù wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， sūn shī fù tí dào： xià zhōu， sūn shī fù yuán lái zhǔn bèi míng tiān zǎo shàng qù bó wù guǎn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le zhōng wǔ shí èr diǎn。   sūn shī fù wèi shén me gǎi biàn le ān pái？",
-              "partId": "listening-part-3"
-            },
-            {
-              "id": "l022",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "张老师为什么改变了安排？",
-              "options": [
-                {
-                  "id": "A",
-                  "text": "公司",
-                  "pinyin": "gōng sī"
-                },
-                {
-                  "id": "B",
-                  "text": "下午四点",
-                  "pinyin": "xià wǔ sì diǎn"
-                },
-                {
-                  "id": "C",
-                  "text": "锻炼身体",
-                  "pinyin": "duàn liàn shēn tǐ"
-                },
-                {
-                  "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
-                }
-              ],
-              "transcript": "女：在一次电话交流中，张老师提到：下周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。\n男：张老师为什么改变了安排？",
-              "audioText": "在一次电话交流中，张老师提到：下周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。 张老师为什么改变了安排？",
-              "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，张老师提到：下周，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。",
-                  "rate": "-5%"
-                },
-                {
-                  "speaker": "male",
-                  "voice": "zh-CN-YunxiNeural",
-                  "text": "张老师为什么改变了安排？",
-                  "rate": "-5%"
-                }
-              ],
-              "audioPath": "./assets/audio/mock-tests/shared/7353a5eca75dd4293effd32cdf028b43c8fc9f570638efd82292f6a7a20a35a1.mp3",
-              "repeatCount": 2,
-              "scoreWeight": 2.8571,
-              "vocabularyTags": [
-                "学校",
-                "接朋友"
-              ],
-              "difficulty": "HSK2",
-              "promptPinyin": "zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhāng lǎo shī tí dào： xià zhōu， zhāng lǎo shī yuán lái zhǔn bèi xià wǔ liǎng diǎn qù xué xiào jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ liǎng diǎn。   zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
-              "partId": "listening-part-3"
-            },
-            {
-              "id": "l023",
-              "questionType": "single_choice",
-              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "刘阿姨为什么改变了安排？",
+              "prompt": "小雨参加的参观活动现在什么时候开始？",
               "options": [
                 {
                   "id": "A",
@@ -1289,431 +1219,561 @@
                 },
                 {
                   "id": "B",
-                  "text": "准备报告",
-                  "pinyin": "zhǔn bèi bào gào"
+                  "text": "星期一",
+                  "pinyin": "xīng qī yī"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "下午两点",
+                  "pinyin": "xià wǔ liǎng diǎn"
                 },
                 {
                   "id": "D",
-                  "text": "医院",
-                  "pinyin": "yī yuàn"
+                  "text": "下午四点",
+                  "pinyin": "xià wǔ sì diǎn"
                 }
               ],
-              "transcript": "女：在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。\n男：刘阿姨为什么改变了安排？",
-              "audioText": "在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。 刘阿姨为什么改变了安排？",
+              "transcript": "男：小雨原来要星期六去博物馆参加参观活动，现在改到下午两点。\n女：小雨参加的参观活动现在什么时候开始？",
+              "audioText": "小雨原来要星期六去博物馆参加参观活动，现在改到下午两点。 小雨参加的参观活动现在什么时候开始？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "小雨原来要星期六去博物馆参加参观活动，现在改到下午两点。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小雨参加的参观活动现在什么时候开始？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/424ad52aaaffddc21f9c754b5e33a97372c1a36de80991c9f6962c8dd2cf392e.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "下午两点",
+                "银行"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "xiǎo yǔ cān jiā de cān guān huó dòng xiàn zài shén me shí hòu kāi shǐ？",
+              "transcriptPinyin": "xiǎo yǔ yuán lái yào xīng qī liù qù bó wù guǎn cān jiā cān guān huó dòng， xiàn zài gǎi dào xià wǔ liǎng diǎn。   xiǎo yǔ cān jiā de cān guān huó dòng xiàn zài shén me shí hòu kāi shǐ？",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "l022",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "赵经理最后去哪里？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "火车站",
+                  "pinyin": "huǒ chē zhàn"
+                },
+                {
+                  "id": "B",
+                  "text": "学校",
+                  "pinyin": "xué xiào"
+                },
+                {
+                  "id": "C",
+                  "text": "医院",
+                  "pinyin": "yī yuàn"
+                },
+                {
+                  "id": "D",
+                  "text": "超市",
+                  "pinyin": "chāo shì"
+                }
+              ],
+              "transcript": "女：赵经理先去火车站接朋友，然后到学校上课。\n男：赵经理最后去哪里？",
+              "audioText": "赵经理先去火车站接朋友，然后到学校上课。 赵经理最后去哪里？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，刘阿姨提到：下周，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。",
-                  "rate": "-5%"
+                  "text": "赵经理先去火车站接朋友，然后到学校上课。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "刘阿姨为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "赵经理最后去哪里？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/c3c2fda2f493be6807716eba19070e49ba2b01ad29cc17094933cb6843faa508.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/6cd780513c3a4a3076120dd92c69f1dc27e8319e799f3bd4c922f63f8878ad29.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "医院",
-                "吃晚饭"
+                "学校",
+                "超市"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "liú ā yí wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， liú ā yí tí dào： xià zhōu， liú ā yí yuán lái zhǔn bèi xīng qī sān qù yī yuàn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ sì diǎn。   liú ā yí wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "zhào jīng lǐ zuì hòu qù nǎ lǐ？",
+              "transcriptPinyin": "zhào jīng lǐ xiān qù huǒ chē zhàn jiē péng yǒu， rán hòu dào xué xiào shàng kè。   zhào jīng lǐ zuì hòu qù nǎ lǐ？",
+              "partId": "listening-part-3"
+            },
+            {
+              "id": "l023",
+              "questionType": "single_choice",
+              "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
+              "prompt": "孙师傅最后怎么去学校？",
+              "options": [
+                {
+                  "id": "A",
+                  "text": "出租车",
+                  "pinyin": "chū zū chē"
+                },
+                {
+                  "id": "B",
+                  "text": "地铁",
+                  "pinyin": "dì tiě"
+                },
+                {
+                  "id": "C",
+                  "text": "自行车",
+                  "pinyin": "zì xíng chē"
+                },
+                {
+                  "id": "D",
+                  "text": "火车",
+                  "pinyin": "huǒ chē"
+                }
+              ],
+              "transcript": "男：因为身体不舒服，孙师傅不坐地铁了，改坐出租车去学校。\n女：孙师傅最后怎么去学校？",
+              "audioText": "因为身体不舒服，孙师傅不坐地铁了，改坐出租车去学校。 孙师傅最后怎么去学校？",
+              "audioSegments": [
+                {
+                  "speaker": "male",
+                  "voice": "zh-CN-YunxiNeural",
+                  "text": "因为身体不舒服，孙师傅不坐地铁了，改坐出租车去学校。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "孙师傅最后怎么去学校？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                }
+              ],
+              "audioPath": "./assets/audio/mock-tests/shared/dbd34e39fa7badd3bd2d4e2f88ed2a68edc144c1f26371bf7266a7e1cb5fc913.mp3",
+              "repeatCount": 2,
+              "scoreWeight": 2.8571,
+              "vocabularyTags": [
+                "出租车",
+                "学校"
+              ],
+              "difficulty": "HSK2",
+              "promptPinyin": "sūn shī fù zuì hòu zěn me qù xué xiào？",
+              "transcriptPinyin": "yīn wèi shēn tǐ bù shū fú， sūn shī fù bù zuò dì tiě le， gǎi zuò chū zū chē qù xué xiào。   sūn shī fù zuì hòu zěn me qù xué xiào？",
               "partId": "listening-part-3"
             },
             {
               "id": "l024",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "周同学为什么改变了安排？",
+              "prompt": "张老师参加活动以后做什么？",
               "options": [
                 {
                   "id": "A",
-                  "text": "参加活动",
-                  "pinyin": "cān jiā huó dòng"
+                  "text": "还书",
+                  "pinyin": "huán shū"
                 },
                 {
                   "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "上课",
+                  "pinyin": "shàng kè"
                 },
                 {
                   "id": "C",
-                  "text": "超市",
-                  "pinyin": "chāo shì"
+                  "text": "开会",
+                  "pinyin": "kāi huì"
                 },
                 {
                   "id": "D",
-                  "text": "星期一",
-                  "pinyin": "xīng qī yī"
+                  "text": "办业务",
+                  "pinyin": "bàn yè wù"
                 }
               ],
-              "transcript": "女：在一次电话交流中，周同学提到：下周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。\n男：周同学为什么改变了安排？",
-              "audioText": "在一次电话交流中，周同学提到：下周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。 周同学为什么改变了安排？",
+              "transcript": "女：张老师在博物馆参加活动以后，还要去银行办业务。\n男：张老师参加活动以后做什么？",
+              "audioText": "张老师在博物馆参加活动以后，还要去银行办业务。 张老师参加活动以后做什么？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，周同学提到：下周，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。",
-                  "rate": "-5%"
+                  "text": "张老师在博物馆参加活动以后，还要去银行办业务。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "周同学为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "张老师参加活动以后做什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/2ae10067b9d68606bd080c67e4d06e5d504ece24f37400b87571e89697262f99.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/097bf440f713cebf34287d42fb9e9d9f8cab60b3e9053b249a1c4efab6bd89b3.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "接朋友"
+                "办业务",
+                "饭店"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhōu tóng xué tí dào： xià zhōu， zhōu tóng xué yuán lái zhǔn bèi shàng wǔ shí diǎn qù huǒ chē zhàn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le wǎn shàng qī diǎn。   zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "zhāng lǎo shī cān jiā huó dòng yǐ hòu zuò shén me？",
+              "transcriptPinyin": "zhāng lǎo shī zài bó wù guǎn cān jiā huó dòng yǐ hòu， hái yào qù yín háng bàn yè wù。   zhāng lǎo shī cān jiā huó dòng yǐ hòu zuò shén me？",
               "partId": "listening-part-3"
             },
             {
               "id": "l025",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "王芳为什么改变了安排？",
+              "prompt": "谁负责向火车站确认时间？",
               "options": [
                 {
                   "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "李明",
+                  "pinyin": "lǐ míng"
                 },
                 {
                   "id": "B",
-                  "text": "火车站",
-                  "pinyin": "huǒ chē zhàn"
+                  "text": "王芳",
+                  "pinyin": "wáng fāng"
                 },
                 {
                   "id": "C",
-                  "text": "星期三",
-                  "pinyin": "xīng qī sān"
+                  "text": "林医生",
+                  "pinyin": "lín yī shēng"
                 },
                 {
                   "id": "D",
-                  "text": "还书",
-                  "pinyin": "huán shū"
+                  "text": "孙师傅",
+                  "pinyin": "sūn shī fù"
                 }
               ],
-              "transcript": "女：在一次电话交流中，王芳提到：下周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。\n男：王芳为什么改变了安排？",
-              "audioText": "在一次电话交流中，王芳提到：下周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。 王芳为什么改变了安排？",
+              "transcript": "男：刘阿姨整理东西，林医生给火车站打电话问时间。\n女：谁负责向火车站确认时间？",
+              "audioText": "刘阿姨整理东西，林医生给火车站打电话问时间。 谁负责向火车站确认时间？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，王芳提到：下周，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "王芳为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "刘阿姨整理东西，林医生给火车站打电话问时间。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "谁负责向火车站确认时间？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/9741d6dabb7d4ff73e58b5d7b38b974897bba36c0b5613b90c226c018c6e8a7e.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/684e16969f1a858b4a244a7efbb2da9e7c52da01a12d5281b795118c31778f4b.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "银行",
-                "吃晚饭"
+                "林医生",
+                "火车站"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "wáng fāng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， wáng fāng tí dào： xià zhōu， wáng fāng yuán lái zhǔn bèi wǎn shàng qī diǎn qù yín háng chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī yī。   wáng fāng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "shuí fù zé xiàng huǒ chē zhàn què rèn shí jiān？",
+              "transcriptPinyin": "liú ā yí zhěng lǐ dōng xī， lín yī shēng gěi huǒ chē zhàn dǎ diàn huà wèn shí jiān。   shuí fù zé xiàng huǒ chē zhàn què rèn shí jiān？",
               "partId": "listening-part-3"
             },
             {
               "id": "l026",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "陈先生为什么改变了安排？",
+              "prompt": "陈先生的词典是什么颜色？",
               "options": [
                 {
                   "id": "A",
-                  "text": "公园",
-                  "pinyin": "gōng yuán"
+                  "text": "白色",
+                  "pinyin": "bái sè"
                 },
                 {
                   "id": "B",
-                  "text": "星期六",
-                  "pinyin": "xīng qī liù"
+                  "text": "黄色",
+                  "pinyin": "huáng sè"
                 },
                 {
                   "id": "C",
-                  "text": "吃晚饭",
-                  "pinyin": "chī wǎn fàn"
+                  "text": "红色",
+                  "pinyin": "hóng sè"
                 },
                 {
                   "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "蓝色",
+                  "pinyin": "lán sè"
                 }
               ],
-              "transcript": "女：在一次电话交流中，陈先生提到：下周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。\n男：陈先生为什么改变了安排？",
-              "audioText": "在一次电话交流中，陈先生提到：下周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。 陈先生为什么改变了安排？",
+              "transcript": "女：绿色的词典是周同学的，黄色的是陈先生的。\n男：陈先生的词典是什么颜色？",
+              "audioText": "绿色的词典是周同学的，黄色的是陈先生的。 陈先生的词典是什么颜色？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，陈先生提到：下周，陈先生原来准备明天早上去博物馆接朋友，后来因为临时有事，改到了星期三。",
-                  "rate": "-5%"
+                  "text": "绿色的词典是周同学的，黄色的是陈先生的。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "陈先生为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "陈先生的词典是什么颜色？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/a6e5d0e1a55559aa5d1b8588cb4a58a34011f95df156e95e79265d9f763ee2c6.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/2742cb959c40f5c9d8cb0a98565f9b4ccf705407ed3ea92bfc4744a10e066675.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "博物馆",
-                "接朋友"
+                "黄色",
+                "公司"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "chén xiān shēng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， chén xiān shēng tí dào： xià zhōu， chén xiān shēng yuán lái zhǔn bèi míng tiān zǎo shàng qù bó wù guǎn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī sān。   chén xiān shēng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "chén xiān shēng de cí diǎn shì shén me yán sè？",
+              "transcriptPinyin": "lǜ sè de cí diǎn shì zhōu tóng xué de， huáng sè de shì chén xiān shēng de。   chén xiān shēng de cí diǎn shì shén me yán sè？",
               "partId": "listening-part-3"
             },
             {
               "id": "l027",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "林医生为什么改变了安排？",
+              "prompt": "王芳买的雨伞多少钱？",
               "options": [
                 {
                   "id": "A",
-                  "text": "明天早上",
-                  "pinyin": "míng tiān zǎo shàng"
+                  "text": "二十元",
+                  "pinyin": "èr shí yuán"
                 },
                 {
                   "id": "B",
-                  "text": "开会",
-                  "pinyin": "kāi huì"
+                  "text": "八十五元",
+                  "pinyin": "bā shí wǔ yuán"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "一百二十元",
+                  "pinyin": "yì bǎi èr shí yuán"
                 },
                 {
                   "id": "D",
-                  "text": "银行",
-                  "pinyin": "yín háng"
+                  "text": "三十五元",
+                  "pinyin": "sān shí wǔ yuán"
                 }
               ],
-              "transcript": "女：在一次电话交流中，林医生提到：下周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。\n男：林医生为什么改变了安排？",
-              "audioText": "在一次电话交流中，林医生提到：下周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。 林医生为什么改变了安排？",
+              "transcript": "男：王芳在商店买了一个雨伞，一共花了二十元。\n女：王芳买的雨伞多少钱？",
+              "audioText": "王芳在商店买了一个雨伞，一共花了二十元。 王芳买的雨伞多少钱？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，林医生提到：下周，林医生原来准备下午两点去学校吃晚饭，后来因为临时有事，改到了星期六。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "林医生为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "王芳在商店买了一个雨伞，一共花了二十元。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "王芳买的雨伞多少钱？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/5d84cb5b789fb70a5c344e12718cce4214ec7b6e29dff991e1ecb546fc03bee9.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/b783b0de80a71c70324844e94325c650395abb69c968a79e1e269f11b5030fba.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "学校",
-                "吃晚饭"
+                "二十元",
+                "博物馆"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "lín yī shēng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lín yī shēng tí dào： xià zhōu， lín yī shēng yuán lái zhǔn bèi xià wǔ liǎng diǎn qù xué xiào chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī liù。   lín yī shēng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "wáng fāng mǎi de yǔ sǎn duō shǎo qián？",
+              "transcriptPinyin": "wáng fāng zài shāng diàn mǎi le yí gè yǔ sǎn， yī gòng huā le èr shí yuán。   wáng fāng mǎi de yǔ sǎn duō shǎo qián？",
               "partId": "listening-part-3"
             },
             {
               "id": "l028",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "李明为什么改变了安排？",
+              "prompt": "陈先生选择了什么？",
               "options": [
                 {
                   "id": "A",
-                  "text": "上课",
-                  "pinyin": "shàng kè"
+                  "text": "鸡蛋",
+                  "pinyin": "jī dàn"
                 },
                 {
                   "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "面包",
+                  "pinyin": "miàn bāo"
                 },
                 {
                   "id": "C",
-                  "text": "饭店",
-                  "pinyin": "fàn diàn"
+                  "text": "鱼",
+                  "pinyin": "yú"
                 },
                 {
                   "id": "D",
-                  "text": "上午八点",
-                  "pinyin": "shàng wǔ bā diǎn"
+                  "text": "米饭",
+                  "pinyin": "mǐ fàn"
                 }
               ],
-              "transcript": "女：在一次电话交流中，李明提到：下周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。\n男：李明为什么改变了安排？",
-              "audioText": "在一次电话交流中，李明提到：下周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。 李明为什么改变了安排？",
+              "transcript": "女：陈先生喜欢吃米饭，不太喜欢面条。\n男：陈先生选择了什么？",
+              "audioText": "陈先生喜欢吃米饭，不太喜欢面条。 陈先生选择了什么？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，李明提到：下周，李明原来准备星期三去医院接朋友，后来因为临时有事，改到了明天早上。",
-                  "rate": "-5%"
+                  "text": "陈先生喜欢吃米饭，不太喜欢面条。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "李明为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "陈先生选择了什么？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/078a694e3539c441b6ddf92a47a3d23885c867f7d16b466ecbceba55947c1b87.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/33e30c73e50688bd58fc1fc5854051782569cc592ffb03c084d42e2026884e4b.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "医院",
-                "接朋友"
+                "米饭",
+                "公园"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "lǐ míng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， lǐ míng tí dào： xià zhōu， lǐ míng yuán lái zhǔn bèi xīng qī sān qù yī yuàn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le míng tiān zǎo shàng。   lǐ míng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "chén xiān shēng xuǎn zé le shén me？",
+              "transcriptPinyin": "chén xiān shēng xǐ huān chī mǐ fàn， bù tài xǐ huān miàn tiáo。   chén xiān shēng xuǎn zé le shén me？",
               "partId": "listening-part-3"
             },
             {
               "id": "l029",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "小雨为什么改变了安排？",
+              "prompt": "平时从医院到博物馆要多久？",
               "options": [
                 {
                   "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "十分钟",
+                  "pinyin": "shí fēn zhōng"
                 },
                 {
                   "id": "B",
-                  "text": "博物馆",
-                  "pinyin": "bó wù guǎn"
+                  "text": "二十分钟",
+                  "pinyin": "èr shí fēn zhōng"
                 },
                 {
                   "id": "C",
-                  "text": "上午十点",
-                  "pinyin": "shàng wǔ shí diǎn"
+                  "text": "四十五分钟",
+                  "pinyin": "sì shí wǔ fēn zhōng"
                 },
                 {
                   "id": "D",
-                  "text": "看医生",
-                  "pinyin": "kàn yī shēng"
+                  "text": "一个半小时",
+                  "pinyin": "yí gè bàn xiǎo shí"
                 }
               ],
-              "transcript": "女：在一次电话交流中，小雨提到：下周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。\n男：小雨为什么改变了安排？",
-              "audioText": "在一次电话交流中，小雨提到：下周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。 小雨为什么改变了安排？",
+              "transcript": "男：林医生从医院到博物馆要四十五分钟。\n女：平时从医院到博物馆要多久？",
+              "audioText": "林医生从医院到博物馆要四十五分钟。 平时从医院到博物馆要多久？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，小雨提到：下周，小雨原来准备上午十点去火车站吃晚饭，后来因为临时有事，改到了上午八点。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "小雨为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "林医生从医院到博物馆要四十五分钟。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "平时从医院到博物馆要多久？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/6be22fa417646da2a6621fcc7fcbc320c3a42f601a7a95d28895ddca35ccf274.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/2027c7d55cfb53c07bf9385a70561352d02ffe4b838d9f95f529d374965d5c8e.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "吃晚饭"
+                "四十五分钟",
+                "医院"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "xiǎo yǔ wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， xiǎo yǔ tí dào： xià zhōu， xiǎo yǔ yuán lái zhǔn bèi shàng wǔ shí diǎn qù huǒ chē zhàn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le shàng wǔ bā diǎn。   xiǎo yǔ wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "píng shí cóng yī yuàn dào bó wù guǎn yào duō jiǔ？",
+              "transcriptPinyin": "lín yī shēng cóng yī yuàn dào bó wù guǎn yào sì shí wǔ fēn zhōng。   píng shí cóng yī yuàn dào bó wù guǎn yào duō jiǔ？",
               "partId": "listening-part-3"
             },
             {
               "id": "l030",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "赵经理为什么改变了安排？",
+              "prompt": "李明哪天去学校？",
               "options": [
                 {
                   "id": "A",
-                  "text": "图书馆",
-                  "pinyin": "tú shū guǎn"
+                  "text": "星期日",
+                  "pinyin": "xīng qī rì"
                 },
                 {
                   "id": "B",
-                  "text": "中午十二点",
-                  "pinyin": "zhōng wǔ shí èr diǎn"
+                  "text": "星期四",
+                  "pinyin": "xīng qī sì"
                 },
                 {
                   "id": "C",
-                  "text": "买东西",
-                  "pinyin": "mǎi dōng xī"
+                  "text": "星期五",
+                  "pinyin": "xīng qī wǔ"
                 },
                 {
                   "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "星期六",
+                  "pinyin": "xīng qī liù"
                 }
               ],
-              "transcript": "女：在一次电话交流中，赵经理提到：下周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。\n男：赵经理为什么改变了安排？",
-              "audioText": "在一次电话交流中，赵经理提到：下周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。 赵经理为什么改变了安排？",
+              "transcript": "女：学校星期日不开门，李明改成星期四去上课。\n男：李明哪天去学校？",
+              "audioText": "学校星期日不开门，李明改成星期四去上课。 李明哪天去学校？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，赵经理提到：下周，赵经理原来准备晚上七点去银行接朋友，后来因为临时有事，改到了上午十点。",
-                  "rate": "-5%"
+                  "text": "学校星期日不开门，李明改成星期四去上课。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "赵经理为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "李明哪天去学校？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/faa58496f91b1de42f62c20d9337fd42bf572b1dd6f2297204f843bcd23e1de8.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/df17226d728b7a5c57dadcf64d1c88e0fe059397667b4ce33bfc1a12605a88e4.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "银行",
-                "接朋友"
+                "星期四",
+                "图书馆"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhào jīng lǐ wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhào jīng lǐ tí dào： xià zhōu， zhào jīng lǐ yuán lái zhǔn bèi wǎn shàng qī diǎn qù yín háng jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le shàng wǔ shí diǎn。   zhào jīng lǐ wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "lǐ míng nǎ tiān qù xué xiào？",
+              "transcriptPinyin": "xué xiào xīng qī rì bù kāi mén， lǐ míng gǎi chéng xīng qī sì qù shàng kè。   lǐ míng nǎ tiān qù xué xiào？",
               "partId": "listening-part-3"
             }
           ]
@@ -1727,275 +1787,285 @@
               "id": "l031",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "孙师傅为什么改变了安排？",
+              "prompt": "小雨为什么不能按原计划参加参观活动？",
               "options": [
                 {
                   "id": "A",
-                  "text": "下午两点",
-                  "pinyin": "xià wǔ liǎng diǎn"
+                  "text": "临时要开会",
+                  "pinyin": "lín shí yào kāi huì"
                 },
                 {
                   "id": "B",
-                  "text": "接朋友",
-                  "pinyin": "jiē péng yǒu"
+                  "text": "天气不好",
+                  "pinyin": "tiān qì bù hǎo"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "路上堵车",
+                  "pinyin": "lù shàng dǔ chē"
                 },
                 {
                   "id": "D",
-                  "text": "学校",
-                  "pinyin": "xué xiào"
+                  "text": "身体不舒服",
+                  "pinyin": "shēn tǐ bù shū fú"
                 }
               ],
-              "transcript": "女：在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。\n男：孙师傅为什么改变了安排？",
-              "audioText": "在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。 孙师傅为什么改变了安排？",
+              "transcript": "男：因为临时要开会，小雨今天不能去博物馆参加参观活动。\n女：小雨为什么不能按原计划参加参观活动？",
+              "audioText": "因为临时要开会，小雨今天不能去博物馆参加参观活动。 小雨为什么不能按原计划参加参观活动？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，孙师傅提到：这个月，孙师傅原来准备明天早上去博物馆吃晚饭，后来因为临时有事，改到了中午十二点。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "孙师傅为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "因为临时要开会，小雨今天不能去博物馆参加参观活动。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "小雨为什么不能按原计划参加参观活动？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/481135530bc3e157098224b2d8c69a5eb96fc897cec2a5ae36a0464b29d8a011.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/ab27d72aaca22b0f49b584b288089b648937a10193a0f990d5343d21d803f17e.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "博物馆",
-                "吃晚饭"
+                "临时要开会",
+                "银行"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "sūn shī fù wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， sūn shī fù tí dào： zhè ge yuè， sūn shī fù yuán lái zhǔn bèi míng tiān zǎo shàng qù bó wù guǎn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le zhōng wǔ shí èr diǎn。   sūn shī fù wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "xiǎo yǔ wèi shén me bù néng àn yuán jì huà cān jiā cān guān huó dòng？",
+              "transcriptPinyin": "yīn wèi lín shí yào kāi huì， xiǎo yǔ jīn tiān bù néng qù bó wù guǎn cān jiā cān guān huó dòng。   xiǎo yǔ wèi shén me bù néng àn yuán jì huà cān jiā cān guān huó dòng？",
               "partId": "listening-part-4"
             },
             {
               "id": "l032",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "张老师为什么改变了安排？",
+              "prompt": "赵经理最后需要准备多少？",
               "options": [
                 {
                   "id": "A",
-                  "text": "锻炼身体",
-                  "pinyin": "duàn liàn shēn tǐ"
+                  "text": "六份",
+                  "pinyin": "liù fèn"
                 },
                 {
                   "id": "B",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "八份",
+                  "pinyin": "bā fèn"
                 },
                 {
                   "id": "C",
-                  "text": "公司",
-                  "pinyin": "gōng sī"
+                  "text": "三份",
+                  "pinyin": "sān fèn"
                 },
                 {
                   "id": "D",
-                  "text": "下午四点",
-                  "pinyin": "xià wǔ sì diǎn"
+                  "text": "两份",
+                  "pinyin": "liǎng fèn"
                 }
               ],
-              "transcript": "女：在一次电话交流中，张老师提到：这个月，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。\n男：张老师为什么改变了安排？",
-              "audioText": "在一次电话交流中，张老师提到：这个月，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。 张老师为什么改变了安排？",
+              "transcript": "女：赵经理要准备两份材料，不是一份。\n男：赵经理最后需要准备多少？",
+              "audioText": "赵经理要准备两份材料，不是一份。 赵经理最后需要准备多少？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，张老师提到：这个月，张老师原来准备下午两点去学校接朋友，后来因为临时有事，改到了下午两点。",
-                  "rate": "-5%"
+                  "text": "赵经理要准备两份材料，不是一份。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "张老师为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "赵经理最后需要准备多少？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/1e57abae177bb78aafc4082b253a2bd90c3312ba96980c67737bff8c45d3f8bb.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/40cf58917764df523dfff83908adda9761fb56f34ca38341c97808771c28e31b.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "学校",
-                "接朋友"
+                "两份",
+                "超市"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhāng lǎo shī tí dào： zhè ge yuè， zhāng lǎo shī yuán lái zhǔn bèi xià wǔ liǎng diǎn qù xué xiào jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ liǎng diǎn。   zhāng lǎo shī wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "zhào jīng lǐ zuì hòu xū yào zhǔn bèi duō shǎo？",
+              "transcriptPinyin": "zhào jīng lǐ yào zhǔn bèi liǎng fèn cái liào， bú shì yī fèn。   zhào jīng lǐ zuì hòu xū yào zhǔn bèi duō shǎo？",
               "partId": "listening-part-4"
             },
             {
               "id": "l033",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "刘阿姨为什么改变了安排？",
+              "prompt": "钥匙可能在哪里？",
               "options": [
                 {
                   "id": "A",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "学校",
+                  "pinyin": "xué xiào"
                 },
                 {
                   "id": "B",
+                  "text": "公司",
+                  "pinyin": "gōng sī"
+                },
+                {
+                  "id": "C",
                   "text": "医院",
                   "pinyin": "yī yuàn"
                 },
                 {
-                  "id": "C",
-                  "text": "晚上七点",
-                  "pinyin": "wǎn shàng qī diǎn"
-                },
-                {
                   "id": "D",
-                  "text": "准备报告",
-                  "pinyin": "zhǔn bèi bào gào"
+                  "text": "图书馆",
+                  "pinyin": "tú shū guǎn"
                 }
               ],
-              "transcript": "女：在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。\n男：刘阿姨为什么改变了安排？",
-              "audioText": "在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。 刘阿姨为什么改变了安排？",
+              "transcript": "男：孙师傅把钥匙忘在医院了，到了学校才发现。\n女：钥匙可能在哪里？",
+              "audioText": "孙师傅把钥匙忘在医院了，到了学校才发现。 钥匙可能在哪里？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，刘阿姨提到：这个月，刘阿姨原来准备星期三去医院吃晚饭，后来因为临时有事，改到了下午四点。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "刘阿姨为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "孙师傅把钥匙忘在医院了，到了学校才发现。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "钥匙可能在哪里？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/81b52ced0f27238ccff261e7f5c46855906ca73453f240ca58e6a6fd56d357ed.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/a6cbc7dacbdf14758b710a73225f7afe26c8fb155c0d5fe41c1ec548524166ab.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
                 "医院",
-                "吃晚饭"
+                "学校"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "liú ā yí wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， liú ā yí tí dào： zhè ge yuè， liú ā yí yuán lái zhǔn bèi xīng qī sān qù yī yuàn chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xià wǔ sì diǎn。   liú ā yí wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "yào shi kě néng zài nǎ lǐ？",
+              "transcriptPinyin": "sūn shī fù bǎ yào shi wàng zài yī yuàn le， dào le xué xiào cái fā xiàn。   yào shi kě néng zài nǎ lǐ？",
               "partId": "listening-part-4"
             },
             {
               "id": "l034",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "周同学为什么改变了安排？",
+              "prompt": "别人给张老师什么建议？",
               "options": [
                 {
                   "id": "A",
-                  "text": "超市",
-                  "pinyin": "chāo shì"
+                  "text": "多休息多喝水",
+                  "pinyin": "duō xiū xī duō hē shuǐ"
                 },
                 {
                   "id": "B",
-                  "text": "星期一",
-                  "pinyin": "xīng qī yī"
+                  "text": "早点儿出门",
+                  "pinyin": "zǎo diǎn ér chū mén"
                 },
                 {
                   "id": "C",
-                  "text": "参加活动",
-                  "pinyin": "cān jiā huó dòng"
+                  "text": "请老师再讲一次",
+                  "pinyin": "qǐng lǎo shī zài jiǎng yī cì"
                 },
                 {
                   "id": "D",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "先打电话问一下",
+                  "pinyin": "xiān dǎ diàn huà wèn yī xià"
                 }
               ],
-              "transcript": "女：在一次电话交流中，周同学提到：这个月，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。\n男：周同学为什么改变了安排？",
-              "audioText": "在一次电话交流中，周同学提到：这个月，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。 周同学为什么改变了安排？",
+              "transcript": "女：张老师遇到了问题，朋友建议他早点儿出门。\n男：别人给张老师什么建议？",
+              "audioText": "张老师遇到了问题，朋友建议他早点儿出门。 别人给张老师什么建议？",
               "audioSegments": [
                 {
                   "speaker": "female",
                   "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，周同学提到：这个月，周同学原来准备上午十点去火车站接朋友，后来因为临时有事，改到了晚上七点。",
-                  "rate": "-5%"
+                  "text": "张老师遇到了问题，朋友建议他早点儿出门。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "周同学为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "别人给张老师什么建议？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/9b897150646754b35287be9e7fe01dcbbecb7b90c00510730b8cc6ed1cda8abc.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/79207a2f72cfb9532e31c8b3d5e15318845a06ef3c05e62a826442abfcac04d4.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8571,
               "vocabularyTags": [
-                "火车站",
-                "接朋友"
+                "早点儿出门",
+                "饭店"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， zhōu tóng xué tí dào： zhè ge yuè， zhōu tóng xué yuán lái zhǔn bèi shàng wǔ shí diǎn qù huǒ chē zhàn jiē péng yǒu， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le wǎn shàng qī diǎn。   zhōu tóng xué wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "bié rén gěi zhāng lǎo shī shén me jiàn yì？",
+              "transcriptPinyin": "zhāng lǎo shī yù dào le wèn tí， péng yǒu jiàn yì tā zǎo diǎn ér chū mén。   bié rén gěi zhāng lǎo shī shén me jiàn yì？",
               "partId": "listening-part-4"
             },
             {
               "id": "l035",
               "questionType": "single_choice",
               "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-              "prompt": "王芳为什么改变了安排？",
+              "prompt": "刘阿姨为什么每天去火车站？",
               "options": [
                 {
                   "id": "A",
-                  "text": "星期三",
-                  "pinyin": "xīng qī sān"
+                  "text": "接朋友",
+                  "pinyin": "jiē péng yǒu"
                 },
                 {
                   "id": "B",
-                  "text": "还书",
-                  "pinyin": "huán shū"
+                  "text": "看医生",
+                  "pinyin": "kàn yī shēng"
                 },
                 {
                   "id": "C",
-                  "text": "临时有事",
-                  "pinyin": "lín shí yǒu shì"
+                  "text": "学习汉语",
+                  "pinyin": "xué xí hàn yǔ"
                 },
                 {
                   "id": "D",
-                  "text": "火车站",
-                  "pinyin": "huǒ chē zhàn"
+                  "text": "锻炼身体",
+                  "pinyin": "duàn liàn shēn tǐ"
                 }
               ],
-              "transcript": "女：在一次电话交流中，王芳提到：这个月，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。\n男：王芳为什么改变了安排？",
-              "audioText": "在一次电话交流中，王芳提到：这个月，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。 王芳为什么改变了安排？",
+              "transcript": "男：刘阿姨每天去火车站，是为了接朋友。\n女：刘阿姨为什么每天去火车站？",
+              "audioText": "刘阿姨每天去火车站，是为了接朋友。 刘阿姨为什么每天去火车站？",
               "audioSegments": [
-                {
-                  "speaker": "female",
-                  "voice": "zh-CN-XiaoxiaoNeural",
-                  "text": "在一次电话交流中，王芳提到：这个月，王芳原来准备晚上七点去银行吃晚饭，后来因为临时有事，改到了星期一。",
-                  "rate": "-5%"
-                },
                 {
                   "speaker": "male",
                   "voice": "zh-CN-YunxiNeural",
-                  "text": "王芳为什么改变了安排？",
-                  "rate": "-5%"
+                  "text": "刘阿姨每天去火车站，是为了接朋友。",
+                  "rate": "-18%",
+                  "postTempo": 0.84
+                },
+                {
+                  "speaker": "female",
+                  "voice": "zh-CN-XiaoxiaoNeural",
+                  "text": "刘阿姨为什么每天去火车站？",
+                  "rate": "-18%",
+                  "postTempo": 0.84
                 }
               ],
-              "audioPath": "./assets/audio/mock-tests/shared/d3e63c2e42299660f6359723c71330db21f2ba65bbbe0a8ff073e8f5fca2960c.mp3",
+              "audioPath": "./assets/audio/mock-tests/shared/fbd9b80b558c8fe941a17a035b5d759b64246798e62d9364a9af95508b2937df.mp3",
               "repeatCount": 2,
               "scoreWeight": 2.8586,
               "vocabularyTags": [
-                "银行",
-                "吃晚饭"
+                "接朋友",
+                "火车站"
               ],
               "difficulty": "HSK2",
-              "promptPinyin": "wáng fāng wèi shén me gǎi biàn le ān pái？",
-              "transcriptPinyin": "zài yī cì diàn huà jiāo liú zhōng， wáng fāng tí dào： zhè ge yuè， wáng fāng yuán lái zhǔn bèi wǎn shàng qī diǎn qù yín háng chī wǎn fàn， hòu lái yīn wèi lín shí yǒu shì， gǎi dào le xīng qī yī。   wáng fāng wèi shén me gǎi biàn le ān pái？",
+              "promptPinyin": "liú ā yí wèi shén me měi tiān qù huǒ chē zhàn？",
+              "transcriptPinyin": "liú ā yí měi tiān qù huǒ chē zhàn， shì wèi le jiē péng yǒu。   liú ā yí wèi shén me měi tiān qù huǒ chē zhàn？",
               "partId": "listening-part-4"
             }
           ]

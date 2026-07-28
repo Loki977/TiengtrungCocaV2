@@ -76,6 +76,40 @@ NAMES = ["李明", "王芳", "张老师", "小雨", "陈先生", "刘阿姨", "�
 PLACES = ["图书馆", "学校", "公司", "医院", "超市", "火车站", "公园", "银行", "饭店", "博物馆"]
 TIMES = ["上午八点", "上午十点", "中午十二点", "下午两点", "下午四点", "晚上七点", "星期一", "星期三", "星期六", "明天早上"]
 ACTIVITIES = ["开会", "上课", "看医生", "买东西", "接朋友", "锻炼身体", "准备报告", "参加活动", "还书", "吃晚饭"]
+EVENTS = ["课程", "会议", "讲座", "比赛", "培训", "展览", "面试", "交流活动", "健康检查", "参观活动"]
+EVENT_PLACES = ["学校", "公司", "学校", "公园", "公司", "博物馆", "公司", "学校", "医院", "博物馆"]
+PLACE_ACTIVITIES = [
+    ("图书馆", "还书"),
+    ("学校", "上课"),
+    ("公司", "开会"),
+    ("医院", "看医生"),
+    ("超市", "买东西"),
+    ("火车站", "接朋友"),
+    ("公园", "锻炼身体"),
+    ("银行", "办业务"),
+    ("饭店", "吃晚饭"),
+    ("博物馆", "参加活动"),
+]
+LISTENING_RATES = {1: "-22%", 2: "-18%", 3: "-12%", 4: "-5%", 5: "-5%", 6: "-5%"}
+LISTENING_POST_TEMPOS = {1: 0.78, 2: 0.84, 3: 0.90}
+TRANSPORTS = ["公共汽车", "地铁", "出租车", "自行车", "火车", "步行"]
+WEEKDAYS = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+ITEMS = ["雨伞", "手机", "钥匙", "词典", "杯子", "眼镜", "书包", "笔记本", "车票", "文件"]
+COLORS = ["红色", "蓝色", "白色", "黑色", "绿色", "黄色"]
+FOODS = ["面条", "米饭", "饺子", "苹果", "西瓜", "鸡蛋", "面包", "鱼"]
+PRICES = ["二十元", "三十五元", "四十八元", "六十元", "八十五元", "一百二十元"]
+DURATIONS = ["十分钟", "二十分钟", "半个小时", "四十五分钟", "一个小时", "一个半小时"]
+COUNTS = ["两份", "三份", "四份", "五份", "六份", "八份"]
+REASONS = ["天气不好", "路上堵车", "身体不舒服", "设备出了问题", "临时要开会", "材料还没准备好"]
+METHODS = ["先列清单再逐项完成", "把任务分成几个小步骤", "先听取意见再作决定", "提前预约并确认时间", "比较数据后再调整方案", "请有经验的同事协助"]
+RESULTS = ["按时完成了任务", "把活动改到了室内", "减少了等待时间", "找到了更合适的方案", "避免了重复修改", "得到了大家的支持"]
+PURPOSES = ["方便大家出行", "提高工作效率", "减少不必要的浪费", "让信息更容易理解", "保证活动顺利进行", "听取更多人的意见"]
+EVALUATIONS = ["位置方便但环境有点儿吵", "价格合适而且服务很好", "内容清楚但例子还不够", "设计简单却很实用", "安排紧凑但时间合理", "方法新颖而且容易执行"]
+BASIC_METHODS = ["早点儿出门", "先打电话问一下", "多休息多喝水", "每天练习半个小时", "把重要的事写下来", "请老师再讲一次"]
+BASIC_RESULTS = ["按时到了", "在家休息", "买到了东西", "找到了钥匙", "完成了作业", "见到了朋友"]
+BASIC_PURPOSES = ["去上课", "买东西", "看医生", "接朋友", "学习汉语", "锻炼身体"]
+BASIC_PURPOSE_PLACES = ["学校", "超市", "医院", "火车站", "学校", "公园"]
+BASIC_EVALUATIONS = ["很方便", "有点儿贵", "味道不错", "离家很近", "人太多了", "服务很好"]
 
 LEVEL_CLAUSES = {
     2: [
@@ -493,56 +527,287 @@ def option_list(correct: str, distractors: list[str], seed: int, with_pinyin: bo
     return options, answer
 
 
+def listening_choices(values: list[str], correct: str, seed: int) -> list[str]:
+    choices = [value for value in values if value != correct]
+    if not choices:
+        raise ValueError(f"Không có đáp án nhiễu cho {correct}")
+    start = seed % len(choices)
+    rotated = choices[start:] + choices[:start]
+    return rotated[:3]
+
+
+def build_varied_listening_item(level: int, serial: int) -> tuple[str, str, str, list[str], list[str]]:
+    """Create one deterministic, answerable listening item for exam variants 2–5.
+
+    Twenty scenario families rotate independently from names, places, times and
+    objects. This keeps each exam varied without adding a repeated lead-in.
+    """
+
+    scenario = serial % 20
+    cycle = serial // 20
+    seed = serial * 7 + level * 11 + cycle * 3
+
+    def pick(values: list[str], offset: int = 0, step: int = 1) -> str:
+        return values[(seed * step + offset + cycle) % len(values)]
+
+    name1 = NAMES[(scenario * 3 + cycle + level) % len(NAMES)]
+    name2 = NAMES[(scenario * 7 + cycle * 3 + level + 4) % len(NAMES)]
+    if name2 == name1:
+        name2 = NAMES[(NAMES.index(name1) + 1) % len(NAMES)]
+    place1 = pick(PLACES, 1)
+    place2 = pick(PLACES, 5, 3)
+    if place2 == place1:
+        place2 = PLACES[(PLACES.index(place1) + 2) % len(PLACES)]
+    time1 = pick(TIMES, 2)
+    time2 = pick(TIMES, 7, 3)
+    if time2 == time1:
+        time2 = TIMES[(TIMES.index(time1) + 2) % len(TIMES)]
+    activity1 = pick(ACTIVITIES, 3)
+    activity2 = pick(ACTIVITIES, 8, 3)
+    if activity2 == activity1:
+        activity2 = ACTIVITIES[(ACTIVITIES.index(activity1) + 3) % len(ACTIVITIES)]
+    event = pick(EVENTS, 3)
+    event_place = EVENT_PLACES[EVENTS.index(event)]
+    pair1 = PLACE_ACTIVITIES[(scenario * 2 + cycle + level) % len(PLACE_ACTIVITIES)]
+    pair2 = PLACE_ACTIVITIES[(scenario * 3 + cycle * 2 + level + 4) % len(PLACE_ACTIVITIES)]
+    if pair2 == pair1:
+        pair2 = PLACE_ACTIVITIES[(PLACE_ACTIVITIES.index(pair1) + 1) % len(PLACE_ACTIVITIES)]
+    transport1 = pick(TRANSPORTS, 1)
+    transport2 = pick(TRANSPORTS, 4, 3)
+    if transport2 == transport1:
+        transport2 = TRANSPORTS[(TRANSPORTS.index(transport1) + 1) % len(TRANSPORTS)]
+    item = pick(ITEMS, 2)
+    color1 = pick(COLORS, 1)
+    color2 = pick(COLORS, 4, 3)
+    if color2 == color1:
+        color2 = COLORS[(COLORS.index(color1) + 1) % len(COLORS)]
+    food1 = pick(FOODS, 2)
+    food2 = pick(FOODS, 5, 3)
+    if food2 == food1:
+        food2 = FOODS[(FOODS.index(food1) + 1) % len(FOODS)]
+    price = pick(PRICES, 2)
+    duration = pick(DURATIONS, 3)
+    weekday1 = pick(WEEKDAYS, 1)
+    weekday2 = pick(WEEKDAYS, 4, 3)
+    if weekday2 == weekday1:
+        weekday2 = WEEKDAYS[(WEEKDAYS.index(weekday1) + 2) % len(WEEKDAYS)]
+    reason = pick(REASONS, 2)
+    count = pick(COUNTS, 3)
+    method_pool = BASIC_METHODS if level <= 3 else METHODS
+    result_pool = BASIC_RESULTS if level <= 3 else RESULTS
+    purpose_pool = BASIC_PURPOSES if level <= 3 else PURPOSES
+    evaluation_pool = BASIC_EVALUATIONS if level <= 3 else EVALUATIONS
+    method = pick(method_pool, 1)
+    result = pick(result_pool, 2)
+    purpose = pick(purpose_pool, 3)
+    evaluation = pick(evaluation_pool, 4)
+    advanced = level >= 4
+
+    if scenario == 0:
+        if advanced:
+            statement = f"{name1}负责的{event}原定{time1}在{event_place}开始，场地确认后顺延到{time2}，其他安排不变。"
+        else:
+            statement = f"{name1}原来要{time1}去{event_place}参加{event}，现在改到{time2}。"
+        asked, correct, pool = f"{name1}参加的{event}现在什么时候开始？", time2, TIMES
+    elif scenario == 1:
+        if advanced:
+            statement = f"{name1}先到{pair1[0]}{pair1[1]}，随后前往{pair2[0]}{pair2[1]}，中途不再停留。"
+        else:
+            statement = f"{name1}先去{pair1[0]}{pair1[1]}，然后到{pair2[0]}{pair2[1]}。"
+        asked, correct, pool = f"{name1}最后去哪里？", pair2[0], PLACES
+    elif scenario == 2:
+        if advanced:
+            statement = f"{transport1}受{reason}影响，{name1}权衡时间后改乘{transport2}前往{place1}。"
+        else:
+            statement = f"因为{reason}，{name1}不坐{transport1}了，改坐{transport2}去{place1}。"
+        asked, correct, pool = f"{name1}最后怎么去{place1}？", transport2, TRANSPORTS
+    elif scenario == 3:
+        if advanced:
+            statement = f"{name1}在{pair1[0]}完成{pair1[1]}后，又前往{pair2[0]}{pair2[1]}，没有直接回家。"
+        else:
+            statement = f"{name1}在{pair1[0]}{pair1[1]}以后，还要去{pair2[0]}{pair2[1]}。"
+        asked, correct, pool = f"{name1}{pair1[1]}以后做什么？", pair2[1], [item[1] for item in PLACE_ACTIVITIES]
+    elif scenario == 4:
+        if advanced:
+            statement = f"{name1}负责整理资料，{name2}负责与{place1}联系；需要确认时间的是后者。"
+        else:
+            statement = f"{name1}整理东西，{name2}给{place1}打电话问时间。"
+        asked, correct, pool = f"谁负责向{place1}确认时间？", name2, NAMES
+    elif scenario == 5:
+        if advanced:
+            statement = f"桌上有两个{item}，{color1}的是{name1}的，贴着标签的{color2}那个属于{name2}。"
+        else:
+            statement = f"{color1}的{item}是{name1}的，{color2}的是{name2}的。"
+        asked, correct, pool = f"{name2}的{item}是什么颜色？", color2, COLORS
+    elif scenario == 6:
+        if advanced:
+            statement = f"{name1}比较了几家店，最终以{price}买下{item}，价格包含送货费。"
+        else:
+            statement = f"{name1}在商店买了一个{item}，一共花了{price}。"
+        asked, correct, pool = f"{name1}买的{item}多少钱？", price, PRICES
+    elif scenario == 7:
+        if advanced:
+            statement = f"{name1}觉得{food1}清淡合适，{food2}虽然有名却不合口味，因此点了前者。"
+        else:
+            statement = f"{name1}喜欢吃{food1}，不太喜欢{food2}。"
+        asked, correct, pool = f"{name1}选择了什么？", food1, FOODS
+    elif scenario == 8:
+        if advanced:
+            statement = f"{name1}了解到，从{place1}到{place2}通常需要{duration}，高峰期还可能再多十分钟。"
+        else:
+            statement = f"{name1}从{place1}到{place2}要{duration}。"
+        asked, correct, pool = f"平时从{place1}到{place2}要多久？", duration, DURATIONS
+    elif scenario == 9:
+        if advanced:
+            statement = f"{pair1[0]}在{weekday1}暂停开放，{name1}只好把原定{pair1[1]}改到{weekday2}。"
+        else:
+            statement = f"{pair1[0]}{weekday1}不开门，{name1}改成{weekday2}去{pair1[1]}。"
+        asked, correct, pool = f"{name1}哪天去{pair1[0]}？", weekday2, WEEKDAYS
+    elif scenario == 10:
+        if advanced:
+            statement = f"{name1}得知，考虑到{reason}，负责人取消了在{event_place}举行的{event}，并及时通知了参加者。"
+            asked = f"{name1}提到的{event}为什么取消？"
+        else:
+            statement = f"因为{reason}，{name1}今天不能去{event_place}参加{event}。"
+            asked = f"{name1}为什么不能按原计划参加{event}？"
+        correct, pool = reason, REASONS
+    elif scenario == 11:
+        if advanced:
+            statement = f"{place1}原本需要准备更多材料，核对报名人数后只保留了{count}，数量已经确认。"
+        else:
+            statement = f"{name1}要准备{count}材料，不是一份。"
+        asked, correct, pool = f"{name1}最后需要准备多少？", count, COUNTS
+    elif scenario == 12:
+        if advanced:
+            statement = f"{name1}离开{place1}后才发现{item}不在身边，回想起来应该落在{place2}的服务台。"
+        else:
+            statement = f"{name1}把{item}忘在{place2}了，到了{place1}才发现。"
+        asked, correct, pool = f"{item}可能在哪里？", place2, PLACES
+    elif scenario == 13:
+        if advanced:
+            statement = f"针对{reason}带来的影响，{name1}没有急着继续，而是决定{method}。"
+        else:
+            statement = f"{name1}遇到了问题，朋友建议他{method}。"
+        asked, correct, pool = f"别人给{name1}什么建议？", method, method_pool
+    elif scenario == 14:
+        if advanced:
+            statement = f"{name1}说明，{place1}调整流程并不是为了减少服务，而是为了{purpose}，试行一个月后再评估。"
+            asked = f"{name1}说{place1}这样安排的主要目的是什么？"
+        else:
+            purpose_place = BASIC_PURPOSE_PLACES[BASIC_PURPOSES.index(purpose)]
+            statement = f"{name1}每天去{purpose_place}，是为了{purpose}。"
+            asked = f"{name1}为什么每天去{purpose_place}？"
+        correct, pool = purpose, purpose_pool
+    elif scenario == 15:
+        if advanced:
+            statement = f"面对进度落后的情况，{name1}采用了新办法：{method}，而不是简单延长工作时间。"
+        else:
+            statement = f"为了做好这件事，{name1}决定{method}。"
+        asked, correct, pool = f"{name1}用了什么办法？", method, method_pool
+    elif scenario == 16:
+        if advanced:
+            statement = f"{name1}所在的团队调整以后不仅没有耽误进度，还{result}，说明前面的判断是有效的。"
+        else:
+            statement = f"{name1}照着计划做，最后{result}。"
+        asked, correct, pool = f"{name1}这边最后的结果怎么样？", result, result_pool
+    elif scenario == 17:
+        if advanced:
+            statement = f"{name1}没有直接处理细节，而是先{method}，确认方向后才安排后续工作。"
+        else:
+            statement = f"{name1}先{method}，然后才去{place1}。"
+        asked, correct, pool = f"{name1}先做了什么？", method, method_pool
+    elif scenario == 18:
+        if advanced:
+            statement = f"{name1}体验了{place1}的新服务后认为，它{evaluation}，总体上值得继续使用。"
+        else:
+            statement = f"{name1}觉得这个地方{evaluation}。"
+        asked, correct, pool = f"{name1}怎么评价这里？", evaluation, evaluation_pool
+    else:
+        if advanced:
+            statement = f"讨论过{reason}和时间成本后，{name1}放弃了{activity1}，最终决定先{activity2}。"
+        else:
+            statement = f"{name1}本来要{activity1}，后来决定先{activity2}。"
+        asked, correct, pool = f"{name1}最后决定先做什么？", activity2, ACTIVITIES
+
+    distractors = listening_choices(pool, correct, seed + scenario)
+    return statement, asked, correct, distractors, [correct, place1]
+
+
 def build_listening_questions(level: int, count: int, repeat_count: int, variant: int = 1) -> tuple[list[dict], dict]:
     clauses = LEVEL_CLAUSES[level]
     weights = distribute_weights(count)
     questions, answers = [], {}
     for i in range(count):
-        statement, asked, correct = clauses[i % len(clauses)]
-        variant_offset = (variant - 1) * 7
-        name = NAMES[(i * 3 + level + variant_offset) % len(NAMES)]
-        place = PLACES[(i * 2 + level + variant_offset) % len(PLACES)]
-        time = TIMES[(i * 4 + level + variant_offset) % len(TIMES)]
-        activity = ACTIVITIES[(i * 5 + level + variant_offset) % len(ACTIVITIES)]
-        if i >= len(clauses):
-            context = ["这周", "下周", "这个月", "假期里", "培训期间"][i // len(clauses) - 1]
-            statement = f"{context}，{name}原来准备{time}去{place}{activity}，后来因为临时有事，改到了{TIMES[(i + 2) % len(TIMES)]}。"
-            asked = f"{name}为什么改变了安排？"
-            correct = "临时有事"
         if variant > 1:
-            statement = f"{VARIANT_CONTEXTS[variant - 1]}，{name}提到：{statement}"
-        female = statement
-        male = asked
+            serial = (variant - 2) * count + i
+            statement, asked, correct, distractors, vocabulary_tags = build_varied_listening_item(level, serial)
+        else:
+            statement, asked, correct = clauses[i % len(clauses)]
+            name = NAMES[(i * 3 + level) % len(NAMES)]
+            place = PLACES[(i * 2 + level) % len(PLACES)]
+            time = TIMES[(i * 4 + level) % len(TIMES)]
+            activity = ACTIVITIES[(i * 5 + level) % len(ACTIVITIES)]
+            if i >= len(clauses):
+                context = ["这周", "下周", "这个月", "假期里", "培训期间"][i // len(clauses) - 1]
+                changed_time = TIMES[(i + 2) % len(TIMES)]
+                statement = f"{context}，{name}原来准备{time}去{place}{activity}，后来因为临时有事，改到了{changed_time}。"
+                asked = f"{name}为什么改变了安排？"
+                correct = "临时有事"
+            distractors = [
+                PLACES[(i + 1) % len(PLACES)],
+                TIMES[(i + 3) % len(TIMES)],
+                ACTIVITIES[(i + 4) % len(ACTIVITIES)],
+            ]
+            vocabulary_tags = [place, activity]
+
+        if variant == 1 or (i + variant) % 2:
+            statement_speaker = {"speaker": "female", "voice": "zh-CN-XiaoxiaoNeural", "label": "女"}
+            question_speaker = {"speaker": "male", "voice": "zh-CN-YunxiNeural", "label": "男"}
+        else:
+            statement_speaker = {"speaker": "male", "voice": "zh-CN-YunxiNeural", "label": "男"}
+            question_speaker = {"speaker": "female", "voice": "zh-CN-XiaoxiaoNeural", "label": "女"}
+        rate = LISTENING_RATES[level]
         segments = [
-            {"speaker": "female", "voice": "zh-CN-XiaoxiaoNeural", "text": female, "rate": "-5%"},
-            {"speaker": "male", "voice": "zh-CN-YunxiNeural", "text": male, "rate": "-5%"},
+            {
+                "speaker": statement_speaker["speaker"],
+                "voice": statement_speaker["voice"],
+                "text": statement,
+                "rate": rate,
+            },
+            {
+                "speaker": question_speaker["speaker"],
+                "voice": question_speaker["voice"],
+                "text": asked,
+                "rate": rate,
+            },
         ]
-        distractor_pool = [
-            correct,
-            PLACES[(i + 1) % len(PLACES)],
-            TIMES[(i + 3) % len(TIMES)],
-            ACTIVITIES[(i + 4) % len(ACTIVITIES)],
-        ]
-        options, correct_id = option_list(correct, distractor_pool[1:], i, level <= 2)
+        if level in LISTENING_POST_TEMPOS:
+            for segment in segments:
+                segment["postTempo"] = LISTENING_POST_TEMPOS[level]
+        option_seed = i if variant == 1 else i + variant * 17
+        options, correct_id = option_list(correct, distractors, option_seed, level <= 2)
         qid = f"l{i + 1:03d}"
         question = {
             "id": qid,
             "questionType": "single_choice",
             "instruction": "Nghe đoạn hội thoại và chọn đáp án đúng.",
-            "prompt": male,
+            "prompt": asked,
             "options": options,
-            "transcript": f"女：{female}\n男：{male}",
-            "audioText": f"{female} {male}",
+            "transcript": (
+                f"{statement_speaker['label']}：{statement}\n"
+                f"{question_speaker['label']}：{asked}"
+            ),
+            "audioText": f"{statement} {asked}",
             "audioSegments": segments,
             "audioPath": audio_path(segments),
             "repeatCount": repeat_count,
             "scoreWeight": weights[i],
-            "vocabularyTags": [place, activity],
+            "vocabularyTags": vocabulary_tags,
             "difficulty": f"HSK{level}",
         }
         if level <= 2:
-            question["promptPinyin"] = pinyin(male)
-            question["transcriptPinyin"] = pinyin(f"{female} {male}")
+            question["promptPinyin"] = pinyin(asked)
+            question["transcriptPinyin"] = pinyin(f"{statement} {asked}")
         questions.append(question)
         answers[qid] = {
             "correctAnswer": correct_id,
@@ -810,7 +1075,13 @@ def migrate_hsk1(source: dict) -> tuple[dict, dict]:
         weights = distribute_weights(expected)
         for index, old in enumerate(legacy_section["questions"]):
             qtype = old.get("type", "single_choice")
-            segments = [{"speaker": "female", "voice": "zh-CN-XiaoxiaoNeural", "text": old.get("transcript") or old.get("hanzi") or old["prompt"], "rate": "-5%"}]
+            segments = [{
+                "speaker": "female",
+                "voice": "zh-CN-XiaoxiaoNeural",
+                "text": old.get("transcript") or old.get("hanzi") or old["prompt"],
+                "rate": LISTENING_RATES[1],
+                "postTempo": LISTENING_POST_TEMPOS[1],
+            }]
             question = {
                 "id": old["id"],
                 "questionType": qtype,
