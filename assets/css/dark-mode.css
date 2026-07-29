@@ -387,6 +387,116 @@ html.dark-mode :is(.feedback.wrong, .danger-zone .settings-card__head) {
   color: #ff9aaa !important;
 }
 
+/* Translation challenge: keep every state readable on the shared dark canvas. */
+html.dark-mode .challenge-shell {
+  --ch-primary: #ff8b55;
+  --ch-deep: #eef4ff;
+  --ch-mint: #102d2a;
+  --ch-card: #121c2f;
+  color: #dce7f5;
+}
+
+html.dark-mode .challenge-top .back-link {
+  color: #c4d1e3 !important;
+}
+
+html.dark-mode .challenge-top .back-link:hover,
+html.dark-mode .challenge-brand {
+  color: #ffb16f !important;
+}
+
+html.dark-mode .challenge-panel {
+  color: #dce7f5 !important;
+  background:
+    radial-gradient(circle at 50% 0, rgba(255, 139, 85, .08), transparent 34%),
+    linear-gradient(145deg, rgba(19, 31, 52, .98), rgba(12, 21, 38, .98)) !important;
+  border-color: rgba(164, 183, 216, .20) !important;
+  box-shadow: 0 24px 58px rgba(0, 0, 0, .38) !important;
+}
+
+html.dark-mode .setup :is(p, #setupNote),
+html.dark-mode .result p,
+html.dark-mode .question-meta {
+  color: #adbbd0;
+}
+
+html.dark-mode .level-btn {
+  color: #dce7f5;
+  background: #101b2e;
+  border-color: #33445f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045);
+  transition: border-color .18s ease, background-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.dark-mode .level-btn:hover {
+    color: #ffd0ad;
+    background: #172641;
+    border-color: rgba(255, 139, 85, .66);
+    transform: translateY(-2px);
+  }
+}
+
+html.dark-mode .level-btn.active {
+  color: #ffc194;
+  background: linear-gradient(145deg, rgba(255, 139, 85, .20), rgba(177, 75, 29, .13));
+  border-color: #ff8b55;
+  box-shadow:
+    0 0 0 3px rgba(255, 139, 85, .10),
+    inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+html.dark-mode .level-btn:focus-visible {
+  outline: 3px solid #7db3ff;
+  outline-offset: 3px;
+}
+
+html.dark-mode .primary-btn {
+  background: linear-gradient(135deg, #ff955f, #e75c29);
+  box-shadow: 0 11px 26px rgba(231, 92, 41, .25);
+}
+
+html.dark-mode .primary-btn:hover {
+  filter: brightness(1.06);
+}
+
+html.dark-mode :is(.timer, .lives) {
+  color: #e7effb;
+  background: #101b2e;
+  border: 1px solid rgba(164, 183, 216, .18);
+}
+
+html.dark-mode .timer.danger {
+  color: #fff;
+  background: #b92f50;
+  border-color: #e75a78;
+}
+
+html.dark-mode .chinese {
+  color: #f4f8ff;
+}
+
+html.dark-mode .answer-box {
+  color: #e6eef9 !important;
+  background: #091221 !important;
+  border-color: #35465f !important;
+}
+
+html.dark-mode .answer-box:focus {
+  border-color: #ff8b55 !important;
+  box-shadow: 0 0 0 4px rgba(255, 139, 85, .14);
+}
+
+html.dark-mode .reward {
+  color: #ffad72;
+}
+
+html.dark-mode :is(.primary-btn, .secondary-btn):disabled {
+  cursor: not-allowed;
+  opacity: .58;
+  filter: none;
+}
+
 html.dark-mode body.profile-bg-enabled .profile-page .danger-zone .settings-card__head {
   color: #ff9aaa !important;
   background: rgba(91, 22, 36, .72) !important;

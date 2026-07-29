@@ -463,11 +463,26 @@
     settingsPanel.querySelector('[data-cc-delete-account]').disabled = !currentUser;
   }
 
+  function setDarkMode(enabled) {
+    const next = Boolean(enabled);
+    if (window.CCDarkMode?.set) {
+      window.CCDarkMode.set(next);
+      return;
+    }
+
+    document.documentElement.classList.toggle('dark-mode', next);
+    document.documentElement.dataset.theme = next ? 'dark' : 'light';
+    document.body?.classList.toggle('dark-mode', next);
+    try { localStorage.setItem('cc_darkMode', String(next)); } catch (_) {}
+  }
+
   function bindSettings() {
     shell.querySelector('[data-cc-settings-open]').addEventListener('click', openSettings);
     shell.querySelector('[data-cc-settings-close]').addEventListener('click', () => closeSettings());
     shell.querySelector('[data-cc-dark-quick]').addEventListener('click', () => {
-      window.CCDarkMode?.set?.(!window.CCDarkMode.get());
+      const enabled = window.CCDarkMode?.get?.()
+        ?? document.documentElement.classList.contains('dark-mode');
+      setDarkMode(!enabled);
       syncSettings();
     });
 
@@ -519,7 +534,7 @@
     });
 
     settingsPanel.querySelector('#ccShellDarkMode').addEventListener('change', (event) => {
-      window.CCDarkMode?.set?.(event.target.checked);
+      setDarkMode(event.target.checked);
     });
     settingsPanel.querySelector('#ccShellMotion').addEventListener('change', (event) => {
       window.CCMotion?.set?.(event.target.checked);

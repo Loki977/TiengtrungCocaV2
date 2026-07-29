@@ -8,6 +8,11 @@
   let remoteSyncTimer = 0;
   let remoteAppearanceLoadedFor = '';
 
+  function dispatchAppearanceEvent(name, detail) {
+    if (typeof window.CustomEvent !== 'function') return;
+    window.dispatchEvent(new CustomEvent(name, { detail }));
+  }
+
   function readPreference() {
     try {
       return localStorage.getItem(STORAGE_KEY) === 'true';
@@ -40,8 +45,8 @@
         /* The theme still works for this page if storage is unavailable. */
       }
     }
-    window.dispatchEvent(new CustomEvent('cc:darkmode', { detail: { enabled: next } }));
-    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    dispatchAppearanceEvent('cc:darkmode', { enabled: next });
+    dispatchAppearanceEvent('cc:appearancechange', getAppearanceState());
     if (persist !== false) scheduleRemoteSync();
   }
 
@@ -98,7 +103,8 @@
       }
       if (video.hasAttribute('data-motion-autoplay')) {
         video.setAttribute('autoplay', '');
-        video.play().catch(function () { /* Browser autoplay rules can still block playback. */ });
+        const playback = video.play();
+        playback?.catch?.(function () { /* Browser autoplay rules can still block playback. */ });
       }
     });
   }
@@ -119,8 +125,8 @@
         /* Motion still updates for this page if storage is unavailable. */
       }
     }
-    window.dispatchEvent(new CustomEvent('cc:motionchange', { detail: { enabled: next } }));
-    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    dispatchAppearanceEvent('cc:motionchange', { enabled: next });
+    dispatchAppearanceEvent('cc:appearancechange', getAppearanceState());
     if (persist !== false) scheduleRemoteSync();
   }
 
@@ -154,7 +160,7 @@
     if (persist !== false) {
       try { localStorage.setItem(FONT_STORAGE_KEY, next); } catch (_) {}
     }
-    window.dispatchEvent(new CustomEvent('cc:appearancechange', { detail: getAppearanceState() }));
+    dispatchAppearanceEvent('cc:appearancechange', getAppearanceState());
     if (persist !== false) scheduleRemoteSync();
     return next;
   }
@@ -196,6 +202,29 @@
     }
   }
 
+  window.CCDarkMode = {
+    get: readPreference,
+    set: function (enabled) { setTheme(enabled, true); }
+  };
+
+  window.CCMotion = {
+    get: readMotionPreference,
+    set: function (enabled) { setMotion(enabled, true); },
+    isEnabled: readMotionPreference
+  };
+
+  window.CCAppearance = {
+    get: getAppearanceState,
+    apply: function () {
+      applyTheme(readPreference());
+      applyMotion(readMotionPreference());
+      applyFontSize(readFontSize());
+      return getAppearanceState();
+    },
+    setDarkMode: function (enabled) { setTheme(enabled, true); return getAppearanceState(); },
+    setFontSize: function (fontSize) { setFontSize(fontSize, true); return getAppearanceState(); }
+  };
+
   const initialPreference = readPreference();
   applyTheme(initialPreference);
   applyMotion(readMotionPreference());
@@ -227,37 +256,17 @@
     restoreRemoteAppearance(event.detail?.user);
   });
 
-  new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      mutation.addedNodes.forEach(function (node) {
-        if (node.nodeType !== 1) return;
-        if (node.matches('video') || node.querySelector('video')) {
-          syncMotionVideos(readMotionPreference(), node);
-        }
+  if (typeof window.MutationObserver === 'function') {
+    new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.matches('video') || node.querySelector('video')) {
+            syncMotionVideos(readMotionPreference(), node);
+          }
+        });
       });
-    });
-  }).observe(document.documentElement, { childList: true, subtree: true });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
 
-  window.CCDarkMode = {
-    get: readPreference,
-    set: function (enabled) { setTheme(enabled, true); }
-  };
-
-  window.CCMotion = {
-    get: readMotionPreference,
-    set: function (enabled) { setMotion(enabled, true); },
-    isEnabled: readMotionPreference
-  };
-
-  window.CCAppearance = {
-    get: getAppearanceState,
-    apply: function () {
-      applyTheme(readPreference());
-      applyMotion(readMotionPreference());
-      applyFontSize(readFontSize());
-      return getAppearanceState();
-    },
-    setDarkMode: function (enabled) { setTheme(enabled, true); return getAppearanceState(); },
-    setFontSize: function (fontSize) { setFontSize(fontSize, true); return getAppearanceState(); }
-  };
 })();

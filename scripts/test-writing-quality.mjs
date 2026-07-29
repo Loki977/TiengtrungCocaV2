@@ -35,6 +35,20 @@ const forbiddenPatterns = [
 const expectedLessonCounts = { hsk1: 15, hsk2: 15, hsk3: 20, hsk4: 20, hsk5: 36, hsk6: 40 };
 const expectedSentenceCounts = { hsk1: 149, hsk2: 150, hsk3: 200, hsk4: 200, hsk5: 360, hsk6: 400 };
 const expectedVocabularyPerLesson = { hsk2: 20, hsk3: 30, hsk4: 40, hsk5: 40, hsk6: 50 };
+const expectedVietnameseSentenceTranslations = {
+  hsk1: {
+    "北京很大。": "Bắc Kinh rất lớn.",
+    "电视很大。": "Tivi rất lớn.",
+    "飞机很快。": "Máy bay rất nhanh."
+  },
+  hsk2: {
+    "北京很大。": "Bắc Kinh rất lớn.",
+    "飞机很快。": "Máy bay rất nhanh."
+  },
+  hsk3: {
+    "机场离这里很近。": "Sân bay ở gần đây."
+  }
+};
 const correctedClassifierExamples = [
   "这篇文章的标题很吸引人。",
   "这条项链很漂亮。",
@@ -121,8 +135,25 @@ function verifyVocabularyVietnamese(level, lessonId, word) {
   }
 }
 
+function verifyVietnameseSentenceTranslations(level, lessons) {
+  const expected = expectedVietnameseSentenceTranslations[level];
+  if (!expected) return;
+
+  const translations = new Map(
+    lessons.flatMap((lesson) => lesson.sentences).map((sentence) => [sentence.chinese, sentence.vietnamese])
+  );
+  for (const [chinese, vietnamese] of Object.entries(expected)) {
+    assert.equal(
+      translations.get(chinese),
+      vietnamese,
+      `${level} phải giữ bản dịch tiếng Việt tự nhiên cho ${chinese}`
+    );
+  }
+}
+
 const hsk1Lessons = await generateLessons("hsk1", getLessonConfig("hsk1"));
 verifyAnnotations("hsk1", hsk1Lessons);
+verifyVietnameseSentenceTranslations("hsk1", hsk1Lessons);
 assert.equal(hsk1Lessons.length, expectedLessonCounts.hsk1, "HSK1 thiếu bài luyện viết");
 assert.equal(hsk1Lessons.flatMap((lesson) => lesson.sentences).length, expectedSentenceCounts.hsk1, "HSK1 thiếu câu luyện viết");
 for (const lesson of hsk1Lessons) {
@@ -139,6 +170,7 @@ for (const lesson of hsk1Lessons) {
 for (const level of ["hsk2", "hsk3", "hsk4", "hsk5", "hsk6"]) {
   const lessons = await generateLessons(level, getLessonConfig(level));
   verifyAnnotations(level, lessons);
+  verifyVietnameseSentenceTranslations(level, lessons);
   const allSentences = lessons.flatMap((lesson) => lesson.sentences);
   const rawItems = JSON.parse(await fs.readFile(`assets/data/writing/${level}.json`, "utf8"));
   const ids = rawItems.map((item) => item.id);
@@ -256,6 +288,11 @@ assert.equal(
   areAnswersEquivalent("Tôi không uống bia", "Tôi uống bia.", "vi"),
   false,
   "Không được bỏ qua khác biệt phủ định"
+);
+assert.equal(
+  areAnswersEquivalent("Bắc Kinh rất to.", "Bắc Kinh rất lớn.", "vi"),
+  true,
+  "Câu dịch dùng từ đồng nghĩa tự nhiên phải được chấp nhận"
 );
 assert.equal(
   areAnswersEquivalent("to lớn", "lớn, to", "vi"),

@@ -156,6 +156,11 @@ assert.doesNotMatch(archiveJs, /radical-library-card__number/, 'radical cards mu
 assert.match(archiveCss, /\.radicals-library-grid\s*\{[\s\S]*grid-template-columns:/, 'radicals must use a responsive card grid');
 assert.match(archiveCss, /repeat\(var\(--radical-columns/, 'radical columns must come from the responsive page-size calculation');
 assert.match(archiveCss, /html\.dark-mode \.radicals-library-section/, 'radicals must include an explicit dark theme');
+assert.match(archiveCss, /html\.dark-mode \.archive-masthead/, 'Tàng Thư Các landing must include an explicit dark theme');
+assert.match(archiveCss, /html\.dark-mode \.library-list-card/, 'Tàng Thư Các content cards must include an explicit dark theme');
+assert.match(archiveHtml, /preload="none"[\s\S]*data-src="assets\/videos\/tang-thu-cac\.mp4"/, 'decorative archive video must not compete with the initial page load');
+assert.doesNotMatch(archiveHtml, /\nloadDictionary\(\);\n/, 'dictionary payload must not load before the dictionary tab is selected');
+assert.match(archiveJs, /tab === "dictionary"[\s\S]*ensureDictionaryLoaded/, 'dictionary payload must load on demand from the dictionary tab');
 assert.match(read('hsk-writing.html'), /cc-site-brand__logo/, 'Writing must use the shared website logo');
 assert.match(shellCss, /main\.page > header\.topbar\[data-cc-legacy-shell-header\][\s\S]*position:\s*sticky\s*!important/, 'Writing website branding must stay visible while scrolling');
 assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.fc-page[\s\S]*linear-gradient\(145deg,\s*#080e1b/, 'Flashcard must use the shared dark canvas');
@@ -164,6 +169,10 @@ assert.match(read('assets/css/hsk-hero-scene.css'), /padding-top:\s*calc\(var\(-
 assert.match(read('assets/css/quick-menu.css'), /\.quick-menu\s*\{[\s\S]*padding-top:\s*clamp\(118px/, 'Home quick cards must sit lower below the header');
 assert.match(read('assets/css/quick-menu.css'), /@media \(max-width:\s*768px\)[\s\S]*\.quick-menu\s*\{[\s\S]*padding-top:\s*96px/, 'Home quick cards must also clear the mobile brand header');
 assert.match(read('challenge.html'), /challenge-brand cc-site-brand/, 'Challenge must use the shared website brand');
+assert.match(read('challenge.html'), /id="levelGrid" role="group" aria-label="Chọn cấp độ HSK"/, 'Challenge level selector must expose an accessible group');
+assert.match(read('assets/js/challenge.js'), /aria-pressed/, 'Challenge level buttons must expose their selected state');
+assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.level-btn[\s\S]*background:\s*#101b2e/, 'Challenge level buttons must keep readable dark surfaces');
+assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.level-btn\.active[\s\S]*border-color:\s*#ff8b55/, 'Challenge selected level must stay visible in dark mode');
 assert.match(read('ThiThu.html'), /cc-site-brand__logo/, 'Placement test entry must use the shared website logo');
 assert.match(read('ThiThu.html'), /id="levelCards"[\s\S]*role="group"/, 'Mock exam entry must expose the six-level card selector as an accessible group');
 assert.match(read('assets/js/thi-thu/app.js'), /for \(let levelNumber = 1; levelNumber <= 6;/, 'Mock exam level selector must render HSK 1 through HSK 6');

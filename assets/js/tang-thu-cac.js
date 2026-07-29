@@ -62,9 +62,42 @@
     bindGrammarControls();
     bindIdiomControls();
     bindRadicalControls();
+    initArchiveVideo();
 
     const requested = location.hash.replace("#", "").toLowerCase();
     if (ARCHIVE_TABS.includes(requested)) activateTab(requested, false);
+  }
+
+  function initArchiveVideo() {
+    const video = $(".archive-video-frame__video");
+    const source = video?.querySelector("source[data-src]");
+    if (!video || !source) return;
+
+    let scheduled = false;
+    const loadVideo = () => {
+      if (!source.dataset.src) return;
+      source.src = source.dataset.src;
+      delete source.dataset.src;
+      video.load();
+      if (document.documentElement.dataset.motion !== "off") {
+        const playback = video.play();
+        playback?.catch?.(() => {});
+      }
+    };
+    const scheduleVideo = () => {
+      if (scheduled || document.documentElement.dataset.motion === "off") return;
+      scheduled = true;
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadVideo, { timeout: 1400 });
+      } else {
+        window.setTimeout(loadVideo, 650);
+      }
+    };
+
+    scheduleVideo();
+    window.addEventListener("cc:motionchange", (event) => {
+      if (event.detail?.enabled) scheduleVideo();
+    });
   }
 
   function bindTabs() {
@@ -157,6 +190,7 @@
         location.hash = tab;
       }
     }
+    if (tab === "dictionary") await window.ensureDictionaryLoaded?.();
     if (tab === "grammar") await ensureLoaded("grammar");
     if (tab === "idioms") await ensureLoaded("idioms");
     if (tab === "radicals") await ensureLoaded("radicals");
