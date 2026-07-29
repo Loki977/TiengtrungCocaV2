@@ -914,8 +914,13 @@
     const sections = getSections(lesson);
     const done = getDoneMap(state);
     dispatchLearningEvent('cc:learning-progress', lesson, {
+      kind: 'course',
       current: sections.filter((section) => done[section]).length,
-      total: sections.length
+      total: sections.length,
+      title: lesson.title || `Bài ${lesson.lessonId || 1}`,
+      meta: `Khóa học ${getLessonLevelKey(lesson).toUpperCase()} · ${sectionName(currentSection)}`,
+      next: `Mục đang học: ${sectionName(currentSection)}`,
+      href: `hsk.html?level=${getLessonLevelKey(lesson)}&lesson=${Number(lesson.lessonId || 1) || 1}`
     });
 
     return `

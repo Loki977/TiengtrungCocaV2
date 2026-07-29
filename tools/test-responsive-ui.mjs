@@ -85,6 +85,8 @@ assert.match(
 );
 
 const auth = read('assets/js/firebase-auth.js');
+const homeProgress = read('assets/js/home-progress.js');
+const learningResume = read('assets/js/learning-resume.js');
 const rememberedBlock = auth.slice(
   auth.indexOf('function rememberAccount'),
   auth.indexOf('function removeRememberedAccount')
@@ -97,6 +99,14 @@ assert.match(rememberedBlock, /providerId:/);
 assert.match(rememberedBlock, /lastUsedAt:/);
 assert.doesNotMatch(rememberedBlock, /accessToken|refreshToken|credential|password\s*:/i);
 assert.doesNotMatch(auth.slice(auth.indexOf('async function logout'), auth.indexOf('async function reauthenticateForAccountDeletion')), /REMEMBERED_ACCOUNTS_KEY/);
+assert.match(learningResume, /await firebase\.authReady/, 'last learning activity must wait for the resolved account before saving');
+assert.match(learningResume, /saveUserStats\(\{ currentLesson: activity \}\)/, 'last learning activity must use the shared progress store');
+assert.match(auth, /currentStats = normalizeStats\(readLocalProgress\(\) \|\| DEFAULT_STATS\)/, 'signed-out sessions must restore their own local learning progress');
+assert.match(read('assets/js/lesson-render.js'), /kind:\s*'course'[\s\S]*href:\s*`hsk\.html\?level=/, 'course lessons must publish a resumable real progress record');
+assert.match(read('lesson-page.js'), /kind:\s*"writing"[\s\S]*href:\s*`lesson\.html\?level=/, 'writing lessons must publish a resumable real progress record');
+assert.match(homeProgress, /Number\(activity\.updatedAt\) > 0/, 'Home must reject the legacy placeholder as recent progress');
+assert.match(homeProgress, /getSafeLearningHref/, 'Home must validate the saved resume destination');
+assert.match(homeProgress, /hsk\.html\?level=\$\{level\}&lesson=1/, 'Home course cards must open the course instead of the writing lesson');
 
 const hud = read('assets/js/learning-hud.js');
 const hudCss = read('assets/css/learning-hud.css');
@@ -139,6 +149,8 @@ assert.match(radicalsJs, /hsk1-radicals-intro/, 'radicals completion must use a 
 assert.match(radicalsJs, /pointerdown/, 'radicals writing pad must support pointer input');
 assert.match(radicalsJs, /cc:learning-progress/, 'radicals lesson must report section progress to the shared HUD');
 assert.doesNotMatch(read('flashcard.html'), /class="cc-page-brand"/, 'Flashcard branding must stay in the shared page header');
+assert.match(read('flashcard.html'), /@media \(max-width:\s*640px\)[\s\S]*\.fc-page \.deck-selector[\s\S]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/, 'Flashcard HSK levels must use a stable two-column mobile grid');
+assert.match(read('flashcard.html'), /@media \(max-width:\s*640px\)[\s\S]*\.fc-page\s*\{[\s\S]*padding-top:\s*0/, 'Flashcard mobile layout must not count the website header twice');
 assert.doesNotMatch(read('vocabulary.html'), /class="cc-page-brand"/, 'Tàng Thư Các branding must stay in the shared page header');
 const archiveHtml = read('vocabulary.html');
 const archiveJs = read('assets/js/tang-thu-cac.js');
@@ -168,6 +180,9 @@ assert.match(read('assets/css/dark-mode.css'), /html\.dark-mode \.fc-card__front
 assert.match(read('assets/css/hsk-hero-scene.css'), /padding-top:\s*calc\(var\(--header-h/, 'course hero characters must start below the website brand');
 assert.match(read('assets/css/quick-menu.css'), /\.quick-menu\s*\{[\s\S]*padding-top:\s*clamp\(118px/, 'Home quick cards must sit lower below the header');
 assert.match(read('assets/css/quick-menu.css'), /@media \(max-width:\s*768px\)[\s\S]*\.quick-menu\s*\{[\s\S]*padding-top:\s*96px/, 'Home quick cards must also clear the mobile brand header');
+assert.match(read('index.html'), /id="homeTrailerVideo"[\s\S]*preload="none"[\s\S]*trailer\.mp4\?v=3/, 'Home trailer must avoid eager metadata loading and use the optimized asset');
+assert.match(read('assets/js/home-trailer.js'), /video\.play\(\)\.then\(revealTrailer\)/, 'Home trailer must stay hidden until playback actually starts');
+assert.doesNotMatch(read('assets/css/home-trailer.css'), /backdrop-filter:\s*blur\(3px\)/, 'Home trailer must avoid an expensive full-screen blur');
 assert.match(read('challenge.html'), /challenge-brand cc-site-brand/, 'Challenge must use the shared website brand');
 assert.match(read('challenge.html'), /id="levelGrid" role="group" aria-label="Chọn cấp độ HSK"/, 'Challenge level selector must expose an accessible group');
 assert.match(read('assets/js/challenge.js'), /aria-pressed/, 'Challenge level buttons must expose their selected state');

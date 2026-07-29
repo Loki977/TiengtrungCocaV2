@@ -17,6 +17,7 @@ import { SentenceStructure } from "./assets/js/sentence-structure.js";
 const params = new URLSearchParams(window.location.search);
 const level = (params.get("level") || "hsk1").toLowerCase();
 const lessonId = Number(params.get("lesson") || 1);
+const resumeStep = Math.max(0, Number(params.get("step")) || 0);
 const app = document.getElementById("app");
 const sentenceStructure = new SentenceStructure({ level });
 const ACCESS_TYPES = new Set(["free", "guided", "vip", "coins"]);
@@ -207,6 +208,17 @@ async function init() {
       app.className = "error";
       app.textContent = "Bài học này chưa có đủ dữ liệu từ vựng.";
       return;
+    }
+
+    const sentenceCount = getLessonSentences().length;
+    const totalCards = state.lesson.vocabularies.length + sentenceCount;
+    const safeResumeStep = Math.min(resumeStep, Math.max(totalCards - 1, 0));
+    if (safeResumeStep >= state.lesson.vocabularies.length && sentenceCount > 0) {
+      state.currentPhase = "sentence";
+      state.currentIndex = safeResumeStep - state.lesson.vocabularies.length;
+    } else {
+      state.currentPhase = "vocabulary";
+      state.currentIndex = safeResumeStep;
     }
 
     renderShell();
@@ -415,7 +427,16 @@ function renderCurrentCard() {
 
   document.getElementById("progressLabel").textContent = `${globalIndex + 1}/${total}`;
   document.getElementById("progressBar").style.width = `${((globalIndex + 1) / total) * 100}%`;
-  dispatchLearningEvent("cc:learning-progress", { current: globalIndex + 1, total });
+  const phaseLabel = isSentence ? "Luyện viết câu" : "Từ vựng";
+  dispatchLearningEvent("cc:learning-progress", {
+    kind: "writing",
+    current: globalIndex + 1,
+    total,
+    title: state.lesson.title || `Bài ${lessonId}`,
+    meta: `Luyện viết ${level.toUpperCase()} · ${phaseLabel}`,
+    next: `${phaseLabel}: thẻ ${globalIndex + 1}/${total}`,
+    href: `lesson.html?level=${level}&lesson=${lessonId}&step=${globalIndex}`
+  });
   document.getElementById("pageTitle").textContent = `${state.lesson.title} – ${isSentence ? "Luyện viết câu" : "Từ vựng"}`;
   document.getElementById("cardBadge").textContent = isSentence ? "Luyện viết câu" : "Từ vựng";
   const workspace = document.querySelector(".workspace");

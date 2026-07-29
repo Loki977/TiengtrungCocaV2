@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/css/style.css?v=mobile-header-3" />
     <link rel="stylesheet" href="assets/css/home.css?v=responsive-4" />
     <link rel="stylesheet" href="assets/css/home-fabs.css" />
-    <link rel="stylesheet" href="assets/css/home-trailer.css?v=2" />
+    <link rel="stylesheet" href="assets/css/home-trailer.css?v=3" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
     <link rel="stylesheet" href="assets/css/dark-mode.css?v=2" />
     <link rel="stylesheet" href="assets/css/app-shell.css?v=9" />
@@ -25,7 +25,7 @@
   <body>
     <div class="home-trailer" id="homeTrailer" role="dialog" aria-modal="true" aria-label="Trailer giới thiệu" aria-hidden="true">
       <div class="home-trailer__window">
-        <video class="home-trailer__video" id="homeTrailerVideo" muted playsinline preload="metadata" aria-label="Trailer Tiếng Trung Cam &amp; Coca" data-src="assets/videos/trailer.mp4?v=1"></video>
+        <video class="home-trailer__video" id="homeTrailerVideo" muted playsinline preload="none" aria-label="Trailer Tiếng Trung Cam &amp; Coca" data-src="assets/videos/trailer.mp4?v=3"></video>
         <div class="home-trailer__actions">
           <button class="home-trailer__sound" id="homeTrailerSound" type="button" aria-label="Bật âm thanh trailer">🔊 Bật âm thanh</button>
           <button class="home-trailer__skip" id="homeTrailerSkip" type="button" aria-label="Bỏ qua trailer">Bỏ qua</button>
@@ -274,13 +274,13 @@
             <div class="continue-card">
               <div class="continue-card__header">
                 <h3>Tiếp tục học</h3>
-                <span class="badge badge--orange" data-progress="currentLessonLevel">HSK 1</span>
+                <span class="badge badge--orange" data-progress="currentLessonLevel">—</span>
               </div>
               <div class="continue-card__lesson">
                 <div class="lesson-icon">📖</div>
                 <div class="lesson-info">
-                  <h4 data-progress="currentLessonTitle">Bài 1: Bắt đầu học HSK 1</h4>
-                  <p class="lesson-meta" data-progress="currentLessonMeta">Từ vựng · bắt đầu học · ~10 phút</p>
+                  <h4 data-progress="currentLessonTitle">Chưa có bài học gần đây</h4>
+                  <p class="lesson-meta" data-progress="currentLessonMeta">Mở Khóa học hoặc Luyện viết để bắt đầu lưu tiến trình.</p>
                 </div>
               </div>
               <div class="progress-bar-wrap">
@@ -291,9 +291,9 @@
               </div>
               <div class="continue-card__upcoming">
                 <p class="upcoming-label">Tiếp theo:</p>
-                <div class="upcoming-item" data-progress="nextLesson"><span>🎧</span> Bài 2: Tiếp tục học</div>
+                <div class="upcoming-item" data-progress="nextLesson">📖 Tiến trình thật sẽ xuất hiện tại đây</div>
               </div>
-              <button class="btn btn--primary btn--full ripple" id="continueLearningBtn">Tiếp tục học <span class="arrow">→</span></button>
+              <button class="btn btn--primary btn--full ripple" id="continueLearningBtn">Chọn bài học →</button>
             </div>
             <div class="daily-goal">
               <h3>Mục tiêu hôm nay</h3>
@@ -622,12 +622,12 @@
     <script src="assets/js/site-shell.js?v=5"></script>
     <script src="assets/js/quick-menu.js?v=1"></script>
     <script src="assets/js/app.js?v=auth-modal-20260726"></script>
-    <script src="assets/js/home-trailer.js?v=2"></script>
-    <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260726"></script>
+    <script src="assets/js/home-trailer.js?v=3"></script>
+    <script type="module" src="assets/js/firebase-auth.js?v=auth-ui-20260729-progress"></script>
     <script type="module" src="assets/js/hsk-placement-invite.js"></script>
     <script type="module" src="assets/js/facebook-login.js"></script>
   <script type="module" src="assets/js/access-logger.js"></script>
-    <script type="module" src="assets/js/home-progress.js"></script>
+    <script type="module" src="assets/js/home-progress.js?v=2"></script>
     
   </body>
 </html>

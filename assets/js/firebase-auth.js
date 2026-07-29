@@ -1272,14 +1272,16 @@ async function completeLesson({ level = "hsk1", lessonId = 1, title = "", xp = 1
     completedLessons: Object.keys(completedLessonIds).length,
     completedLessonIds,
     currentLevel: levelLabel.replace(/^HSK/i, "HSK"),
-    currentLesson: {
+    currentLesson: Number(current.currentLesson?.updatedAt) > 0
+      ? current.currentLesson
+      : {
       level: normalizedLevel,
       lesson: nextLessonId,
       title: `Bài ${nextLessonId}: Tiếp tục học`,
       meta: `${levelLabel} · bài tiếp theo`,
       progress: 0,
       next: `Bài ${nextLessonId + 1}: Tiếp tục học`
-    },
+        },
     courses,
     history
   });
@@ -1629,7 +1631,7 @@ function handleConfirmedSignedOut(source = "observer") {
   completedUid = null;
   completingUid = null;
   completingUserPromise = null;
-  currentStats = normalizeStats(DEFAULT_STATS);
+  currentStats = normalizeStats(readLocalProgress() || DEFAULT_STATS);
   latestVipVerification = { uid: null, verified: true, checkedAt: Date.now(), state: getVipState({}) };
   setAuthStatus("unauthenticated");
   clearSignedOutCache();

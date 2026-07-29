@@ -2,7 +2,8 @@
   'use strict';
 
   const SESSION_KEY = 'camCocaTrailerPlayed';
-  const FADE_MS = 700;
+  const FADE_MS = 260;
+  const LOAD_TIMEOUT_MS = 6000;
   const overlay = document.getElementById('homeTrailer');
   const video = document.getElementById('homeTrailerVideo');
   const skipButton = document.getElementById('homeTrailerSkip');
@@ -12,6 +13,8 @@
   const motionEnabled = () => !window.CCMotion || window.CCMotion.isEnabled();
   let playbackTimer;
   let closeTimer;
+  let loadTimer;
+  let openRequest = 0;
 
   if (!overlay || !video || !skipButton) return;
 
@@ -32,8 +35,10 @@
   };
 
   const closeTrailer = (immediate = false) => {
+    openRequest += 1;
     clearTimeout(playbackTimer);
     clearTimeout(closeTimer);
+    clearTimeout(loadTimer);
     video.pause();
     overlay.classList.add('is-closing');
     overlay.setAttribute('aria-hidden', 'true');
@@ -49,32 +54,48 @@
   const openTrailer = ({ replay = false } = {}) => {
     if (!motionEnabled() || (!replay && (hasPlayedThisSession() || reducedMotion.matches))) return;
 
+    const request = ++openRequest;
     clearTimeout(closeTimer);
-    markPlayed();
+    clearTimeout(loadTimer);
     overlay.classList.remove('is-closing');
-    overlay.classList.add('is-visible');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('trailer-open');
     video.muted = false;
     syncSoundButton();
     video.src = video.dataset.src;
     video.currentTime = 0;
     video.load();
 
-    const playWhenReady = () => {
-      if (!motionEnabled() || !overlay.classList.contains('is-visible') || overlay.classList.contains('is-closing')) return;
-      video.play().catch(() => {
+    const revealTrailer = () => {
+      if (request !== openRequest || !motionEnabled() || overlay.classList.contains('is-closing')) {
+        video.pause();
+        return;
+      }
+      clearTimeout(loadTimer);
+      markPlayed();
+      overlay.classList.add('is-visible');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('trailer-open');
+    };
+
+    const startPlayback = () => {
+      video.play().then(revealTrailer).catch(() => {
         if (!video.muted) {
           video.muted = true;
           syncSoundButton();
-          return video.play().catch(() => closeTrailer());
+          return video.play().then(revealTrailer).catch(() => closeTrailer(true));
         }
-        closeTrailer();
+        closeTrailer(true);
       });
     };
 
-    if (replay || video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) playWhenReady();
-    else video.addEventListener('canplay', playWhenReady, { once: true });
+    loadTimer = window.setTimeout(() => {
+      if (request !== openRequest || overlay.classList.contains('is-visible')) return;
+      openRequest += 1;
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+    }, LOAD_TIMEOUT_MS);
+
+    startPlayback();
   };
 
   video.addEventListener('playing', () => {

@@ -39,9 +39,13 @@
 
   const panelsWrap = document.getElementById('tabPanels');
   const detailWrap = document.getElementById('lessonDetail');
+  const requestedParams = new URLSearchParams(window.location.search);
+  const requestedLevelMatch = String(requestedParams.get('level') || '').toLowerCase().match(/^hsk([1-6])$/);
+  const requestedTab = requestedLevelMatch ? Number(requestedLevelMatch[1]) : 1;
+  const requestedLesson = Math.max(0, Number(requestedParams.get('lesson')) || 0);
 
-  let currentTab = 1;
-  let currentLevel = 'hsk1';
+  let currentTab = requestedTab;
+  let currentLevel = `hsk${requestedTab}`;
   let currentLessonsIndex = [];
   let currentStats = window.CCFirebase?.getCurrentStats?.() || null;
   let contentDbPromise = null;
@@ -596,7 +600,14 @@
       window.LessonRenderer.bindLessonRenderEvents(document);
     }
 
+    document.querySelectorAll('.hsk-tab').forEach((tab) => {
+      const active = Number(tab.dataset.tab) === currentTab;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', String(active));
+    });
+
     showCoursePanel();
-    await renderPanel(1);
+    await renderPanel(currentTab);
+    if (requestedLesson) await handleLessonClick(requestedLesson);
   });
 })();

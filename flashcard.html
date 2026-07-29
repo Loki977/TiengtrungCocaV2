@@ -286,6 +286,66 @@
     }
   </style>
   <link rel="stylesheet" href="assets/css/hsk-writing-sync.css?v=4" />
+  <style>
+    @media (max-width: 640px) {
+      .fc-page {
+        padding-top: 0;
+      }
+      .fc-page .deck-banner {
+        padding: 24px 0 26px !important;
+      }
+      .fc-page .deck-banner .container {
+        width: 100%;
+        padding-inline: 16px !important;
+      }
+      .fc-page .deck-banner__title {
+        margin: 0 0 14px !important;
+        transform: none;
+        text-align: center !important;
+        font-size: clamp(1.35rem, 6.2vw, 1.65rem) !important;
+      }
+      .fc-page .deck-selector {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+        margin: 0 auto 18px !important;
+        padding: 10px !important;
+        border-radius: 24px !important;
+        overflow: visible;
+      }
+      .fc-page .deck-btn {
+        width: 100%;
+        min-width: 0 !important;
+        padding: 9px 8px !important;
+        font-size: .86rem !important;
+      }
+      .fc-page .deck-btn-count {
+        min-width: 20px;
+        height: 18px;
+        padding-inline: 5px;
+      }
+      .fc-page .deck-progress,
+      .fc-page .fc-mode-bar {
+        padding-inline: 2px;
+      }
+      .fc-page .fc-mode-bar {
+        gap: 8px;
+      }
+      .fc-page .fc-mode-btn,
+      .fc-page .fc-mastered-counter {
+        min-width: 0;
+        padding: 9px 10px;
+        font-size: .76rem;
+      }
+      .fc-page .fc-main {
+        padding: 28px 0 44px;
+      }
+      .fc-page .fc-container {
+        padding-inline: 16px;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="assets/css/dark-mode.css?v=2" />
   <link rel="stylesheet" href="assets/css/app-shell.css?v=9" />
   <script src="assets/js/dark-mode.js"></script>

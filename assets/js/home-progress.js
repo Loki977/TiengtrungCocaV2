@@ -45,10 +45,6 @@ function setText(selector, value) {
   $all(selector).forEach((el) => { el.textContent = value; });
 }
 
-function setHtml(selector, html) {
-  $all(selector).forEach((el) => { el.innerHTML = html; });
-}
-
 function setWidth(selector, percent) {
   const safePercent = Math.max(0, Math.min(100, Number(percent) || 0));
   $all(selector).forEach((el) => { el.style.width = `${safePercent}%`; });
@@ -63,6 +59,59 @@ function normalizeProgress(rawProgress) {
   progress.courses = deepMerge(DEFAULT_PROGRESS.courses, progress.courses || {});
   progress.currentLesson = deepMerge(DEFAULT_PROGRESS.currentLesson, progress.currentLesson || {});
   return progress;
+}
+
+function getSafeLearningHref(activity) {
+  const level = /^hsk[1-6]$/i.test(String(activity?.level || ""))
+    ? String(activity.level).toLowerCase()
+    : "hsk1";
+  const lesson = Math.max(1, Number(activity?.lesson) || 1);
+  const fallback = activity?.kind === "writing"
+    ? `lesson.html?level=${level}&lesson=${lesson}`
+    : `hsk.html?level=${level}&lesson=${lesson}`;
+
+  try {
+    const url = new URL(String(activity?.href || fallback), window.location.href);
+    if (url.origin !== window.location.origin || !["http:", "https:"].includes(url.protocol)) return fallback;
+    return `${url.pathname.split("/").pop() || "index.html"}${url.search}${url.hash}`;
+  } catch (_) {
+    return fallback;
+  }
+}
+
+function getResumeLesson(progress) {
+  const activity = progress.currentLesson || {};
+  const hasTrackedActivity = Number(activity.updatedAt) > 0;
+
+  if (!hasTrackedActivity) {
+    return {
+      empty: true,
+      level: "—",
+      title: "Chưa có bài học gần đây",
+      meta: "Mở Khóa học hoặc Luyện viết để bắt đầu lưu tiến trình.",
+      progress: 0,
+      next: "Tiến trình thật sẽ xuất hiện tại đây",
+      href: "hsk.html"
+    };
+  }
+
+  const kind = activity.kind === "writing" ? "writing" : "course";
+  const level = /^hsk[1-6]$/i.test(String(activity.level || ""))
+    ? String(activity.level).toLowerCase()
+    : "hsk1";
+  const lesson = Math.max(1, Number(activity.lesson) || 1);
+  return {
+    ...activity,
+    empty: false,
+    kind,
+    level,
+    lesson,
+    title: String(activity.title || `Bài ${lesson}`),
+    meta: String(activity.meta || (kind === "writing" ? "Luyện viết" : "Khóa học")),
+    progress: Math.max(0, Math.min(100, Number(activity.progress) || 0)),
+    next: String(activity.next || "Tiếp tục từ vị trí gần nhất"),
+    href: getSafeLearningHref({ ...activity, kind, level, lesson })
+  };
 }
 
 function renderTasks(tasks) {
@@ -109,13 +158,13 @@ function renderCourses(courses) {
       if (ribbon) ribbon.textContent = "Chưa học";
       if (button) { button.textContent = "🔒 Chưa mở khóa"; button.disabled = true; }
     }
-    if (button) button.onclick = () => { if (!button.disabled) location.href = `lesson.html?level=${level}&lesson=1`; };
+    if (button) button.onclick = () => { if (!button.disabled) location.href = `hsk.html?level=${level}&lesson=1`; };
   });
 }
 
 function renderProgress(rawProgress) {
   const progress = normalizeProgress(rawProgress);
-  const lesson = progress.currentLesson;
+  const lesson = getResumeLesson(progress);
   const lessonPercent = Math.max(0, Math.min(100, Number(lesson.progress) || 0));
   const dailyGoal = Number(progress.dailyGoal) || 250;
   const todayXp = Number(progress.todayXp) || 0;
@@ -129,19 +178,22 @@ function renderProgress(rawProgress) {
   setText('[data-progress="lastXp"]', `+${progress.lastXp || 0}`);
   setText('[data-progress="xpToNext"]', `Cần ${progress.xpToNext || 1000} XP để lên cấp`);
   setWidth('[data-progress-style="levelPercent"]', progress.levelPercent);
-  setText('[data-progress="currentLessonLevel"]', String(lesson.level || "hsk1").toUpperCase());
+  setText('[data-progress="currentLessonLevel"]', lesson.empty ? "—" : String(lesson.level || "hsk1").toUpperCase());
   setText('[data-progress="currentLessonTitle"]', lesson.title);
   setText('[data-progress="currentLessonMeta"]', lesson.meta);
   setWidth('[data-progress-style="currentLessonProgress"]', lessonPercent);
   setText('[data-progress="currentLessonProgressLabel"]', `${lessonPercent}%`);
-  setHtml('[data-progress="nextLesson"]', `<span>🎧</span> ${lesson.next || "Bài tiếp theo"}`);
+  setText('[data-progress="nextLesson"]', `${lesson.kind === "writing" ? "✍️" : "📖"} ${lesson.next}`);
   setText('[data-progress="todayXp"]', todayXp);
   setText('[data-progress="dailyGoal"]', `/ ${dailyGoal} XP`);
   $all('[data-progress-ring="dailyGoal"]').forEach((circle) => circle.setAttribute("stroke-dasharray", `${ringValue} 314`));
   renderTasks(progress.tasks);
   renderCourses(progress.courses);
   const continueBtn = $("#continueLearningBtn");
-  if (continueBtn) continueBtn.onclick = () => { location.href = `lesson.html?level=${lesson.level || "hsk1"}&lesson=${lesson.lesson || 1}`; };
+  if (continueBtn) {
+    continueBtn.textContent = lesson.empty ? "Chọn bài học →" : "Tiếp tục học →";
+    continueBtn.onclick = () => { location.href = lesson.href; };
+  }
 }
 
 function initHomeProgress() {
