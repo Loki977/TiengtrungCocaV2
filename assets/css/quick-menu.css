@@ -254,6 +254,16 @@
     text-align: center;
   }
 
+  .quick-card:not(.is-active) .quick-card__body {
+    min-height: calc(3 * 1.08em);
+    align-content: start;
+  }
+
+  .quick-card:not(.is-active) .quick-card__description,
+  .quick-card:not(.is-active) .quick-card__cta {
+    display: none;
+  }
+
   .quick-card::after {
     right: -8px;
     bottom: -16px;

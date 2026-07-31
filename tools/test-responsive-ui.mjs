@@ -53,6 +53,9 @@ assert.match(quickMenu, /event\.key === 'Escape'/, 'Escape must collapse the car
 assert.match(quickMenuCss, /white-space:\s*nowrap/, 'expanded Home card titles must remain visually stable');
 assert.match(quickMenuCss, /@media \(min-width:\s*769px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__body\s*\{[^}]*gap:\s*0/s, 'hidden desktop card rows must not leave a vertical gap above the visible titles');
 assert.match(quickMenuCss, /@media \(min-width:\s*769px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__cta\s*\{[^}]*min-height:\s*0/s, 'hidden desktop card actions must not shift the visible titles');
+assert.match(quickMenuCss, /@media \(max-width:\s*768px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__body\s*\{[^}]*min-height:\s*calc\(3 \* 1\.08em\)/s, 'mobile quick-card labels must reserve equal height so their icons stay aligned');
+assert.match(quickMenuCss, /@media \(max-width:\s*768px\)[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__description,[\s\S]*\.quick-card:not\(\.is-active\) \.quick-card__cta\s*\{[^}]*display:\s*none/s, 'hidden mobile quick-card rows must not shift the visible icon and title');
+assert.match(indexHtml, /assets\/css\/quick-menu\.css\?v=(?:[6-9]|\d{2,})/, 'Home must invalidate the pre-alignment quick-menu stylesheet');
 
 const shell = read('assets/js/site-shell.js');
 const shellCss = read('assets/css/app-shell.css');
