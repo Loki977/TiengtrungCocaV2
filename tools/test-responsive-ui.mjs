@@ -174,6 +174,9 @@ assert.match(archiveCss, /html\.dark-mode \.radicals-library-section/, 'radicals
 assert.match(archiveCss, /html\.dark-mode \.archive-masthead/, 'Tàng Thư Các landing must include an explicit dark theme');
 assert.match(archiveCss, /html\.dark-mode \.library-list-card/, 'Tàng Thư Các content cards must include an explicit dark theme');
 assert.match(archiveHtml, /preload="none"[\s\S]*data-src="assets\/videos\/tang-thu-cac\.mp4"/, 'decorative archive video must not compete with the initial page load');
+assert.doesNotMatch(archiveHtml, /archive-video-frame__seal/, 'archive video must not render decorative seal overlays');
+assert.doesNotMatch(archiveCss, /\.archive-video-frame::(?:before|after)/, 'archive video frame must not render decorative corner marks');
+assert.match(archiveHtml, /assets\/css\/tang-thu-cac\.css\?v=(?:[7-9]|\d{2,})/, 'archive page must invalidate the pre-cleanup video frame stylesheet');
 assert.doesNotMatch(archiveHtml, /\nloadDictionary\(\);\n/, 'dictionary payload must not load before the dictionary tab is selected');
 assert.match(archiveJs, /tab === "dictionary"[\s\S]*ensureDictionaryLoaded/, 'dictionary payload must load on demand from the dictionary tab');
 assert.match(read('hsk-writing.html'), /cc-site-brand__logo/, 'Writing must use the shared website logo');
